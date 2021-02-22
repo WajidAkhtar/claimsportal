@@ -116,7 +116,10 @@ class UserService extends BaseService
         try {
             $user = $this->createUser([
                 'type' => $data['type'],
-                'name' => $data['name'],
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'job_title' => $data['job_title'],
+                'department' => $data['department'],
                 'email' => $data['email'],
                 'password' => $data['password'],
                 'email_verified_at' => isset($data['email_verified']) && $data['email_verified'] === '1' ? now() : null,
@@ -130,7 +133,6 @@ class UserService extends BaseService
             }
         } catch (Exception $e) {
             DB::rollBack();
-
             throw new GeneralException(__('There was a problem creating this user. Please try again.'));
         }
 
@@ -160,7 +162,10 @@ class UserService extends BaseService
         try {
             $user->update([
                 'type' => $user->isMasterAdmin() ? $this->model::TYPE_ADMIN : $data['type'] ?? $user->type,
-                'name' => $data['name'],
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'job_title' => $data['job_title'],
+                'department' => $data['department'],
                 'email' => $data['email'],
             ]);
 
@@ -324,7 +329,10 @@ class UserService extends BaseService
     {
         return $this->model::create([
             'type' => $data['type'] ?? $this->model::TYPE_USER,
-            'name' => $data['name'] ?? null,
+            'first_name' => $data['first_name'] ?? null,
+            'last_name' => $data['last_name'] ?? null,
+            'job_title' => $data['job_title'] ?? null,
+            'department' => $data['department'] ?? null,
             'email' => $data['email'] ?? null,
             'password' => $data['password'] ?? null,
             'provider' => $data['provider'] ?? null,

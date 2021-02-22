@@ -18,7 +18,7 @@ class UsersTable extends TableComponent
     /**
      * @var string
      */
-    public $sortField = 'name';
+    public $sortField = 'first_name';
 
     /**
      * @var string
@@ -71,7 +71,16 @@ class UsersTable extends TableComponent
                 ->format(function (User $model) {
                     return view('backend.auth.user.includes.type', ['user' => $model]);
                 }),
-            Column::make(__('Name'), 'name')
+            Column::make(__('Name'), 'first_name')
+                ->searchable()
+                ->sortable(),
+            Column::make(__('Last Name'), 'last_name')
+                ->searchable()
+                ->sortable(),
+            Column::make(__('Job Title'), 'job_title')
+                ->searchable()
+                ->sortable(),
+            Column::make(__('Department'), 'department')
                 ->searchable()
                 ->sortable(),
             Column::make(__('E-mail'), 'email')

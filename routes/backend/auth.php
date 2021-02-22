@@ -82,7 +82,7 @@ Route::group([
                     ->middleware('permission:admin.access.user.list')
                     ->breadcrumbs(function (Trail $trail, User $user) {
                         $trail->parent('admin.auth.user.index')
-                            ->push($user->name, route('admin.auth.user.show', $user));
+                            ->push($user->first_name.' '.$user->last_name, route('admin.auth.user.show', $user));
                     });
 
                 Route::patch('mark/{status}', [DeactivatedUserController::class, 'update'])

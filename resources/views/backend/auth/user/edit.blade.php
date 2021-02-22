@@ -31,10 +31,34 @@
                     @endif
 
                     <div class="form-group row">
-                        <label for="name" class="col-md-2 col-form-label">@lang('Name')</label>
+                        <label for="first_name" class="col-md-2 col-form-label">@lang('First Name')</label>
 
                         <div class="col-md-10">
-                            <input type="text" name="name" class="form-control" placeholder="{{ __('Name') }}" value="{{ old('name') ?? $user->name }}" maxlength="100" required />
+                            <input type="text" name="first_name" class="form-control" placeholder="{{ __('First Name') }}" value="{{ old('first_name') ?? $user->first_name }}" maxlength="100" required />
+                        </div>
+                    </div><!--form-group-->
+
+                    <div class="form-group row">
+                        <label for="last_name" class="col-md-2 col-form-label">@lang('Last Name')</label>
+
+                        <div class="col-md-10">
+                            <input type="text" name="last_name" class="form-control" placeholder="{{ __('Last Name') }}" value="{{ old('last_name') ?? $user->last_name }}" maxlength="100" required />
+                        </div>
+                    </div><!--form-group-->
+
+                    <div class="form-group row">
+                        <label for="job_title" class="col-md-2 col-form-label">@lang('Job Title')</label>
+
+                        <div class="col-md-10">
+                            <input type="text" name="job_title" class="form-control" placeholder="{{ __('Job Title') }}" value="{{ old('job_title') ?? $user->job_title }}" maxlength="100" required />
+                        </div>
+                    </div><!--form-group-->
+
+                    <div class="form-group row">
+                        <label for="department" class="col-md-2 col-form-label">@lang('Department')</label>
+
+                        <div class="col-md-10">
+                            <input type="text" name="department" class="form-control" placeholder="{{ __('Department') }}" value="{{ old('department') ?? $user->department }}" maxlength="100" required />
                         </div>
                     </div><!--form-group-->
 
