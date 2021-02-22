@@ -26,6 +26,7 @@
         "rappasoft/laravel-livewire-tables": "^0.3",
         "rappasoft/lockout": "^3.0",
         "spatie/laravel-activitylog": "^3.14",
+        "spatie/laravel-html": "^2.29",
         "spatie/laravel-permission": "^3.11",
         "tabuna/breadcrumbs": "^2.2"
     },

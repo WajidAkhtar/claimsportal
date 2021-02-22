@@ -21,6 +21,15 @@
                     </li>
                 </ul>
             </li>
+            
+            <li class="dropdown active">
+                <a href="javascript:void(0)"><i class="fa fa-sticky-note mr-1"></i> Claims</a>
+                <ul>
+                    <li class="{{activeClass(Route::is('admin.claim.project.*'), 'active')}}">
+                        <a href="{{route('admin.claim.project.index')}}"><i class="fa fa-project-diagram"></i> @lang('Projects')</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
         <!-- END: Menu-->
         {{-- <ol class="breadcrumb bg-transparent align-self-center m-0 p-0 ml-auto">

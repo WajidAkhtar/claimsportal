@@ -18,12 +18,12 @@
             <x-slot name="body">
                 <div x-data="{userType : '{{ $user->type }}'}">
                     @if (!$user->isMasterAdmin())
-                        <div class="form-group row">
+                        <div class="form-group row d-none">
                             <label for="name" class="col-md-2 col-form-label">@lang('Type')</label>
 
                             <div class="col-md-10">
                                 <select name="type" class="form-control" required x-on:change="userType = $event.target.value">
-                                    <option value="{{ $model::TYPE_USER }}" {{ $user->type === $model::TYPE_USER ? 'selected' : '' }}>@lang('User')</option>
+                                    <option value="{{ $model::TYPE_USER }}" {{ $user->type === $model::TYPE_USER ? 'selected' : 'selected' }}>@lang('User')</option>
                                     <option value="{{ $model::TYPE_ADMIN }}" {{ $user->type === $model::TYPE_ADMIN ? 'selected' : '' }}>@lang('Administrator')</option>
                                 </select>
                             </div>

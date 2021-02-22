@@ -2,9 +2,9 @@
 
 namespace Database\Seeders\Auth;
 
+use Illuminate\Database\Seeder;
 use App\Domains\Auth\Models\User;
 use Database\Seeders\Traits\DisableForeignKeys;
-use Illuminate\Database\Seeder;
 
 /**
  * Class UserTableSeeder.

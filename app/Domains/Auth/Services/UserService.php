@@ -44,6 +44,21 @@ class UserService extends BaseService
 
         return $this->model::byType($type)->get();
     }
+    
+    /**
+     * @param $roleId
+     * @param  bool|int  $perPage
+     *
+     * @return mixed
+     */
+    public function getByRoleId($roleId, $perPage = false)
+    {
+        if (is_numeric($perPage)) {
+            return $this->model::whereHas('roles', function($q) use($roleId){ return $q->whereId($roleId);})->paginate($perPage);
+        }
+        
+        return $this->model::whereHas('roles', function($q) use($roleId){ return $q->whereId($roleId);})->get();
+    }
 
     /**
      * @param  array  $data
