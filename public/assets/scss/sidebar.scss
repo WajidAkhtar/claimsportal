@@ -1,0 +1,156 @@
+/* Sidebar Menu */
+.hide-sidebar .sidebar
+{
+    margin-left: -250px;
+}
+
+.sidebar
+{
+    background: var(--sidebarbg);
+    position: fixed;
+    top: 65px;
+    bottom: 0; 
+    z-index: 5;
+    width:250px;    
+    transition: all 0.5s;
+    border-right: 1px solid var(--sidebarbordercolor);  
+    border-top: 0px solid var(--sidebarbordercolor); 
+    overflow-y: scroll;
+    &::-webkit-scrollbar { 
+        display: none; 
+    }    
+    @media (max-width: 991px){        
+        -webkit-transform: translateX(-250px);
+        transform: translateX(-250px); 
+        &.active
+        {
+            -webkit-transform: translateX(0);
+            transform: translateX(0);
+            margin-left: 0px;
+            z-index: 5;
+        }
+    }
+
+    .sidebar-menu
+    {
+        padding: 0px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        list-style: none;  
+        .sub-menu{
+            opacity:0;          
+            display: none;
+          
+        }
+        >li{
+            a{                       
+                &:hover{
+                    color:var(--sidebaractivecolor);
+                }
+            }
+            .active{
+                >a{
+                    color:var(--sidebaractivecolor); 
+                }
+            }
+            padding:5px 15px; 
+            >a{
+                font-weight: 600; 
+                pointer-events: none;
+                font-size: 12px;
+                text-transform: uppercase;
+                background: var(--sidebarheadingbackground);
+                box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+                border-radius: 6px;
+                display: block;  
+                padding:10px;
+                margin:15px 0px;
+                color:var(--sidebarheadingcolor);
+                &:after{                    
+                    display: none;
+                }
+            }
+            ul{                
+                list-style: none;
+                padding:0px;
+                margin: 0px;
+                margin-top: 10px;
+                li{
+                    padding: 5px 0px;                   
+                    i{
+                        margin-right: 15px;
+                    }
+                    a{
+                        color:var(--sidebarcolor); 
+                        display: block;
+                        font-size: 13px;
+                        font-weight: 500;
+                        i{
+                            font-weight: 700;
+                        }
+                    }
+                    &.dropdown
+                    {
+                        >a
+                        { position:relative;
+                          &:after{
+                              content: "\e606";
+                              font-family: 'simple-line-icons';
+                              speak: none;
+                              font-style: normal;
+                              font-weight: normal;
+                              font-variant: normal;
+                              text-transform: none;
+                              line-height: 1;
+                              -webkit-font-smoothing: antialiased;
+                              -moz-osx-font-smoothing: grayscale;
+                              position: absolute;
+                              right: 0px;
+                              top:5px;
+                              font-size: 10px;
+                          }
+                        }
+                    }
+                    &.active{
+                        >a{
+                            &:after{ 
+                                transform: rotate(90deg);
+                            }   
+                        } 
+                        >.sub-menu{
+                            opacity:1;
+                            display: block;
+                        }
+                    }
+                    .sub-menu
+                    {
+                        padding-left: 28px;
+                        a{
+                            font-weight: 500;
+                        }
+                        i{
+                            display: none;
+                        }
+                        .sub-menu
+                        {
+                            padding-left: 10px;
+                            a{
+                                font-weight: 400;
+                            }
+                        }
+
+                    }
+
+                }
+            }
+
+        }
+
+    }
+    .breadcrumb
+    {
+        display: none;
+    }
+}   
+
+

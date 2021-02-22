@@ -1,0 +1,20 @@
+/* Responsive Css */
+
+@media (max-width: 767px){
+    .card {
+        .card-header{
+            h4
+            {
+                font-size: 1rem;
+                font-weight: bold;
+            }
+        } 
+    }
+    .timeline-point:after, .timeline-point:before, .timeline:after, .timeline:before
+    {
+        display: none; 
+    }
+    .header-chart{
+        float:left;
+    }
+}

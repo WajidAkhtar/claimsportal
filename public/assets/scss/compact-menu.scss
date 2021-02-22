@@ -1,0 +1,134 @@
+/* Compact Menu */
+.compact-menu:not(.horizontal-menu)
+{
+    min-height:100vh;
+    #header-fix {
+        .logo-bar
+        {
+            width:140px;
+        }
+    }
+    @media (min-width: 992px){ 
+        position: relative;
+        .sidebar:not(:hover)
+        {   
+            position: absolute;
+            width:80px; 
+            height: 100%;
+            z-index:2;
+            overflow: scroll;
+            top:0px;
+            padding-top: 0px;
+            @media (max-width: 991px){        
+                -webkit-transform: translateX(-80);
+                transform: translateX(-80); 
+
+                &.active
+                {
+                    -webkit-transform: translateX(0);
+                    transform: translateX(0);
+                    margin-left: 0px;
+                }
+
+            } 
+
+            .sidebar-menu
+            {
+                padding-top:0px;
+                >li {   
+                    padding:0px;
+                    &>ul{               
+                        margin:0px;
+                        >li{
+
+                            padding:20px 0px;
+                            text-align:center;
+                            >a{
+                                line-height: 0px;
+                                font-size: 0px;
+                                display: block; 
+                                &:after{
+                                    display: none;
+                                }
+                                i {
+                                    font-size: 20px;
+                                    margin-right: 0px;
+                                }
+                            }
+                        }
+                    }
+                    >a{
+                        line-height: 0px;
+                        font-size: 0px;
+                        display: block; 
+                        background:transparent;
+                        padding:0px;
+                        box-shadow:none;
+                        margin:0px;
+                        i {
+                            font-size: 0px;
+                        }
+                    }
+                    ul{
+                        li{
+                            &.active{
+                                >.sub-menu{
+                                    @media (min-width: 992px){ 
+                                        display:none !important;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                li{
+                    &:hover{
+                        >.sub-menu{
+                            display: block !important;
+                            position: absolute;
+                            left:100%;
+                            top:0px;
+                            min-width: 190px;
+                            li{                          
+                                a{
+                                    line-height: 13px;
+                                    display: flex;
+                                    white-space: nowrap;
+                                    i{display: block; float: left;}
+                                }
+                            }
+                        }
+                    }
+                    .sub-menu{
+                        background: var(--sidebarbg);
+                        margin: 0px;
+                        text-align: left;
+                        border: 1px solid var(--bordercolor); 
+                        padding-left: 0px !important;
+                        border-bottom: none;
+                        li{
+                            padding: 15px;
+                            border-bottom: 1px solid var(--bordercolor);
+                            &.dropdown > a:after
+                                {
+                                top:3px;
+                            }
+                        }
+                    }
+
+
+                }
+            }
+
+        } 
+        main, .site-footer
+        {
+            margin-left: 80px;
+            width: calc(100% - 80px);
+            @media (max-width: 991px){
+                margin-left:0px;
+            }
+
+        }
+    }
+}

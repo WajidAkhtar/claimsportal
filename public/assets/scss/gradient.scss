@@ -1,0 +1,122 @@
+/* gradient Template */
+.gbackground{
+    background:url("../images/gradient-bg.jpg") ; 
+    background-size: 100% auto !important;
+    background-attachment: fixed !important;
+    background-repeat: no-repeat !important;    
+    background-attachment: fixed !important;   
+}
+.gradient
+{
+
+    @extend .gbackground;
+
+    #header-fix{ 
+        @extend .gbackground;
+        border-bottom:1px solid var(--bordercolor);
+        .logo-bar
+        {
+            @extend .gbackground;            
+            .horizontal-logo
+            {
+                color:#fff;
+                svg g{
+                    fill:#fff;
+                }
+            }
+
+        }
+    }  
+    .sidebar
+    {
+        
+        .dropdown-menu{
+            @extend .gbackground;
+            border-bottom:1px solid var(--bordercolor);
+        }
+
+    }
+    #settings
+    {
+        .sidbarchat
+        {
+            @extend .gbackground;
+            border-bottom:1px solid var(--bordercolor);
+        }
+    }
+    &.horizontal-menu
+    {
+        #header-fix{ 
+
+            @extend .gbackground;
+            border-bottom:1px solid var(--bordercolor); 
+
+        }
+        .sidebar
+        {
+            .sidebar-menu
+            {
+                margin-bottom:-2px;
+                >li{
+                    border:1px solid rgba(0,0,0,0);
+                    >a{
+                        background: transparent;
+                    }
+                    &.active, &:hover{
+                        border: 1px solid var(--sidebarbordercolor);
+                        border-bottom: none;
+                        background:var(--primarycolor);
+                    }  
+                    ul{
+                        background:var(--primarycolor);
+                        border-bottom:1px solid var(--bordercolor);
+                    }
+                }
+
+            }
+        }
+    }
+    &.compact-menu
+    {
+        .sidebar{
+            @extend .gbackground;
+            border-bottom:1px solid var(--bordercolor);
+        }
+    }
+    .dropdown-menu
+    {
+        @extend .gbackground;
+        border-bottom:1px solid var(--bordercolor); 
+    }
+
+    .theme-table
+    {
+
+        thead
+        {
+            th, td
+            {
+
+                &:after{
+
+                    background: #000;
+
+                }
+            }
+        }
+        tr
+        {
+            td
+            {
+
+                &:after{
+
+                    background: #000;
+
+                }
+            }
+
+        }
+    }
+
+}

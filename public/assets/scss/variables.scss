@@ -1,0 +1,228 @@
+/*
+Template Name: Pick Admin
+Author: PSD2ALLCONVERSION
+Email: psd2allconversion@gmail.com
+File: Main Style
+*/
+
+/*
+- Font Family Import
+- Font Family
+- Color Variables
+- Top Header
+- Sidebar Menu
+- Common Css
+- Circle
+- Badge
+- Animation Style
+- List Group
+- Border Color
+- Scroll bar color
+- Card Header
+- Time Garph
+- Twitter Section
+- Bootstrap Nav Tabs
+- To do List
+- Checkbox Radio Button
+- Activity List
+- Info Card
+- Business card
+- Star Rating
+- Bootstrap Element
+- Progress Bar
+- Social Graph
+- Footer
+- Back to top
+- Template Settings
+- Dropdown Menu
+- App Calendar
+- Page Loader
+- Model Pop Up
+- Pop Over / Tool Tip
+- Scrollyfy
+- Select 2
+- Sweet Alert
+- Chat App
+- Task Board
+- Flip Menu
+- ToDo App
+- Form Control
+- Sparkline Chart 
+- Chartist Js
+- Height
+- Flot Chart
+- Google Chart
+- Apex Chart
+- c3 Chart
+- Mail App
+- Notes App 
+- Quill Editor
+- Upload Button Wrapper
+- Focus
+- Form Input
+- Bootstrap 4 checkboxes
+- toggle Switch
+- Float Input
+- Form Wizard Page Css
+- File Upload
+- Dropzone Css
+- Icheck
+- Image Cropper
+- Typeahead
+- X-Editable
+- Summernote
+- tablesaw
+- Table / Layout
+- datatable
+- Footable
+- Js grid
+- Tablesaw/Responsive Table
+- Buttons
+- Accordion Alt
+- Lockscreen Page
+- Timeline Css
+- Portfolio/ Gallery
+- Price Table
+- icon font
+- Conatct List
+- File Manager
+- Invoice List
+- blockquote
+- Ecommerce
+- Line Height Class
+- Cryptocurrency Dashboard
+- Analyitc Dashboard
+- Covid Dash Borad
+- Compact Menu
+- horizontal Menu
+- Dark Template
+- Responsive Css
+*/
+
+
+/* Font Family Import */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+
+$body-font:  'Montserrat', sans-serif;
+
+/* Color Variables */
+:root {
+    --sidebarbg: #fff;    
+    --sidebarcolor: #6c757d;
+    --sidebarbordercolor: rgba(72, 94, 144, 0.16);
+    --sidebaractivecolor: #4c75f2; 
+    --sidebarheadingcolor: #6c757d;
+    --sidebarheadingbackground: #fff;
+    --logobg: #fff;    
+    --logocolor: #4c75f2;
+    --headerbackground:#fff;
+    --headercolor:#292b3a;
+    --searchcolor:#292b3a;
+    --primarycolor: #1e3d73;
+    --bodycolor: #292b3a;
+    --bodybackground: #f6f6f7;
+    --bordercolor: rgba(72, 94, 144, 0.16);
+    --mainbackground: #fff;
+    --secondary: #6c757d;
+    --success: #1ee0ac;
+    --info: #17a2b8;
+    --warning: #ffc107;
+    --danger: #f64e60;
+    --dark: #343a40;
+    --sidebarwidth: 140px;
+}
+.semi-dark {
+    --sidebarbg: #060818;    
+    --sidebarcolor: rgba(255,255,255,0.8);
+    --sidebarbordercolor: rgba(255,255,255,0.1); 
+    --sidebaractivecolor: #4c75f2; 
+    --sidebarheadingcolor: #fff;
+    --sidebarheadingbackground: rgba(59, 63, 92, 0.35);
+    --logobg: #060818;    
+    --logocolor: rgba(255,255,255,0.8);
+}
+.dark {
+    --sidebarbg: #101329;    
+    --sidebarcolor: rgba(255,255,255,0.8);
+    --sidebarbordercolor: rgba(255,255,255,0.1); 
+    --sidebaractivecolor: #17b3a3; 
+    --sidebarheadingcolor: #fff;
+    --sidebarheadingbackground: rgba(59, 63, 92, 0.35);
+    --logobg: #101329;    
+    --logocolor: rgba(255,255,255,0.8);
+    --headerbackground:#101329;
+    --headercolor:rgba(255,255,255,0.8);
+    --searchcolor:#fff;
+    --primarycolor: #17b3a3;
+    --bodycolor: #8283a0;
+    --bodybackground: #060818;
+    --bordercolor: rgba(255, 255, 255, 0.1);
+    --mainbackground: #101329;
+}
+
+.horizontal-menu {
+    --sidebarbg: #f6f6f7;    
+    --sidebarcolor: #6c757d;
+    --sidebarbordercolor: rgba(72, 94, 144, 0.16);
+    --headerbordercolor:rgba(72, 94, 144, 0.16);
+     --bodybackground: #fff;
+}
+
+.horizontal-menu.dark {
+    --sidebarbg: #101329;    
+    --sidebarcolor: rgba(255,255,255,0.8);
+    --sidebarbordercolor: rgba(255,255,255,0.1); 
+    --sidebaractivecolor: #4c75f2; 
+    --sidebarheadingcolor: #fff;
+    --sidebarheadingbackground: #060818;
+    --logobg: #101329;    
+    --logocolor: rgba(255,255,255,0.8);
+    --headerbackground:#101329;
+    --headercolor:rgba(255,255,255,0.8);
+    --headerbordercolor:rgba(255, 255, 255, 0.1);
+    --searchcolor:#fff;
+    --primarycolor: #17b3a3;
+    --bodycolor: #8283a0;
+    --bodybackground: #060818;
+    --bordercolor: rgba(255, 255, 255, 0.1);
+    --mainbackground: #101329;
+}
+
+.horizontal-menu.semi-dark {
+    --sidebarbg: #334f7f;    
+    --sidebarcolor: rgba(255,255,255,0.8);
+    --sidebarbordercolor: rgba(72, 94, 144, 0.16);
+    --sidebaractivecolor: #4c75f2; 
+    --sidebarheadingcolor: #6c757d;
+    --dropdowncolor: #6c757d;
+    --sidebarheadingbackground: #fafafa;
+    --logobg: #060818;    
+    --logocolor: rgba(255,255,255,0.8);
+    --headerbordercolor:rgba(255,255,255,0.16);
+    --headerbackground:#1e3d73;
+    --headercolor:rgba(255,255,255,0.8);
+    --searchcolor:#fff;
+    --bodybackground: #fafafa;
+}
+.gradient {
+    --sidebarbg: rgba(0,0,0,0.2);    
+    --sidebarcolor: #fff;
+    --sidebarbordercolor: rgba(255,255,255,0.1); 
+    --sidebaractivecolor: #fff; 
+    --sidebarheadingcolor: rgba(255,255,255,0.7);
+    --sidebarheadingbackground: rgba(0,0,0,0.2);      
+    --headerbackground:rgba(2,0,36,1);   
+    --headercolor:rgba(255,255,255,0.8);
+    --headerbordercolor:rgba(255,255,255,0.1);
+    --searchcolor:#fff;
+    --primarycolor: #396e94;
+    --bodycolor: #fff;
+    --bodybackground:#19606F;
+    --bordercolor: rgba(255, 255, 255, 0.2);
+    --mainbackground: rgba(0,0,0,0.2);  
+     --secondary: #fff;
+     --dark:#fff;
+}
+
