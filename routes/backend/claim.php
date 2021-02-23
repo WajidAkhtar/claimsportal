@@ -56,7 +56,7 @@ Route::group([
                     ->middleware('permission:admin.access.project.list')
                     ->breadcrumbs(function (Trail $trail, Project $project) {
                         $trail->parent('admin.claim.project.index')
-                            ->push($project->first_name.' '.$project->last_name, route('admin.claim.project.show', $project));
+                            ->push($project->name, route('admin.claim.project.show', $project));
                     });
 
                 Route::patch('mark/{status}', [DeactivatedProjectController::class, 'update'])
