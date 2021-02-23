@@ -3,6 +3,7 @@
 namespace Database\Seeders\Project;
 
 use Illuminate\Database\Seeder;
+use App\Domains\Claim\Models\CostItem;
 
 class CostItemSeeder extends Seeder
 {
@@ -16,21 +17,21 @@ class CostItemSeeder extends Seeder
         CostItem::create([
             'name' => 'A1',
             'description' => 'Directly Incurred Staff',
-            'value' => '',
+            'value' => '0.00',
             'active' => true,
         ]);
         
         CostItem::create([
             'name' => 'A2',
             'description' => 'Consumables',
-            'value' => '',
+            'value' => '0.00',
             'active' => true,
         ]);
         
         CostItem::create([
             'name' => 'A3',
             'description' => 'Travel & Subsistence',
-            'value' => '',
+            'value' => '0.00',
             'active' => true,
         ]);
     }

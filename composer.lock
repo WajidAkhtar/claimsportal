@@ -1615,16 +1615,16 @@
         },
         {
             "name": "laravel/socialite",
-            "version": "v5.2.0",
+            "version": "v5.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/socialite.git",
-                "reference": "c0c85cccdad53e1916b9ba27c95daaaec591d113"
+                "reference": "8aa705d771f127317f60887515cfb2f777653ce5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/socialite/zipball/c0c85cccdad53e1916b9ba27c95daaaec591d113",
-                "reference": "c0c85cccdad53e1916b9ba27c95daaaec591d113",
+                "url": "https://api.github.com/repos/laravel/socialite/zipball/8aa705d771f127317f60887515cfb2f777653ce5",
+                "reference": "8aa705d771f127317f60887515cfb2f777653ce5",
                 "shasum": ""
             },
             "require": {
@@ -1676,7 +1676,7 @@
                 "laravel",
                 "oauth"
             ],
-            "time": "2021-02-16T17:07:37+00:00"
+            "time": "2021-02-22T14:22:51+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -3786,16 +3786,6 @@
                 "html",
                 "spatie"
             ],
-            "support": {
-                "issues": "https://github.com/spatie/laravel-html/issues",
-                "source": "https://github.com/spatie/laravel-html/tree/2.29.0"
-            },
-            "funding": [
-                {
-                    "url": "https://spatie.be/open-source/support-us",
-                    "type": "custom"
-                }
-            ],
             "time": "2021-02-09T08:46:34+00:00"
         },
         {
@@ -5759,19 +5749,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Torann/laravel-geoip.git",
-                "reference": "f16d5df66ecb6ba4ffaef52abef519fbc19596d3"
+                "reference": "bb6870a5698c2f44270f0d7d1478f32eb78a2851"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Torann/laravel-geoip/zipball/f16d5df66ecb6ba4ffaef52abef519fbc19596d3",
-                "reference": "f16d5df66ecb6ba4ffaef52abef519fbc19596d3",
+                "url": "https://api.github.com/repos/Torann/laravel-geoip/zipball/bb6870a5698c2f44270f0d7d1478f32eb78a2851",
+                "reference": "bb6870a5698c2f44270f0d7d1478f32eb78a2851",
                 "shasum": ""
             },
             "require": {
                 "illuminate/cache": "^8.0",
                 "illuminate/console": "^8.0",
                 "illuminate/support": "^8.0",
-                "php": "^7.2 || ^8.0"
+                "php": "^7.3|^8.0"
             },
             "require-dev": {
                 "geoip2/geoip2": "~2.1",
@@ -5827,7 +5817,7 @@
                 "location",
                 "maxmind"
             ],
-            "time": "2020-12-21T19:12:11+00:00"
+            "time": "2021-02-22T15:02:06+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -10236,6 +10226,5 @@
     "platform": {
         "php": "^7.3|^8.0"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "platform-dev": []
 }
