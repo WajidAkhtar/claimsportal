@@ -2,6 +2,8 @@
 
 namespace App\Domains\Claim\Http\Controllers\Backend\Project;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 use App\Domains\Claim\Models\Project;
 use App\Domains\Claim\Models\CostItem;
 use App\Domains\Auth\Services\UserService;
@@ -79,8 +81,10 @@ class ProjectController
      */
     public function show(Project $project)
     {
+        $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project])->render();
         return view('backend.claim.project.show')
-            ->withProject($project);
+            ->withProject($project)
+            ->withyearwiseHtml($yearwiseHtml);
     }
 
     /**
@@ -125,5 +129,23 @@ class ProjectController
         $this->projectService->delete($project);
 
         return redirect()->route('admin.claim.project.index')->withFlashSuccess(__('The project was successfully deleted.'));
+    }
+    
+    /**
+     * @param  Project  $project
+     *
+     * @return mixed
+     * @throws \App\Exceptions\GeneralException
+     */
+    public function saveClaims(Request $request, Project $project)
+    {
+        foreach($request->claim_values as $costItemId => $claimValue) {
+            $costItem = $project->costItems()->whereId($costItemId)->first();
+            $costItem->claims_data = collect($claimValue)->only('quarter_values', 'yearwise')->toArray();
+            $costItem->save();
+        }
+
+        $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project])->render();
+        return response()->json(['success' => 1, 'message' => 'Data saved successfully!', 'data' => ['yearwiseHtml' => $yearwiseHtml]]);
     }
 }

@@ -6,6 +6,7 @@
         <title>{{ appName() }} | Admin | @yield('title', 'Dashboard')</title>
         <meta name="description" content="@yield('meta_description', appName())">
         <meta name="author" content="@yield('meta_author', appName())">
+        <meta name="csrf-token" content="{{csrf_token()}}">
         @yield('meta')
 
         @stack('before-styles')
@@ -123,7 +124,13 @@
         <!-- START: APP JS-->
         <script src="{{ asset('assets/backend/js/app.js') }}"></script>
         @stack('after-app-scripts')
-
+        <script>
+            $.ajaxSetup({
+                headers: {
+                    'X-XSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        </script>
         <!-- END: APP JS-->
         @stack('after-scripts')
     </body>

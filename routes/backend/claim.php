@@ -36,6 +36,8 @@ Route::group([
 
                 Route::patch('/', [ProjectController::class, 'update'])->name('update');
                 Route::delete('/', [ProjectController::class, 'destroy'])->name('destroy');
+
+                Route::post('/save-claims-data', [ProjectController::class, 'saveClaims'])->name('save.claims');
             });
         });
 

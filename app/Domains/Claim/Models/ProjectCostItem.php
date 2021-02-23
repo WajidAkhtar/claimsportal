@@ -46,6 +46,7 @@ class ProjectCostItem extends Model
      */
     protected $casts = [
         'active' => 'boolean',
+        'claims_data' => 'object',
     ];
 
     /**
