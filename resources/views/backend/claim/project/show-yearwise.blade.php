@@ -3,11 +3,12 @@
     $fromDate = clone $project->start_date;
     $globalFromDate = clone $fromDate;
     $remainingQuarters = $project->length;
+    $quarterNo = 1;
 @endphp
 @for ($yearIndex = 0; $yearIndex < round($project->length/4); $yearIndex++)
 {{-- {{var_dump($fromDate1->format('Y-m-d'))}} --}}
 <div class="col-sm-12 mt-5">
-    <h4>Year {{$yearIndex + 1}} Accountintg</h4>
+    <h4>Year {{$yearIndex + 1}} Accounting</h4>
     <table class="table table-responsive table-borders table-sm" style="overflow-x: auto;">
         <thead>
             <tr>
@@ -31,7 +32,7 @@
                     @endphp
                     <th class="text-center">
                         <label class="{{$lableClass}} text-uppercase"> {{$startDate->format('My')}} - {{$date->format('My')}}</label><br>
-                        <label class="{{$lableClass}}">Q{{$i+1}}</label>
+                        <label class="{{$lableClass}}">Q{{$quarterNo++}}</label>
                     </th>
                     @php
                         $startDate->addMonths(3);
@@ -130,7 +131,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text readonly">&euro;</span>
                         </div>
-                        {{ html()->input('number', 'yearly_data['.$yearIndex.'][claim_values]['.$costItem->id.'][variance]', $costItem->value - $projectTotal)
+                        {{ html()->input('number', 'yearly_data['.$yearIndex.'][claim_values]['.$costItem->id.'][variance]', (optional(optional($costItem->claims_data)->yearwise)[$yearIndex]->budget ?? 0) - $projectTotal)
                             ->placeholder('Amount')
                             ->class('form-control')
                             ->readOnly()

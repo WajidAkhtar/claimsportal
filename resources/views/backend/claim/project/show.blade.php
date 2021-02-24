@@ -534,6 +534,7 @@
         $(document).ready(function(){
             calculateFields();
             calculateYearwiseFields();
+            formatNegativeValue();
 
             $('table.main-claims-table input[name*="[quarter_values]"], table.main-claims-table input[name*="[budget]"]').change(function(){
                 calculateFields();
@@ -551,21 +552,26 @@
                         else{
                             $('#year-wise-claims').html(response.data.yearwiseHtml)
                             calculateYearwiseFields();
+                            formatNegativeValue();
                         }
                     }
                 })
             })
 
             $(document).on('change', 'table input', function(){
-                $('table input').each(function(i, v){
-                    if(parseFloat($(v).val()) < 0) {
-                        $(v).addClass('text-danger');
-                    }
-                    else{
-                        $(v).removeClass('text-danger');
-                    }
-                })
+                formatNegativeValue();                
             });
         });
+
+        function formatNegativeValue() {
+            $('table input').each(function(i, v){
+                if(parseFloat($(v).val()) < 0) {
+                    $(v).addClass('text-danger');
+                }
+                else{
+                    $(v).removeClass('text-danger');
+                }
+            })
+        }
     </script>
 @endpush
