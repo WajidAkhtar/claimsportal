@@ -9,9 +9,9 @@ use App\Domains\Claim\Models\CostItem;
 use App\Domains\Auth\Services\UserService;
 use App\Domains\Claim\Services\ProjectService;
 use App\Domains\Claim\Http\Requests\Backend\Project\EditProjectRequest;
-use App\Domains\CLaim\Http\Requests\Backend\Project\StoreProjectRequest;
+use App\Domains\Claim\Http\Requests\Backend\Project\StoreProjectRequest;
 use App\Domains\Claim\Http\Requests\Backend\Project\DeleteProjectRequest;
-use App\Domains\CLaim\Http\Requests\Backend\Project\UpdateProjectRequest;
+use App\Domains\Claim\Http\Requests\Backend\Project\UpdateProjectRequest;
 
 /**
  * Class ProjectController.

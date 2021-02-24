@@ -106,10 +106,6 @@ class ProjectService extends BaseService
      */
     public function delete(Project $project): Project
     {
-        if ($project->id === auth()->id()) {
-            throw new GeneralException(__('You can not delete yourself.'));
-        }
-
         if ($this->deleteById($project->id)) {
             return $project;
         }

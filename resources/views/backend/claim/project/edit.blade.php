@@ -66,7 +66,7 @@
                 </div><!--form-group-->
                 
                 <div class="form-group row">
-                    {{ html()->label(__('Project Length'))->class('col-md-2 col-form-label')->for('length') }}
+                    {{ html()->label(__('Project Length (No. of Quarters)'))->class('col-md-2 col-form-label')->for('length') }}
 
                     <div class="col-md-10">
                         {{ html()->input('number', 'length')
