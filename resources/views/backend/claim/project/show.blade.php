@@ -117,17 +117,24 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text readonly">&euro;</span>
                                         </div>
-                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][total_budget]', $costItem->value ?? 0)
+                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][total_budget]', 0)
                                             ->placeholder('Amount')
                                             ->class('form-control')
                                             ->readOnly()
                                             ->required() }}
                                     </div>
                                 </td>
+                                @php
+                                    $yearIndex = 0;
+                                @endphp
                                 @for ($i = 0; $i < $project->length; $i++)
                                 @php
-                                    // $toDate = clone $fromDate;
-                                    // $toDate->addMonths(2);
+                                    $toDate = clone $fromDate;
+                                    $toDate->addMonths(2)->endOfMonth();
+                                    $labelClass = '';
+                                    if(now()->betweenIncluded($fromDate, $toDate)){
+                                        $labelClass = 'text-danger';
+                                    }
                                 @endphp
                                 <td>
                                     <div class="input-group">
@@ -136,12 +143,16 @@
                                         </div>
                                         {{ html()->input('number', 'claim_values['.$costItem->id.'][quarter_values]['.$fromDate->timestamp.']', optional(optional($costItem->claims_data)->quarter_values)->{"$fromDate->timestamp"} ?? 0)
                                             ->placeholder('Amount')
-                                            ->class('form-control')
+                                            ->class('form-control '.$labelClass)
+                                            ->attribute('data-year-index', $yearIndex)
                                             ->required() }}
                                     </div>
                                 </td>
                                 @php
                                     $fromDate->addMonths(3);
+                                    if(($i+1) % 4 == 0){
+                                        $yearIndex++;
+                                    }
                                 @endphp
                                 @endfor
                                 <td>
@@ -174,7 +185,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">&euro;</span>
                                         </div>
-                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][yearwise]['.$i.'][budget]', 0)
+                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][yearwise]['.$i.'][budget]', optional(optional($costItem->claims_data)->yearwise)[$i]->budget ?? 0)
                                             // ->placeholder('Amount')
                                             ->class('form-control')
                                             ->required() }}
@@ -185,7 +196,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text readonly">&euro;</span>
                                         </div>
-                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][yearwise]['.$i.'][amount]', 0)
+                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][yearwise]['.$i.'][amount]', optional(optional($costItem->claims_data)->yearwise)[$i]->amount ?? 0)
                                             // ->placeholder('Amount')
                                             ->class('form-control')
                                             ->readOnly()
@@ -197,7 +208,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text readonly">&euro;</span>
                                         </div>
-                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][yearwise]['.$i.'][variance]', 0)
+                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][yearwise]['.$i.'][variance]', optional(optional($costItem->claims_data)->yearwise)[$i]->variance ?? 0)
                                             // ->placeholder('Amount')
                                             ->class('form-control')
                                             ->readOnly()
@@ -216,7 +227,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text readonly">&euro;</span>
                                         </div>
-                                        {{ html()->input('number', 'total_costs[for_each_item][total_budget]', $project->costItems->sum('value') ?? 0)
+                                        {{ html()->input('number', 'total_costs[for_each_item][total_budget]', 0)
                                             ->placeholder('Amount')
                                             ->class('form-control')
                                             ->readOnly()
@@ -225,11 +236,16 @@
                                 </td>
                                 @php
                                     $fromDate = clone $project->start_date;
+                                    $yearIndex = 0;
                                 @endphp
                                 @for ($i = 0; $i < $project->length; $i++)
                                 @php
                                     $toDate = clone $fromDate;
-                                    $toDate->addMonths(2);
+                                    $toDate->addMonths(2)->endOfMonth();
+                                    $labelClass = '';
+                                    if(now()->betweenIncluded($fromDate, $toDate)){
+                                        $labelClass = 'text-danger';
+                                    }
                                 @endphp
                                 <td class="text-center">
                                     <div class="input-group">
@@ -238,13 +254,17 @@
                                         </div>
                                         {{ html()->input('number', 'total_costs[for_each_item][quarter_values]['.$fromDate->timestamp.']', 0)
                                             // ->placeholder('Amount')
-                                            ->class('form-control')
+                                            ->class('form-control '.$labelClass)
+                                            ->attribute('data-year-index', $yearIndex)
                                             ->readOnly()
                                             ->required() }}
                                     </div>
                                 </td>
                                 @php
                                     $fromDate->addMonths(3);
+                                    if(($i+1) % 4 == 0) {
+                                        $yearIndex++;
+                                    }
                                 @endphp
                                 @endfor
                                 <td class="text-center">
@@ -275,11 +295,12 @@
                                 <td>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text">&euro;</span>
+                                            <span class="input-group-text readonly">&euro;</span>
                                         </div>
                                         {{ html()->input('number', 'total_costs[for_each_item][yearwise]['.$i.'][total_budget]', 0)
                                             // ->placeholder('Amount')
                                             ->class('form-control')
+                                            ->readOnly()
                                             ->required() }}
                                     </div>
                                 </td>
@@ -320,7 +341,11 @@
                                 @for ($i = 0; $i < $project->length; $i++)
                                 @php
                                     $toDate = clone $fromDate;
-                                    $toDate->addMonths(2);
+                                    $toDate->addMonths(2)->endOfMonth();
+                                    $labelClass = '';
+                                    if(now()->betweenIncluded($fromDate, $toDate)){
+                                        $labelClass = 'text-danger';
+                                    }
                                 @endphp
                                 <td class="text-center">
                                     <div class="input-group">
@@ -329,7 +354,7 @@
                                         </div>
                                         {{ html()->input('number', 'total_costs[cumulative]['.$fromDate->timestamp.']', 0)
                                             // ->placeholder('Amount')
-                                            ->class('form-control')
+                                            ->class('form-control '.$labelClass)
                                             ->readOnly()
                                             ->required() }}
                                     </div>
@@ -372,6 +397,15 @@
                 $('.main-claims-table [name^="total_costs[cumulative]'+rowId+'"]').val(cumulativeTotal);
             });
 
+            $('.main-claims-table [name^="claim_values"][name$="[total_budget]"]').each(function(i, v){
+                var total_budget = 0;
+                $(v).closest('tr').find('[name*="yearwise"][name$="[budget]"]').each(function(i1, v1){
+                    total_budget += parseFloat($(v1).val());
+                });
+
+                $(v).val(total_budget);
+            });
+
             $('.main-claims-table [name$="[project_total]"]').each(function(i, v){
                 var rowId = $(v).attr('name').replace('[project_total]', '');
                 var project_total = 0;
@@ -384,11 +418,77 @@
                 var total_budget = $(v).closest('tr').find('[name*="'+rowId+'[total_budget]"]').val();
                 $(v).closest('tr').find('[name="'+rowId+'[variance]"]').val(total_budget - project_total)
             });
+            
+            $('.main-claims-table [name*="[yearwise]"][name$="[amount]"]').each(function(i, v){
+                var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[2];
 
+                var yearWiseTotal = 0;
+                $(v).closest('tr').find('[data-year-index="'+yearIndex+'"]').each(function(i1, v1){
+                    yearWiseTotal += parseFloat($(v1).val());
+                });
+
+                $(v).val(yearWiseTotal);
+
+                // var total_budget = $(v).closest('tr').find('[name*="'+rowId+'[total_budget]"]').val();
+                // $(v).closest('tr').find('[name="'+rowId+'[variance]"]').val(total_budget - project_total)
+            });
+            
+            $('.main-claims-table [name*="[yearwise]"][name$="[total_amount]"]').each(function(i, v){
+                var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[2];
+
+                var yearWiseTotal = 0;
+                $(v).closest('tr').find('[data-year-index="'+yearIndex+'"]').each(function(i1, v1){
+                    yearWiseTotal += parseFloat($(v1).val());
+                });
+
+                $(v).val(yearWiseTotal);
+
+                // var total_budget = $(v).closest('tr').find('[name*="'+rowId+'[total_budget]"]').val();
+                // $(v).closest('tr').find('[name="'+rowId+'[variance]"]').val(total_budget - project_total)
+            });
+            
+            $('.main-claims-table [name*="[yearwise]"][name$="[variance]"]').each(function(i, v){
+                var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[2];
+                var yearBudget = parseFloat($(v).closest('tr').find('[name*="[yearwise]['+yearIndex+'][budget]"]').val());
+                var yearAmount = parseFloat($(v).closest('tr').find('[name*="[yearwise]['+yearIndex+'][amount]"]').val());
+                var variance = yearBudget - yearAmount;
+                $(v).val(variance);
+                if(variance < 0) {
+                    $(v).addClass('text-danger');
+                }else{
+                    $(v).removeClass('text-danger');
+                }
+            });
+
+            $('.main-claims-table [name^="total_costs[for_each_item][yearwise]"][name$="[total_budget]"]').each(function(i, v){
+                var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[2];
+                var total_budget = 0;
+                $(v).closest('table.main-claims-table').find('[name$="[yearwise]['+yearIndex+'][budget]"]').each(function(i1, v1){
+                    total_budget += parseFloat($(v1).val());
+                });
+                $(v).val(total_budget);
+            });
+
+            $('.main-claims-table [name^="total_costs[for_each_item][yearwise]"][name$="[total_variance]"]').each(function(i, v){
+                var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[2];
+                var total = 0;
+                $('.main-claims-table [name$="[yearwise]['+yearIndex+'][variance]"').each(function(i1, v1){
+                    total += parseFloat($(v1).val());
+                });
+
+                $(v).val(total);
+            });
+            
+            for_each_total_budget = 0;
+            $('[name^="claim_values"][name$="[total_budget]"]').each(function(i, v) {
+                for_each_total_budget += parseFloat($(v).val());
+            });
+            $('[name="total_costs[for_each_item][total_budget]"]').val(for_each_total_budget)
         }
 
         function calculateYearwiseFields() {
             var cumulativeTotal = 0;
+            var prevYearIndex = 0;
             $('#year-wise-claims [name*="[total_costs][for_each_item][quarter_values]"]').each(function(i, v){
                 // var rowId = $(v).attr('name').replace('[total_costs][for_each_item][quarter_values]', '');
                 var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[0];
@@ -396,20 +496,46 @@
                 var rowId = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[4];
                 // console.log(rowId)
                 var total = 0;
+                if(prevYearIndex != yearIndex) {
+                    cumulativeTotal = 0;
+                }
+                prevYearIndex = yearIndex;
                 $(v).closest('table').find('[name^="yearly_data['+yearIndex+'][claim_values]"][name$="[quarter_values]['+rowId+']"]').each(function(i1, v1){
                     total += parseFloat($(v1).val());
                 });
 
                 $(v).val(total);
                 cumulativeTotal += total;
-                $(v).closest('table').find('[name*="total_costs[cumulative]['+rowId+']"]').val(cumulativeTotal);
+                $(v).closest('table').find('[name^="yearly_data['+yearIndex+'][total_costs][cumulative]['+rowId+']"]').val(cumulativeTotal);
+            });
+
+            $('#year-wise-claims [name$="[for_each_item][project_total]"]').each(function(i, v){
+                var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[0];
+                var project_total = 0;
+                $(v).closest('tr').find('[name^="yearly_data['+yearIndex+'][total_costs][for_each_item][quarter_values]"]').each(function(i1, v1){
+                    project_total += parseFloat($(v1).val());
+                });
+
+                $(v).val(project_total);
+
+                var total_budget = $(v).closest('tr').find('[name*="yearly_data['+yearIndex+'][total_costs][for_each_item][total_budget]"]').val();
+                $(v).closest('tr').find('[name$="[for_each_item][variance]"]').val(total_budget - project_total)
+            });
+
+            $('[name^="yearly_data"][name$="[total_costs][for_each_item][total_budget]"]').each(function(i, v){
+                var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[0];
+                for_each_total_budget = 0;
+                $('[name^="yearly_data['+yearIndex+'][claim_values]"][name$="[total_budget]"]').each(function(i, v) {
+                    for_each_total_budget += parseFloat($(v).val());
+                });
+                $(v).val(for_each_total_budget);
             });
         }
         $(document).ready(function(){
             calculateFields();
             calculateYearwiseFields();
 
-            $('table.main-claims-table input[name*="[quarter_values]"]').change(function(){
+            $('table.main-claims-table input[name*="[quarter_values]"], table.main-claims-table input[name*="[budget]"]').change(function(){
                 calculateFields();
                 var formData = new FormData($('#claims_form')[0]);
                 $.ajax({
@@ -419,7 +545,6 @@
                     contentType: false,
                     processData: false,
                     success: function(response){
-                        response = $.parseJSON(response);
                         if(!response.success) {
                             alert(response.message);
                         }
@@ -430,6 +555,17 @@
                     }
                 })
             })
+
+            $(document).on('change', 'table input', function(){
+                $('table input').each(function(i, v){
+                    if(parseFloat($(v).val()) < 0) {
+                        $(v).addClass('text-danger');
+                    }
+                    else{
+                        $(v).removeClass('text-danger');
+                    }
+                })
+            });
         });
     </script>
 @endpush

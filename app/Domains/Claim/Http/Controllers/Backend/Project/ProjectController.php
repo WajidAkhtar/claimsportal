@@ -141,7 +141,7 @@ class ProjectController
     {
         foreach($request->claim_values as $costItemId => $claimValue) {
             $costItem = $project->costItems()->whereId($costItemId)->first();
-            $costItem->claims_data = collect($claimValue)->only('quarter_values', 'yearwise')->toArray();
+            $costItem->claims_data = collect($claimValue)->only('quarter_values', 'yearwise', 'total_budget')->toArray();
             $costItem->save();
         }
 

@@ -71,15 +71,30 @@
                 <td style="max-width: 10px;min-width:auto;">{{$index+1}}</td>
                 <td>{{$costItem->name}}</td>
                 <td>{{$costItem->description}}</td>
-                <td>&euro;{{$costItem->value}}</td>
+                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">&euro;</span>
+                        </div>
+                        {{ html()->input('number', 'yearly_data['.$yearIndex.'][claim_values]['.$costItem->id.'][total_budget]', optional(optional($costItem->claims_data)->yearwise)[$yearIndex]->budget ?? 0)
+                            ->placeholder('Amount')
+                            ->class('form-control')
+                            ->readOnly()
+                            ->required() }}
+                    </div>
+                </td>
                 @php
                 $fromDate1 = clone $globalFromDate;
                 $projectTotal = 0;
                 @endphp
                 @for ($i = 0; $i < $currentYearQuarters; $i++)
                 @php
-                    // $toDate = clone $fromDate1;
-                    // $toDate->addMonths(2);
+                    $toDate = clone $fromDate1;
+                    $toDate->addMonths(2)->endOfMonth();
+                    $lableClass = '';
+                    if (now()->betweenIncluded($fromDate1, $toDate)){
+                        $lableClass = 'text-danger';
+                    }
                     $projectTotal += optional(optional($costItem->claims_data)->quarter_values)->{"$fromDate1->timestamp"} ?? 0;
                 @endphp
                 <td>
@@ -89,7 +104,7 @@
                         </div>
                         {{ html()->input('number', 'yearly_data['.$yearIndex.'][claim_values]['.$costItem->id.'][quarter_values]['.$fromDate1->timestamp.']', optional(optional($costItem->claims_data)->quarter_values)->{"$fromDate1->timestamp"} ?? 0)
                             ->placeholder('Amount')
-                            ->class('form-control')
+                            ->class('form-control '.$lableClass)
                             ->readOnly()
                             ->required() }}
                     </div>
@@ -128,12 +143,30 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td><strong>Total Cost(for each item)</strong></td>
-                <td>&euro;{{number_format($project->costItems->sum('value'), 2)}}</td>
+                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">&euro;</span>
+                        </div>
+                        {{ html()->input('number', 'yearly_data['.$yearIndex.'][total_costs][for_each_item][total_budget]', 0)
+                            ->placeholder('Amount')
+                            ->class('form-control')
+                            ->readOnly()
+                            ->required() }}
+                    </div>
+                </td>
+                @php
+                $fromDate2 = clone $globalFromDate;
+                @endphp
                 @for ($i = 0; $i < $currentYearQuarters; $i++)
                 @php
-                    $fromDate2 = clone $globalFromDate;
+                    // $fromDate2 = clone $globalFromDate;
                     $toDate = clone $fromDate2;
-                    $toDate->addMonths(2);
+                    $toDate->addMonths(2)->endOfMonth();
+                    $lableClass = '';
+                    if (now()->betweenIncluded($fromDate2, $toDate)){
+                        $lableClass = 'text-danger';
+                    }
                 @endphp
                 <td class="text-center">
                     <div class="input-group">
@@ -142,7 +175,7 @@
                         </div>
                         {{ html()->input('number', 'yearly_data['.$yearIndex.'][total_costs][for_each_item][quarter_values]['.$fromDate2->timestamp.']', 0)
                             // ->placeholder('Amount')
-                            ->class('form-control')
+                            ->class('form-control '.$lableClass)
                             ->readOnly()
                             ->required() }}
                     </div>
@@ -181,11 +214,17 @@
                 <td>&nbsp;</td>
                 <td><strong>Total Cost(cumulative)</strong></td>
                 <td>&nbsp;</td>
+                @php
+                $fromDate3 = clone $globalFromDate;
+                @endphp
                 @for ($i = 0; $i < $currentYearQuarters; $i++)
                 @php
-                    $fromDate3 = clone $globalFromDate;
                     $toDate = clone $fromDate3;
-                    $toDate->addMonths(2);
+                    $toDate->addMonths(2)->endOfMonth();
+                    $lableClass = '';
+                    if (now()->betweenIncluded($fromDate3, $toDate)){
+                        $lableClass = 'text-danger';
+                    }
                 @endphp
                 <td class="text-center">
                     <div class="input-group">
@@ -194,7 +233,7 @@
                         </div>
                         {{ html()->input('number', 'yearly_data['.$yearIndex.'][total_costs][cumulative]['.$fromDate3->timestamp.']', 0)
                             // ->placeholder('Amount')
-                            ->class('form-control')
+                            ->class('form-control '.$lableClass)
                             ->readOnly()
                             ->required() }}
                     </div>
