@@ -210,7 +210,7 @@
             template: "#cost-items-template",
             min: 1,
             prefix: '',
-            idStartIndex: '{{ count(old('claim_items') ?? [] ) }}',
+            idStartIndex: '{{ count(old('claim_items') ?? [$project->claim_data] ) }}',
         });
     });
 </script>

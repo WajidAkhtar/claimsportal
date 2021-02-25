@@ -115,7 +115,7 @@
                                 <th>PROJECT TOTAL</th>
                                 <th class="border-right">VARIANCE</th>
                                 
-                                @for ($i = 1; $i <= round(($project->length/4)); $i++)
+                                @for ($i = 1; $i <= ceil(($project->length/4)); $i++)
                                 <th>YR{{$i}} BUDGET</th>
                                 <th>YEAR{{$i}}</th>
                                 <th class="border-right">VARIANCE</th>
@@ -198,7 +198,7 @@
                                             ->required() }}
                                     </div>
                                 </td>
-                                @for ($i = 0; $i < round(($project->length/4)); $i++)
+                                @for ($i = 0; $i < ceil(($project->length/4)); $i++)
                                 <td>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -310,7 +310,7 @@
                                             ->required() }}
                                     </div>
                                 </td>
-                                @for ($i = 0; $i < round(($project->length/4)); $i++)
+                                @for ($i = 0; $i < ceil(($project->length/4)); $i++)
                                 <td>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -385,7 +385,7 @@
                                 @endfor
                                 <td style="color: #fff;">&nbsp;</td>
                                 <td class="border-right" style="color: #fff;">&nbsp;</td>
-                                @for ($i = 0; $i < round(($project->length/4)); $i++)
+                                @for ($i = 0; $i < ceil(($project->length/4)); $i++)
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td class="border-right">&nbsp;</td>
