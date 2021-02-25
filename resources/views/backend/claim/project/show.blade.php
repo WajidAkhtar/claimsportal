@@ -571,7 +571,12 @@
                 }
                 prevYearIndex = yearIndex;
                 $(v).closest('table').find('[name^="yearly_data['+yearIndex+'][claim_values]"][name$="[quarter_values]['+rowId+']"]').each(function(i1, v1){
-                    total += parseFloat($(v1).val());
+                    if($(v1).val() == '' || isNaN($(v1).val())) {
+                        value = 0;
+                    } else {
+                        value = $(v1).val();
+                    }
+                    total += parseFloat(value);
                 });
 
                 $(v).val(total.toFixed(2));
@@ -583,7 +588,12 @@
                 var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[0];
                 var project_total = 0;
                 $(v).closest('tr').find('[name^="yearly_data['+yearIndex+'][total_costs][for_each_item][quarter_values]"]').each(function(i1, v1){
-                    project_total += parseFloat($(v1).val());
+                    if($(v1).val() == '' || isNaN($(v1).val())) {
+                        value = 0;
+                    } else {
+                        value = $(v1).val();
+                    }
+                    project_total += parseFloat(value);
                 });
 
                 $(v).val(project_total.toFixed(2));
@@ -596,7 +606,12 @@
                 var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[0];
                 for_each_total_budget = 0;
                 $('[name^="yearly_data['+yearIndex+'][claim_values]"][name$="[total_budget]"]').each(function(i, v) {
-                    for_each_total_budget += parseFloat($(v).val());
+                    if($(v).val() == '' || isNaN($(v).val())) {
+                        value = 0;
+                    } else {
+                        value = $(v).val();
+                    }
+                    for_each_total_budget += parseFloat(value);
                 });
                 $(v).val(for_each_total_budget.toFixed(2));
             });
