@@ -12,6 +12,7 @@ use App\Domains\Claim\Http\Requests\Backend\Project\EditProjectRequest;
 use App\Domains\Claim\Http\Requests\Backend\Project\StoreProjectRequest;
 use App\Domains\Claim\Http\Requests\Backend\Project\DeleteProjectRequest;
 use App\Domains\Claim\Http\Requests\Backend\Project\UpdateProjectRequest;
+use App\Domains\Claim\Models\ProjectCostItem;
 
 /**
  * Class ProjectController.
@@ -150,7 +151,8 @@ class ProjectController
                 $claimYearwiseValue['amount'] = number_format($claimYearwiseValue['amount'], 2, '.', '');
                 $claimYearwiseValue['variance'] = number_format($claimYearwiseValue['variance'], 2, '.', '');
             }
-            $costItem = $project->costItems()->whereId($costItemId)->first();
+            // $costItem = $project->costItems()->whereId($costItemId)->first();
+            $costItem = ProjectCostItem::whereProjectId($project->id)->whereCostItemId($costItemId)->first();
             $costItem->claims_data = collect($claimValue)->only('quarter_values', 'yearwise', 'total_budget')->toArray();
             $costItem->save();
         }

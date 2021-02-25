@@ -3,6 +3,7 @@
 namespace App\Domains\Claim\Models\Traits\Relationship;
 
 use App\Domains\Auth\Models\User;
+use App\Domains\Claim\Models\CostItem;
 use App\Domains\Claim\Models\ProjectCostItem;
 
 /**
@@ -23,6 +24,6 @@ trait ProjectRelationship
      */
     public function costItems()
     {
-        return $this->hasMany(ProjectCostItem::class);
+        return $this->belongsToMany(CostItem::class, 'project_cost_items')->withPivot('claims_data')->withTimestamps();
     }
 }

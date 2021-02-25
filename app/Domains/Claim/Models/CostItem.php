@@ -2,6 +2,7 @@
 
 namespace App\Domains\Claim\Models;
 
+use App\Domains\Claim\Models\Traits\Attribute\CostItemAttribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Domains\Claim\Models\Traits\Scope\CostItemScope;
@@ -12,7 +13,8 @@ use App\Domains\Claim\Models\Traits\Scope\CostItemScope;
 class CostItem extends Model
 {
     use SoftDeletes,
-        CostItemScope;
+        CostItemScope,
+        CostItemAttribute;
 
     /**
      * The attributes that are mass assignable.

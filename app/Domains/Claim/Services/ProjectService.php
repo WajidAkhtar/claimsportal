@@ -52,11 +52,10 @@ class ProjectService extends BaseService
             // Save cost items
             foreach ($data['cost_items'] as $key => $value) {
                 $costItem = CostItem::firstOrCreate(['name' => $value['name']]);
-                $project->costItems()->create(['cost_item_id' => $costItem->id]);
+                $project->costItems()->attach($costItem->id);
             }
         } catch (Exception $e) {
             DB::rollBack();
-            dd($e);
             throw new GeneralException(__('There was a problem creating this project. Please try again.'));
         }
 
@@ -90,14 +89,17 @@ class ProjectService extends BaseService
             $project->funders()->sync($data['funders']);
             // Delete old and Save new cost items
             // $project->costItems()->delete();
+            $costItemIds = [];
             foreach ($data['cost_items'] as $key => $value) {
                 $costItem = CostItem::firstOrCreate(['name' => $value['name']]);
-                $project->costItems()->create(['cost_item_id' => $costItem->id]);
+                $costItemIds[] = $costItem->id;
+                // $project->costItems()->sync($costItem->id);
             }
+            $project->costItems()->sync($costItemIds);
             // $project->costItems()->createMany($data['cost_items']);
         } catch (Exception $e) {
             DB::rollBack();
-
+            dd($e);
             throw new GeneralException(__('There was a problem updating this project. Please try again.'));
         }
 

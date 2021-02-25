@@ -115,7 +115,7 @@
                             <tbody class="repeatable">
                                 @if (!empty(old('cost_items')) || !empty($costItems))
                                 @php $costItemCount = 1; @endphp
-                                @foreach (old('cost_items')?? ($project->costItems ?? $costItems) as $key => $costItem)
+                                @foreach (old('cost_items')?? ( $costItems) as $key => $costItem)
                                 <tr class="field-group">
                                     <td>{{ $costItemCount++ }}</td>
                                     <td>
