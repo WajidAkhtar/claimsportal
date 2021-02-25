@@ -53,7 +53,7 @@ class ProjectController
      */
     public function create()
     {
-        $funders = $this->userService->getByRoleId(7)->pluck('name', 'id');
+        $funders = $this->userService->getByRoleId(7)->pluck('organisation', 'id');
         $costItems = CostItem::onlyActive()->get();
         return view('backend.claim.project.create')
             ->withFunders($funders)
@@ -95,7 +95,7 @@ class ProjectController
      */
     public function edit(EditProjectRequest $request, Project $project)
     {
-        $funders = $this->userService->getByRoleId(7)->pluck('name', 'id');
+        $funders = $this->userService->getByRoleId(7)->pluck('organisation', 'id');
         $costItems = CostItem::onlyActive()->get();
         return view('backend.claim.project.edit')
             ->withProject($project)

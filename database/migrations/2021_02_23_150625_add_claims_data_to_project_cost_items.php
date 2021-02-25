@@ -14,7 +14,7 @@ class AddClaimsDataToProjectCostItems extends Migration
     public function up()
     {
         Schema::table('project_cost_items', function (Blueprint $table) {
-            $table->json('claims_data')->nullable()->after('value');
+            $table->json('claims_data')->nullable()->after('description');
         });
     }
 

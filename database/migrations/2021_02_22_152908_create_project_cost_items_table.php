@@ -18,7 +18,6 @@ class CreateProjectCostItemsTable extends Migration
             $table->unsignedBigInteger('project_id');
             $table->string('name');
             $table->string('description');
-            $table->decimal('value');
             $table->timestamps();
             $table->softDeletes();
         });

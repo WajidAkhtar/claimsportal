@@ -107,7 +107,6 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Description</th>
-                                    <th>Amount</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -126,17 +125,6 @@
                                             ->placeholder('Description')
                                             ->class('form-control')
                                             ->required() }}
-                                    </td>
-                                    <td>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">&euro;</span>
-                                            </div>
-                                            {{ html()->input('number', 'cost_items['.$key.'][value]', $costItem->value ?? '')
-                                                ->placeholder('Amount')
-                                                ->class('form-control')
-                                                ->required() }}
-                                        </div>
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-danger btn-sm delete"><i class="fa fa-trash"></i></button>
@@ -179,17 +167,6 @@
                     ->placeholder('Description')
                     ->class('form-control')
                     ->required() }}
-            </td>
-            <td>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">&euro;</span>
-                    </div>
-                    {{ html()->input('number', 'cost_items][{?}][value]')
-                        ->placeholder('Amount')
-                        ->class('form-control')
-                        ->required() }}
-                </div>
             </td>
             <td>
                 <button type="button" class="btn btn-danger btn-sm delete"><i class="fa fa-trash"></i></button>

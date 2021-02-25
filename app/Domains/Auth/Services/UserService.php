@@ -126,6 +126,7 @@ class UserService extends BaseService
      */
     public function store(array $data = []): User
     {
+        dd($data);
         DB::beginTransaction();
 
         try {
@@ -135,6 +136,7 @@ class UserService extends BaseService
                 'last_name' => $data['last_name'],
                 'job_title' => $data['job_title'],
                 'department' => $data['department'],
+                'organisation' => $data['organisation'],
                 'email' => $data['email'],
                 'password' => $data['password'],
                 'email_verified_at' => isset($data['email_verified']) && $data['email_verified'] === '1' ? now() : null,
@@ -181,6 +183,7 @@ class UserService extends BaseService
                 'last_name' => $data['last_name'],
                 'job_title' => $data['job_title'],
                 'department' => $data['department'],
+                'organisation' => $data['organisation'],
                 'email' => $data['email'],
             ]);
 
@@ -348,6 +351,7 @@ class UserService extends BaseService
             'last_name' => $data['last_name'] ?? null,
             'job_title' => $data['job_title'] ?? null,
             'department' => $data['department'] ?? null,
+            'organisation' => $data['organisation'] ?? null,
             'email' => $data['email'] ?? null,
             'password' => $data['password'] ?? null,
             'provider' => $data['provider'] ?? null,
