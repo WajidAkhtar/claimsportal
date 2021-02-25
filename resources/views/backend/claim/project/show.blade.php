@@ -54,7 +54,7 @@
                 <div><strong>Project Name:</strong> {{$project->name}}</div>
                 <div><strong>Project Number:</strong> {{$project->number}}</div>
                 <div><strong>Project Start Date:</strong> {{$project->start_date->format('m-Y')}}</div>
-                <div><strong>Funders:</strong> {{$project->funders->implode('name', ', ')}}</div>
+                <div><strong>Funders:</strong> {{$project->funders->implode('organisation', ', ')}}</div>
             </div>
             <form action="#" id="claims_form">
                 <div class="col-sm-12 mt-5">

@@ -35,6 +35,7 @@ class StoreUserRequest extends FormRequest
             'last_name' => ['required', 'max:100'],
             'job_title' => ['required', 'max:100'],
             'department' => ['required', 'max:100'],
+            'organisation' => ['required', 'max:100'],
             'email' => ['required', 'max:255', 'email', Rule::unique('users')],
             'password' => ['max:100', PasswordRules::register($this->email)],
             'active' => ['sometimes', 'in:1'],

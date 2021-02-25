@@ -39,7 +39,6 @@ class StoreProjectRequest extends FormRequest
             'cost_items' => 'required|array',
             'cost_items.*.name' => 'required|max:191',
             'cost_items.*.description' => 'required|max:191',
-            'cost_items.*.value' => 'required|numeric',
         ];
     }
 

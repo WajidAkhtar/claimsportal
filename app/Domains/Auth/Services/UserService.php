@@ -126,7 +126,6 @@ class UserService extends BaseService
      */
     public function store(array $data = []): User
     {
-        dd($data);
         DB::beginTransaction();
 
         try {
