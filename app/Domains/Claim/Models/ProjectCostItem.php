@@ -21,9 +21,7 @@ class ProjectCostItem extends Model
      */
     protected $fillable = [
         'project_id',
-        'name',
-        'description',
-        'value',
+        'cost_item_id',
         'active',
     ];
 

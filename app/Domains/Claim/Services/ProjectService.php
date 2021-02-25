@@ -7,6 +7,7 @@ use App\Services\BaseService;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
 use App\Domains\Claim\Models\Project;
+use App\Domains\Claim\Models\CostItem;
 
 /**
  * Class ProjectService.
@@ -49,9 +50,13 @@ class ProjectService extends BaseService
             $project->funders()->sync($data['funders']);
 
             // Save cost items
-            $project->costItems()->createMany($data['cost_items']);
+            foreach ($data['cost_items'] as $key => $value) {
+                $costItem = CostItem::firstOrNew(['name' => $value['name']]);
+                $project->costItems()->create(['cost_item_id' => $costItem->id]);
+            }
         } catch (Exception $e) {
             DB::rollBack();
+            dd($e);
             throw new GeneralException(__('There was a problem creating this project. Please try again.'));
         }
 
@@ -84,8 +89,12 @@ class ProjectService extends BaseService
             // Sync Funders
             $project->funders()->sync($data['funders']);
             // Delete old and Save new cost items
-            $project->costItems()->delete();
-            $project->costItems()->createMany($data['cost_items']);
+            // $project->costItems()->delete();
+            foreach ($data['cost_items'] as $key => $value) {
+                $costItem = CostItem::firstOrNew(['name' => $value['name']]);
+                $project->costItems()->create(['cost_item_id' => $costItem->id]);
+            }
+            // $project->costItems()->createMany($data['cost_items']);
         } catch (Exception $e) {
             DB::rollBack();
 
