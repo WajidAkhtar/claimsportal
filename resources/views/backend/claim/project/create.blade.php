@@ -102,6 +102,7 @@
                         <table class="table cost_items">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>Name</th>
                                     <th>Description</th>
                                     <th>Action</th>
@@ -109,8 +110,10 @@
                             </thead>
                             <tbody class="repeatable">
                                 @if (!empty(old('cost_items')) || !empty($costItems))
+                                @php $costItemCount = 1; @endphp
                                 @foreach (old('cost_items')?? $costItems as $key => $costItem)
                                 <tr class="field-group">
+                                    <td>{{ $costItemCount++ }}</td>
                                     <td>
                                         {{ html()->text('cost_items['.$key.'][name]', $costItem->name ?? '')
                                             ->placeholder(__('Name'))
@@ -150,6 +153,7 @@
     </x-forms.post>
     <script type="text/template" id="cost-items-template">
         <tr class="field-group">
+            <td></td>
             <td>
                 {{ html()->text('cost_items[{?}][name]')
                     ->placeholder(__('Name'))
@@ -180,8 +184,18 @@
             deleteTrigger: ".cost_items .delete",
             template: "#cost-items-template",
             min: 1,
-            prefix: '',
+            prefix: 'ds',
             idStartIndex: '{{ count(old('claim_items') ?? [] ) }}',
+            afterAdd : function() {
+                $('.cost_items tbody tr').each(function(i, v) {
+                    $(this).find('td:first').html(i+1);
+                });
+            },
+            afterDelete : function() {
+                $('.cost_items tbody tr').each(function(i, v) {
+                    $(this).find('td:first').html(i+1);
+                });  
+            }
         });
     });
 </script>
