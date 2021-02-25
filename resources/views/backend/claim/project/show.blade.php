@@ -541,7 +541,7 @@
             
             for_each_total_budget = 0;
             $('[name^="claim_values"][name$="[total_budget]"]').each(function(i, v) {
-                if(isNaN($(v).val())) {
+                if($(v).val() == '' || isNaN($(v).val())) {
                     value = 0;
                 } else {
                     value = $(v).val();
@@ -626,6 +626,13 @@
             $(document).on('change', 'table input', function(){
                 formatNegativeValue();                
             });
+
+            $(document).on('click', 'table input', function(i, v){
+                if($(this).val() == '0.00') {
+                    $(this).val('');
+                }
+            });
+
         });
 
         function formatNegativeValue() {
@@ -636,13 +643,9 @@
                 else{
                     $(v).removeClass('text-danger');
                 }
-                // if(isNaN($(v).val()) || $(v).val() == 0) {
-                //     $(v).val('');
-                //     $(v).removeClass('text-danger');
-                // } else {
-                    $(v).val(parseFloat($(v).val()).toFixed(2));
-                // }
+                $(v).val(parseFloat($(v).val()).toFixed(2));
             })
         }
+        
     </script>
 @endpush
