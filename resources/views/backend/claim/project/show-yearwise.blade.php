@@ -75,7 +75,7 @@
                 <td>
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text readonly">&euro;</span>
+                            <span class="input-group-text readonly">£</span>
                         </div>
                         {{ html()->input('number', 'yearly_data['.$yearIndex.'][claim_values]['.$costItem->id.'][total_budget]', optional(optional($costItem->claims_data)->yearwise)[$yearIndex]->budget ?? 0)
                             ->placeholder('Amount')
@@ -101,7 +101,7 @@
                 <td>
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text readonly">&euro;</span>
+                            <span class="input-group-text readonly">£</span>
                         </div>
                         {{ html()->input('number', 'yearly_data['.$yearIndex.'][claim_values]['.$costItem->id.'][quarter_values]['.$fromDate1->timestamp.']', optional(optional($costItem->claims_data)->quarter_values)->{"$fromDate1->timestamp"} ?? 0)
                             ->placeholder('Amount')
@@ -117,7 +117,7 @@
                 <td>
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text readonly">&euro;</span>
+                            <span class="input-group-text readonly">£</span>
                         </div>
                         {{ html()->input('number', 'yearly_data['.$yearIndex.'][claim_values]['.$costItem->id.'][project_total]', $projectTotal)
                             ->placeholder('Amount')
@@ -129,7 +129,7 @@
                 <td class="border-right">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text readonly">&euro;</span>
+                            <span class="input-group-text readonly">£</span>
                         </div>
                         {{ html()->input('number', 'yearly_data['.$yearIndex.'][claim_values]['.$costItem->id.'][variance]', (optional(optional($costItem->claims_data)->yearwise)[$yearIndex]->budget ?? 0) - $projectTotal)
                             ->placeholder('Amount')
@@ -147,7 +147,7 @@
                 <td>
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text readonly">&euro;</span>
+                            <span class="input-group-text readonly">£</span>
                         </div>
                         {{ html()->input('number', 'yearly_data['.$yearIndex.'][total_costs][for_each_item][total_budget]', 0)
                             ->placeholder('Amount')
@@ -172,7 +172,7 @@
                 <td class="text-center">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text readonly">&euro;</span>
+                            <span class="input-group-text readonly">£</span>
                         </div>
                         {{ html()->input('number', 'yearly_data['.$yearIndex.'][total_costs][for_each_item][quarter_values]['.$fromDate2->timestamp.']', 0)
                             // ->placeholder('Amount')
@@ -188,7 +188,7 @@
                 <td class="text-center">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text readonly">&euro;</span>
+                            <span class="input-group-text readonly">£</span>
                         </div>
                         {{ html()->input('number', 'yearly_data['.$yearIndex.'][total_costs][for_each_item][project_total]', 0)
                             // ->placeholder('Amount')
@@ -200,7 +200,7 @@
                 <td class="text-center border-right">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text readonly">&euro;</span>
+                            <span class="input-group-text readonly">£</span>
                         </div>
                         {{ html()->input('number', 'yearly_data['.$yearIndex.'][total_costs][for_each_item][variance]', 0)
                             // ->placeholder('Amount')
@@ -230,7 +230,7 @@
                 <td class="text-center" style="color: #fff;">
                     <div class="input-group" style="color: #fff;">
                         <div class="input-group-prepend" style="color: #fff;">
-                            <span class="input-group-text readonly" style="color: #fff;">&euro;</span>
+                            <span class="input-group-text readonly" style="color: #fff;">£</span>
                         </div>
                         {{ html()->input('number', 'yearly_data['.$yearIndex.'][total_costs][cumulative]['.$fromDate3->timestamp.']', 0)
                             // ->placeholder('Amount')
