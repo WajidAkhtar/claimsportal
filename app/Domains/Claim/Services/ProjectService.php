@@ -51,7 +51,7 @@ class ProjectService extends BaseService
 
             // Save cost items
             foreach ($data['cost_items'] as $key => $value) {
-                $costItem = CostItem::firstOrNew(['name' => $value['name']]);
+                $costItem = CostItem::firstOrCreate(['name' => $value['name']]);
                 $project->costItems()->create(['cost_item_id' => $costItem->id]);
             }
         } catch (Exception $e) {
@@ -91,7 +91,7 @@ class ProjectService extends BaseService
             // Delete old and Save new cost items
             // $project->costItems()->delete();
             foreach ($data['cost_items'] as $key => $value) {
-                $costItem = CostItem::firstOrNew(['name' => $value['name']]);
+                $costItem = CostItem::firstOrCreate(['name' => $value['name']]);
                 $project->costItems()->create(['cost_item_id' => $costItem->id]);
             }
             // $project->costItems()->createMany($data['cost_items']);
