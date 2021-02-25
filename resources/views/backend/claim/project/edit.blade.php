@@ -61,6 +61,7 @@
                         {{ html()->text('start_date', $project->start_date->format('m-Y'))
                             ->class('form-control')
                             ->placeholder('MM-YYYY')
+                            ->attribute('readonly')
                             ->required() }}
                     </div>
                 </div><!--form-group-->
