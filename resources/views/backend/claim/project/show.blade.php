@@ -409,7 +409,12 @@
                 var rowId = $(v).attr('name').replace('total_costs[for_each_item][quarter_values]', '');
                 var total = 0;
                 $('.main-claims-table [name$="[quarter_values]'+rowId+'"][name^="claim_values"]').each(function(i1, v1){
-                    total += parseFloat($(v1).val());
+                    if($(v1).val() == '' || isNaN($(v1).val())) {
+                        value = 0;
+                    } else {
+                        value = $(v1).val();
+                    }
+                    total += parseFloat(value);
                 });
 
                 $(v).val(total.toFixed(2));
@@ -420,7 +425,12 @@
             $('.main-claims-table [name^="claim_values"][name$="[total_budget]"]').each(function(i, v){
                 var total_budget = 0;
                 $(v).closest('tr').find('[name*="yearwise"][name$="[budget]"]').each(function(i1, v1){
-                    total_budget += parseFloat($(v1).val());
+                    if($(v1).val() == '' || isNaN($(v1).val())) {
+                        value = 0;
+                    } else {
+                        value = $(v1).val();
+                    }
+                    total_budget += parseFloat(value);
                 });
 
                 $(v).val(total_budget.toFixed(2));
@@ -430,7 +440,12 @@
                 var rowId = $(v).attr('name').replace('[project_total]', '');
                 var project_total = 0;
                 $(v).closest('tr').find('[name*="'+rowId+'[quarter_values]"]').each(function(i1, v1){
-                    project_total += parseFloat($(v1).val());
+                    if($(v1).val() == '' || isNaN($(v1).val())) {
+                        value = 0;
+                    } else {
+                        value = $(v1).val();
+                    }
+                    project_total += parseFloat(value);
                 });
 
                 $(v).val(project_total.toFixed(2));
@@ -444,7 +459,12 @@
 
                 var yearWiseTotal = 0;
                 $(v).closest('tr').find('[data-year-index="'+yearIndex+'"]').each(function(i1, v1){
-                    yearWiseTotal += parseFloat($(v1).val());
+                    if($(v1).val() == '' || isNaN($(v1).val())) {
+                        value = 0;
+                    } else {
+                        value = $(v1).val();
+                    }
+                    yearWiseTotal += parseFloat(value);
                 });
 
                 $(v).val(yearWiseTotal.toFixed(2));
@@ -458,7 +478,12 @@
 
                 var yearWiseTotal = 0;
                 $(v).closest('tr').find('[data-year-index="'+yearIndex+'"]').each(function(i1, v1){
-                    yearWiseTotal += parseFloat($(v1).val());
+                    if($(v1).val() == '' || isNaN($(v1).val())) {
+                        value = 0;
+                    } else {
+                        value = $(v1).val();
+                    }
+                    yearWiseTotal += parseFloat(value);
                 });
 
                 $(v).val(yearWiseTotal.toFixed(2));
@@ -469,8 +494,18 @@
             
             $('.main-claims-table [name*="[yearwise]"][name$="[variance]"]').each(function(i, v){
                 var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[2];
-                var yearBudget = parseFloat($(v).closest('tr').find('[name*="[yearwise]['+yearIndex+'][budget]"]').val());
-                var yearAmount = parseFloat($(v).closest('tr').find('[name*="[yearwise]['+yearIndex+'][amount]"]').val());
+                if($(v).closest('tr').find('[name*="[yearwise]['+yearIndex+'][budget]"]').val() == '' || isNaN($(v).closest('tr').find('[name*="[yearwise]['+yearIndex+'][budget]"]').val())) {
+                    yearBudgetValue = 0;
+                } else {
+                    yearBudgetValue = $(v).closest('tr').find('[name*="[yearwise]['+yearIndex+'][budget]"]').val();
+                }
+                if($(v).closest('tr').find('[name*="[yearwise]['+yearIndex+'][amount]"]').val() == '' || isNaN($(v).closest('tr').find('[name*="[yearwise]['+yearIndex+'][amount]"]').val())) {
+                    yearAmountValue = 0;
+                } else {
+                    yearAmountValue = $(v).closest('tr').find('[name*="[yearwise]['+yearIndex+'][amount]"]').val();
+                }
+                var yearBudget = parseFloat(yearBudgetValue);
+                var yearAmount = parseFloat(yearAmountValue);
                 var variance = yearBudget - yearAmount;
                 $(v).val(variance.toFixed(2));
                 if(variance < 0) {
@@ -493,7 +528,12 @@
                 var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[2];
                 var total = 0;
                 $('.main-claims-table [name$="[yearwise]['+yearIndex+'][variance]"').each(function(i1, v1){
-                    total += parseFloat($(v1).val());
+                    if($(v1).val() == '' || isNaN($(v1).val())) {
+                        value = 0;
+                    } else {
+                        value = $(v1).val();
+                    }
+                    total += parseFloat(value);
                 });
 
                 $(v).val(total.toFixed(2));
@@ -501,7 +541,12 @@
             
             for_each_total_budget = 0;
             $('[name^="claim_values"][name$="[total_budget]"]').each(function(i, v) {
-                for_each_total_budget += parseFloat($(v).val());
+                if(isNaN($(v).val())) {
+                    value = 0;
+                } else {
+                    value = $(v).val();
+                }
+                for_each_total_budget += parseFloat(value);
             });
             $('[name="total_costs[for_each_item][total_budget]"]').val(for_each_total_budget.toFixed(2))
         }
@@ -591,7 +636,12 @@
                 else{
                     $(v).removeClass('text-danger');
                 }
-                $(v).val(parseFloat($(v).val()).toFixed(2));
+                // if(isNaN($(v).val()) || $(v).val() == 0) {
+                //     $(v).val('');
+                //     $(v).removeClass('text-danger');
+                // } else {
+                    $(v).val(parseFloat($(v).val()).toFixed(2));
+                // }
             })
         }
     </script>
