@@ -78,7 +78,7 @@
                             <span class="input-group-text readonly">£</span>
                         </div>
                         {{ html()->input('number', 'yearly_data['.$yearIndex.'][claim_values]['.$costItem->id.'][total_budget]', optional(optional($costItem->claims_data)->yearwise)[$yearIndex]->budget ?? 0)
-                            ->placeholder('Amount')
+                            ->placeholder('0.00')
                             ->class('form-control')
                             ->readOnly()
                             ->required() }}
@@ -103,8 +103,8 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text readonly">£</span>
                         </div>
-                        {{ html()->input('number', 'yearly_data['.$yearIndex.'][claim_values]['.$costItem->id.'][quarter_values]['.$fromDate1->timestamp.']', optional(optional($costItem->claims_data)->quarter_values)->{"$fromDate1->timestamp"} ?? 0)
-                            ->placeholder('Amount')
+                        {{ html()->input('number', 'yearly_data['.$yearIndex.'][claim_values]['.$costItem->id.'][quarter_values]['.$fromDate1->timestamp.']', optional(optional($costItem->claims_data)->quarter_values)->{"$fromDate1->timestamp"} ?? 0.00)
+                            ->placeholder('0.00')
                             ->class('form-control '.$lableClass)
                             ->readOnly()
                             ->required() }}
@@ -120,7 +120,7 @@
                             <span class="input-group-text readonly">£</span>
                         </div>
                         {{ html()->input('number', 'yearly_data['.$yearIndex.'][claim_values]['.$costItem->id.'][project_total]', $projectTotal)
-                            ->placeholder('Amount')
+                            ->placeholder('0.00')
                             ->class('form-control')
                             ->readOnly()
                             ->required() }}
@@ -132,7 +132,7 @@
                             <span class="input-group-text readonly">£</span>
                         </div>
                         {{ html()->input('number', 'yearly_data['.$yearIndex.'][claim_values]['.$costItem->id.'][variance]', (optional(optional($costItem->claims_data)->yearwise)[$yearIndex]->budget ?? 0) - $projectTotal)
-                            ->placeholder('Amount')
+                            ->placeholder('0.00')
                             ->class('form-control')
                             ->readOnly()
                             ->required() }}
@@ -150,7 +150,7 @@
                             <span class="input-group-text readonly">£</span>
                         </div>
                         {{ html()->input('number', 'yearly_data['.$yearIndex.'][total_costs][for_each_item][total_budget]', 0)
-                            ->placeholder('Amount')
+                            ->placeholder('0.00')
                             ->class('form-control')
                             ->readOnly()
                             ->required() }}
@@ -175,7 +175,7 @@
                             <span class="input-group-text readonly">£</span>
                         </div>
                         {{ html()->input('number', 'yearly_data['.$yearIndex.'][total_costs][for_each_item][quarter_values]['.$fromDate2->timestamp.']', 0)
-                            // ->placeholder('Amount')
+                            // ->placeholder('0.00')
                             ->class('form-control '.$lableClass)
                             ->readOnly()
                             ->required() }}
@@ -191,7 +191,7 @@
                             <span class="input-group-text readonly">£</span>
                         </div>
                         {{ html()->input('number', 'yearly_data['.$yearIndex.'][total_costs][for_each_item][project_total]', 0)
-                            // ->placeholder('Amount')
+                            // ->placeholder('0.00')
                             ->class('form-control')
                             ->readOnly()
                             ->required() }}
@@ -203,7 +203,7 @@
                             <span class="input-group-text readonly">£</span>
                         </div>
                         {{ html()->input('number', 'yearly_data['.$yearIndex.'][total_costs][for_each_item][variance]', 0)
-                            // ->placeholder('Amount')
+                            // ->placeholder('0.00')
                             ->class('form-control')
                             ->readOnly()
                             ->required() }}
@@ -233,7 +233,7 @@
                             <span class="input-group-text readonly" style="color: #fff;">£</span>
                         </div>
                         {{ html()->input('number', 'yearly_data['.$yearIndex.'][total_costs][cumulative]['.$fromDate3->timestamp.']', 0)
-                            // ->placeholder('Amount')
+                            // ->placeholder('0.00')
                             ->class('form-control '.$lableClass)
                             ->attribute('style', 'color: #fff;')
                             ->readOnly()

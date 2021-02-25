@@ -136,8 +136,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text readonly">£</span>
                                         </div>
-                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][total_budget]', 0)
-                                            ->placeholder('Amount')
+                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][total_budget]')
+                                            ->placeholder('0.00')
                                             ->class('form-control')
                                             ->readOnly()
                                             ->required() }}
@@ -160,8 +160,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">£</span>
                                         </div>
-                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][quarter_values]['.$fromDate->timestamp.']', optional(optional($costItem->claims_data)->quarter_values)->{"$fromDate->timestamp"} ?? 0)
-                                            ->placeholder('Amount')
+                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][quarter_values]['.$fromDate->timestamp.']', optional(optional($costItem->claims_data)->quarter_values)->{"$fromDate->timestamp"} ?? '')
+                                            ->placeholder('0.00')
                                             ->class('form-control '.$labelClass)
                                             ->attribute('data-year-index', $yearIndex)
                                             ->required() }}
@@ -180,7 +180,7 @@
                                             <span class="input-group-text readonly">£</span>
                                         </div>
                                         {{ html()->input('number', 'claim_values['.$costItem->id.'][project_total]')
-                                            ->placeholder('Amount')
+                                            ->placeholder('0.00')
                                             ->class('form-control')
                                             ->readOnly()
                                             ->required() }}
@@ -191,8 +191,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text readonly">£</span>
                                         </div>
-                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][variance]', 0)
-                                            ->placeholder('Amount')
+                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][variance]')
+                                            ->placeholder('0.00')
                                             ->class('form-control')
                                             ->readOnly()
                                             ->required() }}
@@ -204,8 +204,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">£</span>
                                         </div>
-                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][yearwise]['.$i.'][budget]', optional(optional($costItem->claims_data)->yearwise)[$i]->budget ?? 0)
-                                            // ->placeholder('Amount')
+                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][yearwise]['.$i.'][budget]', optional(optional($costItem->claims_data)->yearwise)[$i]->budget ?? '')
+                                            ->placeholder('0.00')
                                             ->class('form-control')
                                             ->required() }}
                                     </div>
@@ -215,8 +215,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text readonly">£</span>
                                         </div>
-                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][yearwise]['.$i.'][amount]', optional(optional($costItem->claims_data)->yearwise)[$i]->amount ?? 0)
-                                            // ->placeholder('Amount')
+                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][yearwise]['.$i.'][amount]', optional(optional($costItem->claims_data)->yearwise)[$i]->amount ?? '')
+                                            ->placeholder('0.00')
                                             ->class('form-control')
                                             ->readOnly()
                                             ->required() }}
@@ -227,8 +227,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text readonly">£</span>
                                         </div>
-                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][yearwise]['.$i.'][variance]', optional(optional($costItem->claims_data)->yearwise)[$i]->variance ?? 0)
-                                            // ->placeholder('Amount')
+                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][yearwise]['.$i.'][variance]', optional(optional($costItem->claims_data)->yearwise)[$i]->variance ?? '')
+                                            ->placeholder('0.00')
                                             ->class('form-control')
                                             ->readOnly()
                                             ->required() }}
@@ -246,8 +246,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text readonly">£</span>
                                         </div>
-                                        {{ html()->input('number', 'total_costs[for_each_item][total_budget]', 0)
-                                            ->placeholder('Amount')
+                                        {{ html()->input('number', 'total_costs[for_each_item][total_budget]')
+                                            ->placeholder('0.00')
                                             ->class('form-control')
                                             ->readOnly()
                                             ->required() }}
@@ -271,8 +271,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text readonly">£</span>
                                         </div>
-                                        {{ html()->input('number', 'total_costs[for_each_item][quarter_values]['.$fromDate->timestamp.']', 0)
-                                            // ->placeholder('Amount')
+                                        {{ html()->input('number', 'total_costs[for_each_item][quarter_values]['.$fromDate->timestamp.']')
+                                            // ->placeholder('0.00')
                                             ->class('form-control '.$labelClass)
                                             ->attribute('data-year-index', $yearIndex)
                                             ->readOnly()
@@ -291,8 +291,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text readonly">£</span>
                                         </div>
-                                        {{ html()->input('number', 'total_costs[for_each_item][project_total]', 0)
-                                            // ->placeholder('Amount')
+                                        {{ html()->input('number', 'total_costs[for_each_item][project_total]')
+                                            // ->placeholder('0.00')
                                             ->class('form-control')
                                             ->readOnly()
                                             ->required() }}
@@ -303,8 +303,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text readonly">£</span>
                                         </div>
-                                        {{ html()->input('number', 'total_costs[for_each_item][variance]', 0)
-                                            // ->placeholder('Amount')
+                                        {{ html()->input('number', 'total_costs[for_each_item][variance]')
+                                            // ->placeholder('0.00')
                                             ->class('form-control')
                                             ->readOnly()
                                             ->required() }}
@@ -316,8 +316,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text readonly">£</span>
                                         </div>
-                                        {{ html()->input('number', 'total_costs[for_each_item][yearwise]['.$i.'][total_budget]', 0)
-                                            // ->placeholder('Amount')
+                                        {{ html()->input('number', 'total_costs[for_each_item][yearwise]['.$i.'][total_budget]')
+                                            // ->placeholder('0.00')
                                             ->class('form-control')
                                             ->readOnly()
                                             ->required() }}
@@ -328,8 +328,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text readonly">£</span>
                                         </div>
-                                        {{ html()->input('number', 'total_costs[for_each_item][yearwise]['.$i.'][total_amount]', 0)
-                                            // ->placeholder('Amount')
+                                        {{ html()->input('number', 'total_costs[for_each_item][yearwise]['.$i.'][total_amount]')
+                                            // ->placeholder('0.00')
                                             ->class('form-control')
                                             ->readOnly()
                                             ->required() }}
@@ -340,8 +340,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text readonly">£</span>
                                         </div>
-                                        {{ html()->input('number', 'total_costs[for_each_item][yearwise]['.$i.'][total_variance]', 0)
-                                            // ->placeholder('Amount')
+                                        {{ html()->input('number', 'total_costs[for_each_item][yearwise]['.$i.'][total_variance]')
+                                            // ->placeholder('0.00')
                                             ->class('form-control')
                                             ->readOnly()
                                             ->required() }}
@@ -371,8 +371,8 @@
                                         <div class="input-group-prepend" style="color: #fff;">
                                             <span class="input-group-text readonly" style="color: #fff;">£</span>
                                         </div>
-                                        {{ html()->input('number', 'total_costs[cumulative]['.$fromDate->timestamp.']', 0)
-                                            // ->placeholder('Amount')
+                                        {{ html()->input('number', 'total_costs[cumulative]['.$fromDate->timestamp.']')
+                                            // ->placeholder('0.00')
                                             ->class('form-control '.$labelClass)
                                             ->attribute('style', 'color: #fff;')
                                             ->readOnly()
@@ -412,9 +412,9 @@
                     total += parseFloat($(v1).val());
                 });
 
-                $(v).val(total);
+                $(v).val(total.toFixed(2));
                 cumulativeTotal += total;
-                $('.main-claims-table [name^="total_costs[cumulative]'+rowId+'"]').val(cumulativeTotal);
+                $('.main-claims-table [name^="total_costs[cumulative]'+rowId+'"]').val(cumulativeTotal.toFixed(2));
             });
 
             $('.main-claims-table [name^="claim_values"][name$="[total_budget]"]').each(function(i, v){
@@ -423,7 +423,7 @@
                     total_budget += parseFloat($(v1).val());
                 });
 
-                $(v).val(total_budget);
+                $(v).val(total_budget.toFixed(2));
             });
 
             $('.main-claims-table [name$="[project_total]"]').each(function(i, v){
@@ -433,10 +433,10 @@
                     project_total += parseFloat($(v1).val());
                 });
 
-                $(v).val(project_total);
+                $(v).val(project_total.toFixed(2));
 
                 var total_budget = $(v).closest('tr').find('[name*="'+rowId+'[total_budget]"]').val();
-                $(v).closest('tr').find('[name="'+rowId+'[variance]"]').val(total_budget - project_total)
+                $(v).closest('tr').find('[name="'+rowId+'[variance]"]').val((total_budget - project_total).toFixed(2))
             });
             
             $('.main-claims-table [name*="[yearwise]"][name$="[amount]"]').each(function(i, v){
@@ -447,7 +447,7 @@
                     yearWiseTotal += parseFloat($(v1).val());
                 });
 
-                $(v).val(yearWiseTotal);
+                $(v).val(yearWiseTotal.toFixed(2));
 
                 // var total_budget = $(v).closest('tr').find('[name*="'+rowId+'[total_budget]"]').val();
                 // $(v).closest('tr').find('[name="'+rowId+'[variance]"]').val(total_budget - project_total)
@@ -461,7 +461,7 @@
                     yearWiseTotal += parseFloat($(v1).val());
                 });
 
-                $(v).val(yearWiseTotal);
+                $(v).val(yearWiseTotal.toFixed(2));
 
                 // var total_budget = $(v).closest('tr').find('[name*="'+rowId+'[total_budget]"]').val();
                 // $(v).closest('tr').find('[name="'+rowId+'[variance]"]').val(total_budget - project_total)
@@ -472,7 +472,7 @@
                 var yearBudget = parseFloat($(v).closest('tr').find('[name*="[yearwise]['+yearIndex+'][budget]"]').val());
                 var yearAmount = parseFloat($(v).closest('tr').find('[name*="[yearwise]['+yearIndex+'][amount]"]').val());
                 var variance = yearBudget - yearAmount;
-                $(v).val(variance);
+                $(v).val(variance.toFixed(2));
                 if(variance < 0) {
                     $(v).addClass('text-danger');
                 }else{
@@ -486,7 +486,7 @@
                 $(v).closest('table.main-claims-table').find('[name$="[yearwise]['+yearIndex+'][budget]"]').each(function(i1, v1){
                     total_budget += parseFloat($(v1).val());
                 });
-                $(v).val(total_budget);
+                $(v).val(total_budget.toFixed(2));
             });
 
             $('.main-claims-table [name^="total_costs[for_each_item][yearwise]"][name$="[total_variance]"]').each(function(i, v){
@@ -496,14 +496,14 @@
                     total += parseFloat($(v1).val());
                 });
 
-                $(v).val(total);
+                $(v).val(total.toFixed(2));
             });
             
             for_each_total_budget = 0;
             $('[name^="claim_values"][name$="[total_budget]"]').each(function(i, v) {
                 for_each_total_budget += parseFloat($(v).val());
             });
-            $('[name="total_costs[for_each_item][total_budget]"]').val(for_each_total_budget)
+            $('[name="total_costs[for_each_item][total_budget]"]').val(for_each_total_budget.toFixed(2))
         }
 
         function calculateYearwiseFields() {
@@ -524,9 +524,9 @@
                     total += parseFloat($(v1).val());
                 });
 
-                $(v).val(total);
+                $(v).val(total.toFixed(2));
                 cumulativeTotal += total;
-                $(v).closest('table').find('[name^="yearly_data['+yearIndex+'][total_costs][cumulative]['+rowId+']"]').val(cumulativeTotal);
+                $(v).closest('table').find('[name^="yearly_data['+yearIndex+'][total_costs][cumulative]['+rowId+']"]').val(cumulativeTotal.toFixed(2));
             });
 
             $('#year-wise-claims [name$="[for_each_item][project_total]"]').each(function(i, v){
@@ -536,10 +536,10 @@
                     project_total += parseFloat($(v1).val());
                 });
 
-                $(v).val(project_total);
+                $(v).val(project_total.toFixed(2));
 
                 var total_budget = $(v).closest('tr').find('[name*="yearly_data['+yearIndex+'][total_costs][for_each_item][total_budget]"]').val();
-                $(v).closest('tr').find('[name$="[for_each_item][variance]"]').val(total_budget - project_total)
+                $(v).closest('tr').find('[name$="[for_each_item][variance]"]').val((total_budget - project_total).toFixed(2))
             });
 
             $('[name^="yearly_data"][name$="[total_costs][for_each_item][total_budget]"]').each(function(i, v){
@@ -548,7 +548,7 @@
                 $('[name^="yearly_data['+yearIndex+'][claim_values]"][name$="[total_budget]"]').each(function(i, v) {
                     for_each_total_budget += parseFloat($(v).val());
                 });
-                $(v).val(for_each_total_budget);
+                $(v).val(for_each_total_budget.toFixed(2));
             });
         }
         $(document).ready(function(){
@@ -591,6 +591,7 @@
                 else{
                     $(v).removeClass('text-danger');
                 }
+                $(v).val(parseFloat($(v).val()).toFixed(2));
             })
         }
     </script>

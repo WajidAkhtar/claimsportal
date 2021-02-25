@@ -83,7 +83,6 @@ class ProjectService extends BaseService
 
             // Sync Funders
             $project->funders()->sync($data['funders']);
-
             // Delete old and Save new cost items
             $project->costItems()->delete();
             $project->costItems()->createMany($data['cost_items']);

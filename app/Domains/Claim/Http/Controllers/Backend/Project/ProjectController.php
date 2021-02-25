@@ -140,6 +140,16 @@ class ProjectController
     public function saveClaims(Request $request, Project $project)
     {
         foreach($request->claim_values as $costItemId => $claimValue) {
+            $claimValue['total_budget'] = number_format($claimValue['total_budget'], 2, '.', '');
+            $claimValue['project_total'] = number_format($claimValue['project_total'], 2, '.', '');
+            $claimValue['variance'] = number_format($claimValue['variance'], 2, '.', '');
+            foreach($claimValue['quarter_values'] as $key => &$claimQuarterValue) {
+                $claimQuarterValue = number_format($claimQuarterValue, 2, '.', '');
+            }
+            foreach($claimValue['yearwise'] as $key => &$claimYearwiseValue) {
+                $claimYearwiseValue['amount'] = number_format($claimYearwiseValue['amount'], 2, '.', '');
+                $claimYearwiseValue['variance'] = number_format($claimYearwiseValue['variance'], 2, '.', '');
+            }
             $costItem = $project->costItems()->whereId($costItemId)->first();
             $costItem->claims_data = collect($claimValue)->only('quarter_values', 'yearwise', 'total_budget')->toArray();
             $costItem->save();
