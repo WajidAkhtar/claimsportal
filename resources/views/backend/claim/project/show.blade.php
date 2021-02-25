@@ -519,7 +519,12 @@
                 var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[2];
                 var total_budget = 0;
                 $(v).closest('table.main-claims-table').find('[name$="[yearwise]['+yearIndex+'][budget]"]').each(function(i1, v1){
-                    total_budget += parseFloat($(v1).val());
+                    if($(v1).val() == '' || isNaN($(v1).val())) {
+                        value = 0;
+                    } else {
+                        value = $(v1).val();
+                    }
+                    total_budget += parseFloat(value);
                 });
                 $(v).val(total_budget.toFixed(2));
             });
