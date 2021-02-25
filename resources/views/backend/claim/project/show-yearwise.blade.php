@@ -30,7 +30,7 @@
                             $lableClass = 'text-danger';
                         }
                     @endphp
-                    <th class="text-center">
+                    <th class="text-center light-grey-bg">
                         <label class="{{$lableClass}} text-uppercase"> {{$startDate->format('My')}} - {{$date->format('My')}}</label><br>
                         <label class="{{$lableClass}}">Q{{$quarterNo++}}</label>
                     </th>
@@ -39,7 +39,7 @@
                     @endphp
                 @endfor
             </tr>
-            <tr>
+            <tr class="dark-grey-bg">
                 <th style="max-width: 10px;min-width:auto;">#</th>
                 <th>COST ITEM</th>
                 <th>DESCRIPTION</th>
@@ -51,7 +51,7 @@
                 @endphp
                 <th class="text-center">
                     @if (now()->betweenIncluded($fromDate, $toDate))
-                        <label class="text-danger mb-0">CURRENT</label>
+                        <label class="current-bg mb-0">CURRENT</label>
                         @elseif($fromDate->lt(now()))
                         <label class="mb-0">HISTORIC</label>
                         @else
@@ -140,7 +140,7 @@
                 </td>
             </tr>
             @endforeach
-            <tr>
+            <tr class="light-grey-bg">
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td><strong>Total Cost(for each item)</strong></td>
@@ -210,7 +210,7 @@
                     </div>
                 </td>
             </tr>
-            <tr>
+            <tr class="dark-grey-bg">
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td><strong>Total Cost(cumulative)</strong></td>
@@ -227,14 +227,15 @@
                         $lableClass = 'text-danger';
                     }
                 @endphp
-                <td class="text-center">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text readonly">&euro;</span>
+                <td class="text-center" style="color: #fff;">
+                    <div class="input-group" style="color: #fff;">
+                        <div class="input-group-prepend" style="color: #fff;">
+                            <span class="input-group-text readonly" style="color: #fff;">&euro;</span>
                         </div>
                         {{ html()->input('number', 'yearly_data['.$yearIndex.'][total_costs][cumulative]['.$fromDate3->timestamp.']', 0)
                             // ->placeholder('Amount')
                             ->class('form-control '.$lableClass)
+                            ->attribute('style', 'color: #fff;')
                             ->readOnly()
                             ->required() }}
                     </div>

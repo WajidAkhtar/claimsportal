@@ -8,6 +8,25 @@
             white-space: nowrap;
             min-width: 150px;
         }
+        
+        table tr th:first-child, table tr td:first-child {
+            min-width: 50px !important;
+        }
+        
+        .light-grey-bg {
+            background-color: #e9ecef;
+            color: #000;
+        }
+        
+        .dark-grey-bg {
+            background-color: #3c424de0;
+            color: #fff;
+        }
+        
+        .current-bg {
+            background-color: #f64e60;
+            color: #fff;
+        }
 
         input:read-only {
             border: 0px;
@@ -58,7 +77,7 @@
                                             $lableClass = 'text-danger';
                                         }
                                     @endphp
-                                    <th class="text-center">
+                                    <th class="text-center light-grey-bg">
                                         <label class="{{$lableClass}} text-uppercase"> {{$startDate->format('My')}} - {{$date->format('My')}}</label><br>
                                         <label class="{{$lableClass}}">Q{{$i+1}}</label>
                                     </th>
@@ -67,8 +86,8 @@
                                     @endphp
                                 @endfor
                             </tr>
-                            <tr>
-                                <th style="max-width: 10px;min-width:auto;">#</th>
+                            <tr class="dark-grey-bg">
+                                <th style="max-width: 20px;min-width:auto;">#</th>
                                 <th>COST ITEM</th>
                                 <th>DESCRIPTION</th>
                                 <th>TOTAL BUDGET</th>
@@ -82,7 +101,7 @@
                                 @endphp
                                 <th class="text-center">
                                     @if (now()->betweenIncluded($fromDate, $toDate))
-                                        <label class="text-danger mb-0">CURRENT</label>
+                                        <label class="current-bg mb-0">&nbsp;CURRENT&nbsp;</label>
                                         @elseif($fromDate->lt(now()))
                                         <label class="mb-0">HISTORIC</label>
                                         @else
@@ -115,7 +134,7 @@
                                 <td>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text readonly">&euro;</span>
+                                            <span class="input-group-text readonly">£</span>
                                         </div>
                                         {{ html()->input('number', 'claim_values['.$costItem->id.'][total_budget]', 0)
                                             ->placeholder('Amount')
@@ -139,7 +158,7 @@
                                 <td>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text">&euro;</span>
+                                            <span class="input-group-text">£</span>
                                         </div>
                                         {{ html()->input('number', 'claim_values['.$costItem->id.'][quarter_values]['.$fromDate->timestamp.']', optional(optional($costItem->claims_data)->quarter_values)->{"$fromDate->timestamp"} ?? 0)
                                             ->placeholder('Amount')
@@ -158,7 +177,7 @@
                                 <td>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text readonly">&euro;</span>
+                                            <span class="input-group-text readonly">£</span>
                                         </div>
                                         {{ html()->input('number', 'claim_values['.$costItem->id.'][project_total]')
                                             ->placeholder('Amount')
@@ -170,7 +189,7 @@
                                 <td class="border-right">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text readonly">&euro;</span>
+                                            <span class="input-group-text readonly">£</span>
                                         </div>
                                         {{ html()->input('number', 'claim_values['.$costItem->id.'][variance]', 0)
                                             ->placeholder('Amount')
@@ -183,7 +202,7 @@
                                 <td>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text">&euro;</span>
+                                            <span class="input-group-text">£</span>
                                         </div>
                                         {{ html()->input('number', 'claim_values['.$costItem->id.'][yearwise]['.$i.'][budget]', optional(optional($costItem->claims_data)->yearwise)[$i]->budget ?? 0)
                                             // ->placeholder('Amount')
@@ -194,7 +213,7 @@
                                 <td>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text readonly">&euro;</span>
+                                            <span class="input-group-text readonly">£</span>
                                         </div>
                                         {{ html()->input('number', 'claim_values['.$costItem->id.'][yearwise]['.$i.'][amount]', optional(optional($costItem->claims_data)->yearwise)[$i]->amount ?? 0)
                                             // ->placeholder('Amount')
@@ -206,7 +225,7 @@
                                 <td class="border-right">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text readonly">&euro;</span>
+                                            <span class="input-group-text readonly">£</span>
                                         </div>
                                         {{ html()->input('number', 'claim_values['.$costItem->id.'][yearwise]['.$i.'][variance]', optional(optional($costItem->claims_data)->yearwise)[$i]->variance ?? 0)
                                             // ->placeholder('Amount')
@@ -218,14 +237,14 @@
                                 @endfor
                             </tr>
                             @endforeach
-                            <tr>
+                            <tr class="light-grey-bg">
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td><strong>Total Cost(for each item)</strong></td>
                                 <td>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text readonly">&euro;</span>
+                                            <span class="input-group-text readonly">£</span>
                                         </div>
                                         {{ html()->input('number', 'total_costs[for_each_item][total_budget]', 0)
                                             ->placeholder('Amount')
@@ -250,7 +269,7 @@
                                 <td class="text-center">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text readonly">&euro;</span>
+                                            <span class="input-group-text readonly">£</span>
                                         </div>
                                         {{ html()->input('number', 'total_costs[for_each_item][quarter_values]['.$fromDate->timestamp.']', 0)
                                             // ->placeholder('Amount')
@@ -270,7 +289,7 @@
                                 <td class="text-center">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text readonly">&euro;</span>
+                                            <span class="input-group-text readonly">£</span>
                                         </div>
                                         {{ html()->input('number', 'total_costs[for_each_item][project_total]', 0)
                                             // ->placeholder('Amount')
@@ -282,7 +301,7 @@
                                 <td class="text-center border-right">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text readonly">&euro;</span>
+                                            <span class="input-group-text readonly">£</span>
                                         </div>
                                         {{ html()->input('number', 'total_costs[for_each_item][variance]', 0)
                                             // ->placeholder('Amount')
@@ -295,7 +314,7 @@
                                 <td>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text readonly">&euro;</span>
+                                            <span class="input-group-text readonly">£</span>
                                         </div>
                                         {{ html()->input('number', 'total_costs[for_each_item][yearwise]['.$i.'][total_budget]', 0)
                                             // ->placeholder('Amount')
@@ -307,7 +326,7 @@
                                 <td>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text readonly">&euro;</span>
+                                            <span class="input-group-text readonly">£</span>
                                         </div>
                                         {{ html()->input('number', 'total_costs[for_each_item][yearwise]['.$i.'][total_amount]', 0)
                                             // ->placeholder('Amount')
@@ -319,7 +338,7 @@
                                 <td class="border-right">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text readonly">&euro;</span>
+                                            <span class="input-group-text readonly">£</span>
                                         </div>
                                         {{ html()->input('number', 'total_costs[for_each_item][yearwise]['.$i.'][total_variance]', 0)
                                             // ->placeholder('Amount')
@@ -330,11 +349,11 @@
                                 </td>
                                 @endfor
                             </tr>
-                            <tr>
+                            <tr class="dark-grey-bg">
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td><strong>Total Cost(cumulative)</strong></td>
-                                <td>&nbsp;</td>
+                                <td style="color: #fff;">&nbsp;</td>
                                 @php
                                     $fromDate = clone $project->start_date;
                                 @endphp
@@ -347,14 +366,15 @@
                                         $labelClass = 'text-danger';
                                     }
                                 @endphp
-                                <td class="text-center">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text readonly">&euro;</span>
+                                <td class="text-center" style="color: #fff;">
+                                    <div class="input-group" style="color: #fff;">
+                                        <div class="input-group-prepend" style="color: #fff;">
+                                            <span class="input-group-text readonly" style="color: #fff;">£</span>
                                         </div>
                                         {{ html()->input('number', 'total_costs[cumulative]['.$fromDate->timestamp.']', 0)
                                             // ->placeholder('Amount')
                                             ->class('form-control '.$labelClass)
+                                            ->attribute('style', 'color: #fff;')
                                             ->readOnly()
                                             ->required() }}
                                     </div>
@@ -363,8 +383,8 @@
                                     $fromDate->addMonths(3);
                                 @endphp
                                 @endfor
-                                <td>&nbsp;</td>
-                                <td class="border-right">&nbsp;</td>
+                                <td style="color: #fff;">&nbsp;</td>
+                                <td class="border-right" style="color: #fff;">&nbsp;</td>
                                 @for ($i = 0; $i < round(($project->length/4)); $i++)
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>

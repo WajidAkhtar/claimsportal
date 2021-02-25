@@ -34,5 +34,75 @@ class CostItemSeeder extends Seeder
             'value' => '0.00',
             'active' => true,
         ]);
+
+        CostItem::create([
+            'name' => 'A4',
+            'description' => 'Directly incurred: Other cost ',
+            'value' => '0.00',
+            'active' => true,
+        ]);
+
+        CostItem::create([
+            'name' => 'A4a',
+            'description' => 'Directly incurred: Exceptions Other',
+            'value' => '0.00',
+            'active' => true,
+        ]);
+
+        CostItem::create([
+            'name' => 'A5',
+            'description' => 'Directly allocated: Investigators',
+            'value' => '0.00',
+            'active' => true,
+        ]);
+
+        CostItem::create([
+            'name' => 'A6',
+            'description' => 'Directly allocated: Estates',
+            'value' => '0.00',
+            'active' => true,
+        ]);
+
+        CostItem::create([
+            'name' => 'A7',
+            'description' => 'Directly allocated: Other cost',
+            'value' => '0.00',
+            'active' => true,
+        ]);
+
+        CostItem::create([
+            'name' => 'A8',
+            'description' => 'Indirect costs',
+            'value' => '0.00',
+            'active' => true,
+        ]);
+
+        CostItem::create([
+            'name' => 'A9',
+            'description' => '  Exceptions: Staff',
+            'value' => '0.00',
+            'active' => true,
+        ]);
+
+        CostItem::create([
+            'name' => 'A10',
+            'description' => 'Exceptions: Travel & Subsistence',
+            'value' => '0.00',
+            'active' => true,
+        ]);
+
+        CostItem::create([
+            'name' => 'A11',
+            'description' => 'Exceptions: Student Internships',
+            'value' => '0.00',
+            'active' => true,
+        ]);
+
+        CostItem::create([
+            'name' => 'A12',
+            'description' => 'Exceptions: Other cost',
+            'value' => '0.00',
+            'active' => true,
+        ]);
     }
 }
