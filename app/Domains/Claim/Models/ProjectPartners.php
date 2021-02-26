@@ -2,19 +2,14 @@
 
 namespace App\Domains\Claim\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Domains\Claim\Models\Traits\Scope\ProjectScope;
-use App\Domains\Claim\Models\Traits\Relationship\ProjectRelationship;
+use App\Domains\Auth\Models\User;
+use App\Domains\Claim\Models\Project;
 
-/**
- * Class Project.
- */
-class Project extends Model
+class ProjectPartners extends Model
 {
-    use SoftDeletes,
-        ProjectScope,
-        ProjectRelationship;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -22,14 +17,8 @@ class Project extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
-        'number',
-        'pool',
-        'start_date',
-        'length',
-        'number_of_partners',
-        'status',
-        'active',
+        'project_id',
+        'user_id',
     ];
 
     /**
@@ -42,9 +31,7 @@ class Project extends Model
     /**
      * @var array
      */
-    protected $dates = [
-        'start_date'
-    ];
+    protected $dates = [];
 
     /**
      * The attributes that should be cast to native types.
@@ -52,7 +39,8 @@ class Project extends Model
      * @var array
      */
     protected $casts = [
-        'active' => 'boolean',
+        'project_id' => 'integer',
+        'claims_data' => 'integer',
     ];
 
     /**
@@ -63,6 +51,14 @@ class Project extends Model
     /**
      * @var string[]
      */
-    protected $with = [];
-    
+    protected $with = ['user', 'project'];
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
+    public function project() {
+        return $this->belongsTo(Project::class);
+    }
+
 }

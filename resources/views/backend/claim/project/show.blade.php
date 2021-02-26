@@ -39,7 +39,29 @@
     </style>
 @endpush
 @section('content')
+    
     <x-backend.card>
+            <x-slot name="header">
+                @lang('Filter by Partner')
+            </x-slot>
+            <x-slot name="body">
+                <div class="col-sm-4">
+                    <div class="form-group row">
+                        <div class="col-md-10">
+                            <select class="form-control">
+                                @php $partnerCount = 1; @endphp
+                                @foreach($project->allpartners as $partner)
+                                    <option value="{{ $partner->user->id ?? 0 }}">{{ $partner->user->name ?? 'Partener - '.$partnerCount++ }}</option>
+                                @endforeach                            
+                            </select>
+                        </div>
+                    </div><!--form-group-->
+                </div>
+            </x-slot>
+    </x-backend.card>
+    <br />
+    <x-backend.card>
+
         <x-slot name="header">
             @lang('View Project')
         </x-slot>

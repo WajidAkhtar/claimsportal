@@ -42,6 +42,7 @@ class ProjectService extends BaseService
                 'pool' => $data['pool'],
                 'start_date' => '01-'.$data['start_date'],
                 'length' => $data['length'],
+                'number_of_partners' => $data['number_of_partners'],
                 'status' => $data['status'],
                 'active' => 1,
             ]);
@@ -49,11 +50,23 @@ class ProjectService extends BaseService
             // Sync Funders
             $project->funders()->sync($data['funders']);
 
-            // Save cost items
+            // Save cost items to the project
             foreach ($data['cost_items'] as $key => $value) {
                 $costItem = CostItem::firstOrCreate(['name' => $value['name']]);
                 $project->costItems()->attach($costItem->id);
             }
+
+            // Save partners for the project
+            if(!empty($data['number_of_partners'])) {
+                $partnerCount = 1;
+                while($partnerCount <= $data['number_of_partners']) {
+                    $project->allpartners()->create([
+                        'project_id' => $project->id
+                    ]);
+                    $partnerCount++;
+                }
+            }
+
         } catch (Exception $e) {
             DB::rollBack();
             throw new GeneralException(__('There was a problem creating this project. Please try again.'));
@@ -73,6 +86,10 @@ class ProjectService extends BaseService
      */
     public function update(Project $project, array $data = []): Project
     {
+        if($data['number_of_partners'] != count($data['project_partners'])) {
+            throw new GeneralException(__('Please assign '.$data['number_of_partners'].' partners to this project'));
+        }
+
         DB::beginTransaction();
 
         try {
@@ -82,24 +99,33 @@ class ProjectService extends BaseService
                 'pool' => $data['pool'],
                 'start_date' => '01-'.$data['start_date'],
                 'length' => $data['length'],
+                'number_of_partners' => $data['number_of_partners'],
                 'status' => $data['status'],
             ]);
 
             // Sync Funders
             $project->funders()->sync($data['funders']);
-            // Delete old and Save new cost items
-            // $project->costItems()->delete();
+
             $costItemIds = [];
             foreach ($data['cost_items'] as $key => $value) {
                 $costItem = CostItem::firstOrCreate(['name' => $value['name']]);
                 $costItemIds[] = $costItem->id;
-                // $project->costItems()->sync($costItem->id);
             }
+            // Save cost items to the project
             $project->costItems()->sync($costItemIds);
-            // $project->costItems()->createMany($data['cost_items']);
+
+            // Delete existing project partners
+            $project->allpartners()->delete();
+            // Save partners for the project
+            foreach ($data['project_partners'] as $key => $project_partner) {
+                $project->allpartners()->create([
+                    'user_id' => $project_partner,
+                    'project_id' => $project->id,
+                ]);
+            }
+
         } catch (Exception $e) {
             DB::rollBack();
-            dd($e);
             throw new GeneralException(__('There was a problem updating this project. Please try again.'));
         }
 
@@ -117,6 +143,7 @@ class ProjectService extends BaseService
     public function delete(Project $project): Project
     {
         if ($this->deleteById($project->id)) {
+            $project->allpartners()->delete();
             return $project;
         }
 

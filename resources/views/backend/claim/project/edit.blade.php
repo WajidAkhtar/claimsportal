@@ -79,6 +79,29 @@
                 </div><!--form-group-->
 
                 <div class="form-group row">
+                    {{ html()->label(__('No. of Parteners'))->class('col-md-2 col-form-label')->for('number_of_partners') }}
+
+                    <div class="col-md-10">
+                        {{ html()->input('number', 'number_of_partners')
+                            ->class('form-control')
+                            ->maxlength('5')
+                            ->placeholder('Number of parteners')
+                            ->required() }}
+                    </div>
+                </div><!--form-group-->
+
+                <div class="form-group row">
+                    {{ html()->label(__('Project Partners'))->class('col-md-2 col-form-label')->for('project_partners') }}
+
+                    <div class="col-md-10">
+                        {{ html()->multiselect('project_partners[]', $partners, old('project_partners')?? $project->partners->pluck('id'))
+                            ->class('form-control select2')
+                            // ->placeholder('Choose Project Partners')
+                            ->required() }}
+                    </div>
+                </div><!--form-group-->
+
+                <div class="form-group row">
                     {{ html()->label(__('Project Status'))->class('col-md-2 col-form-label')->for('status') }}
 
                     <div class="col-md-10">

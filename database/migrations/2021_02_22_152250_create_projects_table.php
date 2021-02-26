@@ -20,9 +20,13 @@ class CreateProjectsTable extends Migration
             $table->string('pool');
             $table->date('start_date');
             $table->smallInteger('length');
+            $table->smallInteger('number_of_partners')->default(0);
             $table->string('status');
             $table->unsignedTinyInteger('active')->default(1);
             $table->timestamps();
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('modified_by')->nullable();
+            $table->unsignedBigInteger('purged_by')->nullable();
             $table->softDeletes();
         });
     }

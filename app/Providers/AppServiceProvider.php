@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
+use App\Domains\Claim\Models\Project;
+use App\Observers\ProjectObserver;
 
 /**
  * Class AppServiceProvider.
@@ -28,5 +30,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Paginator::useBootstrap();
+        Project::observe(ProjectObserver::class);
     }
 }
