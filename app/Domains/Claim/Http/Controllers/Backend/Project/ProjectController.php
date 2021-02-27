@@ -13,6 +13,7 @@ use App\Domains\Claim\Http\Requests\Backend\Project\StoreProjectRequest;
 use App\Domains\Claim\Http\Requests\Backend\Project\DeleteProjectRequest;
 use App\Domains\Claim\Http\Requests\Backend\Project\UpdateProjectRequest;
 use App\Domains\Claim\Models\ProjectCostItem;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class ProjectController.
@@ -82,6 +83,9 @@ class ProjectController
      */
     public function show(Project $project)
     {
+        if(!empty(request()->partner)) {
+            dd(request()->partner);
+        }
         $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project])->render();
         return view('backend.claim.project.show')
             ->withProject($project)
@@ -156,6 +160,7 @@ class ProjectController
             // $costItem = $project->costItems()->whereId($costItemId)->first();
             $costItem = ProjectCostItem::whereProjectId($project->id)->whereCostItemId($costItemId)->first();
             $costItem->claims_data = collect($claimValue)->only('quarter_values', 'yearwise', 'total_budget')->toArray();
+            $costItem->user_id = Auth()->user()->id;
             $costItem->save();
         }
 

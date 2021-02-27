@@ -48,13 +48,15 @@
                 <div class="col-sm-4">
                     <div class="form-group row">
                         <div class="col-md-10">
-                            <select class="form-control">
-                                @php $partnerCount = 1; @endphp
-                                <option value="mastersheet">Master Sheet</option>
-                                @foreach($project->allpartners as $partner)
-                                    <option value="{{ $partner->user->id ?? 0 }}">{{ $partner->user->name ?? 'Partener - '.$partnerCount++ }}</option>
-                                @endforeach                            
-                            </select>
+                            <form action="#" id="filter_project_claims_data">
+                                <select class="form-control" onchange="this.form.submit()" name="partner">
+                                    @php $partnerCount = 1; @endphp
+                                    <option value="mastersheet">Master Sheet</option>
+                                    @foreach($project->allpartners as $partner)
+                                        <option value="{{ $partner->user->id ?? 0 }}">{{ $partner->user->name ?? 'Partener - '.$partnerCount++ }}</option>
+                                    @endforeach                            
+                                </select>
+                            </form>
                         </div>
                     </div><!--form-group-->
                 </div>
