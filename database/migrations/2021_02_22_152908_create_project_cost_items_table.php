@@ -17,7 +17,7 @@ class CreateProjectCostItemsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('project_id');
             $table->unsignedBigInteger('cost_item_id');
-            $table->unsignedBigInteger('user_id'); // For project partner
+            $table->unsignedBigInteger('user_id')->nullable(); // For project partner
             $table->timestamps();
             $table->softDeletes();
         });

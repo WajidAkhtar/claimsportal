@@ -55,6 +55,9 @@ class ProjectController
      */
     public function create()
     {
+        if(!auth()->user()->hasRole('Administrator')) {
+            return redirect()->route('admin.claim.project.index')->withFlashDanger(__('You have no access to this page.'));
+        }
         $funders = $this->userService->getByRoleId(7)->pluck('organisation', 'id');
         $costItems = CostItem::onlyActive()->get();
         return view('backend.claim.project.create')
@@ -83,12 +86,38 @@ class ProjectController
      */
     public function show(Project $project)
     {
-        if(!empty(request()->partner)) {
-            dd(request()->partner);
+        $allowToEdit = $project->isUserPartOfProject(auth()->user()->id);
+        
+        if(empty(request()->partner)) {
+            $project->costItems = $project->costItems()->limit($project->costItems()->count() / $project->number_of_partners, 1)->get();
+            $allowToEdit = false;
+        } else if(!empty(request()->partner)) {
+            $project->costItems = $project->costItems()->where('user_id', request()->partner)->get();
+        } else {
+            $project->costItems = $project->costItems()->where('user_id', auth()->user()->id)->get();
         }
-        $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project])->render();
+
+        if(empty(request()->partner) && $allowToEdit && $project->created_by != auth()->user()->id) {
+            $allowToEdit = true;
+        } else {
+            $allowToEdit = false;
+        }
+
+        if(!$project->isUserPartOfProject(auth()->user()->id, true) && $project->isUserPartOfProject(auth()->user()->id)) {
+            $allowToEdit = true;
+            $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project])->render();
+        } else {
+            if(empty(request()->partner)) {
+                $yearwiseHtml = View::make('backend.claim.project.show-yearwise-master', ['project' => $project])->render();
+            } else {
+                $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project])->render();
+            }
+        }
+
+        // $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project])->render();
         return view('backend.claim.project.show')
             ->withProject($project)
+            ->withAllowToEdit($allowToEdit)
             ->withyearwiseHtml($yearwiseHtml);
     }
 
@@ -100,6 +129,9 @@ class ProjectController
      */
     public function edit(EditProjectRequest $request, Project $project)
     {
+        if(!auth()->user()->hasRole('Administrator')) {
+            return redirect()->route('admin.claim.project.index')->withFlashDanger(__('You have no access to this page.'));
+        }
         $funders = $this->userService->getByRoleId(7)->pluck('organisation', 'id');
         $partners = $this->userService->getByRoleId(6)->pluck('name', 'id');
         $costItems = CostItem::onlyActive()->get();
@@ -158,9 +190,8 @@ class ProjectController
                 $claimYearwiseValue['variance'] = number_format($claimYearwiseValue['variance'], 2, '.', '');
             }
             // $costItem = $project->costItems()->whereId($costItemId)->first();
-            $costItem = ProjectCostItem::whereProjectId($project->id)->whereCostItemId($costItemId)->first();
+            $costItem = ProjectCostItem::whereProjectId($project->id)->whereCostItemId($costItemId)->whereUserId(Auth()->user()->id)->first();
             $costItem->claims_data = collect($claimValue)->only('quarter_values', 'yearwise', 'total_budget')->toArray();
-            $costItem->user_id = Auth()->user()->id;
             $costItem->save();
         }
 

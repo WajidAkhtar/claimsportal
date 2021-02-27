@@ -31,37 +31,37 @@ class PermissionRoleSeeder extends Seeder
         
         Role::create([
             'id' => 2,
-            'type' => User::TYPE_USER,
+            'type' => User::TYPE_ADMIN,
             'name' => 'Developer',
         ]);
         
         Role::create([
             'id' => 3,
-            'type' => User::TYPE_USER,
+            'type' => User::TYPE_ADMIN,
             'name' => 'Super User',
         ]);
         
         Role::create([
             'id' => 4,
-            'type' => User::TYPE_USER,
+            'type' => User::TYPE_ADMIN,
             'name' => 'Finance Officer',
         ]);
         
         Role::create([
             'id' => 5,
-            'type' => User::TYPE_USER,
+            'type' => User::TYPE_ADMIN,
             'name' => 'Project Admin',
         ]);
         
         Role::create([
             'id' => 6,
-            'type' => User::TYPE_USER,
+            'type' => User::TYPE_ADMIN,
             'name' => 'Project Partner',
         ]);
         
         Role::create([
             'id' => 7,
-            'type' => User::TYPE_USER,
+            'type' => User::TYPE_ADMIN,
             'name' => 'Funders',
         ]);
 

@@ -52,4 +52,16 @@ trait ProjectRelationship
         return $this->hasMany(ProjectPartners::class, 'project_id', 'id');
     }
 
+    /**
+     * @return mixed
+     */
+    public function isUserPartOfProject($user_id, $onlyCreator = false)
+    {
+        if($onlyCreator == true) {
+            return $this->created_by == $user_id;
+        }
+
+        return $this->created_by == $user_id || in_array($user_id, $this->partners->pluck('id')->toArray());
+    }
+
 }

@@ -39,7 +39,7 @@
     </style>
 @endpush
 @section('content')
-    
+    @if(auth()->user()->id == $project->created_by)
     <x-backend.card>
             <x-slot name="header">
                 @lang('Filter by Partner')
@@ -51,9 +51,9 @@
                             <form action="#" id="filter_project_claims_data">
                                 <select class="form-control" onchange="this.form.submit()" name="partner">
                                     @php $partnerCount = 1; @endphp
-                                    <option value="mastersheet">Master Sheet</option>
+                                    <option value="">Master Sheet</option>
                                     @foreach($project->allpartners as $partner)
-                                        <option value="{{ $partner->user->id ?? 0 }}">{{ $partner->user->name ?? 'Partener - '.$partnerCount++ }}</option>
+                                        <option value="{{ $partner->user->id ?? 0 }}" {{ (!empty($partner->user) && request()->partner == $partner->user->id ? 'selected':'') }}>{{ $partner->user->name ?? 'Partener - '.$partnerCount++ }} Sheet</option>
                                     @endforeach                            
                                 </select>
                             </form>
@@ -63,6 +63,8 @@
             </x-slot>
     </x-backend.card>
     <br />
+    @endif
+
     <x-backend.card>
 
         <x-slot name="header">
@@ -677,6 +679,15 @@
                     $(this).val('');
                 }
             });
+
+            var allowToEdit = '{{ $allowToEdit }}';
+            if(!allowToEdit) {
+                $('table input').each(function() {
+                    $(this).attr('disabled', 'disabled');
+                    $(this).attr('readonly', 'readonly');
+                    $(this).parent().find('.input-group-prepend span').addClass('readonly');
+                });
+            }
 
         });
 

@@ -15,7 +15,7 @@ Route::group([
         'as' => 'project.',
     ], function () {
         Route::group([
-            'middleware' => 'role:'.config('boilerplate.access.role.admin'),
+            // 'middleware' => 'role:'.config('boilerplate.access.role.admin').'|Project Partner',
         ], function () {
             Route::get('create', [ProjectController::class, 'create'])
                 ->name('create')
@@ -42,11 +42,11 @@ Route::group([
         });
 
         Route::group([
-            'middleware' => 'permission:admin.access.project.list',
+            // 'middleware' => 'permission:admin.access.project.list',
         ], function () {
             Route::get('/', [ProjectController::class, 'index'])
                 ->name('index')
-                ->middleware('permission:admin.access.project.list|admin.access.project.deactivate|admin.access.project.clear-session|admin.access.project.impersonate|admin.access.project.change-password')
+                // ->middleware('permission:admin.access.project.list|admin.access.project.deactivate|admin.access.project.clear-session|admin.access.project.impersonate|admin.access.project.change-password')
                 ->breadcrumbs(function (Trail $trail) {
                     $trail->parent('admin.dashboard')
                         ->push(__('Project Management'), route('admin.claim.project.index'));
@@ -55,7 +55,7 @@ Route::group([
             Route::group(['prefix' => '{project}'], function () {
                 Route::get('/', [ProjectController::class, 'show'])
                     ->name('show')
-                    ->middleware('permission:admin.access.project.list')
+                    // ->middleware('permission:admin.access.project.list')
                     ->breadcrumbs(function (Trail $trail, Project $project) {
                         $trail->parent('admin.claim.project.index')
                             ->push($project->name, route('admin.claim.project.show', $project));
@@ -63,8 +63,8 @@ Route::group([
 
                 Route::patch('mark/{status}', [DeactivatedProjectController::class, 'update'])
                     ->name('mark')
-                    ->where(['status' => '[0,1]'])
-                    ->middleware('permission:admin.access.project.deactivate|admin.access.project.reactivate');
+                    ->where(['status' => '[0,1]']);
+                    // ->middleware('permission:admin.access.project.deactivate|admin.access.project.reactivate');
             });
         });
     });

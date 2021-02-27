@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Exceptions\GeneralException;
 use App\Domains\Claim\Models\Project;
 use App\Domains\Claim\Models\CostItem;
+use App\Domains\Claim\Models\ProjectCostItem;
 
 /**
  * Class ProjectService.
@@ -49,12 +50,6 @@ class ProjectService extends BaseService
             
             // Sync Funders
             $project->funders()->sync($data['funders']);
-
-            // Save cost items to the project
-            foreach ($data['cost_items'] as $key => $value) {
-                $costItem = CostItem::firstOrCreate(['name' => $value['name']]);
-                $project->costItems()->attach($costItem->id);
-            }
 
             // Save partners for the project
             if(!empty($data['number_of_partners'])) {
@@ -112,7 +107,7 @@ class ProjectService extends BaseService
                 $costItemIds[] = $costItem->id;
             }
             // Save cost items to the project
-            $project->costItems()->sync($costItemIds);
+            // $project->costItems()->sync($costItemIds);
 
             // Delete existing project partners
             $project->allpartners()->delete();
@@ -122,6 +117,14 @@ class ProjectService extends BaseService
                     'user_id' => $project_partner,
                     'project_id' => $project->id,
                 ]);
+                foreach ($data['cost_items'] as $key => $value) {
+                    $costItem = CostItem::firstOrCreate(['name' => $value['name']]);
+                    ProjectCostItem::create([
+                        'project_id' => $project->id,
+                        'user_id' => $project_partner,
+                        'cost_item_id' => $costItem->id,
+                    ]);
+                }
             }
 
         } catch (Exception $e) {
@@ -144,6 +147,7 @@ class ProjectService extends BaseService
     {
         if ($this->deleteById($project->id)) {
             $project->allpartners()->delete();
+            $project->costItems()->delete();
             return $project;
         }
 

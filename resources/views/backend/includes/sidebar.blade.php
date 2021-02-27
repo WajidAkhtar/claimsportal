@@ -12,7 +12,7 @@
                 </ul>
             </li>
 
-            
+            @if(auth()->user()->hasRole('Administrator'))
             <li class="dropdown active">
                 <a href="javascript:void(0)"><i class="fa fa-users mr-1"></i> Users</a>
                 <ul>
@@ -21,6 +21,7 @@
                     </li>
                 </ul>
             </li>
+            @endif
             
             <li class="dropdown active">
                 <a href="javascript:void(0)"><i class="fa fa-sticky-note mr-1"></i> Claims</a>
