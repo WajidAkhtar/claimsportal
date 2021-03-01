@@ -31,6 +31,14 @@ trait ProjectRelationship
     /**
      * @return mixed
      */
+    public function innerData()
+    {
+        return $this->hasMany(ProjectCostItem::class, 'project_id', 'id');
+    }
+
+    /**
+     * @return mixed
+     */
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by', 'id');

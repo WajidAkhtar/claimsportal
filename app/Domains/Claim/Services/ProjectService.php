@@ -147,7 +147,7 @@ class ProjectService extends BaseService
     {
         if ($this->deleteById($project->id)) {
             $project->allpartners()->delete();
-            $project->costItems()->delete();
+            $project->innerData()->delete();
             return $project;
         }
 

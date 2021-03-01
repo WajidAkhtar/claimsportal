@@ -88,7 +88,7 @@ class ProjectController
     {
         $allowToEdit = $project->isUserPartOfProject(auth()->user()->id);
         
-        if(empty(request()->partner)) {
+        if(empty(request()->partner) && $project->created_by == auth()->user()->id) {
             $project->costItems = $project->costItems()->limit($project->costItems()->count() / $project->number_of_partners, 1)->get();
             $allowToEdit = false;
         } else if(!empty(request()->partner)) {
@@ -106,11 +106,23 @@ class ProjectController
         if(!$project->isUserPartOfProject(auth()->user()->id, true) && $project->isUserPartOfProject(auth()->user()->id)) {
             $allowToEdit = true;
             $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project])->render();
+            return view('backend.claim.project.show')
+            ->withProject($project)
+            ->withAllowToEdit($allowToEdit)
+            ->withyearwiseHtml($yearwiseHtml);
         } else {
             if(empty(request()->partner)) {
                 $yearwiseHtml = View::make('backend.claim.project.show-yearwise-master', ['project' => $project])->render();
+                return view('backend.claim.project.show-master')
+                ->withProject($project)
+                ->withAllowToEdit($allowToEdit)
+                ->withyearwiseHtml($yearwiseHtml);
             } else {
                 $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project])->render();
+                return view('backend.claim.project.show')
+                ->withProject($project)
+                ->withAllowToEdit($allowToEdit)
+                ->withyearwiseHtml($yearwiseHtml);
             }
         }
 
@@ -194,6 +206,8 @@ class ProjectController
             $costItem->claims_data = collect($claimValue)->only('quarter_values', 'yearwise', 'total_budget')->toArray();
             $costItem->save();
         }
+
+        $project->costItems = $project->costItems()->where('user_id', auth()->user()->id)->get();
 
         $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project])->render();
         return response()->json(['success' => 1, 'message' => 'Data saved successfully!', 'data' => ['yearwiseHtml' => $yearwiseHtml]]);
