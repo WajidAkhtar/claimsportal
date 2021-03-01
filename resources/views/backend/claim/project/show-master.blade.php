@@ -187,7 +187,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">£</span>
                                         </div>
-                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][quarter_values]['.$fromDate->timestamp.']', optional(optional($costItem->claims_data)->quarter_values)->{"$fromDate->timestamp"} ?? '')
+                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][quarter_values]['.$fromDate->timestamp.']', $data->claims_data[$costItem->id]['quarter_values'][$fromDate->timestamp] ?? '')
                                             ->placeholder('0.00')
                                             ->class('form-control '.$labelClass)
                                             ->attribute('data-year-index', $yearIndex)
@@ -231,7 +231,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">£</span>
                                         </div>
-                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][yearwise]['.$i.'][budget]', optional(optional($costItem->claims_data)->yearwise)[$i]->budget ?? '')
+                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][yearwise]['.$i.'][budget]', $data->claims_data[$costItem->id]['yearwise'][$i]['budget'] ?? '')
                                             ->placeholder('0.00')
                                             ->class('form-control')
                                             ->required() }}
@@ -242,7 +242,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text readonly">£</span>
                                         </div>
-                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][yearwise]['.$i.'][amount]', optional(optional($costItem->claims_data)->yearwise)[$i]->amount ?? '')
+                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][yearwise]['.$i.'][amount]', $data->claims_data[$costItem->id]['yearwise'][$i]['amount'] ?? '')
                                             ->placeholder('0.00')
                                             ->class('form-control')
                                             ->readOnly()
@@ -254,7 +254,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text readonly">£</span>
                                         </div>
-                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][yearwise]['.$i.'][variance]', optional(optional($costItem->claims_data)->yearwise)[$i]->variance ?? '')
+                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][yearwise]['.$i.'][variance]', $data->claims_data[$costItem->id]['yearwise'][$i]['variance'] ?? '')
                                             ->placeholder('0.00')
                                             ->class('form-control')
                                             ->readOnly()

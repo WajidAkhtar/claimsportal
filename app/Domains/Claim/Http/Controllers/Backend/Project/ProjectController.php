@@ -89,7 +89,7 @@ class ProjectController
         $allowToEdit = $project->isUserPartOfProject(auth()->user()->id);
         
         if(empty(request()->partner) && $project->created_by == auth()->user()->id) {
-            $project->costItems = $project->costItems()->limit($project->costItems()->count() / $project->number_of_partners, 1)->get();
+            // $project->costItems = $project->costItems()->limit($project->costItems()->count() / $project->number_of_partners, 1)->get();
             $allowToEdit = false;
         } else if(!empty(request()->partner)) {
             $project->costItems = $project->costItems()->where('user_id', request()->partner)->get();
@@ -111,10 +111,29 @@ class ProjectController
             ->withAllowToEdit($allowToEdit)
             ->withyearwiseHtml($yearwiseHtml);
         } else {
+            // $project->costItems = Project::find($project->id)->costItems()->get();
+            $data = [];
             if(empty(request()->partner)) {
-                $yearwiseHtml = View::make('backend.claim.project.show-yearwise-master', ['project' => $project])->render();
+                $costItems = $project->costItems->groupBy('pivot.cost_item_id')->all();
+                foreach ($costItems as $key => $costItem) {
+                    $quarterDates = array_keys((array) $costItem[0]->claims_data->quarter_values);
+                    foreach ($quarterDates as $key => $timestamp) {
+                        $data['claims_data'][$costItem[0]->id]['quarter_values'][$timestamp] = $costItem->pluck('claims_data.quarter_values.'.$timestamp)->sum(); 
+                    }
+
+                    $yearwiseData = array_keys((array) $costItem[0]->claims_data->quarter_values);
+                    foreach ($costItem[0]->claims_data->yearwise as $key => $yearwise) {
+                        $data['claims_data'][$costItem[0]->id]['yearwise'][$key]['budget'] = $costItem->pluck('claims_data.yearwise.'.$key)->sum('budget'); 
+                        $data['claims_data'][$costItem[0]->id]['yearwise'][$key]['amount'] = $costItem->pluck('claims_data.yearwise.'.$key)->sum('amount'); 
+                        $data['claims_data'][$costItem[0]->id]['yearwise'][$key]['variance'] = $costItem->pluck('claims_data.yearwise.'.$key)->sum('variance'); 
+                    }
+                }
+                $project->costItems = $project->costItems()->limit($project->costItems()->count() / $project->number_of_partners, 1)->get();
+                $data = (object) $data;
+                $yearwiseHtml = View::make('backend.claim.project.show-yearwise-master', ['project' => $project, 'data' => $data])->render();
                 return view('backend.claim.project.show-master')
                 ->withProject($project)
+                ->withData($data)
                 ->withAllowToEdit($allowToEdit)
                 ->withyearwiseHtml($yearwiseHtml);
             } else {

@@ -77,7 +77,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text readonly">£</span>
                         </div>
-                        {{ html()->input('number', 'yearly_data['.$yearIndex.'][claim_values]['.$costItem->id.'][total_budget]', optional(optional($costItem->claims_data)->yearwise)[$yearIndex]->budget ?? 0)
+                        {{ html()->input('number', 'yearly_data['.$yearIndex.'][claim_values]['.$costItem->id.'][total_budget]', $data->claims_data[$costItem->id]['yearwise'][$yearIndex]['budget'] ?? '')
                             ->placeholder('0.00')
                             ->class('form-control')
                             ->readOnly()
@@ -96,14 +96,14 @@
                     if (now()->betweenIncluded($fromDate1, $toDate)){
                         $lableClass = 'text-danger';
                     }
-                    $projectTotal += optional(optional($costItem->claims_data)->quarter_values)->{"$fromDate1->timestamp"} ?? 0;
+                    $projectTotal += $data->claims_data[$costItem->id]['quarter_values'][$fromDate1->timestamp] ?? 0;
                 @endphp
                 <td>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text readonly">£</span>
                         </div>
-                        {{ html()->input('number', 'yearly_data['.$yearIndex.'][claim_values]['.$costItem->id.'][quarter_values]['.$fromDate1->timestamp.']', optional(optional($costItem->claims_data)->quarter_values)->{"$fromDate1->timestamp"} ?? 0.00)
+                        {{ html()->input('number', 'yearly_data['.$yearIndex.'][claim_values]['.$costItem->id.'][quarter_values]['.$fromDate1->timestamp.']', $data->claims_data[$costItem->id]['quarter_values'][$fromDate1->timestamp] ?? 0.00)
                             ->placeholder('0.00')
                             ->class('form-control '.$lableClass)
                             ->readOnly()
@@ -131,7 +131,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text readonly">£</span>
                         </div>
-                        {{ html()->input('number', 'yearly_data['.$yearIndex.'][claim_values]['.$costItem->id.'][variance]', (optional(optional($costItem->claims_data)->yearwise)[$yearIndex]->budget ?? 0) - $projectTotal)
+                        {{ html()->input('number', 'yearly_data['.$yearIndex.'][claim_values]['.$costItem->id.'][variance]', $data->claims_data[$costItem->id]['yearwise'][$i]['budget'] ?? 0.00 - $projectTotal)
                             ->placeholder('0.00')
                             ->class('form-control')
                             ->readOnly()
