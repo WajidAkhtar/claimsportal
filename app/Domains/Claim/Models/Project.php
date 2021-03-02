@@ -28,6 +28,7 @@ class Project extends Model
         'start_date',
         'length',
         'number_of_partners',
+        'cost_items_order',
         'status',
         'active',
     ];

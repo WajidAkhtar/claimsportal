@@ -21,6 +21,7 @@ class CreateProjectsTable extends Migration
             $table->date('start_date');
             $table->smallInteger('length');
             $table->smallInteger('number_of_partners')->default(0);
+            $table->string('cost_items_order')->default('');
             $table->string('status');
             $table->unsignedTinyInteger('active')->default(1);
             $table->timestamps();

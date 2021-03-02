@@ -72,4 +72,11 @@ trait ProjectRelationship
         return $this->created_by == $user_id || in_array($user_id, $this->partners->pluck('id')->toArray());
     }
 
+    /**
+    * @return mixed
+    */
+    public function costItemOrderRaw() {
+      return "FIELD (name, '".implode("','", explode(',', $this->cost_items_order))."')";  
+    } 
+
 }

@@ -4,6 +4,7 @@
 
 @push('after-styles')
 <link rel="stylesheet" href="{{asset('assets/backend/vendors/select2/css/select2.css')}}">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 @endpush
 @section('content')
     <x-forms.post :action="route('admin.claim.project.store')">
@@ -123,8 +124,8 @@
                             <tbody class="repeatable">
                                 @if (!empty(old('cost_items')) || !empty($costItems))
                                 @php $costItemCount = 1; @endphp
-                                @foreach (old('cost_items')?? $costItems as $key => $costItem)
-                                <tr class="field-group">
+                                @foreach ($costItems as $key => $costItem)
+                                <tr class="field-group" id="{{ $costItem->name }}">
                                     <td>{{ $costItemCount++ }}</td>
                                     <td>
                                         {{ html()->text('cost_items['.$key.'][name]', $costItem->name ?? '')
@@ -153,6 +154,9 @@
                                 </tr>
                             </tfoot>
                         </table>
+                        {{ html()->input('hidden', 'cost_items_order', $costItems->pluck('name')->implode(','))
+                            ->class('form-control')
+                        }}
                     </div>
                 </div><!--form-group-->
 
@@ -187,10 +191,18 @@
 @push('after-scripts')
 <script src="{{asset('assets/backend/vendors/select2/js/select2.js')}}"></script>
 <script src="{{asset('assets/backend/vendors/repeatable/jquery.repeatable.js')}}"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
     $(document).ready(function(){
         $('.select2').select2();
-
+        $( ".repeatable" ).sortable({
+            connectWith: '.repeatable',
+              update: function(event, ui) {
+                var cost_items_order = $(this).sortable('toArray');
+                $("#cost_items_order").val(cost_items_order.join(','));
+              }
+        });
+        $('.repeatable').disableSelection();
         $('.cost_items .repeatable').repeatable({
             addTrigger: ".cost_items .add",
             deleteTrigger: ".cost_items .delete",

@@ -44,6 +44,7 @@ class ProjectService extends BaseService
                 'start_date' => '01-'.$data['start_date'],
                 'length' => $data['length'],
                 'number_of_partners' => $data['number_of_partners'],
+                'cost_items_order' => $data['cost_items_order'],
                 'status' => $data['status'],
                 'active' => 1,
             ]);
@@ -64,6 +65,7 @@ class ProjectService extends BaseService
 
         } catch (Exception $e) {
             DB::rollBack();
+            dd($e);
             throw new GeneralException(__('There was a problem creating this project. Please try again.'));
         }
 
@@ -95,6 +97,7 @@ class ProjectService extends BaseService
                 'start_date' => '01-'.$data['start_date'],
                 'length' => $data['length'],
                 'number_of_partners' => $data['number_of_partners'],
+                'cost_items_order' => $data['cost_items_order'],
                 'status' => $data['status'],
             ]);
 
@@ -119,7 +122,7 @@ class ProjectService extends BaseService
                 ]);
                 foreach ($data['cost_items'] as $key => $value) {
                     $costItem = CostItem::firstOrCreate(['name' => $value['name']]);
-                    ProjectCostItem::create([
+                    ProjectCostItem::firstOrCreate([
                         'project_id' => $project->id,
                         'user_id' => $project_partner,
                         'cost_item_id' => $costItem->id,

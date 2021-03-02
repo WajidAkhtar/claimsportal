@@ -92,9 +92,9 @@ class ProjectController
             // $project->costItems = $project->costItems()->limit($project->costItems()->count() / $project->number_of_partners, 1)->get();
             $allowToEdit = false;
         } else if(!empty(request()->partner)) {
-            $project->costItems = $project->costItems()->where('user_id', request()->partner)->get();
+            $project->costItems = $project->costItems()->where('user_id', request()->partner)->orderByRaw($project->costItemOrderRaw())->get();
         } else {
-            $project->costItems = $project->costItems()->where('user_id', auth()->user()->id)->get();
+            $project->costItems = $project->costItems()->where('user_id', auth()->user()->id)->orderByRaw($project->costItemOrderRaw())->get();
         }
 
         if(empty(request()->partner) && $allowToEdit && $project->created_by != auth()->user()->id) {
@@ -116,19 +116,44 @@ class ProjectController
             if(empty(request()->partner)) {
                 $costItems = $project->costItems->groupBy('pivot.cost_item_id')->all();
                 foreach ($costItems as $key => $costItem) {
-                    $quarterDates = array_keys((array) $costItem[0]->claims_data->quarter_values);
+                    $quarterDates = [];
+                    if(!empty($costItem)) {
+                        foreach($costItem as $ckey => $ciClaimData) {
+                            if(!empty($ciClaimData) && !empty($ciClaimData->claims_data)) {
+                                $quarterDates = array_keys((array) $ciClaimData->claims_data->quarter_values);
+                                break;
+                            }
+                        }
+                    }
+                    if(empty($quarterDates)) {
+                        continue;
+                    }
                     foreach ($quarterDates as $key => $timestamp) {
                         $data['claims_data'][$costItem[0]->id]['quarter_values'][$timestamp] = $costItem->pluck('claims_data.quarter_values.'.$timestamp)->sum(); 
                     }
-
-                    $yearwiseData = array_keys((array) $costItem[0]->claims_data->quarter_values);
-                    foreach ($costItem[0]->claims_data->yearwise as $key => $yearwise) {
+                }
+                foreach ($costItems as $key => $costItem) {
+                    $yearwise = [];
+                    if(!empty($costItem)) {
+                        foreach($costItem as $ckey => $ciClaimData) {
+                            if(!empty($ciClaimData) && !empty($ciClaimData->claims_data)) {
+                                $yearwise = array_keys((array) $ciClaimData->claims_data->yearwise);
+                                break;
+                            }
+                        }
+                    }
+                    if(empty($yearwise)) {
+                        continue;
+                    }
+                    foreach ($yearwise as $key => $yearwise) {
                         $data['claims_data'][$costItem[0]->id]['yearwise'][$key]['budget'] = $costItem->pluck('claims_data.yearwise.'.$key)->sum('budget'); 
                         $data['claims_data'][$costItem[0]->id]['yearwise'][$key]['amount'] = $costItem->pluck('claims_data.yearwise.'.$key)->sum('amount'); 
                         $data['claims_data'][$costItem[0]->id]['yearwise'][$key]['variance'] = $costItem->pluck('claims_data.yearwise.'.$key)->sum('variance'); 
                     }
+                    // dd($data);
                 }
-                $project->costItems = $project->costItems()->limit($project->costItems()->count() / $project->number_of_partners, 1)->get();
+                $project->costItems = $project->costItems()->orderByRaw($project->costItemOrderRaw())->groupBy('cost_items.name')->get();
+
                 $data = (object) $data;
                 $yearwiseHtml = View::make('backend.claim.project.show-yearwise-master', ['project' => $project, 'data' => $data])->render();
                 return view('backend.claim.project.show-master')
@@ -165,7 +190,7 @@ class ProjectController
         }
         $funders = $this->userService->getByRoleId(7)->pluck('organisation', 'id');
         $partners = $this->userService->getByRoleId(6)->pluck('name', 'id');
-        $costItems = CostItem::onlyActive()->get();
+        $costItems = CostItem::onlyActive()->orderByRaw($project->costItemOrderRaw())->get();
         return view('backend.claim.project.edit')
             ->withProject($project)
             ->withFunders($funders)
@@ -226,7 +251,7 @@ class ProjectController
             $costItem->save();
         }
 
-        $project->costItems = $project->costItems()->where('user_id', auth()->user()->id)->get();
+        $project->costItems = $project->costItems()->where('user_id', auth()->user()->id)->orderByRaw($project->costItemOrderRaw())->get();
 
         $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project])->render();
         return response()->json(['success' => 1, 'message' => 'Data saved successfully!', 'data' => ['yearwiseHtml' => $yearwiseHtml]]);

@@ -39,6 +39,7 @@ class UpdateProjectRequest extends FormRequest
             'funders.*' => 'required|numeric|exists:users,id',
             'project_partners' => 'required|array',
             'project_partners.*' => 'required|numeric|exists:users,id',
+            'cost_items_order' => '',
             'cost_items' => 'required|array',
             'cost_items.*.name' => 'required|max:191',
             'cost_items.*.description' => 'required|max:191',
