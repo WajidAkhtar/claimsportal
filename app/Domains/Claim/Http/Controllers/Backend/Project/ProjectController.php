@@ -117,6 +117,7 @@ class ProjectController
         } else {
             $data = [];
             if(empty(request()->partner)) {
+                dd($project->partners()->pluck('user_id'));
                 $costItems = $project->costItems->whereNull('project_cost_items.deleted_at')->groupBy('pivot.cost_item_id')->all();
                 dd($costItems);
                 foreach ($costItems as $key => $costItem) {
