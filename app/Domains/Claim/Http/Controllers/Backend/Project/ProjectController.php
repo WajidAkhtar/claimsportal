@@ -118,7 +118,6 @@ class ProjectController
             $data = [];
             if(empty(request()->partner)) {
                 $costItems = $project->costItems->whereNull('project_cost_items.deleted_at')->whereIn('pivot.user_id', $project->partners()->pluck('user_id'))->groupBy('pivot.cost_item_id')->all();
-                // dd($costItems);
                 foreach ($costItems as $key => $costItem) {
                     $quarterDates = [];
                     if(!empty($costItem)) {
@@ -172,11 +171,6 @@ class ProjectController
                 ->withyearwiseHtml($yearwiseHtml);
             }
         }
-
-        // return view('backend.claim.project.show')
-        //     ->withProject($project)
-        //     ->withAllowToEdit($allowToEdit)
-        //     ->withyearwiseHtml($yearwiseHtml);
     }
 
     /**

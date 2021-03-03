@@ -4,7 +4,7 @@
 
 @push('after-styles')
 <link rel="stylesheet" href="{{asset('assets/backend/vendors/select2/css/select2.css')}}">
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="{{asset('assets/backend/vendors/jquery-ui/jquery-ui.css')}}">
 @endpush
 @section('content')
     <x-forms.post :action="route('admin.claim.project.store')">
@@ -191,7 +191,7 @@
 @push('after-scripts')
 <script src="{{asset('assets/backend/vendors/select2/js/select2.js')}}"></script>
 <script src="{{asset('assets/backend/vendors/repeatable/jquery.repeatable.js')}}"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="{{asset('assets/backend/vendors/jquery-ui/jquery-ui.js')}}"></script>
 <script>
     $(document).ready(function(){
         $('.select2').select2();
