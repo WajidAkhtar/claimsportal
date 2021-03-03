@@ -4,7 +4,6 @@
 
 @push('after-styles')
 <link rel="stylesheet" href="{{asset('assets/backend/vendors/select2/css/select2.css')}}">
-<link rel="stylesheet" href="{{asset('assets/backend/vendors/jquery-ui/jquery-ui.css')}}">
 @endpush
 @section('content')
     <x-forms.patch :action="route('admin.claim.project.update', $project)">
@@ -209,7 +208,6 @@
 @push('after-scripts')
 <script src="{{asset('assets/backend/vendors/select2/js/select2.js')}}"></script>
 <script src="{{asset('assets/backend/vendors/repeatable/jquery.repeatable.js')}}"></script>
-<script src="{{asset('assets/backend/vendors/jquery-ui/jquery-ui.js')}}"></script>
 <script>
     $(document).ready(function(){
         $('.select2').select2();
