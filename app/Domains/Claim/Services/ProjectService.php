@@ -83,6 +83,7 @@ class ProjectService extends BaseService
     public function update(Project $project, array $data = []): Project
     {
         $oldCostItems = $project->costItems()->groupBy('cost_item_id')->pluck('cost_item_id')->toArray();
+        $oldPartners = $project->partners()->groupBy('user_id')->pluck('user_id')->toArray();
 
         if($data['number_of_partners'] != count($data['project_partners'])) {
             throw new GeneralException(__('Please assign '.$data['number_of_partners'].' partners to this project'));
@@ -114,6 +115,9 @@ class ProjectService extends BaseService
             // Delete removed project cost items
             $costItemIdsToRemove = array_merge(array_diff($costItemIds, $oldCostItems), array_diff($oldCostItems, $costItemIds));
             $project->costItems()->whereIn('cost_item_id', $costItemIdsToRemove)->delete();
+            // Delete removed project partners
+            $costItemsUsersToRemove = array_merge(array_diff($data['project_partners'], $oldPartners), array_diff($oldPartners, $data['project_partners']));
+            $project->costItems()->whereIn('user_id', $costItemsUsersToRemove)->delete();
 
             // Delete existing project partners
             $project->allpartners()->delete();
