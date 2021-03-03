@@ -140,6 +140,7 @@
                                 @if (!empty(old('cost_items')) || !empty($costItems))
                                 @php $costItemCount = 1; @endphp
                                 @foreach (old('cost_items')?? ( $costItems) as $key => $costItem)
+                                @php dd($costItem) @endphp
                                 <tr class="field-group" id="{{ $costItem->name }}">
                                     <td>{{ $costItemCount++ }}</td>
                                     <td>
