@@ -56,7 +56,7 @@ class ProjectController
      */
     public function create()
     {
-        CostItem::update([
+        CostItem::where(1)->update([
             'deleted_at' => null
         ]);
         dd(1);
