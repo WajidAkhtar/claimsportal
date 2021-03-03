@@ -117,7 +117,6 @@ class ProjectService extends BaseService
             $project->costItems()->whereIn('cost_item_id', $costItemIdsToRemove)->delete();
             // Delete removed project partners
             $costItemsUsersToRemove = array_merge(array_diff($data['project_partners'], $oldPartners), array_diff($oldPartners, $data['project_partners']));
-            dd($data['project_partners'], $oldPartners,$costItemsUsersToRemove);
             $project->costItems()->whereIn('user_id', $costItemsUsersToRemove)->delete();
 
             // Delete existing project partners
