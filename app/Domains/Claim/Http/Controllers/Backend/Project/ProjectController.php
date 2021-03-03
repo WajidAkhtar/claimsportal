@@ -86,6 +86,10 @@ class ProjectController
      */
     public function show(Project $project)
     {
+        if(!$project->isUserPartOfProject(auth()->user()->id, true) && !$project->isUserPartOfProject(auth()->user()->id)) {
+            throw new GeneralException(__('You have no access to this page'));
+        }
+
         $allowToEdit = $project->isUserPartOfProject(auth()->user()->id);
         
         if(empty(request()->partner) && $project->created_by == auth()->user()->id) {
