@@ -117,7 +117,7 @@ class ProjectController
         } else {
             $data = [];
             if(empty(request()->partner)) {
-                $costItems = $project->costItems->groupBy('pivot.cost_item_id')->all();
+                $costItems = $project->costItems->whereNull('project_cost_items.deleted_at')->groupBy('pivot.cost_item_id')->all();
                 foreach ($costItems as $key => $costItem) {
                     $quarterDates = [];
                     if(!empty($costItem)) {
