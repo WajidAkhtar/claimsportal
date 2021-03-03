@@ -56,7 +56,7 @@ class ProjectController
      */
     public function create()
     {
-        $deleted = CostItem::where('deleted_at', '!=', 'null')->get();
+        $deleted = CostItem::whereNull('deleted_at')->get();
         //->update(['deleted_at' => null]);
         dd($deleted);
         if(!auth()->user()->hasRole('Administrator')) {
