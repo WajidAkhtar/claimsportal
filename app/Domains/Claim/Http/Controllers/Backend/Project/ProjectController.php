@@ -56,6 +56,9 @@ class ProjectController
      */
     public function create()
     {
+        $deleted = CostItem::where('deleted_at', '!=', 'null')->get();
+        //->update(['deleted_at' => null]);
+        dd($deleted);
         if(!auth()->user()->hasRole('Administrator')) {
             return redirect()->route('admin.claim.project.index')->withFlashDanger(__('You have no access to this page.'));
         }
