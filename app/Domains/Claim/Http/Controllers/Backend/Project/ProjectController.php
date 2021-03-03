@@ -89,7 +89,6 @@ class ProjectController
         $allowToEdit = $project->isUserPartOfProject(auth()->user()->id);
         
         if(empty(request()->partner) && $project->created_by == auth()->user()->id) {
-            // $project->costItems = $project->costItems()->limit($project->costItems()->count() / $project->number_of_partners, 1)->get();
             $allowToEdit = false;
         } else if(!empty(request()->partner)) {
             $project->costItems = $project->costItems()->where('user_id', request()->partner)->orderByRaw($project->costItemOrderRaw())->get();
@@ -111,7 +110,6 @@ class ProjectController
             ->withAllowToEdit($allowToEdit)
             ->withyearwiseHtml($yearwiseHtml);
         } else {
-            // $project->costItems = Project::find($project->id)->costItems()->get();
             $data = [];
             if(empty(request()->partner)) {
                 $costItems = $project->costItems->groupBy('pivot.cost_item_id')->all();
@@ -150,7 +148,6 @@ class ProjectController
                         $data['claims_data'][$costItem[0]->id]['yearwise'][$key]['amount'] = $costItem->pluck('claims_data.yearwise.'.$key)->sum('amount'); 
                         $data['claims_data'][$costItem[0]->id]['yearwise'][$key]['variance'] = $costItem->pluck('claims_data.yearwise.'.$key)->sum('variance'); 
                     }
-                    // dd($data);
                 }
                 $project->costItems = $project->costItems()->orderByRaw($project->costItemOrderRaw())->groupBy('cost_items.name')->get();
 
@@ -170,11 +167,10 @@ class ProjectController
             }
         }
 
-        // $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project])->render();
-        return view('backend.claim.project.show')
-            ->withProject($project)
-            ->withAllowToEdit($allowToEdit)
-            ->withyearwiseHtml($yearwiseHtml);
+        // return view('backend.claim.project.show')
+        //     ->withProject($project)
+        //     ->withAllowToEdit($allowToEdit)
+        //     ->withyearwiseHtml($yearwiseHtml);
     }
 
     /**
@@ -191,6 +187,7 @@ class ProjectController
         $funders = $this->userService->getByRoleId(7)->pluck('organisation', 'id');
         $partners = $this->userService->getByRoleId(6)->pluck('name', 'id');
         $costItems = CostItem::onlyActive()->orderByRaw($project->costItemOrderRaw())->get();
+        // $costItems = $project->costItems()->groupBy('cost_item_id')->orderByRaw($project->costItemOrderRaw())->get();
         return view('backend.claim.project.edit')
             ->withProject($project)
             ->withFunders($funders)
