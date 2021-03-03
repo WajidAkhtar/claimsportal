@@ -60,6 +60,13 @@ class ProjectService extends BaseService
                         'project_id' => $project->id
                     ]);
                     $partnerCount++;
+                    foreach ($data['cost_items'] as $key => $value) {
+                        $costItem = CostItem::firstOrCreate(['name' => $value['name']]);
+                        ProjectCostItem::firstOrCreate([
+                            'project_id' => $project->id,
+                            'cost_item_id' => $costItem->id,
+                        ]);
+                    }
                 }
             }
 
@@ -114,10 +121,10 @@ class ProjectService extends BaseService
 
             // Delete removed project cost items
             $costItemIdsToRemove = array_merge(array_diff($costItemIds, $oldCostItems), array_diff($oldCostItems, $costItemIds));
-            $project->costItems()->whereIn('cost_item_id', $costItemIdsToRemove)->delete();
+            ProjectCostItem::where('project_id', $project->id)->whereIn('cost_item_id', $costItemIdsToRemove)->delete();
             // Delete removed project partners data
             $costItemsUsersToRemove = array_merge(array_diff($data['project_partners'], $oldPartners), array_diff($oldPartners, $data['project_partners']));
-            $project->costItems()->whereIn('user_id', $costItemsUsersToRemove)->delete();
+            ProjectCostItem::where('project_id', $project->id)->whereIn('user_id', $costItemsUsersToRemove)->delete();
 
             // Delete existing project partners
             $project->allpartners()->delete();

@@ -96,9 +96,9 @@ class ProjectController
         if(empty(request()->partner) && $project->created_by == auth()->user()->id) {
             $allowToEdit = false;
         } else if(!empty(request()->partner)) {
-            $project->costItems = $project->costItems()->where('user_id', request()->partner)->orderByRaw($project->costItemOrderRaw())->get();
+            $project->costItems = $project->costItems()->whereNull('project_cost_items.deleted_at')->where('user_id', request()->partner)->orderByRaw($project->costItemOrderRaw())->get();
         } else {
-            $project->costItems = $project->costItems()->where('user_id', auth()->user()->id)->orderByRaw($project->costItemOrderRaw())->get();
+            $project->costItems = $project->costItems()->whereNull('project_cost_items.deleted_at')->where('user_id', auth()->user()->id)->orderByRaw($project->costItemOrderRaw())->get();
         }
 
         if(empty(request()->partner) && $allowToEdit && $project->created_by != auth()->user()->id) {
@@ -154,7 +154,7 @@ class ProjectController
                         $data['claims_data'][$costItem[0]->id]['yearwise'][$key]['variance'] = $costItem->pluck('claims_data.yearwise.'.$key)->sum('variance'); 
                     }
                 }
-                $project->costItems = $project->costItems()->orderByRaw($project->costItemOrderRaw())->groupBy('cost_items.name')->get();
+                $project->costItems = $project->costItems()->whereNull('project_cost_items.deleted_at')->groupBy('cost_item_id')->orderByRaw($project->costItemOrderRaw())->get();
 
                 $data = (object) $data;
                 $yearwiseHtml = View::make('backend.claim.project.show-yearwise-master', ['project' => $project, 'data' => $data])->render();
@@ -191,8 +191,7 @@ class ProjectController
         }
         $funders = $this->userService->getByRoleId(7)->pluck('organisation', 'id');
         $partners = $this->userService->getByRoleId(6)->pluck('name', 'id');
-        // $costItems = CostItem::onlyActive()->orderByRaw($project->costItemOrderRaw())->get();
-        $costItems = $project->costItems()->groupBy('cost_item_id')->orderByRaw($project->costItemOrderRaw())->get();
+        $costItems = $project->costItems()->whereNull('project_cost_items.deleted_at')->groupBy('cost_item_id')->orderByRaw($project->costItemOrderRaw())->get();
         return view('backend.claim.project.edit')
             ->withProject($project)
             ->withFunders($funders)
@@ -253,7 +252,7 @@ class ProjectController
             $costItem->save();
         }
 
-        $project->costItems = $project->costItems()->where('user_id', auth()->user()->id)->orderByRaw($project->costItemOrderRaw())->get();
+        $project->costItems = $project->costItems()->whereNull('project_cost_items.deleted_at')->where('user_id', auth()->user()->id)->orderByRaw($project->costItemOrderRaw())->get();
 
         $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project])->render();
         return response()->json(['success' => 1, 'message' => 'Data saved successfully!', 'data' => ['yearwiseHtml' => $yearwiseHtml]]);
