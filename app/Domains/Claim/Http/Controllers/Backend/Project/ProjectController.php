@@ -191,8 +191,8 @@ class ProjectController
         }
         $funders = $this->userService->getByRoleId(7)->pluck('organisation', 'id');
         $partners = $this->userService->getByRoleId(6)->pluck('name', 'id');
-        $costItems = CostItem::onlyActive()->orderByRaw($project->costItemOrderRaw())->get();
-        // $costItems = $project->costItems()->groupBy('cost_item_id')->orderByRaw($project->costItemOrderRaw())->get();
+        // $costItems = CostItem::onlyActive()->orderByRaw($project->costItemOrderRaw())->get();
+        $costItems = $project->costItems()->groupBy('cost_item_id')->orderByRaw($project->costItemOrderRaw())->get();
         return view('backend.claim.project.edit')
             ->withProject($project)
             ->withFunders($funders)
