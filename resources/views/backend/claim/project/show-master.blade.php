@@ -557,7 +557,7 @@
             });
 
             var total_project_variance = 0;
-            $('.main-claims-table [name ^="claim_values["][name $="[variance]"]').not('[name*="[yearwise]"]').not('[name*="[for_each_item][variance]"]').each(function(i1, v1) {
+            $('table.main-claims-table').find('[name ^="claim_values["][name $="[variance]"]').not('[name*="[yearwise]"]').not('[name*="[for_each_item][variance]"]').each(function(i1, v1) {
                 if($(v1).val() == '' || isNaN($(v1).val())) {
                     value = 0;
                 } else {
@@ -640,7 +640,7 @@
                 $(v).closest('tr').find('[name$="[for_each_item][variance]"]').val((total_budget - project_total).toFixed(2))
             });
 
-            $('#year-wise-claims [name ^="yearly_data["][name $="[total_costs][for_each_item][variance]"]').not('[name*="[yearwise]"]').each(function(i, v) {
+            $('[name ^="yearly_data["][name $="[total_costs][for_each_item][variance]"]').not('[name*="[yearwise]"]').each(function(i, v) {
                 var total_project_variance = 0;
                 var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[0];
                 $('[name^="yearly_data['+yearIndex+'][claim_values]"][name$="[variance]"]').each(function(i1, v1) {
