@@ -556,7 +556,7 @@
                 $(v).val(total_budget.toFixed(2));
             });
 
-            $('table.main-claims-table').find('[name$=[variance]"]').each(function(i1, v1) {
+            $('table.main-claims-table').find('[name=claim_values[1][variance]').each(function(i1, v1) {
                 console.log($(v1).val());
             });
             
