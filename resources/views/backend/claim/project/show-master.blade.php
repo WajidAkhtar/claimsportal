@@ -254,7 +254,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text readonly">£</span>
                                         </div>
-                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][yearwise]['.$i.'][variance]', $data->claims_data[$costItem->id]['yearwise'][$i]['variance'] ?? '')
+                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][yearwise]['.$i.'][variance]')
                                             ->placeholder('0.00')
                                             ->class('form-control')
                                             ->readOnly()
