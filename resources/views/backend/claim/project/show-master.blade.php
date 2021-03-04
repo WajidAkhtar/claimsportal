@@ -631,9 +631,9 @@
                     } else {
                         value = $(v1).val();
                     }
-                    if(yearIndex == 0) {
+                    // if(yearIndex == 0) {
                         console.log(v, value);
-                    }
+                    // }
                     project_total += parseFloat(value);
                 });
 
