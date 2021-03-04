@@ -557,7 +557,13 @@
             });
 
             $('table.main-claims-table').find('[name ^="claim_values["][name $="[variance]"]').not('[name*="[yearwise]"]').each(function(i1, v1) {
-                console.log($(v1).val());
+                if($(v1).val() == '' || isNaN($(v1).val())) {
+                    value = 0;
+                } else {
+                    value = $(v1).val();
+                }
+                total_budget += parseFloat(value);
+                $('[name="total_costs[for_each_item][variance]"]').val(total_budget.toFixed(2));
             });
             
             $('.main-claims-table [name^="total_costs[for_each_item][yearwise]"][name$="[total_variance]"]').each(function(i, v){
