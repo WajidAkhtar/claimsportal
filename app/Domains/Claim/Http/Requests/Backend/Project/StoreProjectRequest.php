@@ -29,7 +29,7 @@ class StoreProjectRequest extends FormRequest
     {
         return [
             'name' => 'required|max:191',
-            'number' => 'required|max:191',
+            'number' => 'required|max:191|unique:projects',
             'pool' => 'required|max:191',
             'start_date' => 'required|date_format:m-Y',
             'length' => 'required|numeric',
