@@ -622,6 +622,27 @@
                 $(v).closest('table').find('[name^="yearly_data['+yearIndex+'][total_costs][cumulative]['+rowId+']"]').val(cumulativeTotal.toFixed(2));
             });
 
+            $('#year-wise-claims [name$="[for_each_item][project_total]"]').each(function(i, v){
+                var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[0];
+                var project_total = 0;
+                $(v).closest('tr').find('[name^="yearly_data['+yearIndex+'][total_costs][for_each_item][quarter_values]"]').each(function(i1, v1){
+                    if($(v1).val() == '' || isNaN($(v1).val())) {
+                        value = 0;
+                    } else {
+                        value = $(v1).val();
+                    }
+                    if(yearIndex == 0) {
+                        console.log(v, value);
+                    }
+                    project_total += parseFloat(value);
+                });
+
+                $(v).val(project_total.toFixed(2));
+
+                var total_budget = $(v).closest('tr').find('[name*="yearly_data['+yearIndex+'][total_costs][for_each_item][total_budget]"]').val();
+                $(v).closest('tr').find('[name$="[for_each_item][variance]"]').val((total_budget - project_total).toFixed(2))
+            });
+
             $('[name ^="yearly_data["][name $="[total_costs][for_each_item][variance]"]').not('[name*="[yearwise]"]').each(function(i, v) {
                 var total_project_variance = 0;
                 var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[0];
@@ -634,24 +655,6 @@
                     total_project_variance += parseFloat(value);
                 });
                 $('[name="yearly_data['+yearIndex+'][total_costs][for_each_item][variance]"]').val(total_project_variance.toFixed(2));
-            });
-
-            $('#year-wise-claims [name$="[for_each_item][project_total]"]').each(function(i, v){
-                var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[0];
-                var project_total = 0;
-                $(v).closest('tr').find('[name^="yearly_data['+yearIndex+'][total_costs][for_each_item][quarter_values]"]').each(function(i1, v1){
-                    if($(v1).val() == '' || isNaN($(v1).val())) {
-                        value = 0;
-                    } else {
-                        value = $(v1).val();
-                    }
-                    project_total += parseFloat(value);
-                });
-
-                $(v).val(project_total.toFixed(2));
-
-                var total_budget = $(v).closest('tr').find('[name*="yearly_data['+yearIndex+'][total_costs][for_each_item][total_budget]"]').val();
-                $(v).closest('tr').find('[name$="[for_each_item][variance]"]').val((total_budget - project_total).toFixed(2))
             });
 
             $('[name^="yearly_data"][name$="[total_costs][for_each_item][total_budget]"]').each(function(i, v){
