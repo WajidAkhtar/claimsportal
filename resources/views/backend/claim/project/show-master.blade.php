@@ -557,7 +557,7 @@
             });
 
             var total_project_variance = 0;
-            $('table.main-claims-table').find('[name ^="claim_values["][name $="[variance]"]').not('[name*="[yearwise]"]').each(function(i1, v1) {
+            $('table.main-claims-table').find('[name ^="claim_values["][name $="[variance]"]').not('[name*="[yearwise]"]').not('[name*="[for_each_item][variance]"]').each(function(i1, v1) {
                 if($(v1).val() == '' || isNaN($(v1).val())) {
                     value = 0;
                 } else {
