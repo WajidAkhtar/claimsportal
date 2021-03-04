@@ -637,6 +637,8 @@
                 $(v).val(project_total.toFixed(2));
 
                 var total_budget = $(v).closest('tr').find('[name*="yearly_data['+yearIndex+'][total_costs][for_each_item][total_budget]"]').val();
+                console.log(project_total);
+                console.log(total_budget);
                 $(v).closest('tr').find('[name$="[for_each_item][variance]"]').val((total_budget - project_total).toFixed(2))
             });
 
