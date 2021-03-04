@@ -53,7 +53,7 @@
                                     @php $partnerCount = 1; @endphp
                                     <option value="">Master Sheet</option>
                                     @foreach($project->allpartners as $partner)
-                                        <option value="{{ $partner->user->id ?? 0 }}" {{ (!empty($partner->user) && request()->partner == $partner->user->id ? 'selected':'') }}>{{ $partner->user->organisation ?? 'Partener - '.$partnerCount++ }} Sheet</option>
+                                        <option value="{{ $partner->user->id ?? 0 }}" {{ (!empty($partner->user) && request()->partner == $partner->user->id ? 'selected':'') }}>{{ $partner->user->organisation ?? 'Partener - '.$partnerCount++ }}</option>
                                     @endforeach                            
                                 </select>
                             </form>
