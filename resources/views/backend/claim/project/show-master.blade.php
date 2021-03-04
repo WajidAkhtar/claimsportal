@@ -560,6 +560,7 @@
                 var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[2];
                 var total = 0;
                 $('.main-claims-table [name$="[yearwise]['+yearIndex+'][variance]"').each(function(i1, v1){
+                    alert(1)
                     if($(v1).val() == '' || isNaN($(v1).val())) {
                         value = 0;
                     } else {
