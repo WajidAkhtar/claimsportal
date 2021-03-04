@@ -563,7 +563,6 @@
                 } else {
                     value = $(v1).val();
                 }
-                console.log(value)
                 total_project_variance += parseFloat(value);
                 $('[name="total_costs[for_each_item][variance]"]').val(total_project_variance.toFixed(2));
             });
@@ -644,11 +643,11 @@
             $('[name ^="yearly_data["][name $="[total_costs][for_each_item][variance]"]').not('[name*="[yearwise]"]').each(function(i, v) {
                 var total_project_variance = 0;
                 var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[0];
-                $('[name ^="yearly_data["][name $="[variance]"]').not('[name*="[yearwise]"]').not('[name*="[total_costs][for_each_item][variance]"]').each(function(i, v) {
-                    if($(v).val() == '' || isNaN($(v).val())) {
+                $('[name^="yearly_data['+yearIndex+'][claim_values]"][name$="[variance]"]').each(function(i1, v1) {
+                    if($(v1).val() == '' || isNaN($(v1).val())) {
                         value = 0;
                     } else {
-                        value = $(v).val();
+                        value = $(v1).val();
                     }
                     // console.log(v, value);
                     total_project_variance += parseFloat(value);
