@@ -631,15 +631,15 @@
                     } else {
                         value = $(v1).val();
                     }
-                    // if(yearIndex == 0) {
-                        console.log(v, value);
-                    // }
                     project_total += parseFloat(value);
                 });
 
                 $(v).val(project_total.toFixed(2));
 
                 var total_budget = $(v).closest('tr').find('[name*="yearly_data['+yearIndex+'][total_costs][for_each_item][total_budget]"]').val();
+                if(yearIndex == 2) {
+                    console.log(v, total_budget);
+                }
                 $(v).closest('tr').find('[name$="[for_each_item][variance]"]').val((total_budget - project_total).toFixed(2))
             });
 
