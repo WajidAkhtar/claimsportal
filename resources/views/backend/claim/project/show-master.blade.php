@@ -556,11 +556,14 @@
                 $(v).val(total_budget.toFixed(2));
             });
 
+            $('table.main-claims-table').find('[name$=[variance]"]').each(function(i1, v1) {
+                console.log($(v1).val());
+            });
+            
             $('.main-claims-table [name^="total_costs[for_each_item][yearwise]"][name$="[total_variance]"]').each(function(i, v){
                 var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[2];
                 var total = 0;
                 $('.main-claims-table [name$="[yearwise]['+yearIndex+'][variance]"').each(function(i1, v1){
-                    console.log($(v1).val())
                     if($(v1).val() == '' || isNaN($(v1).val())) {
                         value = 0;
                     } else {
