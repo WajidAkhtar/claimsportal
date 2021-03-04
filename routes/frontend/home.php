@@ -8,11 +8,19 @@ use Tabuna\Breadcrumbs\Trail;
  * Frontend Controllers
  * All route names are prefixed with 'frontend.'.
  */
-Route::get('/', [HomeController::class, 'index'])
-    ->name('index')
-    ->breadcrumbs(function (Trail $trail) {
-        $trail->push(__('Home'), route('frontend.index'));
-    });
+// Route::get('/', [HomeController::class, 'index'])
+//     ->name('index')
+//     ->breadcrumbs(function (Trail $trail) {
+//         $trail->push(__('Home'), route('frontend.index'));
+//     });
+
+Route::get('/', function() {
+	if (auth()->check()) {
+		return redirect()->route('admin.dashboard');
+	} else {
+		return view('frontend.auth.login');	
+	}
+})->name('index');
 
 Route::get('terms', [TermsController::class, 'index'])
     ->name('pages.terms')
