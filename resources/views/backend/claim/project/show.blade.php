@@ -556,6 +556,17 @@
                 $(v).val(total_budget.toFixed(2));
             });
 
+            var total_project_variance = 0;
+            $('table.main-claims-table').find('[name ^="claim_values["][name $="[variance]"]').not('[name*="[yearwise]"]').not('[name*="[for_each_item][variance]"]').each(function(i1, v1) {
+                if($(v1).val() == '' || isNaN($(v1).val())) {
+                    value = 0;
+                } else {
+                    value = $(v1).val();
+                }
+                total_project_variance += parseFloat(value);
+                $('[name="total_costs[for_each_item][variance]"]').val(total_project_variance.toFixed(2));
+            });
+
             $('.main-claims-table [name^="total_costs[for_each_item][yearwise]"][name$="[total_variance]"]').each(function(i, v){
                 var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[2];
                 var total = 0;
@@ -627,6 +638,20 @@
 
                 var total_budget = $(v).closest('tr').find('[name*="yearly_data['+yearIndex+'][total_costs][for_each_item][total_budget]"]').val();
                 $(v).closest('tr').find('[name$="[for_each_item][variance]"]').val((total_budget - project_total).toFixed(2))
+            });
+
+            $('[name ^="yearly_data["][name $="[total_costs][for_each_item][variance]"]').not('[name*="[yearwise]"]').each(function(i, v) {
+                var total_project_variance = 0;
+                var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[0];
+                $('[name^="yearly_data['+yearIndex+'][claim_values]"][name$="[variance]"]').each(function(i1, v1) {
+                    if($(v1).val() == '' || isNaN($(v1).val())) {
+                        value = 0;
+                    } else {
+                        value = $(v1).val();
+                    }
+                    total_project_variance += parseFloat(value);
+                });
+                $('[name="yearly_data['+yearIndex+'][total_costs][for_each_item][variance]"]').val(total_project_variance.toFixed(2));
             });
 
             $('[name^="yearly_data"][name$="[total_costs][for_each_item][total_budget]"]').each(function(i, v){

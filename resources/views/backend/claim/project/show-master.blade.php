@@ -649,7 +649,6 @@
                     } else {
                         value = $(v1).val();
                     }
-                    console.log(yearIndex, value);
                     total_project_variance += parseFloat(value);
                 });
                 $('[name="yearly_data['+yearIndex+'][total_costs][for_each_item][variance]"]').val(total_project_variance.toFixed(2));
