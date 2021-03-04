@@ -109,10 +109,12 @@ class ProjectController
 
         if(!$project->isUserPartOfProject(auth()->user()->id, true) && $project->isUserPartOfProject(auth()->user()->id)) {
             $allowToEdit = true;
+            $sheet_owner = (!empty(request()->partner)) ? request()->partner : auth()->user()->id;
             $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project])->render();
             return view('backend.claim.project.show')
             ->withProject($project)
             ->withAllowToEdit($allowToEdit)
+            ->withSheetOwner($sheet_owner)
             ->withyearwiseHtml($yearwiseHtml);
         } else {
             $data = [];
@@ -164,9 +166,14 @@ class ProjectController
                 ->withAllowToEdit($allowToEdit)
                 ->withyearwiseHtml($yearwiseHtml);
             } else {
+                if(!empty(request()->partner) && $project->created_by == auth()->user()->id) {
+                    $allowToEdit = true;
+                }
+                $sheet_owner = (!empty(request()->partner)) ? request()->partner : auth()->user()->id;
                 $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project])->render();
                 return view('backend.claim.project.show')
                 ->withProject($project)
+                ->withSheetOwner($sheet_owner)
                 ->withAllowToEdit($allowToEdit)
                 ->withyearwiseHtml($yearwiseHtml);
             }
@@ -242,12 +249,12 @@ class ProjectController
                 $claimYearwiseValue['variance'] = number_format($claimYearwiseValue['variance'], 2, '.', '');
             }
             // $costItem = $project->costItems()->whereId($costItemId)->first();
-            $costItem = ProjectCostItem::whereProjectId($project->id)->whereCostItemId($costItemId)->whereUserId(Auth()->user()->id)->first();
+            $costItem = ProjectCostItem::whereProjectId($project->id)->whereCostItemId($costItemId)->whereUserId($request->sheet_owner)->first();
             $costItem->claims_data = collect($claimValue)->only('quarter_values', 'yearwise', 'total_budget')->toArray();
             $costItem->save();
         }
 
-        $project->costItems = $project->costItems()->whereNull('project_cost_items.deleted_at')->where('user_id', auth()->user()->id)->orderByRaw($project->costItemOrderRaw())->get();
+        $project->costItems = $project->costItems()->whereNull('project_cost_items.deleted_at')->where('user_id', $request->sheet_owner)->orderByRaw($project->costItemOrderRaw())->get();
 
         $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project])->render();
         return response()->json(['success' => 1, 'message' => 'Data saved successfully!', 'data' => ['yearwiseHtml' => $yearwiseHtml]]);
