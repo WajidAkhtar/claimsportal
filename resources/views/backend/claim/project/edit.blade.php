@@ -225,7 +225,7 @@
             template: "#cost-items-template",
             min: 1,
             prefix: '',
-            idStartIndex: '{{ count(old('claim_items') ?? [$project->claim_data] ) }}',
+            idStartIndex: '{{ count(old('claim_items') ?? ($costItems ?? [])) }}',
             afterAdd : function() {
                 $('.cost_items tbody tr').each(function(i, v) {
                     $(this).find('td:first').html(i+1);

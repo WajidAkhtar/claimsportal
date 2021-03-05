@@ -155,7 +155,6 @@ class ProjectService extends BaseService
 
         } catch (Exception $e) {
             DB::rollBack();
-            dd($e);
             throw new GeneralException(__('There was a problem updating this project. Please try again.'));
         }
 
