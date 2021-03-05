@@ -56,11 +56,12 @@ class ProjectController
      */
     public function create()
     {
+        CostItem::where('id', '<=', 13)->update(['is_system_generated' => true]);
         if(!auth()->user()->hasRole('Administrator')) {
             return redirect()->route('admin.claim.project.index')->withFlashDanger(__('You have no access to this page.'));
         }
         $funders = $this->userService->getByRoleId(7)->pluck('organisation', 'id');
-        $costItems = CostItem::onlyActive()->get();
+        $costItems = CostItem::onlyActive()->onlySystemGenerated()->get();
         return view('backend.claim.project.create')
             ->withFunders($funders)
             ->withCostItems($costItems);

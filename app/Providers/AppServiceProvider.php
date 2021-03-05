@@ -31,5 +31,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
         Project::observe(ProjectObserver::class);
+        \Schema::defaultStringLength(191);
     }
 }

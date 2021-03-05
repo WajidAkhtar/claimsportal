@@ -26,4 +26,14 @@ trait CostItemScope
     {
         return $query->whereActive(true);
     }
+    
+    /**
+     * @param $query
+     *
+     * @return mixed
+     */
+    public function scopeOnlySystemGenerated($query)
+    {
+        return $query->whereIsSystemGenerated(true);
+    }
 }

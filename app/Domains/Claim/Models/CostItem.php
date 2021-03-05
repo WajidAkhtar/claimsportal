@@ -25,6 +25,7 @@ class CostItem extends Model
         'name',
         'description',
         'active',
+        'is_system_generated',
     ];
 
     /**
@@ -46,6 +47,7 @@ class CostItem extends Model
      */
     protected $casts = [
         'active' => 'boolean',
+        'is_system_generated' => 'boolean',
     ];
 
     /**
