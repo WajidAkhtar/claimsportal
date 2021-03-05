@@ -62,9 +62,13 @@ class ProjectService extends BaseService
                     $partnerCount++;
                     foreach ($data['cost_items'] as $key => $value) {
                         $costItem = CostItem::firstOrCreate(['name' => $value['name']]);
-                        ProjectCostItem::firstOrCreate([
+                        $projectCostItem = ProjectCostItem::firstOrCreate([
                             'project_id' => $project->id,
                             'cost_item_id' => $costItem->id,
+                        ]);
+                        ProjectCostItem::find($projectCostItem->id)->update([
+                            'cost_item_name' => $value['name'],
+                            'cost_item_description' => $value['description'],
                         ]);
                     }
                 }
@@ -118,16 +122,17 @@ class ProjectService extends BaseService
                 $costItem = CostItem::firstOrCreate(['name' => $value['name']]);
                 $costItemIds[] = $costItem->id;
             }
-
+            
             // Delete removed project cost items
             $costItemIdsToRemove = array_merge(array_diff($costItemIds, $oldCostItems), array_diff($oldCostItems, $costItemIds));
-            ProjectCostItem::where('project_id', $project->id)->whereIn('cost_item_id', $costItemIdsToRemove)->delete();
+            
+            ProjectCostItem::where('project_id', $project->id)->whereIn('cost_item_id', $costItemIdsToRemove)->forceDelete();
             // Delete removed project partners data
             $costItemsUsersToRemove = array_merge(array_diff($data['project_partners'], $oldPartners), array_diff($oldPartners, $data['project_partners']));
-            ProjectCostItem::where('project_id', $project->id)->whereIn('user_id', $costItemsUsersToRemove)->delete();
+            ProjectCostItem::where('project_id', $project->id)->whereIn('user_id', $costItemsUsersToRemove)->forceDelete();
 
             // Delete existing project partners
-            $project->allpartners()->delete();
+            $project->allpartners()->forceDelete();
             // Save partners for the project
             foreach ($data['project_partners'] as $key => $project_partner) {
                 $project->allpartners()->create([
@@ -136,17 +141,21 @@ class ProjectService extends BaseService
                 ]);
                 foreach ($data['cost_items'] as $key => $value) {
                     $costItem = CostItem::firstOrCreate(['name' => $value['name']]);
-                    ProjectCostItem::firstOrCreate([
+                    $projectCostItem = ProjectCostItem::firstOrCreate([
                         'project_id' => $project->id,
                         'user_id' => $project_partner,
                         'cost_item_id' => $costItem->id,
+                    ]);
+                    ProjectCostItem::find($projectCostItem->id)->update([
+                        'cost_item_name' => $value['name'],
+                        'cost_item_description' => $value['description'],
                     ]);
                 }
             }
 
         } catch (Exception $e) {
             DB::rollBack();
-            // dd($e);
+            dd($e);
             throw new GeneralException(__('There was a problem updating this project. Please try again.'));
         }
 
@@ -164,8 +173,8 @@ class ProjectService extends BaseService
     public function delete(Project $project): Project
     {
         if ($this->deleteById($project->id)) {
-            $project->allpartners()->delete();
-            $project->innerData()->delete();
+            $project->allpartners()->forceDelete();
+            $project->innerData()->forceDelete();
             return $project;
         }
 

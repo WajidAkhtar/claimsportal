@@ -23,6 +23,8 @@ class ProjectCostItem extends Model
         'project_id',
         'cost_item_id',
         'user_id',
+        'cost_item_name',
+        'cost_item_description',
         'active',
     ];
 

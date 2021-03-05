@@ -142,13 +142,13 @@
                                 <tr class="field-group" id="{{ $costItem->name ?? '' }}">
                                     <td>{{ $costItemCount++ }}</td>
                                     <td>
-                                        {{ html()->text('cost_items['.$key.'][name]', $costItem->name ?? '')
+                                        {{ html()->text('cost_items['.$key.'][name]', $costItem->pivot->cost_item_name ?? '')
                                             ->placeholder(__('Name'))
                                             ->class('form-control')
                                             ->required() }}
                                     </td>
                                     <td>
-                                        {{ html()->text('cost_items['.$key.'][description]', $costItem->description ?? '')
+                                        {{ html()->text('cost_items['.$key.'][description]', $costItem->pivot->cost_item_description ?? '')
                                             ->placeholder('Description')
                                             ->class('form-control')
                                             ->required() }}

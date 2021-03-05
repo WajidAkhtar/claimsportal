@@ -25,7 +25,7 @@ trait ProjectRelationship
      */
     public function costItems()
     {
-        return $this->belongsToMany(CostItem::class, 'project_cost_items')->withPivot('user_id', 'claims_data')->withTimestamps();
+        return $this->belongsToMany(CostItem::class, 'project_cost_items')->withPivot('user_id', 'claims_data', 'cost_item_name', 'cost_item_description')->withTimestamps();
     }
 
     /**

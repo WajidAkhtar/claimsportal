@@ -157,8 +157,8 @@
                             @endphp
                             <tr>
                                 <td style="max-width: 10px;min-width:auto;">{{$index+1}}</td>
-                                <td>{{$costItem->name}}</td>
-                                <td>{{$costItem->description}}</td>
+                                <td>{{$costItem->pivot->cost_item_name}}</td>
+                                <td>{{$costItem->pivot->cost_item_description}}</td>
                                 <td>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
