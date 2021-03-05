@@ -56,7 +56,6 @@ class ProjectController
      */
     public function create()
     {
-        CostItem::where('id', '<=', 13)->update(['is_system_generated' => true]);
         if(!auth()->user()->hasRole('Administrator')) {
             return redirect()->route('admin.claim.project.index')->withFlashDanger(__('You have no access to this page.'));
         }
