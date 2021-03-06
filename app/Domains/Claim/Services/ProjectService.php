@@ -146,7 +146,7 @@ class ProjectService extends BaseService
                         'user_id' => $project_partner,
                         'cost_item_id' => $costItem->id,
                     ]);
-                    ProjectCostItem::find($projectCostItem->id)->update([
+                    ProjectCostItem::where('project_id', $project->id)->where('cost_item_id', $costItem->id)->update([
                         'cost_item_name' => $value['name'],
                         'cost_item_description' => $value['description'],
                     ]);
