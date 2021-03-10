@@ -81,13 +81,13 @@ class ProjectsTable extends TableComponent
                 ->sortable(),
             Column::make(__('Project Pool'), 'pool')
                 ->format(function($model) {
-                    return (!empty($model->pool)) ? $model->pool->full_name: '';
+                    return (!empty($model->pool)) ? $model->pool->full_name: 'N/A';
                 })
                 ->searchable()
                 ->sortable(),    
-            Column::make(__('Organisation'), 'organisation')
+            Column::make(__('Project Organisation'), 'organisation')
                 ->format(function($model) {
-                    return (!empty($model->organisation)) ? $model->organisation->organisation_name : '';
+                    return (!empty($model->organisation)) ? $model->organisation->organisation_name : 'N/A';
                 })
                 ->searchable()
                 ->sortable(),
