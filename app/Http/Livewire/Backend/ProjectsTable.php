@@ -80,6 +80,15 @@ class ProjectsTable extends TableComponent
                 ->searchable()
                 ->sortable(),
             Column::make(__('Project Pool'), 'pool')
+                ->format(function($model) {
+                    return $model->pool->full_name;
+                })
+                ->searchable()
+                ->sortable(),    
+            Column::make(__('Organisation'), 'organisation')
+                ->format(function($model) {
+                    return $model->organisation->organisation_name;
+                })
                 ->searchable()
                 ->sortable(),
             Column::make(__('Project Length'), 'length')

@@ -30,7 +30,8 @@ class StoreProjectRequest extends FormRequest
         return [
             'name' => 'required|max:191',
             'number' => 'required|max:191',
-            'pool' => 'required|max:191',
+            'pool_id' => 'required',
+            'organisation_id' => 'required',
             'start_date' => 'required|date_format:m-Y',
             'length' => 'required|numeric',
             'number_of_partners' => 'required|numeric',
@@ -42,6 +43,18 @@ class StoreProjectRequest extends FormRequest
             'cost_items.*.name' => 'required|max:191',
             'cost_items.*.description' => 'required|max:191',
             'cost_items_order' => '',
+            'finance_email' => 'max:191',
+            'finance_tel' => 'max:191',
+            'finance_fax' => 'max:191',
+            'vat' => 'max:191',
+            'eori' => 'max:191',
+            'account_name' => 'max:191',
+            'bank_name' => 'max:191',
+            'bank_address' => 'max:191',
+            'sort_code' => 'max:191',
+            'account_no' => 'max:191',
+            'swift' => 'max:191',
+            'iban' => 'max:191',
         ];
     }
 

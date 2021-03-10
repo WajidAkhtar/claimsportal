@@ -15,6 +15,8 @@ use App\Domains\Claim\Http\Requests\Backend\Project\UpdateProjectRequest;
 use App\Domains\Claim\Models\ProjectCostItem;
 use Illuminate\Support\Facades\Auth;
 use App\Exceptions\GeneralException;
+use App\Domains\System\Models\Organisation;
+use App\Domains\System\Models\Pool;
 
 /**
  * Class ProjectController.
@@ -61,9 +63,13 @@ class ProjectController
         }
         $funders = $this->userService->getByRoleId(7)->pluck('organisation', 'id');
         $costItems = CostItem::onlyActive()->onlySystemGenerated()->get();
+        $organisations = Organisation::pluck('organisation_name', 'id');
+        $pools = Pool::get()->pluck('full_name', 'id');
         return view('backend.claim.project.create')
             ->withFunders($funders)
-            ->withCostItems($costItems);
+            ->withCostItems($costItems)
+            ->withPools($pools)
+            ->withOrganisations($organisations);
     }
 
     /**
@@ -194,11 +200,15 @@ class ProjectController
         $funders = $this->userService->getByRoleId(7)->pluck('organisation', 'id');
         $partners = $this->userService->getByRoleId(6)->pluck('organisation', 'id');
         $costItems = $project->costItems()->whereNull('project_cost_items.deleted_at')->whereNotNull('cost_item_description')->groupBy('cost_item_id')->orderByRaw($project->costItemOrderRaw())->get();
+        $organisations = Organisation::pluck('organisation_name', 'id');
+        $pools = Pool::get()->pluck('full_name', 'id');
         return view('backend.claim.project.edit')
             ->withProject($project)
             ->withFunders($funders)
             ->withPartners($partners)
-            ->withCostItems($costItems);
+            ->withCostItems($costItems)
+            ->withPools($pools)
+            ->withOrganisations($organisations);
     }
 
     /**

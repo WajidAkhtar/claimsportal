@@ -39,14 +39,34 @@
                             ->required() }}
                     </div>
                 </div><!--form-group-->
-                
+
                 <div class="form-group row">
-                    {{ html()->label(__('Project Pool'))->class('col-md-2 col-form-label')->for('pool') }}
+                    {{ html()->label(__('Project Funder Ref.'))->class('col-md-2 col-form-label')->for('project_funder_ref') }}
 
                     <div class="col-md-10">
-                        {{ html()->text('pool')
+                        {{ html()->text('project_funder_ref')
                             ->class('form-control')
                             ->maxlength(191)
+                            ->required() }}
+                    </div>
+                </div><!--form-group-->
+                
+                <div class="form-group row">
+                    {{ html()->label(__('Project Pool'))->class('col-md-2 col-form-label')->for('pool_id') }}
+
+                    <div class="col-md-10">
+                        {{ html()->select('pool_id', $pools)
+                            ->class('form-control select2')
+                            ->required() }}
+                    </div>
+                </div><!--form-group-->
+
+                <div class="form-group row">
+                    {{ html()->label(__('Organisations'))->class('col-md-2 col-form-label')->for('organisation_id') }}
+
+                    <div class="col-md-10">
+                        {{ html()->select('organisation_id', $organisations)
+                            ->class('form-control select2')
                             ->required() }}
                     </div>
                 </div><!--form-group-->
@@ -104,6 +124,126 @@
                             ->class('form-control select2')
                             // ->placeholder('Choose Funders')
                             ->required() }}
+                    </div>
+                </div><!--form-group-->
+
+                <div class="form-group row">
+                    {{ html()->label(__('Finance Email'))->class('col-md-2 col-form-label')->for('finance_email') }}
+
+                    <div class="col-md-10">
+                        {{ html()->email('finance_email')
+                            ->class('form-control')
+                            }}
+                    </div>
+                </div><!--form-group-->
+
+                <div class="form-group row">
+                    {{ html()->label(__('Finance Tel'))->class('col-md-2 col-form-label')->for('finance_tel') }}
+
+                    <div class="col-md-10">
+                        {{ html()->email('finance_tel')
+                            ->class('form-control')
+                            }}
+                    </div>
+                </div><!--form-group-->
+
+                <div class="form-group row">
+                    {{ html()->label(__('Finance FAX'))->class('col-md-2 col-form-label')->for('finance_fax') }}
+
+                    <div class="col-md-10">
+                        {{ html()->email('finance_fax')
+                            ->class('form-control')
+                            }}
+                    </div>
+                </div><!--form-group-->
+
+                <div class="form-group row">
+                    {{ html()->label(__('VAT'))->class('col-md-2 col-form-label')->for('vat') }}
+
+                    <div class="col-md-10">
+                        {{ html()->email('vat')
+                            ->class('form-control')
+                            }}
+                    </div>
+                </div><!--form-group-->
+
+                <div class="form-group row">
+                    {{ html()->label(__('EORI'))->class('col-md-2 col-form-label')->for('eori') }}
+
+                    <div class="col-md-10">
+                        {{ html()->email('eori')
+                            ->class('form-control')
+                            }}
+                    </div>
+                </div><!--form-group-->
+
+                <div class="form-group row">
+                    {{ html()->label(__('Account Name'))->class('col-md-2 col-form-label')->for('account_name') }}
+
+                    <div class="col-md-10">
+                        {{ html()->text('account_name')
+                            ->class('form-control')
+                            }}
+                    </div>
+                </div><!--form-group-->
+
+                <div class="form-group row">
+                    {{ html()->label(__('Bank Name'))->class('col-md-2 col-form-label')->for('bank_name') }}
+
+                    <div class="col-md-10">
+                        {{ html()->text('bank_name')
+                            ->class('form-control')
+                            }}
+                    </div>
+                </div><!--form-group-->
+
+                <div class="form-group row">
+                    {{ html()->label(__('Bank Address'))->class('col-md-2 col-form-label')->for('bank_address') }}
+
+                    <div class="col-md-10">
+                        {{ html()->text('bank_address')
+                            ->class('form-control')
+                            }}
+                    </div>
+                </div><!--form-group-->
+
+                <div class="form-group row">
+                    {{ html()->label(__('Sort Code'))->class('col-md-2 col-form-label')->for('sort_code') }}
+
+                    <div class="col-md-10">
+                        {{ html()->text('sort_code')
+                            ->class('form-control')
+                            }}
+                    </div>
+                </div><!--form-group-->
+
+                <div class="form-group row">
+                    {{ html()->label(__('Account No'))->class('col-md-2 col-form-label')->for('account_no') }}
+
+                    <div class="col-md-10">
+                        {{ html()->text('account_no')
+                            ->class('form-control')
+                            }}
+                    </div>
+                </div><!--form-group-->
+
+                <div class="form-group row">
+                    {{ html()->label(__('Swift'))->class('col-md-2 col-form-label')->for('swift') }}
+
+                    <div class="col-md-10">
+                        {{ html()->text('swift')
+                            ->class('form-control')
+                            }}
+                    </div>
+                </div><!--form-group-->
+
+                <div class="form-group row">
+                    {{ html()->label(__('IBAN'))->class('col-md-2 col-form-label')->for('iban') }}
+
+                    <div class="col-md-10">
+                        {{ html()->text('iban')
+                            ->class('form-control')
+                            }}
                     </div>
                 </div><!--form-group-->
                 

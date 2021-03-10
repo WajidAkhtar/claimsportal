@@ -6,6 +6,8 @@ use App\Domains\Auth\Models\User;
 use App\Domains\Claim\Models\CostItem;
 use App\Domains\Claim\Models\ProjectCostItem;
 use App\Domains\Claim\Models\ProjectPartners;
+use App\Domains\System\Models\Pool;
+use App\Domains\System\Models\Organisation;
 
 /**
  * Class ProjectRelationship.
@@ -78,5 +80,21 @@ trait ProjectRelationship
     public function costItemOrderRaw() {
       return "FIELD (name, '".implode("','", explode(',', $this->cost_items_order))."')";  
     } 
+
+    /**
+     * @return mixed
+     */
+    public function pool()
+    {
+        return $this->belongsTo(Pool::class);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function organisation()
+    {
+        return $this->belongsTo(Organisation::class, 'organisation_id', 'id');
+    }
 
 }
