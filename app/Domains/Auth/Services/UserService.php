@@ -135,13 +135,14 @@ class UserService extends BaseService
                 'last_name' => $data['last_name'],
                 'job_title' => $data['job_title'],
                 'department' => $data['department'],
-                'organisation' => $data['organisation'],
+                'organisation_id' => $data['organisation_id'],
                 'email' => $data['email'],
                 'password' => $data['password'],
                 'email_verified_at' => isset($data['email_verified']) && $data['email_verified'] === '1' ? now() : null,
                 'active' => isset($data['active']) && $data['active'] === '1',
             ]);
 
+            $user->pools()->sync($data['pools']);
             $user->syncRoles($data['roles'] ?? []);
 
             if (! config('boilerplate.access.user.only_roles')) {
@@ -182,9 +183,11 @@ class UserService extends BaseService
                 'last_name' => $data['last_name'],
                 'job_title' => $data['job_title'],
                 'department' => $data['department'],
-                'organisation' => $data['organisation'],
+                'organisation_id' => $data['organisation_id'],
                 'email' => $data['email'],
             ]);
+
+            $user->pools()->sync($data['pools']);
 
             if (! $user->isMasterAdmin()) {
                 // Replace selected roles/permissions

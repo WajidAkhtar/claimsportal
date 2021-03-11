@@ -2,9 +2,6 @@
 
 @section('title', __('Create Project'))
 
-@push('after-styles')
-<link rel="stylesheet" href="{{asset('assets/backend/vendors/select2/css/select2.css')}}">
-@endpush
 @section('content')
     <x-forms.post :action="route('admin.claim.project.store')">
         <x-backend.card>
@@ -328,11 +325,9 @@
     </script>
 @endsection
 @push('after-scripts')
-<script src="{{asset('assets/backend/vendors/select2/js/select2.js')}}"></script>
 <script src="{{asset('assets/backend/vendors/repeatable/jquery.repeatable.js')}}"></script>
 <script>
     $(document).ready(function(){
-        $('.select2').select2();
         $( ".repeatable" ).sortable({
             connectWith: '.repeatable',
               update: function(event, ui) {

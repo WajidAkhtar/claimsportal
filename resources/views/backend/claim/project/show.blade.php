@@ -37,6 +37,7 @@
             padding-right: 2px;
         }
     </style>
+    <link rel="stylesheet" href="{{asset('assets/backend/vendors/select2/css/select2.css')}}">
 @endpush
 @section('content')
     @if(auth()->user()->id == $project->created_by)
@@ -53,7 +54,7 @@
                                     @php $partnerCount = 1; @endphp
                                     <option value="">Master Sheet</option>
                                     @foreach($project->allpartners as $partner)
-                                        <option value="{{ $partner->user->id ?? 0 }}" {{ (!empty($partner->user) && request()->partner == $partner->user->id ? 'selected':'') }}>{{ $partner->user->organisation ?? 'Partener - '.$partnerCount++ }} Sheet</option>
+                                        <option value="{{ $partner->user->id ?? 0 }}" {{ (!empty($partner->user) && request()->partner == $partner->user->id ? 'selected':'') }}>{{ $partner->user->organisation ?? 'Partener - '.$partnerCount++ }}</option>
                                     @endforeach                            
                                 </select>
                             </form>
@@ -64,6 +65,120 @@
     </x-backend.card>
     <br />
     @endif
+
+    <x-backend.card>
+        <x-slot name="header">
+            @lang('Assign Required Information')
+        </x-slot>        
+
+        <x-slot name="headerActions">
+            <x-utils.link class="card-header-action" :href="route('admin.claim.project.index')" :text="__('Back')" />
+        </x-slot>
+
+        <x-slot name="body">
+            <form method="post" action="" id="partner_additional_info">
+                {{ html()->input('hidden', 'project_id', $project->id) }}
+                {{ html()->input('hidden', 'sheet_owner', $sheetOwner) }}
+                <div class="row">
+                    <div class="col">
+                        {{ html()->label('ORGANISATION')->for('organisation_id') }}
+                        {{ html()->select('organisation_id', $organisations, $partnerAdditionalInfo->organisation ?? '')
+                            ->class('form-control additional-info select2')
+                            ->required()
+                         }}
+                    </div>
+                    <div class="col">
+                        {{ html()->label('FINANCE EMAIL')->for('finance_email') }}
+                        {{ html()->text('finance_email', $partnerAdditionalInfo->finance_email ?? '')
+                            ->class('form-control additional-info')
+                         }}
+                    </div>
+                    <div class="col">
+                        {{ html()->label('FINANCE TEL')->for('finance_tel') }}
+                        {{ html()->text('finance_tel', $partnerAdditionalInfo->finance_tel ?? '')
+                            ->class('form-control additional-info')
+                         }}
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        {{ html()->label('FINANCE FAX')->for('finance_fax') }}
+                        {{ html()->text('finance_fax', $partnerAdditionalInfo->finance_fax ?? '')
+                            ->class('form-control additional-info')
+                         }}
+                    </div>
+                    <div class="col">
+                        {{ html()->label('VAT')->for('vat') }}
+                        {{ html()->text('vat', $partnerAdditionalInfo->vat ?? '')
+                            ->class('form-control additional-info')
+                         }}
+                    </div>
+                    <div class="col">
+                        {{ html()->label('EORI')->for('eori') }}
+                        {{ html()->text('eori', $partnerAdditionalInfo->eori ?? '')
+                            ->class('form-control additional-info')
+                         }}
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        <h6>Invoicing Details</h6>
+                        <hr />
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        {{ html()->label('ACCOUNT NAME')->for('account_name') }}
+                        {{ html()->text('account_name', $partnerAdditionalInfo->account_name ?? '')
+                            ->class('form-control additional-info')
+                         }}
+                    </div>
+                    <div class="col">
+                        {{ html()->label('BANK NAME')->for('bank_name') }}
+                        {{ html()->text('bank_name', $partnerAdditionalInfo->bank_name ?? '')
+                            ->class('form-control additional-info')
+                         }}
+                    </div>
+                    <div class="col">
+                        {{ html()->label('BANK ADDRESS')->for('bank_address') }}
+                        {{ html()->text('bank_address', $partnerAdditionalInfo->bank_address ?? '')
+                            ->class('form-control additional-info')
+                         }}
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        {{ html()->label('SORT CODE')->for('sort_code') }}
+                        {{ html()->text('sort_code', $partnerAdditionalInfo->sort_code ?? '')
+                            ->class('form-control additional-info')
+                         }}
+                    </div>
+                    <div class="col">
+                        {{ html()->label('ACCOUNT NO')->for('account_no') }}
+                        {{ html()->text('account_no', $partnerAdditionalInfo->account_no ?? '')
+                            ->class('form-control additional-info')
+                         }}
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        {{ html()->label('SWIFT')->for('swift') }}
+                        {{ html()->text('swift', $partnerAdditionalInfo->swift ?? '')
+                            ->class('form-control additional-info')
+                         }}
+                    </div>
+                    <div class="col">
+                        {{ html()->label('IBAN')->for('iban') }}
+                        {{ html()->text('iban', $partnerAdditionalInfo->iban ?? '')
+                            ->class('form-control additional-info')
+                         }}
+                    </div>
+                </div>
+            </form>
+        </x-slot>
+
+    </x-backend.card>
+    <br />
 
     <x-backend.card>
 
@@ -430,6 +545,7 @@
     </x-backend.card>
 @endsection
 @push('after-scripts')
+    <script src="{{asset('assets/backend/vendors/select2/js/select2.js')}}"></script>
     <script>
         function calculateFields() {
             var cumulativeTotal = 0;
@@ -673,6 +789,7 @@
             calculateFields();
             calculateYearwiseFields();
             formatNegativeValue();
+            $('.select2').select2();
 
             $('table.main-claims-table input[name*="[quarter_values]"], table.main-claims-table input[name*="[budget]"]').change(function(){
                 calculateFields();
@@ -715,6 +832,11 @@
                 });
             }
 
+            $(".additional-info").on("blur, change", function() {
+                var organisation_id = $("#organisation_id.additional-info").val();
+                savePartnerAdditionalFields();
+            })
+
         });
 
         function formatNegativeValue() {
@@ -727,6 +849,26 @@
                 }
                 $(v).val(parseFloat($(v).val()).toFixed(2));
             })
+        }
+
+        function savePartnerAdditionalFields() {
+            var formData = new FormData($('#partner_additional_info')[0]);
+            $.ajax({
+                    url: '{{route('admin.claim.project.save.partner.additional', $project)}}',
+                    data: formData,
+                    type: 'POST',
+                    contentType: false,
+                    processData: false,
+                    success: function(response){
+                        toastr.success(response.message);
+                        if(!response.success) {
+                            
+                        }
+                        else{
+                            
+                        }
+                    }
+                })
         }
         
     </script>

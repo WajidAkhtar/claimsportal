@@ -30,53 +30,66 @@
                         </div><!--form-group-->
                     @endif
 
-                    <div class="form-group row">
-                        <label for="first_name" class="col-md-2 col-form-label">@lang('First Name')</label>
-
-                        <div class="col-md-10">
-                            <input type="text" name="first_name" class="form-control" placeholder="{{ __('First Name') }}" value="{{ old('first_name') ?? $user->first_name }}" maxlength="100" required />
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="first_name" class="col-form-label">@lang('First Name')</label>
+                                <input type="text" name="first_name" class="form-control" placeholder="{{ __('First Name') }}" value="{{ old('first_name') ?? $user->first_name }}" maxlength="100" required />
+                            </div><!--form-group-->
                         </div>
-                    </div><!--form-group-->
-
-                    <div class="form-group row">
-                        <label for="last_name" class="col-md-2 col-form-label">@lang('Last Name')</label>
-
-                        <div class="col-md-10">
-                            <input type="text" name="last_name" class="form-control" placeholder="{{ __('Last Name') }}" value="{{ old('last_name') ?? $user->last_name }}" maxlength="100" required />
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="last_name" class="col-form-label">@lang('Last Name')</label>
+                                <input type="text" name="last_name" class="form-control" placeholder="{{ __('Last Name') }}" value="{{ old('last_name') ?? $user->last_name }}" maxlength="100" required />
+                            </div><!--form-group-->
                         </div>
-                    </div><!--form-group-->
+                    </div>
 
-                    <div class="form-group row">
-                        <label for="job_title" class="col-md-2 col-form-label">@lang('Job Title')</label>
-
-                        <div class="col-md-10">
-                            <input type="text" name="job_title" class="form-control" placeholder="{{ __('Job Title') }}" value="{{ old('job_title') ?? $user->job_title }}" maxlength="100" required />
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="job_title" class="col-form-label">@lang('Job Title')</label>
+                                <input type="text" name="job_title" class="form-control" placeholder="{{ __('Job Title') }}" value="{{ old('job_title') ?? $user->job_title }}" maxlength="100" required />
+                            </div><!--form-group-->
                         </div>
-                    </div><!--form-group-->
-
-                    <div class="form-group row">
-                        <label for="department" class="col-md-2 col-form-label">@lang('Department')</label>
-
-                        <div class="col-md-10">
-                            <input type="text" name="department" class="form-control" placeholder="{{ __('Department') }}" value="{{ old('department') ?? $user->department }}" maxlength="100" required />
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="department" class="col-form-label">@lang('Department')</label>
+                                <input type="text" name="department" class="form-control" placeholder="{{ __('Department') }}" value="{{ old('department') ?? $user->department }}" maxlength="100" required />
+                            </div><!--form-group-->
                         </div>
-                    </div><!--form-group-->
+                    </div>
 
-                    <div class="form-group row">
-                        <label for="organisation" class="col-md-2 col-form-label">@lang('Organisation')</label>
-
-                        <div class="col-md-10">
-                            <input type="text" name="organisation" class="form-control" placeholder="{{ __('Organisation') }}" value="{{ old('organisation') ?? $user->organisation }}" maxlength="100" required />
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="organisation_id" class="col-form-label">@lang('Organisation')</label>
+                                {{ 
+                                    html()->select('organisation_id', $organisations, old('organisation_id') ?? $user->organisation_id)
+                                    ->class('form-control select2')
+                                    ->required()
+                                 }}
+                            </div><!--form-group-->
                         </div>
-                    </div><!--form-group-->
-
-                    <div class="form-group row">
-                        <label for="email" class="col-md-2 col-form-label">@lang('E-mail Address')</label>
-
-                        <div class="col-md-10">
-                            <input type="email" name="email" id="email" class="form-control" placeholder="{{ __('E-mail Address') }}" value="{{ old('email') ?? $user->email }}" maxlength="255" required />
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="email" class="col-form-label">@lang('E-mail Address')</label>
+                                <input type="email" name="email" id="email" class="form-control" placeholder="{{ __('E-mail Address') }}" value="{{ old('email') ?? $user->email }}" maxlength="255" required />
+                            </div><!--form-group-->
                         </div>
-                    </div><!--form-group-->
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="pools[]">Pools</label>
+                                {{ html()->multiselect('pools[]', $pools, $user->pools->pluck('id'))
+                                    ->class('form-control select2')
+                                    ->required()
+                                 }}
+                             </div>
+                        </div>
+                    </div>
 
                     @if (!$user->isMasterAdmin())
                         @include('backend.auth.includes.roles')

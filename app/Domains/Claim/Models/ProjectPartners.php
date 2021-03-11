@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Domains\Auth\Models\User;
 use App\Domains\Claim\Models\Project;
+use App\Domains\System\Models\Organisation;
 
 class ProjectPartners extends Model
 {
@@ -51,7 +52,7 @@ class ProjectPartners extends Model
     /**
      * @var string[]
      */
-    protected $with = ['user', 'project'];
+    protected $with = ['user', 'project', 'organisation'];
 
     public function user() {
         return $this->belongsTo(User::class);
@@ -59,6 +60,10 @@ class ProjectPartners extends Model
 
     public function project() {
         return $this->belongsTo(Project::class);
+    }
+
+    public function organisation() {
+        return $this->belongsTo(Organisation::class);
     }
 
 }

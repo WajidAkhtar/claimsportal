@@ -25,6 +25,8 @@
         <link rel="stylesheet" href="{{ asset('assets/backend/vendors/weather-icons/css/pe-icon-set-weather.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/backend/vendors/ionicons/css/ionicons.min.css') }}">
         {{-- <link rel="stylesheet" href="{{ asset('assets/backend/vendors/sweetalert/sweetalert.css') }}"> --}}
+        <link rel="stylesheet" href="{{ asset('assets/backend/vendors/toastr/toastr.min.css') }}">
+        <link rel="stylesheet" href="{{asset('assets/backend/vendors/select2/css/select2.css')}}">
         <livewire:styles />
         @stack('after-page-styles')
         <!-- END: Page CSS-->
@@ -113,6 +115,8 @@
         
         <!-- START: PAGE Vendor JS-->
         {{-- <script src="{{ asset('assets/backend/vendors/sweetalert/sweetalert.min.js') }}"></script> --}}
+        <script src="{{asset('assets/backend/vendors/toastr/toastr.min.js')}}"></script>
+        <script src="{{asset('assets/backend/vendors/select2/js/select2.js')}}"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
         {{-- <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script> --}}
         <livewire:scripts />
@@ -130,6 +134,7 @@
                     'X-XSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+            $('.select2').select2();
         </script>
         <!-- END: APP JS-->
         @stack('after-scripts')

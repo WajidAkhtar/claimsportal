@@ -37,12 +37,13 @@ class UpdateUserRequest extends FormRequest
             'last_name' => ['required', 'max:100'],
             'job_title' => ['required', 'max:100'],
             'department' => ['required', 'max:100'],
-            'organisation' => ['required', 'max:100'],
+            'organisation_id' => ['required'],
             'email' => ['required', 'max:255', 'email', Rule::unique('users')->ignore($this->user->id)],
             'roles' => ['sometimes', 'array'],
             'roles.*' => [Rule::exists('roles', 'id')->where('type', $this->type)],
             'permissions' => ['sometimes', 'array'],
             'permissions.*' => [Rule::exists('permissions', 'id')->where('type', $this->type)],
+            'pools' => ['sometimes', 'array'],
         ];
     }
 

@@ -10,6 +10,8 @@ use App\Domains\Auth\Models\User;
 use App\Domains\Auth\Services\PermissionService;
 use App\Domains\Auth\Services\RoleService;
 use App\Domains\Auth\Services\UserService;
+use App\Domains\System\Services\PoolService;
+use App\Domains\System\Services\OrganisationService;
 
 /**
  * Class UserController.
@@ -32,17 +34,31 @@ class UserController
     protected $permissionService;
 
     /**
+     * @var PoolService
+     */
+    protected $poolService;
+
+    /**
+     * @var OrganisationService
+     */
+    protected $organisationService;
+
+    /**
      * UserController constructor.
      *
      * @param  UserService  $userService
      * @param  RoleService  $roleService
      * @param  PermissionService  $permissionService
+     * @param  PoolService  $poolService
+     * @param  OrganisationService  $organisationService
      */
-    public function __construct(UserService $userService, RoleService $roleService, PermissionService $permissionService)
+    public function __construct(UserService $userService, RoleService $roleService, PermissionService $permissionService, PoolService $poolService, OrganisationService $organisationService)
     {
         $this->userService = $userService;
         $this->roleService = $roleService;
         $this->permissionService = $permissionService;
+        $this->poolService = $poolService;
+        $this->organisationService = $organisationService;
     }
 
     /**
@@ -58,9 +74,12 @@ class UserController
      */
     public function create()
     {
+        $organisations = $this->organisationService->all()->pluck('organisation_name', 'id');
         return view('backend.auth.user.create')
             ->withRoles($this->roleService->get())
             ->withCategories($this->permissionService->getCategorizedPermissions())
+            ->withPools($this->poolService->get()->pluck('full_name', 'id'))
+            ->withOrganisations($organisations)
             ->withGeneral($this->permissionService->getUncategorizedPermissions());
     }
 
@@ -97,11 +116,14 @@ class UserController
      */
     public function edit(EditUserRequest $request, User $user)
     {
+        $organisations = $this->organisationService->all()->pluck('organisation_name', 'id');
         return view('backend.auth.user.edit')
             ->withUser($user)
             ->withRoles($this->roleService->get())
             ->withCategories($this->permissionService->getCategorizedPermissions())
             ->withGeneral($this->permissionService->getUncategorizedPermissions())
+            ->withPools($this->poolService->get()->pluck('full_name', 'id'))
+            ->withOrganisations($organisations)
             ->withUsedPermissions($user->permissions->modelKeys());
     }
 

@@ -35,7 +35,7 @@ class StoreUserRequest extends FormRequest
             'last_name' => ['required', 'max:100'],
             'job_title' => ['required', 'max:100'],
             'department' => ['required', 'max:100'],
-            'organisation' => ['required', 'max:100'],
+            'organisation_id' => ['required'],
             'email' => ['required', 'max:255', 'email', Rule::unique('users')],
             'password' => ['max:100', PasswordRules::register($this->email)],
             'active' => ['sometimes', 'in:1'],
@@ -45,6 +45,7 @@ class StoreUserRequest extends FormRequest
             'roles.*' => [Rule::exists('roles', 'id')->where('type', $this->type)],
             'permissions' => ['sometimes', 'array'],
             'permissions.*' => [Rule::exists('permissions', 'id')->where('type', $this->type)],
+            'pools' => ['sometimes', 'array'],
         ];
     }
 

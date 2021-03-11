@@ -51,7 +51,7 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
         'last_name',
         'job_title',
         'department',
-        'organisation',
+        'organisation_id',
         'email',
         'email_verified_at',
         'password',
@@ -109,6 +109,8 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
     protected $with = [
         'permissions',
         'roles',
+        'organisation',
+        'pools'
     ];
 
     /**

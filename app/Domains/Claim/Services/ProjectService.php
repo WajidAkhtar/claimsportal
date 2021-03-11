@@ -158,10 +158,10 @@ class ProjectService extends BaseService
             ProjectCostItem::where('project_id', $project->id)->whereIn('user_id', $costItemsUsersToRemove)->forceDelete();
 
             // Delete existing project partners
-            $project->allpartners()->forceDelete();
+            // $project->allpartners()->forceDelete();
             // Save partners for the project
             foreach ($data['project_partners'] as $key => $project_partner) {
-                $project->allpartners()->create([
+                $project->allpartners()->firstOrCreate([
                     'user_id' => $project_partner,
                     'project_id' => $project->id,
                 ]);

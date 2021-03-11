@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use App\Domains\Claim\Models\Project;
 use App\Domains\Claim\Models\CostItem;
+use App\Domains\Claim\Models\ProjectPartners;
 use App\Domains\Auth\Services\UserService;
 use App\Domains\Claim\Services\ProjectService;
 use App\Domains\Claim\Http\Requests\Backend\Project\EditProjectRequest;
@@ -93,6 +94,8 @@ class ProjectController
      */
     public function show(Project $project)
     {
+        $organisations = Organisation::pluck('organisation_name', 'id');
+
         if(!$project->isUserPartOfProject(auth()->user()->id, true) && !$project->isUserPartOfProject(auth()->user()->id)) {
             throw new GeneralException(__('You have no access to this page'));
         }
@@ -117,8 +120,11 @@ class ProjectController
             $allowToEdit = true;
             $sheet_owner = (!empty(request()->partner)) ? request()->partner : auth()->user()->id;
             $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project])->render();
+            $partnerAdditionalInfo = ProjectPartners::where('project_id', $project->id)->where('user_id', $sheet_owner)->first();
             return view('backend.claim.project.show')
             ->withProject($project)
+            ->withPartnerAdditionalInfo($partnerAdditionalInfo)
+            ->withOrganisations($organisations)
             ->withAllowToEdit($allowToEdit)
             ->withSheetOwner($sheet_owner)
             ->withyearwiseHtml($yearwiseHtml);
@@ -177,9 +183,12 @@ class ProjectController
                 }
                 $sheet_owner = (!empty(request()->partner)) ? request()->partner : auth()->user()->id;
                 $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project])->render();
+                $partnerAdditionalInfo = ProjectPartners::where('project_id', $project->id)->where('user_id', $sheet_owner)->first();
                 return view('backend.claim.project.show')
                 ->withProject($project)
                 ->withSheetOwner($sheet_owner)
+                ->withPartnerAdditionalInfo($partnerAdditionalInfo)
+                ->withOrganisations($organisations)
                 ->withAllowToEdit($allowToEdit)
                 ->withyearwiseHtml($yearwiseHtml);
             }
@@ -269,4 +278,25 @@ class ProjectController
         $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project])->render();
         return response()->json(['success' => 1, 'message' => 'Data saved successfully!', 'data' => ['yearwiseHtml' => $yearwiseHtml]]);
     }
+
+    public function savePartnerAdditionalFields(Request $request, Project $project) {
+        $isSaved = ProjectPartners::where('user_id', $request->sheet_owner)->where('project_id', $project->id)->update([
+                'organisation_id' => $request->organisation_id,
+                'finance_email' => $request->finance_email,
+                'finance_tel' => $request->finance_tel,
+                'finance_fax' => $request->finance_fax,
+                'vat' => $request->vat,
+                'eori' => $request->eori,
+                'account_name' => $request->account_name,
+                'bank_name' => $request->bank_name,
+                'bank_address' => $request->bank_address,
+                'sort_code' => $request->sort_code,
+                'account_no' => $request->account_no,
+                'swift' => $request->swift,
+                'iban' => $request->iban,
+            ]
+        );
+        return response()->json(['success' => $isSaved, 'message' => 'Data saved successfully!']);
+    }
+
 }

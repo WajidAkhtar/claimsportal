@@ -38,6 +38,7 @@ Route::group([
                 Route::delete('/', [ProjectController::class, 'destroy'])->name('destroy');
 
                 Route::post('/save-claims-data', [ProjectController::class, 'saveClaims'])->name('save.claims');
+            Route::post('/save-partner-additional-data', [ProjectController::class, 'savePartnerAdditionalFields'])->name('save.partner.additional');
             });
         });
 
