@@ -61,6 +61,19 @@ class ProjectController
      */
     public function create()
     {
+        SheetPermission::create([
+            'permission' => 'READ_WRITE_ALL'
+        ]);
+        SheetPermission::create([
+            'permission' => 'WRITE_ONLY_FORECAST'
+        ]);
+        SheetPermission::create([
+            'permission' => 'READ_ONLY'
+        ]);
+        SheetPermission::create([
+            'permission' => 'LEAD_USER'
+        ]);
+        dd('seeded');
         if(!auth()->user()->hasRole('Administrator')) {
             return redirect()->route('admin.claim.project.index')->withFlashDanger(__('You have no access to this page.'));
         }
