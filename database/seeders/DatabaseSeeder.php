@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ProjectSeeder::class);
         $this->call(OrganisationSeeder::class);
         $this->call(PoolSeeder::class);
+        $this->call(SheetPermissionsSeeder::class);
 
         Model::reguard();
     }

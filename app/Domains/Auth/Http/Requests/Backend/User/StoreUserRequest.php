@@ -46,6 +46,16 @@ class StoreUserRequest extends FormRequest
             'permissions' => ['sometimes', 'array'],
             'permissions.*' => [Rule::exists('permissions', 'id')->where('type', $this->type)],
             'pools' => ['sometimes', 'array'],
+            'building_name_no' => ['max:191'],
+            'street' => ['max:191'],
+            'address_line_2' => ['max:191'],
+            'county' => ['max:191'],
+            'city' => ['max:191'],
+            'postcode' => ['max:191'],
+            'correspending_email' => ['required', 'max:191'],
+            'mobile' => ['max:191'],
+            'direct_dial' => ['max:191'],
+            'project_role' => ['required'],
         ];
     }
 

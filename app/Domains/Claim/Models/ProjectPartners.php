@@ -66,4 +66,8 @@ class ProjectPartners extends Model
         return $this->belongsTo(Organisation::class);
     }
 
+    public function userPermissions() {
+        return $this->belongsToMany(SheetPermission::class, 'user_id', 'partner_id');
+    }
+
 }

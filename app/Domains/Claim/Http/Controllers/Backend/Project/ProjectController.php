@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Exceptions\GeneralException;
 use App\Domains\System\Models\Organisation;
 use App\Domains\System\Models\Pool;
+use App\Domains\System\Models\SheetPermission;
+use App\Domains\System\Models\SheetUserPermissions;
 
 /**
  * Class ProjectController.
@@ -62,7 +64,7 @@ class ProjectController
         if(!auth()->user()->hasRole('Administrator')) {
             return redirect()->route('admin.claim.project.index')->withFlashDanger(__('You have no access to this page.'));
         }
-        $funders = $this->userService->getByRoleId(7)->pluck('organisation', 'id');
+        $funders = $this->userService->getByRoleId(7)->pluck('organisation.organisation_name', 'id');
         $costItems = CostItem::onlyActive()->onlySystemGenerated()->get();
         $organisations = Organisation::pluck('organisation_name', 'id');
         $pools = Pool::get()->pluck('full_name', 'id');
@@ -95,6 +97,8 @@ class ProjectController
     public function show(Project $project)
     {
         $organisations = Organisation::pluck('organisation_name', 'id');
+        $users = $project->usersInSamePool()->pluck('full_name', 'id');
+        $sheetPermissions = SheetPermission::pluck('permission', 'id');
 
         if(!$project->isUserPartOfProject(auth()->user()->id, true) && !$project->isUserPartOfProject(auth()->user()->id)) {
             throw new GeneralException(__('You have no access to this page'));
@@ -127,6 +131,8 @@ class ProjectController
             ->withOrganisations($organisations)
             ->withAllowToEdit($allowToEdit)
             ->withSheetOwner($sheet_owner)
+            ->withUsers($users)
+            ->withSheetPermissions($sheetPermissions)
             ->withyearwiseHtml($yearwiseHtml);
         } else {
             $data = [];
@@ -184,12 +190,17 @@ class ProjectController
                 $sheet_owner = (!empty(request()->partner)) ? request()->partner : auth()->user()->id;
                 $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project])->render();
                 $partnerAdditionalInfo = ProjectPartners::where('project_id', $project->id)->where('user_id', $sheet_owner)->first();
+                $SheetUserPermissions = SheetUserPermissions::where('project_id', $project->id)->where('partner_id', $sheet_owner)->get();
+
                 return view('backend.claim.project.show')
                 ->withProject($project)
                 ->withSheetOwner($sheet_owner)
                 ->withPartnerAdditionalInfo($partnerAdditionalInfo)
                 ->withOrganisations($organisations)
                 ->withAllowToEdit($allowToEdit)
+                ->withUsers($users)
+                ->withSheetPermissions($sheetPermissions)
+                ->withSheetUserPermissions($SheetUserPermissions)
                 ->withyearwiseHtml($yearwiseHtml);
             }
         }
@@ -206,8 +217,8 @@ class ProjectController
         if(!auth()->user()->hasRole('Administrator')) {
             return redirect()->route('admin.claim.project.index')->withFlashDanger(__('You have no access to this page.'));
         }
-        $funders = $this->userService->getByRoleId(7)->pluck('organisation', 'id');
-        $partners = $this->userService->getByRoleId(6)->pluck('organisation', 'id');
+        $funders = $this->userService->getByRoleId(7)->pluck('organisation.organisation_name', 'id');
+        $partners = $this->userService->getByRoleId(6)->pluck('organisation.organisation_name', 'id');
         $costItems = $project->costItems()->whereNull('project_cost_items.deleted_at')->whereNotNull('cost_item_description')->groupBy('cost_item_id')->orderByRaw($project->costItemOrderRaw())->get();
         $organisations = Organisation::pluck('organisation_name', 'id');
         $pools = Pool::get()->pluck('full_name', 'id');
@@ -297,6 +308,25 @@ class ProjectController
             ]
         );
         return response()->json(['success' => $isSaved, 'message' => 'Data saved successfully!']);
+    }
+
+    public function saveSheetUserPermissions(Request $request, Project $project) {
+        if(!empty($request->sheet_user_id)) {
+            SheetUserPermissions::where('partner_id', $request->sheet_owner_for_permission)->where('project_id', $project->id)->delete();
+            foreach($request->sheet_user_id as $key => $user_id) {
+                if(!empty($request->sheet_owner_for_permission) && !empty($project->id) && !empty($user_id) && !empty($request->sheet_permission_id[$key])) {
+                    SheetUserPermissions::create([
+                        'partner_id' => $request->sheet_owner_for_permission,
+                        'project_id' => $project->id,
+                        'user_id' => $user_id,
+                        'sheet_permission_id' => $request->sheet_permission_id[$key],
+                    ]);
+                }
+            }
+            return response()->json(['success' => TRUE, 'message' => 'Sheet users & permissions saved successfully!']);   
+        } else {
+            return response()->json(['success' => FALSE, 'message' => 'Nothing to save!']);   
+        }
     }
 
 }

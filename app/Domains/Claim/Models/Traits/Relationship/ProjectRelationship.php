@@ -8,6 +8,7 @@ use App\Domains\Claim\Models\ProjectCostItem;
 use App\Domains\Claim\Models\ProjectPartners;
 use App\Domains\System\Models\Pool;
 use App\Domains\System\Models\Organisation;
+use App\Domains\System\Models\UserPools;
 
 /**
  * Class ProjectRelationship.
@@ -95,6 +96,13 @@ trait ProjectRelationship
     public function organisation()
     {
         return $this->belongsTo(Organisation::class, 'organisation_id', 'id');
+    }
+
+    /**
+    * @return mixed
+    */
+    public function usersInSamePool() {
+        return User::whereIn('id', UserPools::where('pool_id', $this->pool_id)->pluck('user_id'))->get();
     }
 
 }

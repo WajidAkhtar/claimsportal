@@ -53,7 +53,7 @@
                                     @php $partnerCount = 1; @endphp
                                     <option value="">Master Sheet</option>
                                     @foreach($project->allpartners as $partner)
-                                        <option value="{{ $partner->user->id ?? 0 }}" {{ (!empty($partner->user) && request()->partner == $partner->user->id ? 'selected':'') }}>{{ $partner->user->organisation ?? 'Partener - '.$partnerCount++ }}</option>
+                                        <option value="{{ $partner->user->id ?? 0 }}" {{ (!empty($partner->user) && request()->partner == $partner->user->id ? 'selected':'') }}>{{ $partner->user->organisation->organisation_name ?? 'Partener - '.$partnerCount++ }}</option>
                                     @endforeach                            
                                 </select>
                             </form>
@@ -81,7 +81,7 @@
                 <div><strong>Project Name:</strong> {{$project->name}}</div>
                 <div><strong>Project Number:</strong> {{$project->number}}</div>
                 <div><strong>Project Start Date:</strong> {{$project->start_date->format('m-Y')}}</div>
-                <div><strong>Funders:</strong> {{$project->funders->implode('organisation', ', ')}}</div>
+                <div><strong>Funders:</strong> {{$project->funders->implode('organisation.organisation_name', ', ')}}</div>
             </div>
             <form action="#" id="claims_form">
                 <div class="col-sm-12 mt-5">

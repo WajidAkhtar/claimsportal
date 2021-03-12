@@ -136,6 +136,7 @@ class UserService extends BaseService
                 'job_title' => $data['job_title'],
                 'department' => $data['department'],
                 'organisation_id' => $data['organisation_id'],
+                'project_role' => $data['project_role'],
                 'email' => $data['email'],
                 'password' => $data['password'],
                 'email_verified_at' => isset($data['email_verified']) && $data['email_verified'] === '1' ? now() : null,
@@ -144,6 +145,19 @@ class UserService extends BaseService
 
             $user->pools()->sync($data['pools']);
             $user->syncRoles($data['roles'] ?? []);
+            $user->correspondenceAddress()->updateOrCreate([
+                'user_id' => $user->id,
+            ], [
+                'building_name_no' => $data['building_name_no'],
+                'street' => $data['street'],
+                'address_line_2' => $data['address_line_2'],
+                'county' => $data['county'],
+                'city' => $data['city'],
+                'postcode' => $data['postcode'],
+                'email' => $data['email'],
+                'mobile' => $data['mobile'],
+                'direct_dial' => $data['direct_dial'],
+            ]);
 
             if (! config('boilerplate.access.user.only_roles')) {
                 $user->syncPermissions($data['permissions'] ?? []);
@@ -184,10 +198,24 @@ class UserService extends BaseService
                 'job_title' => $data['job_title'],
                 'department' => $data['department'],
                 'organisation_id' => $data['organisation_id'],
+                'project_role' => $data['project_role'],
                 'email' => $data['email'],
             ]);
 
             $user->pools()->sync($data['pools']);
+            $user->correspondenceAddress()->updateOrCreate([
+                'user_id' => $user->id,
+            ], [
+                'building_name_no' => $data['building_name_no'],
+                'street' => $data['street'],
+                'address_line_2' => $data['address_line_2'],
+                'county' => $data['county'],
+                'city' => $data['city'],
+                'postcode' => $data['postcode'],
+                'email' => $data['email'],
+                'mobile' => $data['mobile'],
+                'direct_dial' => $data['direct_dial'],
+            ]);
 
             if (! $user->isMasterAdmin()) {
                 // Replace selected roles/permissions

@@ -80,6 +80,12 @@ class UserController
             ->withCategories($this->permissionService->getCategorizedPermissions())
             ->withPools($this->poolService->get()->pluck('full_name', 'id'))
             ->withOrganisations($organisations)
+            ->withProjectRoles([
+                'COLLABORATOR' => 'COLLABORATOR',
+                'FUNDER' => 'FUNDER',
+                'CO-FUNDER' => 'CO-FUNDER',
+                'LEAD' => 'LEAD',
+            ])
             ->withGeneral($this->permissionService->getUncategorizedPermissions());
     }
 
@@ -124,6 +130,13 @@ class UserController
             ->withGeneral($this->permissionService->getUncategorizedPermissions())
             ->withPools($this->poolService->get()->pluck('full_name', 'id'))
             ->withOrganisations($organisations)
+            ->withCorrespondenceAddress($user->correspondenceAddress()->first())
+            ->withProjectRoles([
+                'COLLABORATOR' => 'COLLABORATOR',
+                'FUNDER' => 'FUNDER',
+                'CO-FUNDER' => 'CO-FUNDER',
+                'LEAD' => 'LEAD',
+            ])
             ->withUsedPermissions($user->permissions->modelKeys());
     }
 

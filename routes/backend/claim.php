@@ -39,6 +39,7 @@ Route::group([
 
                 Route::post('/save-claims-data', [ProjectController::class, 'saveClaims'])->name('save.claims');
             Route::post('/save-partner-additional-data', [ProjectController::class, 'savePartnerAdditionalFields'])->name('save.partner.additional');
+            Route::post('/save-sheet-user-permissions', [ProjectController::class, 'saveSheetUserPermissions'])->name('save.sheet.user.permissions');
             });
         });
 

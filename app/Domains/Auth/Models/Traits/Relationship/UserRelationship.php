@@ -5,6 +5,7 @@ namespace App\Domains\Auth\Models\Traits\Relationship;
 use App\Domains\Auth\Models\PasswordHistory;
 use App\Domains\System\Models\Organisation;
 use App\Domains\System\Models\Pool;
+use App\Domains\System\Models\UserCorrespondenceAddress;
 
 /**
  * Class UserRelationship.
@@ -25,6 +26,10 @@ trait UserRelationship
 
     public function pools() {
     	return $this->belongsToMany(Pool::class, 'user_pools');
+    }
+
+    public function correspondenceAddress() {
+        return $this->hasOne(UserCorrespondenceAddress::class, 'user_id', 'id');
     }
 
 }

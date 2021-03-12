@@ -103,6 +103,110 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col">
+                            <hr>
+                            <h6>CORRESPONDENCE ADDRESS:</h6>
+                            <hr>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="building_name_no">Building Name No:</label>
+                                {{ html()->text('building_name_no', old('building_name_no'))
+                                    ->class('form-control')
+                                 }}
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="street">Street</label>
+                                {{ html()->text('street', old('street'))
+                                    ->class('form-control')
+                                 }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="address_line_2">Address Line 2</label>
+                                {{ html()->text('address_line_2', old('address_line_2'))
+                                    ->class('form-control')
+                                 }}
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="county">County</label>
+                                {{ html()->text('county', old('county'))
+                                    ->class('form-control')
+                                 }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                {{ html()->text('city', old('city'))
+                                    ->class('form-control')
+                                 }}
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="postcode">Post Code</label>
+                                {{ html()->text('postcode', old('postcode'))
+                                    ->class('form-control')
+                                 }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="correspending_email">Email</label>
+                                {{ html()->text('correspending_email', old('correspending_email'))
+                                    ->class('form-control')
+                                    ->required()
+                                 }}
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="mobile">Mobile</label>
+                                {{ html()->text('mobile', old('mobile'))
+                                    ->class('form-control')
+                                 }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="direct_dial">Direct Dial</label>
+                                {{ html()->text('direct_dial', old('direct_dial'))
+                                    ->class('form-control')
+                                 }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="project_role">Project Role</label>
+                                {{ html()->select('project_role', $projectRoles, old('project_role'))
+                                    ->class('form-control select2')
+                                 }}
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-group row mt-3">
                         <label for="active" class="col-md-2 col-form-label">@lang('Active')</label>
 
@@ -152,7 +256,7 @@
 
                     @include('backend.auth.includes.roles')
 
-                    @if (!config('boilerplate.access.user.only_roles'))
+                    @if (!config('boilerplate.access.user.only_roles') && 1==2)
                         @include('backend.auth.includes.permissions')
                     @endif
                 </div>
@@ -164,3 +268,37 @@
         </x-backend.card>
     </x-forms.post>
 @endsection
+
+@push('after-scripts')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("input[name='roles[]']").on("change", function() {
+                if($(this).prop('checked')) {
+                   $("input[name='roles[]']").each(function() {
+                        $(this).prop('checked', false);
+                   });
+                }
+                $(this).prop('checked', true);
+            });
+            $("#organisation_id").on("change", function() {
+                var organisation_id = $(this).val();
+                var url = '{{ url("admin/system/organisation") }}/';
+                $.ajax({
+                    url : url + organisation_id,
+                    type : 'GET',
+                    success : function(response) {
+                        $("#building_name_no").val(response.building_name_no);
+                        $("#street").val(response.street);
+                        $("#address_line_2").val(response.address_line_2);
+                        $("#county").val(response.county);
+                        $("#city").val(response.city);
+                        $("#postcode").val(response.postcode);
+                    },
+                    error : function(error) {
+                        console.log(error);  
+                    }
+                })
+            });
+        });
+    </script>
+@endpush

@@ -52,6 +52,7 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
         'job_title',
         'department',
         'organisation_id',
+        'project_role',
         'email',
         'email_verified_at',
         'password',
@@ -110,7 +111,8 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
         'permissions',
         'roles',
         'organisation',
-        'pools'
+        'pools',
+        'correspondenceAddress'
     ];
 
     /**
@@ -162,5 +164,9 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
     protected static function newFactory()
     {
         return UserFactory::new();
+    }
+
+    public function getFullNameAttribute() {
+        return $this->first_name.' '.$this->last_name;
     }
 }
