@@ -61,5 +61,20 @@ class Organisation extends Model
      * @var string[]
      */
     protected $with = [];
+
+    protected $orderBy = 'organisation_name';
+    protected $orderDirection = 'ASC';
+    protected $orderBys = [
+        [
+            'organisation_name' => 'ASC'
+        ]
+    ];
+
+    public function scopeOrdered($query) {
+        if ($this->orderBy) {
+            return $query->orderBy($this->orderBy, $this->orderDirection);
+        }
+        return $query;
+    }
     
 }

@@ -15,7 +15,7 @@
             :text="__('Permanently Delete')" />
     @endif
 @else
-    @if ($logged_in_user->hasAllAccess())
+    @if ($logged_in_user->hasAllAccess() || in_array(current_user_role(), ['Super User', 'Finance Officer', 'Project Admin', 'Project Partner']))
         {{-- <x-utils.view-button :href="route('admin.auth.user.show', $user)" /> --}}
         <x-utils.edit-button :href="route('admin.auth.user.edit', $user)" />
     @endif
@@ -33,7 +33,7 @@
         </x-utils.form-button>
     @endif
 
-    @if ($user->id !== $logged_in_user->id && !$user->isMasterAdmin() && $logged_in_user->hasAllAccess())
+    @if ($user->id !== $logged_in_user->id && !$user->isMasterAdmin() && $logged_in_user->hasAllAccess() || in_array(current_user_role(), ['Super User', 'Finance Officer', 'Project Admin', 'Project Partner']))
         <x-utils.delete-button :href="route('admin.auth.user.destroy', $user)" />
     @endif
 

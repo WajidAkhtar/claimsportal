@@ -12,6 +12,7 @@ use App\Domains\Auth\Services\RoleService;
 use App\Domains\Auth\Services\UserService;
 use App\Domains\System\Services\PoolService;
 use App\Domains\System\Services\OrganisationService;
+use App\Domains\System\Models\Organisation;
 
 /**
  * Class UserController.
@@ -74,11 +75,11 @@ class UserController
      */
     public function create()
     {
-        $organisations = $this->organisationService->all()->pluck('organisation_name', 'id');
+        $organisations = Organisation::ordered()->pluck('organisation_name', 'id');
         return view('backend.auth.user.create')
             ->withRoles($this->roleService->get())
             ->withCategories($this->permissionService->getCategorizedPermissions())
-            ->withPools($this->poolService->get()->pluck('full_name', 'id'))
+            ->withPools($this->poolService->whereIn('id', auth()->user()->pools()->pluck('pool_id'))->get()->pluck('full_name', 'id'))
             ->withOrganisations($organisations)
             ->withProjectRoles([
                 'COLLABORATOR' => 'COLLABORATOR',
@@ -122,13 +123,13 @@ class UserController
      */
     public function edit(EditUserRequest $request, User $user)
     {
-        $organisations = $this->organisationService->all()->pluck('organisation_name', 'id');
+        $organisations = Organisation::ordered()->pluck('organisation_name', 'id');
         return view('backend.auth.user.edit')
             ->withUser($user)
             ->withRoles($this->roleService->get())
             ->withCategories($this->permissionService->getCategorizedPermissions())
             ->withGeneral($this->permissionService->getUncategorizedPermissions())
-            ->withPools($this->poolService->get()->pluck('full_name', 'id'))
+            ->withPools($this->poolService->whereIn('id', auth()->user()->pools()->pluck('pool_id'))->get()->pluck('full_name', 'id'))
             ->withOrganisations($organisations)
             ->withCorrespondenceAddress($user->correspondenceAddress()->first())
             ->withProjectRoles([

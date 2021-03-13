@@ -381,7 +381,7 @@ class UserService extends BaseService
             'last_name' => $data['last_name'] ?? null,
             'job_title' => $data['job_title'] ?? null,
             'department' => $data['department'] ?? null,
-            'organisation' => $data['organisation'] ?? null,
+            'organisation_id' => $data['organisation_id'] ?? null,
             'email' => $data['email'] ?? null,
             'password' => $data['password'] ?? null,
             'provider' => $data['provider'] ?? null,

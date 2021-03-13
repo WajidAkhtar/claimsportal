@@ -49,6 +49,24 @@ class UsersTable extends TableComponent
         $query = User::with('roles', 'twoFactorAuth')
             ->withCount('twoFactorAuth');
 
+        if(current_user_role() == 'Super User') {
+            $query = $query->whereHas('roles', function($q) {
+                $q->whereIn('name', ['Finance Officer', 'Project Admin', 'Project Partner', 'Funder']);
+            });
+        } else if(current_user_role() == 'Finance Officer') {
+            $query = $query->whereHas('roles', function($q) {
+                $q->whereIn('name', ['Project Admin', 'Project Partner', 'Funder']);
+            });
+        } else if(current_user_role() == 'Project Admin') {
+            $query = $query->whereHas('roles', function($q) {
+                $q->whereIn('name', ['Project Partner', 'Funder']);
+            });
+        } else if(current_user_role() == 'Project Partner') {
+            $query = $query->whereHas('roles', function($q) {
+                $q->whereIn('name', ['Funder']);
+            });
+        }
+
         if ($this->status === 'deleted') {
             return $query->onlyTrashed();
         }

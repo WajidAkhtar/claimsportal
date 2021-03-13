@@ -134,4 +134,5 @@ class OrganisationService extends BaseService
 
         throw new GeneralException(__('There was a problem permanently deleting this Organisation. Please try again.'));
     }
+
 }

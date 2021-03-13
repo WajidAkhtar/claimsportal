@@ -12,7 +12,7 @@
                 </ul>
             </li>
 
-            @if(auth()->user()->hasRole('Administrator'))
+            @if(!auth()->user()->hasRole('Funder'))
             <li class="dropdown active">
                 <a href="javascript:void(0)"><i class="fa fa-users mr-1"></i> Users</a>
                 <ul>

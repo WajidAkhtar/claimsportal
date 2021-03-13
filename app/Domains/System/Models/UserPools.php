@@ -54,5 +54,7 @@ class UserPools extends Model
      * @var string[]
      */
     protected $with = [];
+
+    public $timestamps = TRUE;
     
 }

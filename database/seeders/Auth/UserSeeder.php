@@ -27,7 +27,6 @@ class UserSeeder extends Seeder
             'last_name' => 'Admin',
             'job_title' => 'Administration',
             'department' => 'Administration',
-            'organisation' => 'Administration',
             'email' => 'admin@admin.com',
             'password' => 'secret',
             'email_verified_at' => now(),

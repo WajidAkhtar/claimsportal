@@ -66,7 +66,7 @@ class ProjectController
         }
         $funders = $this->userService->getByRoleId(7)->pluck('organisation.organisation_name', 'id');
         $costItems = CostItem::onlyActive()->onlySystemGenerated()->get();
-        $organisations = Organisation::pluck('organisation_name', 'id');
+        $organisations = Organisation::ordered()->pluck('organisation_name', 'id');
         $pools = Pool::get()->pluck('full_name', 'id');
         return view('backend.claim.project.create')
             ->withFunders($funders)
@@ -96,7 +96,7 @@ class ProjectController
      */
     public function show(Project $project)
     {
-        $organisations = Organisation::pluck('organisation_name', 'id');
+        $organisations = Organisation::ordered()->pluck('organisation_name', 'id');
         $users = $project->usersInSamePool()->pluck('full_name', 'id');
         $sheetPermissions = SheetPermission::pluck('permission', 'id');
 
@@ -220,7 +220,7 @@ class ProjectController
         $funders = $this->userService->getByRoleId(7)->pluck('organisation.organisation_name', 'id');
         $partners = $this->userService->getByRoleId(6)->pluck('organisation.organisation_name', 'id');
         $costItems = $project->costItems()->whereNull('project_cost_items.deleted_at')->whereNotNull('cost_item_description')->groupBy('cost_item_id')->orderByRaw($project->costItemOrderRaw())->get();
-        $organisations = Organisation::pluck('organisation_name', 'id');
+        $organisations = Organisation::ordered()->pluck('organisation_name', 'id');
         $pools = Pool::get()->pluck('full_name', 'id');
         return view('backend.claim.project.edit')
             ->withProject($project)

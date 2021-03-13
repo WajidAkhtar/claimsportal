@@ -95,6 +95,7 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
         'last_login_at' => 'datetime',
         'email_verified_at' => 'datetime',
         'to_be_logged_out' => 'boolean',
+        'organisation_id' => 'integer',
     ];
 
     /**

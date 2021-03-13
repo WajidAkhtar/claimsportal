@@ -50,3 +50,14 @@ if (! function_exists('homeRoute')) {
         return 'frontend.index';
     }
 }
+
+if(! function_exists('current_user_role')) {
+    /**
+    * Return the role name of logged in user
+    *
+    * @return string
+    */
+    function current_user_role() {
+        return auth()->user()->roles()->first()->name;
+    }
+}
