@@ -66,6 +66,7 @@
     <br />
     @endif
 
+    @if(current_user_role() == 'Administrator' || current_user_role() == 'Super User' || auth()->user()->id == $project->created_by)
     <x-backend.card>
         <x-slot name="header">
             <table class="">
@@ -73,161 +74,162 @@
                     <td>
                         <button class="btn btn-sm btn-outline-primary toggle_partner_additional_info togget_action_content"><span class="toggle_action_text">Show</span> @lang('Assign Required Information')</button></td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary toggle_user_permissions_info togget_action_content"><span class="toggle_action_text">Show</span> @lang('Assign User & Permissions')</button>    
+                        <button class="btn btn-sm btn-outline-primary toggle_user_permissions_info togget_action_content"><span class="toggle_action_text">Show</span> @lang('Assign User & Permissions')</button>
                     </td>
                 </tr>
             </table>
         </x-slot>        
 
         <x-slot name="body">
-            <div class="action-container">
-                <form method="post" action="" id="partner_additional_info" style="display: none;">
-                    {{ html()->input('hidden', 'project_id', $project->id) }}
-                    {{ html()->input('hidden', 'sheet_owner', $sheetOwner) }}
-                    <div class="row">
-                        <div class="col">
-                            {{ html()->label('ORGANISATION')->for('organisation_id') }}
-                            {{ html()->select('organisation_id', $organisations, $partnerAdditionalInfo->organisation ?? '')
-                                ->class('form-control additional-info select2')
-                                ->required()
-                             }}
+                <div class="action-container">
+                    <form method="post" action="" id="partner_additional_info" style="display: none;">
+                        {{ html()->input('hidden', 'project_id', $project->id) }}
+                        {{ html()->input('hidden', 'sheet_owner', $sheetOwner) }}
+                        <div class="row">
+                            <div class="col">
+                                {{ html()->label('ORGANISATION')->for('organisation_id') }}
+                                {{ html()->select('organisation_id', $organisations, $partnerAdditionalInfo->organisation ?? '')
+                                    ->class('form-control additional-info select2')
+                                    ->required()
+                                 }}
+                            </div>
+                            <div class="col">
+                                {{ html()->label('FINANCE EMAIL')->for('finance_email') }}
+                                {{ html()->text('finance_email', $partnerAdditionalInfo->finance_email ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                            <div class="col">
+                                {{ html()->label('FINANCE TEL')->for('finance_tel') }}
+                                {{ html()->text('finance_tel', $partnerAdditionalInfo->finance_tel ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
                         </div>
-                        <div class="col">
-                            {{ html()->label('FINANCE EMAIL')->for('finance_email') }}
-                            {{ html()->text('finance_email', $partnerAdditionalInfo->finance_email ?? '')
-                                ->class('form-control additional-info')
-                             }}
+                        <div class="row mt-3">
+                            <div class="col">
+                                {{ html()->label('FINANCE FAX')->for('finance_fax') }}
+                                {{ html()->text('finance_fax', $partnerAdditionalInfo->finance_fax ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                            <div class="col">
+                                {{ html()->label('VAT')->for('vat') }}
+                                {{ html()->text('vat', $partnerAdditionalInfo->vat ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                            <div class="col">
+                                {{ html()->label('EORI')->for('eori') }}
+                                {{ html()->text('eori', $partnerAdditionalInfo->eori ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
                         </div>
-                        <div class="col">
-                            {{ html()->label('FINANCE TEL')->for('finance_tel') }}
-                            {{ html()->text('finance_tel', $partnerAdditionalInfo->finance_tel ?? '')
-                                ->class('form-control additional-info')
-                             }}
+                        <div class="row mt-3">
+                            <div class="col">
+                                <h6>Invoicing Details</h6>
+                                <hr />
+                            </div>
                         </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col">
-                            {{ html()->label('FINANCE FAX')->for('finance_fax') }}
-                            {{ html()->text('finance_fax', $partnerAdditionalInfo->finance_fax ?? '')
-                                ->class('form-control additional-info')
-                             }}
+                        <div class="row mt-2">
+                            <div class="col">
+                                {{ html()->label('ACCOUNT NAME')->for('account_name') }}
+                                {{ html()->text('account_name', $partnerAdditionalInfo->account_name ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                            <div class="col">
+                                {{ html()->label('BANK NAME')->for('bank_name') }}
+                                {{ html()->text('bank_name', $partnerAdditionalInfo->bank_name ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                            <div class="col">
+                                {{ html()->label('BANK ADDRESS')->for('bank_address') }}
+                                {{ html()->text('bank_address', $partnerAdditionalInfo->bank_address ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
                         </div>
-                        <div class="col">
-                            {{ html()->label('VAT')->for('vat') }}
-                            {{ html()->text('vat', $partnerAdditionalInfo->vat ?? '')
-                                ->class('form-control additional-info')
-                             }}
+                        <div class="row mt-3">
+                            <div class="col">
+                                {{ html()->label('SORT CODE')->for('sort_code') }}
+                                {{ html()->text('sort_code', $partnerAdditionalInfo->sort_code ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                            <div class="col">
+                                {{ html()->label('ACCOUNT NO')->for('account_no') }}
+                                {{ html()->text('account_no', $partnerAdditionalInfo->account_no ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
                         </div>
-                        <div class="col">
-                            {{ html()->label('EORI')->for('eori') }}
-                            {{ html()->text('eori', $partnerAdditionalInfo->eori ?? '')
-                                ->class('form-control additional-info')
-                             }}
+                        <div class="row mt-3">
+                            <div class="col">
+                                {{ html()->label('SWIFT')->for('swift') }}
+                                {{ html()->text('swift', $partnerAdditionalInfo->swift ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                            <div class="col">
+                                {{ html()->label('IBAN')->for('iban') }}
+                                {{ html()->text('iban', $partnerAdditionalInfo->iban ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
                         </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col">
-                            <h6>Invoicing Details</h6>
-                            <hr />
-                        </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col">
-                            {{ html()->label('ACCOUNT NAME')->for('account_name') }}
-                            {{ html()->text('account_name', $partnerAdditionalInfo->account_name ?? '')
-                                ->class('form-control additional-info')
-                             }}
-                        </div>
-                        <div class="col">
-                            {{ html()->label('BANK NAME')->for('bank_name') }}
-                            {{ html()->text('bank_name', $partnerAdditionalInfo->bank_name ?? '')
-                                ->class('form-control additional-info')
-                             }}
-                        </div>
-                        <div class="col">
-                            {{ html()->label('BANK ADDRESS')->for('bank_address') }}
-                            {{ html()->text('bank_address', $partnerAdditionalInfo->bank_address ?? '')
-                                ->class('form-control additional-info')
-                             }}
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col">
-                            {{ html()->label('SORT CODE')->for('sort_code') }}
-                            {{ html()->text('sort_code', $partnerAdditionalInfo->sort_code ?? '')
-                                ->class('form-control additional-info')
-                             }}
-                        </div>
-                        <div class="col">
-                            {{ html()->label('ACCOUNT NO')->for('account_no') }}
-                            {{ html()->text('account_no', $partnerAdditionalInfo->account_no ?? '')
-                                ->class('form-control additional-info')
-                             }}
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col">
-                            {{ html()->label('SWIFT')->for('swift') }}
-                            {{ html()->text('swift', $partnerAdditionalInfo->swift ?? '')
-                                ->class('form-control additional-info')
-                             }}
-                        </div>
-                        <div class="col">
-                            {{ html()->label('IBAN')->for('iban') }}
-                            {{ html()->text('iban', $partnerAdditionalInfo->iban ?? '')
-                                ->class('form-control additional-info')
-                             }}
-                        </div>
-                    </div>
-                </form>
-                <form method="post" action="" id="user_permissions_info" style="display: none;">
-                    {{ html()->input('hidden', 'sheet_owner_for_permission', $sheetOwner) }}
-                    <table class="table sheet_user_permissions">
-                        <thead>
-                            <tr>
-                                <th>User</th>
-                                <th>Permission</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody class="repeatable">
-                            @if(!empty($sheetUserPermissions))
-                                @foreach($sheetUserPermissions as $permission)
-                                    <tr class="field-group">
-                                        <td>
-                                            {{ html()->select('sheet_user_id[]', $users, $permission->user_id)
-                                                ->class('form-control')
-                                                ->placeholder('Select User')
-                                             }}
-                                        </td>
-                                        <td>
-                                            {{ html()->select('sheet_permission_id[]', $sheetPermissions, $permission->sheet_permission_id)
-                                                ->class('form-control')
-                                                ->placeholder('Select Permission')
-                                             }}
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger btn-sm delete"><i class="fa fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @endif
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="4">
-                                    <button type="button" class="btn btn-primary btn-sm add"><i class="fa fa-plus"></i></button>
-                                    <button type="button" class="btn-save-sheet-user-permissions btn btn-sm btn-success">Save User & Permissions</button>
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </form>
-            </div>
+                    </form>
+                    <form method="post" action="" id="user_permissions_info" style="display: none;">
+                        {{ html()->input('hidden', 'sheet_owner_for_permission', $sheetOwner) }}
+                        <table class="table sheet_user_permissions">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Permission</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="repeatable">
+                                @if(!empty($sheetUserPermissions))
+                                    @foreach($sheetUserPermissions as $permission)
+                                        <tr class="field-group">
+                                            <td>
+                                                {{ html()->select('sheet_user_id[]', $users, $permission->user_id)
+                                                    ->class('form-control')
+                                                    ->placeholder('Select User')
+                                                 }}
+                                            </td>
+                                            <td>
+                                                {{ html()->select('sheet_permission_id[]', $sheetPermissions, $permission->sheet_permission_id)
+                                                    ->class('form-control')
+                                                    ->placeholder('Select Permission')
+                                                 }}
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger btn-sm delete"><i class="fa fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="4">
+                                        <button type="button" class="btn btn-primary btn-sm add"><i class="fa fa-plus"></i></button>
+                                        <button type="button" class="btn-save-sheet-user-permissions btn btn-sm btn-success">Save User & Permissions</button>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </form>
+                </div>
         </x-slot>
 
     </x-backend.card>
     <br />
+    @endif
 
     <script type="text/template" id="sheet-user-permission-template">
         <tr class="field-group">

@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use App\Domains\System\Models\Pool;
 
 if (! function_exists('appName')) {
     /**
@@ -59,5 +60,19 @@ if(! function_exists('current_user_role')) {
     */
     function current_user_role() {
         return auth()->user()->roles()->first()->name;
+    }
+}
+
+if(! function_exists('current_user_pools')) {
+    /**
+    * Return the pools of logged in user
+    *
+    * @return string
+    */
+    function current_user_pools() {
+        if(current_user_role() == 'Administrator') {
+            return Pool::all();
+        }
+        return auth()->user()->pools();
     }
 }

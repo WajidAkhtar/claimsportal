@@ -138,7 +138,7 @@
                     {{ html()->label(__('Finance Tel'))->class('col-md-2 col-form-label')->for('finance_tel') }}
 
                     <div class="col-md-10">
-                        {{ html()->email('finance_tel')
+                        {{ html()->text('finance_tel')
                             ->class('form-control')
                             }}
                     </div>
@@ -148,7 +148,7 @@
                     {{ html()->label(__('Finance FAX'))->class('col-md-2 col-form-label')->for('finance_fax') }}
 
                     <div class="col-md-10">
-                        {{ html()->email('finance_fax')
+                        {{ html()->text('finance_fax')
                             ->class('form-control')
                             }}
                     </div>
@@ -158,7 +158,7 @@
                     {{ html()->label(__('VAT'))->class('col-md-2 col-form-label')->for('vat') }}
 
                     <div class="col-md-10">
-                        {{ html()->email('vat')
+                        {{ html()->text('vat')
                             ->class('form-control')
                             }}
                     </div>
@@ -168,7 +168,7 @@
                     {{ html()->label(__('EORI'))->class('col-md-2 col-form-label')->for('eori') }}
 
                     <div class="col-md-10">
-                        {{ html()->email('eori')
+                        {{ html()->text('eori')
                             ->class('form-control')
                             }}
                     </div>

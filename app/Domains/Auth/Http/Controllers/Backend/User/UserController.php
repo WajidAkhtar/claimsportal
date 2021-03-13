@@ -79,7 +79,7 @@ class UserController
         return view('backend.auth.user.create')
             ->withRoles($this->roleService->get())
             ->withCategories($this->permissionService->getCategorizedPermissions())
-            ->withPools($this->poolService->whereIn('id', auth()->user()->pools()->pluck('pool_id'))->get()->pluck('full_name', 'id'))
+            ->withPools(current_user_pools()->pluck('full_name', 'id'))
             ->withOrganisations($organisations)
             ->withProjectRoles([
                 'COLLABORATOR' => 'COLLABORATOR',
@@ -129,7 +129,7 @@ class UserController
             ->withRoles($this->roleService->get())
             ->withCategories($this->permissionService->getCategorizedPermissions())
             ->withGeneral($this->permissionService->getUncategorizedPermissions())
-            ->withPools($this->poolService->whereIn('id', auth()->user()->pools()->pluck('pool_id'))->get()->pluck('full_name', 'id'))
+            ->withPools(current_user_pools()->pluck('full_name', 'id'))
             ->withOrganisations($organisations)
             ->withCorrespondenceAddress($user->correspondenceAddress()->first())
             ->withProjectRoles([

@@ -67,7 +67,7 @@ class ProjectController
         $funders = $this->userService->getByRoleId(7)->pluck('organisation.organisation_name', 'id');
         $costItems = CostItem::onlyActive()->onlySystemGenerated()->get();
         $organisations = Organisation::ordered()->pluck('organisation_name', 'id');
-        $pools = Pool::get()->pluck('full_name', 'id');
+        $pools = current_user_pools()->pluck('full_name', 'id');
         return view('backend.claim.project.create')
             ->withFunders($funders)
             ->withCostItems($costItems)
@@ -100,7 +100,7 @@ class ProjectController
         $users = $project->usersInSamePool()->pluck('full_name', 'id');
         $sheetPermissions = SheetPermission::pluck('permission', 'id');
 
-        if(!$project->isUserPartOfProject(auth()->user()->id, true) && !$project->isUserPartOfProject(auth()->user()->id)) {
+        if(!$project->isUserPartOfProject(auth()->user()->id, true) && !$project->isUserPartOfProject(auth()->user()->id) && !in_array($project->pool_id, auth()->user()->pools()->pluck('pool_id')->toArray())) {
             throw new GeneralException(__('You have no access to this page'));
         }
 
@@ -221,7 +221,7 @@ class ProjectController
         $partners = $this->userService->getByRoleId(6)->pluck('organisation.organisation_name', 'id');
         $costItems = $project->costItems()->whereNull('project_cost_items.deleted_at')->whereNotNull('cost_item_description')->groupBy('cost_item_id')->orderByRaw($project->costItemOrderRaw())->get();
         $organisations = Organisation::ordered()->pluck('organisation_name', 'id');
-        $pools = Pool::get()->pluck('full_name', 'id');
+        $pools = current_user_pools()->pluck('full_name', 'id');
         return view('backend.claim.project.edit')
             ->withProject($project)
             ->withFunders($funders)

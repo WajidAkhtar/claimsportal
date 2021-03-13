@@ -48,10 +48,11 @@ class ProjectsTable extends TableComponent
     {
         $query = Project::with('funders');
         if(auth()->user()->roles->pluck('name')->first() != 'Administrator') {
-            $query->where('created_by', auth()->user()->id);
-            $query->orWhereHas('partners', function($q) {
-                $q->where('user_id', auth()->user()->id);
-            });
+            // $query->where('created_by', auth()->user()->id);
+            // $query->orWhereHas('partners', function($q) {
+            //     $q->where('user_id', auth()->user()->id);
+            // });
+            $query->whereIn('pool_id', auth()->user()->pools()->pluck('pool_id'));
         }
 
         // dd($query);
