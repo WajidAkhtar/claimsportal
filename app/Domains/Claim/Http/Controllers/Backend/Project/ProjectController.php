@@ -20,6 +20,7 @@ use App\Domains\System\Models\Organisation;
 use App\Domains\System\Models\Pool;
 use App\Domains\System\Models\SheetPermission;
 use App\Domains\System\Models\SheetUserPermissions;
+use App\Domains\Auth\Models\User;
 
 /**
  * Class ProjectController.
@@ -53,6 +54,9 @@ class ProjectController
      */
     public function index()
     {
+        if(auth()->user()->hasRole('Project Partner')) {
+            return redirect()->route('admin.dashboard')->withFlashDanger(__('You have no access to this page.'));
+        }
         return view('backend.claim.project.index');
     }
 
@@ -61,7 +65,8 @@ class ProjectController
      */
     public function create()
     {
-        if(!auth()->user()->hasRole('Administrator')) {
+        // dd(auth()->user()->roles()->get());
+        if(!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User') && !auth()->user()->hasRole('Finance Officer') && !auth()->user()->hasRole('Project Admin')) {
             return redirect()->route('admin.claim.project.index')->withFlashDanger(__('You have no access to this page.'));
         }
         $funders = $this->userService->getByRoleId(7)->pluck('organisation.organisation_name', 'id');
@@ -97,7 +102,11 @@ class ProjectController
     public function show(Project $project)
     {
         $organisations = Organisation::ordered()->pluck('organisation_name', 'id');
-        $users = $project->usersInSamePool()->pluck('full_name', 'id');
+        if(!auth()->user()->hasRole('Administrator')) {
+            $users = User::get()->pluck('full_name', 'id');
+        } else {
+            $users = $project->usersInSamePool()->pluck('full_name', 'id');
+        }
         $sheetPermissions = SheetPermission::pluck('permission', 'id');
 
         if(!$project->isUserPartOfProject(auth()->user()->id, true) && !$project->isUserPartOfProject(auth()->user()->id) && !in_array($project->pool_id, auth()->user()->pools()->pluck('pool_id')->toArray())) {
@@ -214,7 +223,7 @@ class ProjectController
      */
     public function edit(EditProjectRequest $request, Project $project)
     {
-        if(!auth()->user()->hasRole('Administrator')) {
+        if(!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User') && !auth()->user()->hasRole('Finance Officer') && !auth()->user()->hasRole('Project Admin')) {
             return redirect()->route('admin.claim.project.index')->withFlashDanger(__('You have no access to this page.'));
         }
         $funders = $this->userService->getByRoleId(7)->pluck('organisation.organisation_name', 'id');

@@ -17,7 +17,7 @@ class StoreProjectRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->user()->isMasterAdmin();
+        // return $this->user()->isMasterAdmin();
     }
 
     /**
@@ -67,6 +67,6 @@ class StoreProjectRequest extends FormRequest
      */
     protected function failedAuthorization()
     {
-        throw new AuthorizationException(__('Only the administrator can create project.'));
+        // throw new AuthorizationException(__('Only the administrator can create project.'));
     }
 }

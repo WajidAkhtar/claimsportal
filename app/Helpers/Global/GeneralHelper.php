@@ -73,6 +73,6 @@ if(! function_exists('current_user_pools')) {
         if(current_user_role() == 'Administrator') {
             return Pool::all();
         }
-        return auth()->user()->pools();
+        return auth()->user()->pools()->get();
     }
 }

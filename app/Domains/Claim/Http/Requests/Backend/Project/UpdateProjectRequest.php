@@ -17,7 +17,7 @@ class UpdateProjectRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->user()->isMasterAdmin();
+        // return $this->user()->isMasterAdmin();
     }
 
     /**
@@ -68,6 +68,6 @@ class UpdateProjectRequest extends FormRequest
      */
     protected function failedAuthorization()
     {
-        throw new AuthorizationException(__('Only the administrator can update this project.'));
+        // throw new AuthorizationException(__('Only the administrator can update this project.'));
     }
 }
