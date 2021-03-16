@@ -19,7 +19,8 @@ class ProjectPartners extends Model
      */
     protected $fillable = [
         'project_id',
-        'user_id',
+        'organisation_id',
+        'is_master',
     ];
 
     /**
@@ -52,18 +53,18 @@ class ProjectPartners extends Model
     /**
      * @var string[]
      */
-    protected $with = ['user', 'project', 'organisation'];
+    protected $with = ['project', 'organisation'];
 
-    public function user() {
-        return $this->belongsTo(User::class);
+    public function organisation() {
+        return $this->belongsTo(Organisation::class);
+    }
+
+    public function invoiceOrganisation() {
+        return $this->belongsTo(Organisation::class, 'invoice_organisation_id', 'id');
     }
 
     public function project() {
         return $this->belongsTo(Project::class);
-    }
-
-    public function organisation() {
-        return $this->belongsTo(Organisation::class);
     }
 
     public function userPermissions() {

@@ -22,6 +22,7 @@ class SheetUserPermissions extends Model
         'partner_id',
         'user_id',
         'sheet_permission_id',
+        'is_master',
     ];
 
     /**

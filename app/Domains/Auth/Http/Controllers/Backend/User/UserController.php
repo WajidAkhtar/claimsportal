@@ -67,7 +67,12 @@ class UserController
      */
     public function index()
     {
-        return view('backend.auth.user.index');
+        $allowToCreate = true;
+        if(auth()->user()->hasRole('Project Partner') || auth()->user()->hasRole('Funder')) {
+            $allowToCreate = false;
+            return redirect()->route('admin.dashboard')->withFlashDanger(__('You do not have access to user management module.'));
+        }
+        return view('backend.auth.user.index')->withAllowToCreate($allowToCreate);
     }
 
     /**

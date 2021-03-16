@@ -20,6 +20,20 @@
             </x-slot>
 
             <x-slot name="body">
+
+                <h6>PROJECT PROFILE</h6>
+                <hr/>
+
+                <div class="form-group row">
+                    {{ html()->label(__('Project Pool'))->class('col-md-2 col-form-label')->for('pool_id') }}
+
+                    <div class="col-md-10">
+                        {{ html()->select('pool_id', $pools)
+                            ->class('form-control select2')
+                            ->required() }}
+                    </div>
+                </div><!--form-group-->
+
                 <div class="form-group row">
                     {{ html()->label(__('Project Name'))->class('col-md-2 col-form-label')->for('name') }}
 
@@ -42,32 +56,46 @@
                             ->required() }}
                     </div>
                 </div><!--form-group-->
-                
+
                 <div class="form-group row">
-                    {{ html()->label(__('Project Pool'))->class('col-md-2 col-form-label')->for('pool_id') }}
+                    {{ html()->label(__('Funders'))->class('col-md-2 col-form-label')->for('funders') }}
 
                     <div class="col-md-10">
-                        {{ html()->select('pool_id', $pools)
+                        {{ html()->multiselect('funders[]', $funders, old('funders')?? $project->funders->pluck('id'))
                             ->class('form-control select2')
                             ->required() }}
                     </div>
                 </div><!--form-group-->
 
                 <div class="form-group row">
-                    {{ html()->label(__('Organisations'))->class('col-md-2 col-form-label')->for('organisation_id') }}
+                    {{ html()->label(__('Project Funder Ref.'))->class('col-md-2 col-form-label')->for('project_funder_ref') }}
 
                     <div class="col-md-10">
-                        {{ html()->select('organisation_id', $organisations)
-                            ->class('form-control select2')
+                        {{ html()->text('project_funder_ref')
+                            ->class('form-control')
+                            ->maxlength(191)
                             ->required() }}
                     </div>
                 </div><!--form-group-->
+
+                <div class="form-group row">
+                    {{ html()->label(__('Project Status'))->class('col-md-2 col-form-label')->for('status') }}
+
+                    <div class="col-md-10">
+                        {{ html()->select('status', $projectStatuses)
+                            ->class('form-control')
+                            ->required() }}
+                    </div>
+                </div><!--form-group-->
+
+                <h6 class="mt-4">PROJECT CLAIM TABLE</h6>
+                <hr/>
                 
                 <div class="form-group row">
                     {{ html()->label(__('Project Start Date'))->class('col-md-2 col-form-label')->for('start_date') }}
 
                     <div class="col-md-10">
-                        {{ html()->text('start_date', $project->start_date->format('m-Y'))
+                        {{ html()->text('start_date', $project->start_date)
                             ->class('form-control')
                             ->placeholder('MM-YYYY')
                             ->attribute('readonly')
@@ -88,22 +116,10 @@
                 </div><!--form-group-->
 
                 <div class="form-group row">
-                    {{ html()->label(__('No. of Parteners'))->class('col-md-2 col-form-label')->for('number_of_partners') }}
-
-                    <div class="col-md-10">
-                        {{ html()->input('number', 'number_of_partners')
-                            ->class('form-control')
-                            ->maxlength('5')
-                            ->placeholder('Number of parteners')
-                            ->required() }}
-                    </div>
-                </div><!--form-group-->
-
-                <div class="form-group row">
                     {{ html()->label(__('Project Partners'))->class('col-md-2 col-form-label')->for('project_partners') }}
 
                     <div class="col-md-10">
-                        {{ html()->multiselect('project_partners[]', $partners, old('project_partners')?? $project->partners->pluck('id'))
+                        {{ html()->multiselect('project_partners[]', $partners,  $project->allpartners()->pluck('organisation_id'))
                             ->class('form-control select2')
                             // ->placeholder('Choose Project Partners')
                             ->required() }}
@@ -117,137 +133,6 @@
                         {{ html()->text('status')
                             ->class('form-control')
                             ->required() }}
-                    </div>
-                </div><!--form-group-->
-                
-                <div class="form-group row">
-                    {{ html()->label(__('Funders'))->class('col-md-2 col-form-label')->for('funders') }}
-
-                    <div class="col-md-10">
-                        {{ html()->multiselect('funders[]', $funders, old('funders')?? $project->funders->pluck('id'))
-                            ->class('form-control select2')
-                            // ->placeholder('Choose Funders')
-                            ->required() }}
-                    </div>
-                </div><!--form-group-->
-
-                <div class="form-group row">
-                    {{ html()->label(__('Finance Email'))->class('col-md-2 col-form-label')->for('finance_email') }}
-
-                    <div class="col-md-10">
-                        {{ html()->email('finance_email')
-                            ->class('form-control')
-                            }}
-                    </div>
-                </div><!--form-group-->
-
-                <div class="form-group row">
-                    {{ html()->label(__('Finance Tel'))->class('col-md-2 col-form-label')->for('finance_tel') }}
-
-                    <div class="col-md-10">
-                        {{ html()->text('finance_tel')
-                            ->class('form-control')
-                            }}
-                    </div>
-                </div><!--form-group-->
-
-                <div class="form-group row">
-                    {{ html()->label(__('Finance FAX'))->class('col-md-2 col-form-label')->for('finance_fax') }}
-
-                    <div class="col-md-10">
-                        {{ html()->text('finance_fax')
-                            ->class('form-control')
-                            }}
-                    </div>
-                </div><!--form-group-->
-
-                <div class="form-group row">
-                    {{ html()->label(__('VAT'))->class('col-md-2 col-form-label')->for('vat') }}
-
-                    <div class="col-md-10">
-                        {{ html()->text('vat')
-                            ->class('form-control')
-                            }}
-                    </div>
-                </div><!--form-group-->
-
-                <div class="form-group row">
-                    {{ html()->label(__('EORI'))->class('col-md-2 col-form-label')->for('eori') }}
-
-                    <div class="col-md-10">
-                        {{ html()->text('eori')
-                            ->class('form-control')
-                            }}
-                    </div>
-                </div><!--form-group-->
-
-                <div class="form-group row">
-                    {{ html()->label(__('Account Name'))->class('col-md-2 col-form-label')->for('account_name') }}
-
-                    <div class="col-md-10">
-                        {{ html()->text('account_name')
-                            ->class('form-control')
-                            }}
-                    </div>
-                </div><!--form-group-->
-
-                <div class="form-group row">
-                    {{ html()->label(__('Bank Name'))->class('col-md-2 col-form-label')->for('bank_name') }}
-
-                    <div class="col-md-10">
-                        {{ html()->text('bank_name')
-                            ->class('form-control')
-                            }}
-                    </div>
-                </div><!--form-group-->
-
-                <div class="form-group row">
-                    {{ html()->label(__('Bank Address'))->class('col-md-2 col-form-label')->for('bank_address') }}
-
-                    <div class="col-md-10">
-                        {{ html()->text('bank_address')
-                            ->class('form-control')
-                            }}
-                    </div>
-                </div><!--form-group-->
-
-                <div class="form-group row">
-                    {{ html()->label(__('Sort Code'))->class('col-md-2 col-form-label')->for('sort_code') }}
-
-                    <div class="col-md-10">
-                        {{ html()->text('sort_code')
-                            ->class('form-control')
-                            }}
-                    </div>
-                </div><!--form-group-->
-
-                <div class="form-group row">
-                    {{ html()->label(__('Account No'))->class('col-md-2 col-form-label')->for('account_no') }}
-
-                    <div class="col-md-10">
-                        {{ html()->text('account_no')
-                            ->class('form-control')
-                            }}
-                    </div>
-                </div><!--form-group-->
-
-                <div class="form-group row">
-                    {{ html()->label(__('Swift'))->class('col-md-2 col-form-label')->for('swift') }}
-
-                    <div class="col-md-10">
-                        {{ html()->text('swift')
-                            ->class('form-control')
-                            }}
-                    </div>
-                </div><!--form-group-->
-
-                <div class="form-group row">
-                    {{ html()->label(__('IBAN'))->class('col-md-2 col-form-label')->for('iban') }}
-
-                    <div class="col-md-10">
-                        {{ html()->text('iban')
-                            ->class('form-control')
-                            }}
                     </div>
                 </div><!--form-group-->
                 
@@ -366,6 +251,28 @@
                 });  
             }
         });
+        $("#start_date").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            showButtonPanel: true,
+            dateFormat : 'mm-yy',
+            onClose: function(dateText, inst) {
+                var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+                var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                $(this).val($.datepicker.formatDate('mm-yy', new Date(year, month, 1)));
+            }
+        });
+        $("#start_date").focus(function () {
+            $(".ui-datepicker-calendar").hide();
+            $("#ui-datepicker-div").position({
+                my: "left top",
+                at: "left bottom",
+                of: $(this)
+            });
+        });
+        setTimeout(function() {
+            $('#start_date').datepicker('setDate', new Date($('#start_date').val()));
+        }, 0)
     });
 </script>
 @endpush

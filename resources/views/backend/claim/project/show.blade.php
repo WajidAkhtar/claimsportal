@@ -40,7 +40,7 @@
     <link rel="stylesheet" href="{{asset('assets/backend/vendors/select2/css/select2.css')}}">
 @endpush
 @section('content')
-    @if(auth()->user()->id == $project->created_by)
+    @if($project->userHasPartialAccessToProject())
     <x-backend.card>
             <x-slot name="header">
                 @lang('Filter by Partner')
@@ -52,9 +52,13 @@
                             <form action="#" id="filter_project_claims_data">
                                 <select class="form-control" onchange="this.form.submit()" name="partner">
                                     @php $partnerCount = 1; @endphp
+                                    @if($project->userHasFullAccessToProject())
                                     <option value="">Master Sheet</option>
-                                    @foreach($project->allpartners as $partner)
-                                        <option value="{{ $partner->user->id ?? 0 }}" {{ (!empty($partner->user) && request()->partner == $partner->user->id ? 'selected':'') }}>{{ $partner->user->organisation->organisation_name ?? 'Partener - '.$partnerCount++ }}</option>
+                                    @endif
+                                    @foreach($project->usersWithPermissions()->get() as $partner)
+                                        @if($partner->partner_id != 0 && $partner->partner_id != NULL)
+                                            <option value="{{ $partner->partner_id ?? 0 }}" {{ (request()->partner == $partner->partner_id ? 'selected':'') }}>{{ \App\Domains\System\Models\Organisation::find($partner->partner_id)->organisation_name ?? 'Partener - '.$partnerCount++ }}</option>
+                                        @endif
                                     @endforeach                            
                                 </select>
                             </form>
@@ -85,34 +89,126 @@
                     <form method="post" action="" id="partner_additional_info" style="display: none;">
                         {{ html()->input('hidden', 'project_id', $project->id) }}
                         {{ html()->input('hidden', 'sheet_owner', $sheetOwner) }}
+
+                        <h6>Invoicing Details</h6>
+                        <hr />
+
                         <div class="row">
                             <div class="col">
-                                {{ html()->label('ORGANISATION')->for('organisation_id') }}
-                                {{ html()->select('organisation_id', $organisations, $partnerAdditionalInfo->organisation ?? '')
-                                    ->class('form-control additional-info select2')
-                                    ->required()
-                                 }}
+                                {{ html()->label('Organisation')->for('organisation_id') }}
+                                <div class="form-group"> 
+                                    {{ html()->select('organisation_id', $organisations, $partnerAdditionalInfo->invoiceOrganisation ?? '')
+                                        ->class('form-control additional-info select2')
+                                        ->attribute('style', 'width:100%;')
+                                        ->required()
+                                     }}
+                                </div>
                             </div>
                             <div class="col">
-                                {{ html()->label('FINANCE EMAIL')->for('finance_email') }}
-                                {{ html()->text('finance_email', $partnerAdditionalInfo->finance_email ?? '')
+                                {{ html()->label('Organisation Type')->for('organisation_type') }}
+                                <div class="form-group"> 
+                                    {{ html()->select('organisation_type', $organisationTypes, $partnerAdditionalInfo->organisation_type ?? '')
+                                        ->class('form-control additional-info')
+                                        ->placeholder('Select Organisation Type')
+                                        ->required()
+                                     }}
+                                </div>
+                            </div>
+                            <div class="col">
+                                {{ html()->label('Organisation Role')->for('organisation_role') }}
+                                <div class="form-group"> 
+                                    {{ html()->select('organisation_role', $organisationRoles, $partnerAdditionalInfo->organisation_role ?? '')
+                                        ->class('form-control additional-info')
+                                        ->placeholder('Select Organisation Type')
+                                        ->required()
+                                     }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                {{ html()->label('Office/Team Name')->for('office_team_name') }}
+                                <div class="form-group"> 
+                                    {{ html()->text('office_team_name', $partnerAdditionalInfo->office_team_name ?? '')
+                                        ->class('form-control additional-info')
+                                        ->required()
+                                     }}
+                                </div>
+                            </div>
+                            <div class="col">
+                                {{ html()->label('Bulding Name/No')->for('building_name') }}
+                                <div class="form-group"> 
+                                    {{ html()->text('building_name', $partnerAdditionalInfo->building_name ?? '')
+                                        ->class('form-control additional-info')
+                                        ->required()
+                                     }}
+                                </div>
+                            </div>
+                            <div class="col">
+                                {{ html()->label('Street')->for('street') }}
+                                <div class="form-group"> 
+                                    {{ html()->text('street', $partnerAdditionalInfo->street ?? '')
+                                        ->class('form-control additional-info')
+                                        ->required()
+                                     }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                {{ html()->label('Address Line 2')->for('address_line_2') }}
+                                {{ html()->text('address_line_2', $partnerAdditionalInfo->address_line_2 ?? '')
                                     ->class('form-control additional-info')
                                  }}
                             </div>
                             <div class="col">
-                                {{ html()->label('FINANCE TEL')->for('finance_tel') }}
-                                {{ html()->text('finance_tel', $partnerAdditionalInfo->finance_tel ?? '')
+                                {{ html()->label('City')->for('city') }}
+                                {{ html()->text('city', $partnerAdditionalInfo->city ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                            <div class="col">
+                                {{ html()->label('County')->for('county') }}
+                                {{ html()->text('county', $partnerAdditionalInfo->county ?? '')
                                     ->class('form-control additional-info')
                                  }}
                             </div>
                         </div>
-                        <div class="row mt-3">
+                        <div class="row mt-2">
                             <div class="col">
-                                {{ html()->label('FINANCE FAX')->for('finance_fax') }}
+                                {{ html()->label('Post Code')->for('post_code') }}
+                                {{ html()->text('post_code', $partnerAdditionalInfo->post_code ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                            <div class="col">
+                                {{ html()->label('Finance Contact Name')->for('finance_contact_name') }}
+                                {{ html()->text('finance_contact_name', $partnerAdditionalInfo->finance_contact_name ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                            <div class="col">
+                                {{ html()->label('Finance Email')->for('finance_email') }}
+                                {{ html()->text('finance_email', $partnerAdditionalInfo->finance_email ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                {{ html()->label('Finance TEL')->for('finance_tel') }}
+                                {{ html()->text('finance_tel', $partnerAdditionalInfo->finance_tel ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                            <div class="col">
+                                {{ html()->label('Finance FAX')->for('finance_fax') }}
                                 {{ html()->text('finance_fax', $partnerAdditionalInfo->finance_fax ?? '')
                                     ->class('form-control additional-info')
                                  }}
                             </div>
+                        </div>
+                        <div class="row mt-2">
                             <div class="col">
                                 {{ html()->label('VAT')->for('vat') }}
                                 {{ html()->text('vat', $partnerAdditionalInfo->vat ?? '')
@@ -126,27 +222,27 @@
                                  }}
                             </div>
                         </div>
-                        <div class="row mt-3">
+                        <div class="row mt-4">
                             <div class="col">
-                                <h6>Invoicing Details</h6>
+                                <h6>Banking Details</h6>
                                 <hr />
                             </div>
                         </div>
                         <div class="row mt-2">
                             <div class="col">
-                                {{ html()->label('ACCOUNT NAME')->for('account_name') }}
+                                {{ html()->label('Account Name')->for('account_name') }}
                                 {{ html()->text('account_name', $partnerAdditionalInfo->account_name ?? '')
                                     ->class('form-control additional-info')
                                  }}
                             </div>
                             <div class="col">
-                                {{ html()->label('BANK NAME')->for('bank_name') }}
+                                {{ html()->label('Bank Name')->for('bank_name') }}
                                 {{ html()->text('bank_name', $partnerAdditionalInfo->bank_name ?? '')
                                     ->class('form-control additional-info')
                                  }}
                             </div>
                             <div class="col">
-                                {{ html()->label('BANK ADDRESS')->for('bank_address') }}
+                                {{ html()->label('Bank Address')->for('bank_address') }}
                                 {{ html()->text('bank_address', $partnerAdditionalInfo->bank_address ?? '')
                                     ->class('form-control additional-info')
                                  }}
@@ -154,13 +250,13 @@
                         </div>
                         <div class="row mt-3">
                             <div class="col">
-                                {{ html()->label('SORT CODE')->for('sort_code') }}
+                                {{ html()->label('SORT Code')->for('sort_code') }}
                                 {{ html()->text('sort_code', $partnerAdditionalInfo->sort_code ?? '')
                                     ->class('form-control additional-info')
                                  }}
                             </div>
                             <div class="col">
-                                {{ html()->label('ACCOUNT NO')->for('account_no') }}
+                                {{ html()->label('Account Number')->for('account_no') }}
                                 {{ html()->text('account_no', $partnerAdditionalInfo->account_no ?? '')
                                     ->class('form-control additional-info')
                                  }}
@@ -267,7 +363,7 @@
                 <div><strong>Project Name:</strong> {{$project->name}}</div>
                 <div><strong>Project Number:</strong> {{$project->number}}</div>
                 <div><strong>Project Start Date:</strong> {{$project->start_date->format('m-Y')}}</div>
-                <div><strong>Funders:</strong> {{$project->funders->implode('organisation.organisation_name', ', ')}}</div>
+                <div><strong>Funders:</strong> {{ $project->funders->implode('organisation_name', ', ') }}</div>
             </div>
             <form action="#" id="claims_form">
                 {{ html()->input('hidden', 'sheet_owner', $sheetOwner) }}

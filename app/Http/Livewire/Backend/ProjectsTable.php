@@ -47,15 +47,13 @@ class ProjectsTable extends TableComponent
     public function query(): Builder
     {
         $query = Project::with('funders');
-        if(auth()->user()->roles->pluck('name')->first() != 'Administrator') {
-            // $query->where('created_by', auth()->user()->id);
-            // $query->orWhereHas('partners', function($q) {
-            //     $q->where('user_id', auth()->user()->id);
-            // });
-            $query->whereIn('pool_id', auth()->user()->pools()->pluck('pool_id'));
-        }
 
-        // dd($query);
+        if(!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User')) {
+            $query = $query->whereHas('usersWithPermissions', function($q) {
+                $q->where('user_id', auth()->user()->id);
+            });
+            $query = $query->orWhere('created_by', auth()->user()->id);
+        }
 
         if ($this->status === 'deleted') {
             return $query->onlyTrashed();

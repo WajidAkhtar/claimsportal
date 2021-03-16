@@ -12,7 +12,7 @@
                 </ul>
             </li>
 
-            @if(!auth()->user()->hasRole('Funder'))
+            @if(!auth()->user()->hasRole('Project Partner') && !auth()->user()->hasRole('Funder'))
             <li class="dropdown active">
                 <a href="javascript:void(0)"><i class="fa fa-users mr-1"></i> Users</a>
                 <ul>
@@ -23,7 +23,6 @@
             </li>
             @endif
 
-            @if(!auth()->user()->hasRole('Project Partner'))
             <li class="dropdown active">
                 <a href="javascript:void(0)"><i class="fa fa-sticky-note mr-1"></i> Claims</a>
                 <ul>
@@ -32,7 +31,7 @@
                     </li>
                 </ul>
             </li>
-            @endif
+            
         </ul>
         <!-- END: Menu-->
         {{-- <ol class="breadcrumb bg-transparent align-self-center m-0 p-0 ml-auto">

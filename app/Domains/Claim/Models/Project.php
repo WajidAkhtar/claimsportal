@@ -27,24 +27,10 @@ class Project extends Model
         'pool_id',
         'start_date',
         'length',
-        'number_of_partners',
         'cost_items_order',
         'project_funder_ref',
-        'organisation_id',
         'status',
         'active',
-        'finance_email',
-        'finance_tel',
-        'finance_fax',
-        'vat',
-        'eori',
-        'account_name',
-        'bank_name',
-        'bank_address',
-        'sort_code',
-        'account_no',
-        'swift',
-        'iban',
     ];
 
     /**
@@ -79,5 +65,13 @@ class Project extends Model
      * @var string[]
      */
     protected $with = ['organisation', 'pool'];
+
+    public static function statuses() {
+        return [
+            'Active' => 'Active',
+            'Pending' => 'Pending',
+            'Closed' => 'Closed',
+        ];
+    }
     
 }

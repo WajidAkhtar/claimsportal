@@ -1,4 +1,19 @@
 @forelse($roles->where('type', $type) as $role)
+    @if(current_user_role() == 'Super User')
+        @if(!in_array($role->name, ['Finance Officer', 'Project Admin', 'Project Partner', 'Funder']))
+            @php continue @endphp;
+        @endif
+    @endif
+    @if(current_user_role() == 'Finance Officer')
+        @if(!in_array($role->name, ['Project Admin', 'Project Partner', 'Funder']))
+            @php continue @endphp;
+        @endif
+    @endif
+    @if(current_user_role() == 'Project Admin')
+        @if(!in_array($role->name, ['Project Partner', 'Funder']))
+            @php continue @endphp;
+        @endif
+    @endif
     <div class="mb-2">
         <div class="form-check">
             <input

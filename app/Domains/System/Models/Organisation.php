@@ -76,5 +76,22 @@ class Organisation extends Model
         }
         return $query;
     }
+
+    public static function organisationTypes() {
+        return [
+            'ACADEMIC' => 'ACADEMIC',
+            'FUNDER' => 'FUNDER',
+            'INDUSTRY' => 'INDUSTRY',
+        ];
+    }
+
+    public static function organisationRoles() {
+        return [
+            'LEAD' => 'LEAD',
+            'COLLABORATOR' => 'COLLABORATOR',
+            'FUNDER' => 'FUNDER',
+            'CO FUNDER' => 'CO FUNDER',
+        ];
+    }
     
 }

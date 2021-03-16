@@ -9,6 +9,7 @@ use App\Exceptions\GeneralException;
 use App\Domains\Claim\Models\Project;
 use App\Domains\Claim\Models\CostItem;
 use App\Domains\Claim\Models\ProjectCostItem;
+use App\Domains\Claim\Models\ProjectPartners;
 
 /**
  * Class ProjectService.
@@ -41,43 +42,34 @@ class ProjectService extends BaseService
                 'name' => $data['name'],
                 'number' => $data['number'],
                 'pool_id' => $data['pool_id'],
-                'organisation_id' => $data['organisation_id'],
                 'start_date' => '01-'.$data['start_date'],
                 'length' => $data['length'],
-                'number_of_partners' => $data['number_of_partners'],
                 'cost_items_order' => $data['cost_items_order'],
                 'status' => $data['status'],
                 'active' => 1,
-                'finance_email' => $data['finance_email'],
-                'finance_tel' => $data['finance_tel'],
-                'finance_fax' => $data['finance_fax'],
-                'vat' => $data['vat'],
-                'eori' => $data['eori'],
-                'account_name' => $data['account_name'],
-                'bank_name' => $data['bank_name'],
-                'bank_address' => $data['bank_address'],
-                'sort_code' => $data['sort_code'],
-                'account_no' => $data['account_no'],
-                'swift' => $data['swift'],
-                'iban' => $data['iban'],
+                'project_funder_ref' => $data['project_funder_ref'],
             ]);
             
             // Sync Funders
             $project->funders()->sync($data['funders']);
 
             // Save partners for the project
-            if(!empty($data['number_of_partners'])) {
-                $partnerCount = 1;
-                while($partnerCount <= $data['number_of_partners']) {
+            $project->allpartners()->firstOrcreate([
+                'project_id' => $project->id,
+                'is_master' => '1',
+            ]);
+            if(!empty($data['project_partners'])) {
+                foreach($data['project_partners'] as $project_partner) {
                     $project->allpartners()->create([
-                        'project_id' => $project->id
+                        'project_id' => $project->id,
+                        'organisation_id' => $project_partner,
                     ]);
-                    $partnerCount++;
                     foreach ($data['cost_items'] as $key => $value) {
                         $costItem = CostItem::firstOrCreate(['name' => $value['name']]);
                         $projectCostItem = ProjectCostItem::firstOrCreate([
                             'project_id' => $project->id,
                             'cost_item_id' => $costItem->id,
+                            'organisation_id' => $project_partner,
                         ]);
                         ProjectCostItem::where('project_id', $project->id)->where('cost_item_id', $costItem->id)->update([
                             'cost_item_name' => $value['name'],
@@ -107,11 +99,7 @@ class ProjectService extends BaseService
     public function update(Project $project, array $data = []): Project
     {
         $oldCostItems = $project->costItems()->groupBy('cost_item_id')->pluck('cost_item_id')->toArray();
-        $oldPartners = $project->costItems()->groupBy('user_id')->pluck('user_id')->toArray();
-
-        if($data['number_of_partners'] != count($data['project_partners'])) {
-            throw new GeneralException(__('Please assign '.$data['number_of_partners'].' partners to this project'));
-        }
+        $oldPartners = $project->costItems()->groupBy('organisation_id')->pluck('organisation_id')->toArray();
 
         DB::beginTransaction();
 
@@ -120,24 +108,11 @@ class ProjectService extends BaseService
                 'name' => $data['name'],
                 'number' => $data['number'],
                 'pool_id' => $data['pool_id'],
-                'organisation_id' => $data['organisation_id'],
                 'start_date' => '01-'.$data['start_date'],
                 'length' => $data['length'],
-                'number_of_partners' => $data['number_of_partners'],
                 'cost_items_order' => $data['cost_items_order'],
                 'status' => $data['status'],
-                'finance_email' => $data['finance_email'],
-                'finance_tel' => $data['finance_tel'],
-                'finance_fax' => $data['finance_fax'],
-                'vat' => $data['vat'],
-                'eori' => $data['eori'],
-                'account_name' => $data['account_name'],
-                'bank_name' => $data['bank_name'],
-                'bank_address' => $data['bank_address'],
-                'sort_code' => $data['sort_code'],
-                'account_no' => $data['account_no'],
-                'swift' => $data['swift'],
-                'iban' => $data['iban'],
+                'project_funder_ref' => $data['project_funder_ref'],
             ]);
 
             // Sync Funders
@@ -154,22 +129,27 @@ class ProjectService extends BaseService
             
             ProjectCostItem::where('project_id', $project->id)->whereIn('cost_item_id', $costItemIdsToRemove)->forceDelete();
             // Delete removed project partners data
-            $costItemsUsersToRemove = array_merge(array_diff($data['project_partners'], $oldPartners), array_diff($oldPartners, $data['project_partners']));
-            ProjectCostItem::where('project_id', $project->id)->whereIn('user_id', $costItemsUsersToRemove)->forceDelete();
+            $removeDeletedOrganisationsWhileSync = array_merge(array_diff($data['project_partners'], $oldPartners), array_diff($oldPartners, $data['project_partners']));
+            ProjectCostItem::where('project_id', $project->id)->whereIn('organisation_id', $removeDeletedOrganisationsWhileSync)->forceDelete();
+            ProjectPartners::where('project_id', $project->id)->whereIn('organisation_id', $removeDeletedOrganisationsWhileSync)->forceDelete();
 
             // Delete existing project partners
             // $project->allpartners()->forceDelete();
             // Save partners for the project
+            $res = $project->allpartners()->firstOrcreate([
+                'project_id' => $project->id,
+                'is_master' => '1',
+            ]);
             foreach ($data['project_partners'] as $key => $project_partner) {
                 $project->allpartners()->firstOrCreate([
-                    'user_id' => $project_partner,
+                    'organisation_id' => $project_partner,
                     'project_id' => $project->id,
                 ]);
                 foreach ($data['cost_items'] as $key => $value) {
                     $costItem = CostItem::firstOrCreate(['name' => $value['name']]);
                     $projectCostItem = ProjectCostItem::firstOrCreate([
                         'project_id' => $project->id,
-                        'user_id' => $project_partner,
+                        'organisation_id' => $project_partner,
                         'cost_item_id' => $costItem->id,
                     ]);
                     ProjectCostItem::where('project_id', $project->id)->where('cost_item_id', $costItem->id)->update([

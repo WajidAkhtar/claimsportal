@@ -53,7 +53,9 @@
                                     @php $partnerCount = 1; @endphp
                                     <option value="">Master Sheet</option>
                                     @foreach($project->allpartners as $partner)
-                                        <option value="{{ $partner->user->id ?? 0 }}" {{ (!empty($partner->user) && request()->partner == $partner->user->id ? 'selected':'') }}>{{ $partner->user->organisation->organisation_name ?? 'Partener - '.$partnerCount++ }}</option>
+                                        @if($partner->organisation_id != 0 && $partner->organisation_id != NULL)
+                                            <option value="{{ $partner->organisation->id ?? 0 }}" {{ (!empty($partner->organisation) && request()->partner == $partner->organisation->id ? 'selected':'') }}>{{ $partner->organisation->organisation_name ?? 'Partener - '.$partnerCount++ }}</option>
+                                        @endif
                                     @endforeach                            
                                 </select>
                             </form>
@@ -64,6 +66,285 @@
     </x-backend.card>
     <br />
     @endif
+
+    @if(current_user_role() == 'Administrator' || current_user_role() == 'Super User' || auth()->user()->id == $project->created_by)
+    <x-backend.card>
+        <x-slot name="header">
+            <table class="">
+                <tr>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary toggle_partner_additional_info togget_action_content"><span class="toggle_action_text">Show</span> @lang('Assign Required Information')</button></td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary toggle_user_permissions_info togget_action_content"><span class="toggle_action_text">Show</span> @lang('Assign User & Permissions')</button>
+                    </td>
+                </tr>
+            </table>
+        </x-slot>        
+
+        <x-slot name="body">
+                <div class="action-container">
+                    <form method="post" action="" id="partner_additional_info" style="display: none;">
+                        {{ html()->input('hidden', 'project_id', $project->id) }}
+                        {{ html()->input('hidden', 'sheet_owner', $sheetOwner) }}
+                        {{ html()->input('hidden', 'is_master', 1) }}
+
+                        <h6>Invoicing Details</h6>
+                        <hr />
+
+                        <div class="row">
+                            <div class="col">
+                                {{ html()->label('Organisation')->for('organisation_id') }}
+                                <div class="form-group"> 
+                                    {{ html()->select('organisation_id', $organisations, $partnerAdditionalInfo->invoiceOrganisation ?? '')
+                                        ->class('form-control additional-info select2')
+                                        ->attribute('style', 'width:100%;')
+                                        ->required()
+                                     }}
+                                </div>
+                            </div>
+                            <div class="col">
+                                {{ html()->label('Organisation Type')->for('organisation_type') }}
+                                <div class="form-group"> 
+                                    {{ html()->select('organisation_type', $organisationTypes, $partnerAdditionalInfo->organisation_type ?? '')
+                                        ->class('form-control additional-info')
+                                        ->placeholder('Select Organisation Type')
+                                        ->required()
+                                     }}
+                                </div>
+                            </div>
+                            <div class="col">
+                                {{ html()->label('Organisation Role')->for('organisation_role') }}
+                                <div class="form-group"> 
+                                    {{ html()->select('organisation_role', $organisationRoles, $partnerAdditionalInfo->organisation_role ?? '')
+                                        ->class('form-control additional-info')
+                                        ->placeholder('Select Organisation Type')
+                                        ->required()
+                                     }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                {{ html()->label('Office/Team Name')->for('office_team_name') }}
+                                <div class="form-group"> 
+                                    {{ html()->text('office_team_name', $partnerAdditionalInfo->office_team_name ?? '')
+                                        ->class('form-control additional-info')
+                                        ->required()
+                                     }}
+                                </div>
+                            </div>
+                            <div class="col">
+                                {{ html()->label('Bulding Name/No')->for('building_name') }}
+                                <div class="form-group"> 
+                                    {{ html()->text('building_name', $partnerAdditionalInfo->building_name ?? '')
+                                        ->class('form-control additional-info')
+                                        ->required()
+                                     }}
+                                </div>
+                            </div>
+                            <div class="col">
+                                {{ html()->label('Street')->for('street') }}
+                                <div class="form-group"> 
+                                    {{ html()->text('street', $partnerAdditionalInfo->street ?? '')
+                                        ->class('form-control additional-info')
+                                        ->required()
+                                     }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                {{ html()->label('Address Line 2')->for('address_line_2') }}
+                                {{ html()->text('address_line_2', $partnerAdditionalInfo->address_line_2 ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                            <div class="col">
+                                {{ html()->label('City')->for('city') }}
+                                {{ html()->text('city', $partnerAdditionalInfo->city ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                            <div class="col">
+                                {{ html()->label('County')->for('county') }}
+                                {{ html()->text('county', $partnerAdditionalInfo->county ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                {{ html()->label('Post Code')->for('post_code') }}
+                                {{ html()->text('post_code', $partnerAdditionalInfo->post_code ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                            <div class="col">
+                                {{ html()->label('Finance Contact Name')->for('finance_contact_name') }}
+                                {{ html()->text('finance_contact_name', $partnerAdditionalInfo->finance_contact_name ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                            <div class="col">
+                                {{ html()->label('Finance Email')->for('finance_email') }}
+                                {{ html()->text('finance_email', $partnerAdditionalInfo->finance_email ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                {{ html()->label('Finance TEL')->for('finance_tel') }}
+                                {{ html()->text('finance_tel', $partnerAdditionalInfo->finance_tel ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                            <div class="col">
+                                {{ html()->label('Finance FAX')->for('finance_fax') }}
+                                {{ html()->text('finance_fax', $partnerAdditionalInfo->finance_fax ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                {{ html()->label('VAT')->for('vat') }}
+                                {{ html()->text('vat', $partnerAdditionalInfo->vat ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                            <div class="col">
+                                {{ html()->label('EORI')->for('eori') }}
+                                {{ html()->text('eori', $partnerAdditionalInfo->eori ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col">
+                                <h6>Banking Details</h6>
+                                <hr />
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                {{ html()->label('Account Name')->for('account_name') }}
+                                {{ html()->text('account_name', $partnerAdditionalInfo->account_name ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                            <div class="col">
+                                {{ html()->label('Bank Name')->for('bank_name') }}
+                                {{ html()->text('bank_name', $partnerAdditionalInfo->bank_name ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                            <div class="col">
+                                {{ html()->label('Bank Address')->for('bank_address') }}
+                                {{ html()->text('bank_address', $partnerAdditionalInfo->bank_address ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col">
+                                {{ html()->label('SORT Code')->for('sort_code') }}
+                                {{ html()->text('sort_code', $partnerAdditionalInfo->sort_code ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                            <div class="col">
+                                {{ html()->label('Account Number')->for('account_no') }}
+                                {{ html()->text('account_no', $partnerAdditionalInfo->account_no ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col">
+                                {{ html()->label('SWIFT')->for('swift') }}
+                                {{ html()->text('swift', $partnerAdditionalInfo->swift ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                            <div class="col">
+                                {{ html()->label('IBAN')->for('iban') }}
+                                {{ html()->text('iban', $partnerAdditionalInfo->iban ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                        </div>
+                    </form>
+                    <form method="post" action="" id="user_permissions_info" style="display: none;">
+                        {{ html()->input('hidden', 'sheet_owner_for_permission', $sheetOwner) }}
+                        {{ html()->input('hidden', 'is_master', 1) }}
+                        <table class="table sheet_user_permissions">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Permission</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="repeatable">
+                                @if(!empty($sheetUserPermissions))
+                                    @foreach($sheetUserPermissions as $permission)
+                                        <tr class="field-group">
+                                            <td>
+                                                {{ html()->select('sheet_user_id[]', $users, $permission->user_id)
+                                                    ->class('form-control')
+                                                    ->placeholder('Select User')
+                                                 }}
+                                            </td>
+                                            <td>
+                                                {{ html()->select('sheet_permission_id[]', $sheetPermissions, $permission->sheet_permission_id)
+                                                    ->class('form-control')
+                                                    ->placeholder('Select Permission')
+                                                 }}
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger btn-sm delete"><i class="fa fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="4">
+                                        <button type="button" class="btn btn-primary btn-sm add"><i class="fa fa-plus"></i></button>
+                                        <button type="button" class="btn-save-sheet-user-permissions btn btn-sm btn-success">Save User & Permissions</button>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </form>
+                </div>
+        </x-slot>
+
+    </x-backend.card>
+    <br />
+    @endif
+
+    <script type="text/template" id="sheet-user-permission-template">
+        <tr class="field-group">
+            <td>
+                {{ html()->select('sheet_user_id[]', $users)
+                    ->class('form-control')
+                    ->placeholder('Select User')
+                 }}
+            </td>
+            <td>
+                {{ html()->select('sheet_permission_id[]', $sheetPermissions)
+                    ->class('form-control')
+                    ->placeholder('Select Permission')
+                 }}
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger btn-sm delete"><i class="fa fa-trash"></i></button>
+            </td>
+        </tr>
+    </script>
 
     <x-backend.card>
 
@@ -81,7 +362,7 @@
                 <div><strong>Project Name:</strong> {{$project->name}}</div>
                 <div><strong>Project Number:</strong> {{$project->number}}</div>
                 <div><strong>Project Start Date:</strong> {{$project->start_date->format('m-Y')}}</div>
-                <div><strong>Funders:</strong> {{$project->funders->implode('organisation.organisation_name', ', ')}}</div>
+                <div><strong>Funders:</strong> {{$project->funders->implode('organisation_name', ', ')}}</div>
             </div>
             <form action="#" id="claims_form">
                 <div class="col-sm-12 mt-5">
@@ -429,6 +710,7 @@
     </x-backend.card>
 @endsection
 @push('after-scripts')
+    <script src="{{asset('assets/backend/vendors/repeatable/jquery.repeatable.js')}}"></script>
     <script>
         function calculateFields() {
             var cumulativeTotal = 0;
@@ -714,6 +996,56 @@
                 });
             }
 
+            $(".additional-info").on("blur, change", function() {
+                var organisation_id = $("#organisation_id.additional-info").val();
+                savePartnerAdditionalFields();
+            })
+
+            $(".btn-save-sheet-user-permissions").on("click", function() {
+                saveSheetUserPermissions();
+            })
+
+            $("#partner_additional_info").parent().parent().hide();
+            $(".toggle_partner_additional_info").on("click", function() {
+                if($(this).find('.toggle_action_text').html() == 'Hide') {
+                    $(this).find('.toggle_action_text').html('Show');
+                    $("#partner_additional_info").hide();
+                    $("#partner_additional_info").parent().parent().hide();
+                } else {
+                    hideAllActionsContainers();
+                    $(this).find('.toggle_action_text').html('Hide');
+                    $("#partner_additional_info").show();
+                    $("#partner_additional_info").parent().parent().show();
+                }
+            })
+            $(".toggle_user_permissions_info").on("click", function() {
+                if($(this).find('.toggle_action_text').html() == 'Hide') {
+                    $(this).find('.toggle_action_text').html('Show');
+                    $("#user_permissions_info").hide();
+                    $("#partner_additional_info").parent().parent().hide();
+                } else {
+                    hideAllActionsContainers();
+                    $(this).find('.toggle_action_text').html('Hide');
+                    $("#user_permissions_info").show();
+                    $("#partner_additional_info").parent().parent().show();
+                }
+            })
+
+            $('.sheet_user_permissions .repeatable').repeatable({
+                addTrigger: ".sheet_user_permissions .add",
+                deleteTrigger: ".sheet_user_permissions .delete",
+                template: "#sheet-user-permission-template",
+                min: 1,
+                prefix: 'ds',
+                idStartIndex: '{{ count(old('claim_items') ?? [] ) }}',
+                afterAdd : function() {
+                    $(".toggle_user_permissions_info").trigger('focus');
+                },
+                afterDelete : function() {
+                    $(".toggle_user_permissions_info").trigger('focus');    
+                }
+            });
+
         });
 
         function formatNegativeValue() {
@@ -726,6 +1058,53 @@
                 }
                 $(v).val(parseFloat($(v).val()).toFixed(2));
             })
+        }
+
+        function savePartnerAdditionalFields() {
+            var formData = new FormData($('#partner_additional_info')[0]);
+            $.ajax({
+                    url: '{{route('admin.claim.project.save.partner.additional', $project)}}',
+                    data: formData,
+                    type: 'POST',
+                    contentType: false,
+                    processData: false,
+                    success: function(response){
+                        if(response.success) {
+                            toastr.success(response.message);
+                        }
+                        else{
+                            toastr.error('Something goes wrong...');
+                        }
+                    }
+                })
+        }
+
+        function saveSheetUserPermissions() {
+            var formData = new FormData($('#user_permissions_info')[0]);
+            $.ajax({
+                    url: '{{route('admin.claim.project.save.sheet.user.permissions', $project)}}',
+                    data: formData,
+                    type: 'POST',
+                    contentType: false,
+                    processData: false,
+                    success: function(response){
+                        if(response.success) {
+                            toastr.success(response.message);
+                        }
+                        else{
+                            toastr.error('Something goes wrong...');
+                        }
+                    }
+                })
+        }
+
+        function hideAllActionsContainers() {
+            $(".action-container form").each(function() {
+                $(this).hide();
+            })
+            $(".toggle_action_text").each(function() {
+                $(this).html('Show');
+            });
         }
         
     </script>
