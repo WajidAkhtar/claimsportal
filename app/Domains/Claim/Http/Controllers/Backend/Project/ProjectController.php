@@ -176,7 +176,15 @@ class ProjectController
             $sheet_owner = (!empty(request()->partner)) ? request()->partner : 0;
             $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project])->render();
             $partnerAdditionalInfo = ProjectPartners::where('project_id', $project->id)->where('organisation_id', $sheet_owner)->first();
-            $SheetUserPermissions = SheetUserPermissions::where('project_id', $project->id)->where('user_id', auth()->user()->id)->get();
+            $SheetUserPermissions = SheetUserPermissions::where('project_id', $project->id);
+            if(!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User')) {
+                $SheetUserPermissions = $SheetUserPermissions->where('user_id', auth()->user()->id);
+            }
+            if($sheet_owner != 0) {
+                $SheetUserPermissions = $SheetUserPermissions->where('partner_id', $sheet_owner); 
+            }
+            $SheetUserPermissions = $SheetUserPermissions->get();
+
             $users = $project->partnersInSamePool()->pluck('full_name', 'id');
             $sheetPermissions = SheetPermission::whereIn('permission', ['WRITE_ONLY_FORECAST', 'READ_ONLY'])->pluck('permission', 'id');
             foreach($project->usersWithPermissions()->get() as $key => $partner) {
@@ -190,6 +198,11 @@ class ProjectController
                 $currentSheetUserPermissionId = SheetUserPermissions::where('project_id', $project->id)->where('user_id', auth()->user()->id)->where('partner_id', $sheet_owner)->first();
                 if(!empty($currentSheetUserPermissionId)) {
                     $currentSheetUserPermission = SheetPermission::find($currentSheetUserPermissionId->sheet_permission_id)->permission;
+                } else {
+                    $currentSheetUserPermissionId = SheetUserPermissions::where('project_id', $project->id)->where('user_id', auth()->user()->id)->where('is_master', '1')->first();
+                    if(!empty($currentSheetUserPermissionId)) {
+                        $currentSheetUserPermission = SheetPermission::find($currentSheetUserPermissionId->sheet_permission_id)->permission;
+                    }
                 }
                 if($currentSheetUserPermission == 'READ_ONLY') {
                     $allowToEdit = FALSE;
@@ -344,6 +357,7 @@ class ProjectController
                         $is_master = '0';
                     }
                     SheetUserPermissions::where('is_master', $is_master)->where('project_id', $project->id)->where('user_id', $user_id)->where('partner_id', $partner_id)->delete();
+                    SheetUserPermissions::where('is_master', $is_master)->where('project_id', $project->id)->where('user_id', $user_id)->where('is_master', '1')->delete();
                     $created = SheetUserPermissions::create([
                         'partner_id' => $partner_id,
                         'is_master' => $is_master,

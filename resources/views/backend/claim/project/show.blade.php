@@ -40,6 +40,7 @@
     <link rel="stylesheet" href="{{asset('assets/backend/vendors/select2/css/select2.css')}}">
 @endpush
 @section('content')
+
     @if($project->userHasPartialAccessToProject())
     <x-backend.card>
             <x-slot name="header">
@@ -61,9 +62,9 @@
                                     @endforeach
                                     @else
                                         @foreach($project->usersWithPermissions()->get() as $partner)
-                                            @if($partner->partner_id == 0 && $partner->is_master == '1')
+                                            @if(auth()->user()->id == $partner->user_id && $partner->partner_id == 0 && $partner->is_master == '1')
                                                 <option value="">Master Sheet</option>
-                                            @else($partner->partner_id != 0 && $partner->partner_id != NULL)
+                                            @elseif($partner->partner_id != 0 && $partner->partner_id != NULL && \App\Domains\System\Models\Organisation::find($partner->partner_id)->organisation_name)
                                                 <option value="{{ $partner->partner_id ?? 0 }}" {{ (request()->partner == $partner->partner_id ? 'selected':'') }}>{{ \App\Domains\System\Models\Organisation::find($partner->partner_id)->organisation_name ?? 'Partener - '.$partnerCount++ }}</option>
                                             @endif
                                         @endforeach
@@ -474,7 +475,7 @@
                                         $labelClass = 'text-danger';
                                     }
                                     if (now()->betweenIncluded($fromDate, $toDate)) {
-                                        $isForeCast = 0;
+                                        $isForeCast = 1;
                                     }
                                     elseif($fromDate->lt(now())) {
                                         $isForeCast = 0;
@@ -482,17 +483,24 @@
                                     else {
                                         $isForeCast = 1;
                                     }
+                                    $readOnly = false;
+                                    if($currentSheetUserPermission == 'READ_WRITE_ALL')
+                                        $readOnly = false;
+                                    else if($currentSheetUserPermission == 'WRITE_ONLY_FORECAST' && !$isForeCast)
+                                        $readOnly = true;
+                                    else if($currentSheetUserPermission == 'READ_ONLY')
+                                        $readOnly = true;
                                 @endphp
                                 <td>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text {{ (!$isForeCast && ($currentSheetUserPermission == 'WRITE_ONLY_FORECAST' || $currentSheetUserPermission == 'READ_WRITE_ALL')) ? 'readonly' : '' }}">£</span>
+                                            <span class="input-group-text {{ $readOnly ? 'readonly' : '' }}">£</span>
                                         </div>
                                         {{ html()->input('number', 'claim_values['.$costItem->id.'][quarter_values]['.$fromDate->timestamp.']', optional(optional($costItem->claims_data)->quarter_values)->{"$fromDate->timestamp"} ?? '')
                                             ->placeholder('0.00')
                                             ->class('form-control '.$labelClass)
                                             ->attribute('data-year-index', $yearIndex)
-                                            ->readonly(!$isForeCast && ($currentSheetUserPermission == 'WRITE_ONLY_FORECAST' || $currentSheetUserPermission == 'READ_WRITE_ALL'))
+                                            ->readonly($readOnly)
                                             ->required() }}
                                     </div>
                                 </td>

@@ -130,7 +130,7 @@ trait ProjectRelationship
           return true;
         }
         foreach($this->usersWithPermissions()->get() as $partner) {
-          if($partner->partner_id == 0 && $partner->is_master == '1') {
+          if(auth()->user()->id == $partner->user_id && $partner->partner_id == 0 && $partner->is_master == '1') {
             return true;
           }
         }
