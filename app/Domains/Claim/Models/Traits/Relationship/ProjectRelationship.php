@@ -129,6 +129,11 @@ trait ProjectRelationship
         if($this->created_by == auth()->user()->id || auth()->user()->hasRole('Administrator') || auth()->user()->hasRole('Super User')) {
           return true;
         }
+        foreach($this->usersWithPermissions()->get() as $partner) {
+          if($partner->partner_id == 0 && $partner->is_master == '1') {
+            return true;
+          }
+        }
         return false;
     }
 

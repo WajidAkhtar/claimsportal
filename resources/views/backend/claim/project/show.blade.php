@@ -54,12 +54,20 @@
                                     @php $partnerCount = 1; @endphp
                                     @if($project->userHasFullAccessToProject())
                                     <option value="">Master Sheet</option>
-                                    @endif
-                                    @foreach($project->usersWithPermissions()->get() as $partner)
-                                        @if($partner->partner_id != 0 && $partner->partner_id != NULL)
-                                            <option value="{{ $partner->partner_id ?? 0 }}" {{ (request()->partner == $partner->partner_id ? 'selected':'') }}>{{ \App\Domains\System\Models\Organisation::find($partner->partner_id)->organisation_name ?? 'Partener - '.$partnerCount++ }}</option>
+                                    @foreach($project->allpartners as $partner)
+                                        @if($partner->organisation_id != 0 && $partner->organisation_id != NULL)
+                                            <option value="{{ $partner->organisation->id ?? 0 }}" {{ (!empty($partner->organisation) && request()->partner == $partner->organisation->id ? 'selected':'') }}>{{ $partner->organisation->organisation_name ?? 'Partener - '.$partnerCount++ }}</option>
                                         @endif
-                                    @endforeach                            
+                                    @endforeach
+                                    @else
+                                        @foreach($project->usersWithPermissions()->get() as $partner)
+                                            @if($partner->partner_id == 0 && $partner->is_master == '1')
+                                                <option value="">Master Sheet</option>
+                                            @else($partner->partner_id != 0 && $partner->partner_id != NULL)
+                                                <option value="{{ $partner->partner_id ?? 0 }}" {{ (request()->partner == $partner->partner_id ? 'selected':'') }}>{{ \App\Domains\System\Models\Organisation::find($partner->partner_id)->organisation_name ?? 'Partener - '.$partnerCount++ }}</option>
+                                            @endif
+                                        @endforeach
+                                    @endif
                                 </select>
                             </form>
                         </div>
@@ -458,22 +466,33 @@
                                 @endphp
                                 @for ($i = 0; $i < $project->length; $i++)
                                 @php
+                                    $isForeCast = 0;
                                     $toDate = clone $fromDate;
                                     $toDate->addMonths(2)->endOfMonth();
                                     $labelClass = '';
                                     if(now()->betweenIncluded($fromDate, $toDate)){
                                         $labelClass = 'text-danger';
                                     }
+                                    if (now()->betweenIncluded($fromDate, $toDate)) {
+                                        $isForeCast = 0;
+                                    }
+                                    elseif($fromDate->lt(now())) {
+                                        $isForeCast = 0;
+                                    }
+                                    else {
+                                        $isForeCast = 1;
+                                    }
                                 @endphp
                                 <td>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text">£</span>
+                                            <span class="input-group-text {{ (!$isForeCast && ($currentSheetUserPermission == 'WRITE_ONLY_FORECAST' || $currentSheetUserPermission == 'READ_WRITE_ALL')) ? 'readonly' : '' }}">£</span>
                                         </div>
                                         {{ html()->input('number', 'claim_values['.$costItem->id.'][quarter_values]['.$fromDate->timestamp.']', optional(optional($costItem->claims_data)->quarter_values)->{"$fromDate->timestamp"} ?? '')
                                             ->placeholder('0.00')
                                             ->class('form-control '.$labelClass)
                                             ->attribute('data-year-index', $yearIndex)
+                                            ->readonly(!$isForeCast && ($currentSheetUserPermission == 'WRITE_ONLY_FORECAST' || $currentSheetUserPermission == 'READ_WRITE_ALL'))
                                             ->required() }}
                                     </div>
                                 </td>

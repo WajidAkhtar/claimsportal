@@ -231,10 +231,13 @@
                 });  
             }
         });
+        var dateToday = new Date();
+        var yrRange = 2015 + ":" + (2015 + 60);
         $("#start_date").datepicker({
             changeMonth: true,
             changeYear: true,
             showButtonPanel: true,
+            yearRange : yrRange,
             dateFormat : 'mm-yy',
             onClose: function(dateText, inst) {
                 var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();

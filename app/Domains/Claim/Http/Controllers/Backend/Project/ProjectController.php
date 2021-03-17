@@ -112,9 +112,7 @@ class ProjectController
         if(!empty(request()->partner)) {
             $project->costItems = $project->costItems()->whereNull('project_cost_items.deleted_at')->where('organisation_id', request()->partner)->orderByRaw($project->costItemOrderRaw())->get();
         }
-
-        if($project->userHasFullAccessToProject())
-
+        
         $data = [];
         if(empty(request()->partner) && $project->userHasFullAccessToProject()) {
             $costItems = $project->costItems->whereNull('project_cost_items.deleted_at')->whereIn('pivot.organisation_id', $project->allpartners()->pluck('project_partners.organisation_id'))->groupBy('pivot.cost_item_id')->all();
@@ -187,6 +185,17 @@ class ProjectController
                     break;
                 }
             }
+            $currentSheetUserPermission = '';
+            if($sheet_owner != 0) {
+                $currentSheetUserPermissionId = SheetUserPermissions::where('project_id', $project->id)->where('user_id', auth()->user()->id)->where('partner_id', $sheet_owner)->first();
+                if(!empty($currentSheetUserPermissionId)) {
+                    $currentSheetUserPermission = SheetPermission::find($currentSheetUserPermissionId->sheet_permission_id)->permission;
+                }
+                if($currentSheetUserPermission == 'READ_ONLY') {
+                    $allowToEdit = FALSE;
+                }
+            }
+            $project->costItems = $project->costItems()->where('organisation_id', $sheet_owner)->whereNull('project_cost_items.deleted_at')->groupBy('cost_item_id')->orderByRaw($project->costItemOrderRaw())->get();  
 
             return view('backend.claim.project.show')
             ->withProject($project)
@@ -199,6 +208,7 @@ class ProjectController
             ->withOrganisationTypes($organisationTypes)
             ->withSheetUserPermissions($SheetUserPermissions)
             ->withOrganisationRoles($organisationRoles)
+            ->withCurrentSheetUserPermission($currentSheetUserPermission)
             ->withyearwiseHtml($yearwiseHtml);
         }
     }

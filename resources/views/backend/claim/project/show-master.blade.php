@@ -39,7 +39,7 @@
     </style>
 @endpush
 @section('content')
-    @if(auth()->user()->id == $project->created_by)
+    @if($project->userHasPartialAccessToProject())
     <x-backend.card>
             <x-slot name="header">
                 @lang('Filter by Partner')
