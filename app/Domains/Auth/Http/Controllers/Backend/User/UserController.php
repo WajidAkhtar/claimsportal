@@ -67,8 +67,6 @@ class UserController
      */
     public function index()
     {
-        \DB::table('roles')->where('name', 'Funders')->update(['name' => 'Funder']);
-        dd(1);
         $allowToCreate = true;
         $roles = $this->roleService->all();
         if(auth()->user()->hasRole('Project Partner') || auth()->user()->hasRole('Funder')) {
