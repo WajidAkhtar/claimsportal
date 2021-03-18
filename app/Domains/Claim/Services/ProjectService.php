@@ -10,6 +10,7 @@ use App\Domains\Claim\Models\Project;
 use App\Domains\Claim\Models\CostItem;
 use App\Domains\Claim\Models\ProjectCostItem;
 use App\Domains\Claim\Models\ProjectPartners;
+use App\Domains\System\Models\SheetUserPermissions;
 
 /**
  * Class ProjectService.
@@ -103,6 +104,8 @@ class ProjectService extends BaseService
 
         DB::beginTransaction();
 
+        $cost_items_order = [];
+
         try {
             $project->update([
                 'name' => $data['name'],
@@ -120,9 +123,14 @@ class ProjectService extends BaseService
 
             $costItemIds = [];
             foreach ($data['cost_items'] as $key => $value) {
+                $cost_items_order[] = $value['name'];
                 $costItem = CostItem::firstOrCreate(['name' => $value['name']]);
                 $costItemIds[] = $costItem->id;
             }
+
+            $project->update([
+                'cost_items_order' => implode(',', $cost_items_order),
+            ]);
             
             // Delete removed project cost items
             $costItemIdsToRemove = array_merge(array_diff($costItemIds, $oldCostItems), array_diff($oldCostItems, $costItemIds));
@@ -177,9 +185,13 @@ class ProjectService extends BaseService
      */
     public function delete(Project $project): Project
     {
-        if ($this->deleteById($project->id)) {
+        // if ($this->deleteById($project->id)) {
+        if ($project->forceDelete()) {
             $project->allpartners()->forceDelete();
             $project->innerData()->forceDelete();
+            $project->funders()->forceDelete();
+            $project->allpartners()->forceDelete();
+            SheetUserPermissions::where('project_id', $project->id)->forceDelete();
             return $project;
         }
 

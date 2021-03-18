@@ -14,6 +14,7 @@ use App\Services\BaseService;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Domains\System\Models\UserPools;
 
 /**
  * Class UserService.
@@ -136,7 +137,6 @@ class UserService extends BaseService
                 'job_title' => $data['job_title'],
                 'department' => $data['department'],
                 'organisation_id' => $data['organisation_id'],
-                'project_role' => $data['project_role'],
                 'email' => $data['email'],
                 'password' => $data['password'],
                 'email_verified_at' => isset($data['email_verified']) && $data['email_verified'] === '1' ? now() : null,
@@ -198,7 +198,6 @@ class UserService extends BaseService
                 'job_title' => $data['job_title'],
                 'department' => $data['department'],
                 'organisation_id' => $data['organisation_id'],
-                'project_role' => $data['project_role'],
                 'email' => $data['email'],
             ]);
 
@@ -325,7 +324,10 @@ class UserService extends BaseService
             throw new GeneralException(__('You can not delete yourself.'));
         }
 
-        if ($this->deleteById($user->id)) {
+        // if ($this->deleteById($user->id)) {
+        if($user->forceDelete()) {
+            $user->correspondenceAddress()->forceDelete();
+            UserPools::where('user_id', $user->id)->delete();
             event(new UserDeleted($user));
 
             return $user;

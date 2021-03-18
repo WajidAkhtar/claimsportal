@@ -101,6 +101,9 @@ class ProjectController
         if(!$userHasPartialAccessToProject) {
             return redirect()->route('admin.claim.project.index')->withFlashDanger(__('you have no access to this project.'));
         }
+        if(!in_array(current_user_role(), ['Administrator', 'Super User']) && !in_array($project->pool_id, current_user_pools()->pluck('id')->toArray())) {
+            return redirect()->route('admin.claim.project.index')->withFlashDanger(__('you have no access to this project.'));
+        }
         $organisations = Organisation::ordered()->pluck('organisation_name', 'id');
         $allowToEdit = true;
         $users = $project->usersInSamePool()->pluck('full_name', 'id');
@@ -180,14 +183,18 @@ class ProjectController
             if(!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User')) {
                 $SheetUserPermissions = $SheetUserPermissions->where('user_id', auth()->user()->id);
             }
-            if($sheet_owner != 0) {
+            if($sheet_owner != 0 && $project->userHasFullAccessToProject()) {
                 $SheetUserPermissions = $SheetUserPermissions->where('partner_id', $sheet_owner); 
             }
             $SheetUserPermissions = $SheetUserPermissions->get();
 
+            if($sheet_owner == 0 && !in_array(current_user_role(), ['Administrator', 'Super User'])) {
+                // $SheetUserPermissions = SheetUserPermissions::where('project_id', $project->id)->where('user_id', auth()->user()->id)->get();
+            }
+
             $users = $project->partnersInSamePool()->pluck('full_name', 'id');
             $sheetPermissions = SheetPermission::whereIn('permission', ['WRITE_ONLY_FORECAST', 'READ_ONLY'])->pluck('permission', 'id');
-            foreach($project->usersWithPermissions()->get() as $key => $partner) {
+            foreach($project->usersWithPermissions($sheet_owner)->get() as $key => $partner) {
                 if($sheet_owner == 0 && $key == 0) {
                     $sheet_owner = $partner->partner_id;
                     break;

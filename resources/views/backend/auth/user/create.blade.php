@@ -64,6 +64,7 @@
                                 <label for="organisation_id">Organisation</label>
                                 {{ html()->select('organisation_id', $organisations)
                                     ->class('form-control select2')
+                                    ->placeholder('Select Organisation')
                                     ->required()
                                  }}
                              </div>
@@ -194,14 +195,6 @@
                                 <label for="direct_dial">Direct Dial</label>
                                 {{ html()->text('direct_dial', old('direct_dial'))
                                     ->class('form-control')
-                                 }}
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="project_role">Project Role</label>
-                                {{ html()->select('project_role', $projectRoles, old('project_role'))
-                                    ->class('form-control select2')
                                  }}
                             </div>
                         </div>

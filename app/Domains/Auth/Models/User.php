@@ -52,7 +52,6 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
         'job_title',
         'department',
         'organisation_id',
-        'project_role',
         'email',
         'email_verified_at',
         'password',

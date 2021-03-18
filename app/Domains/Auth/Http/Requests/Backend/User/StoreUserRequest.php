@@ -55,7 +55,6 @@ class StoreUserRequest extends FormRequest
             'correspending_email' => ['required', 'max:191'],
             'mobile' => ['max:191'],
             'direct_dial' => ['max:191'],
-            'project_role' => ['required'],
         ];
     }
 

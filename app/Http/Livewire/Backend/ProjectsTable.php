@@ -49,10 +49,11 @@ class ProjectsTable extends TableComponent
         $query = Project::with('funders');
 
         if(!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User')) {
-            $query = $query->whereHas('usersWithPermissions', function($q) {
+            $query = $query->whereHas('usersWithPermissions', function($q) use ($query) {
                 $q->where('user_id', auth()->user()->id);
+                // $query->orWhere('created_by', auth()->user()->id);
             });
-            $query = $query->orWhere('created_by', auth()->user()->id);
+            $query = $query->whereIn('pool_id', current_user_pools()->pluck('id')->toArray());
         }
 
         if ($this->status === 'deleted') {

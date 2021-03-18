@@ -248,7 +248,7 @@
             afterDelete : function() {
                 $('.cost_items tbody tr').each(function(i, v) {
                     $(this).find('td:first').html(i+1);
-                });  
+                });
             }
         });
         var dateToday = new Date();

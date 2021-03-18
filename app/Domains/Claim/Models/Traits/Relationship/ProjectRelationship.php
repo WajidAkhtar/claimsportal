@@ -118,8 +118,12 @@ trait ProjectRelationship
     /**
     * @return mixed
     */
-    public function usersWithPermissions() {
-        return $this->hasMany(SheetUserPermissions::class, 'project_id', 'id');
+    public function usersWithPermissions($partner_id = 0) {
+        $permissions = $this->hasMany(SheetUserPermissions::class, 'project_id', 'id');
+        if(!empty($partner_id)) {
+          $permissions = $permissions->where('partner_id', $partner_id);
+        }
+        return $permissions;
     }
 
     /**
