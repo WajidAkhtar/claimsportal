@@ -39,6 +39,8 @@ class ProjectService extends BaseService
     {
         DB::beginTransaction();
 
+        $cost_items_order = [];
+
         try {
             $project = $this->model::create([
                 'name' => $data['name'],
@@ -46,10 +48,17 @@ class ProjectService extends BaseService
                 'pool_id' => $data['pool_id'],
                 'start_date' => '01-'.$data['start_date'],
                 'length' => $data['length'],
-                'cost_items_order' => $data['cost_items_order'],
                 'status' => $data['status'],
                 'active' => 1,
                 'project_funder_ref' => $data['project_funder_ref'],
+            ]);
+
+            foreach ($data['cost_items'] as $key => $value) {
+                $cost_items_order[] = $value['name'];
+            }
+
+            $project->update([
+                'cost_items_order' => implode(',', $cost_items_order),
             ]);
             
             // Sync Funders
@@ -114,7 +123,6 @@ class ProjectService extends BaseService
                 'pool_id' => $data['pool_id'],
                 'start_date' => '01-'.$data['start_date'],
                 'length' => $data['length'],
-                'cost_items_order' => $data['cost_items_order'],
                 'status' => $data['status'],
                 'project_funder_ref' => $data['project_funder_ref'],
             ]);
