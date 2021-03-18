@@ -35,10 +35,16 @@ class UpdatePasswordRequest extends FormRequest
                     'max:100',
                     new UnusedPassword($this->user()),
                 ],
-                PasswordRules::changePassword(
-                    $this->email,
-                    config('boilerplate.access.user.password_history') ? 'current_password' : null
-                )
+                [
+                    'required',
+                    'string',
+                    'min:4',
+                    'confirmed',
+                ],
+                // PasswordRules::changePassword(
+                //     $this->email,
+                //     config('boilerplate.access.user.password_history') ? 'current_password' : null
+                // )
             ),
         ];
     }
