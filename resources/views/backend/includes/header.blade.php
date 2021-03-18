@@ -53,7 +53,7 @@
                         </a>
 
                         <div class="dropdown-menu border dropdown-menu-right p-0">
-                            <a href="" class="dropdown-item px-2 align-self-center d-flex">
+                            <a href="{{ route('frontend.user.account') }}" class="dropdown-item px-2 align-self-center d-flex">
                                 <span class="icon-pencil mr-2 h6 mb-0"></span> Edit Profile</a>
                             <div class="dropdown-divider"></div>
                             <x-utils.link

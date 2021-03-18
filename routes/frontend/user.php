@@ -22,7 +22,7 @@ Route::group(['as' => 'user.', 'middleware' => ['auth', 'password.expires', conf
     Route::get('account', [AccountController::class, 'index'])
         ->name('account')
         ->breadcrumbs(function (Trail $trail) {
-            $trail->parent('frontend.index')
+            $trail->parent('admin.dashboard')
                 ->push(__('My Account'), route('frontend.user.account'));
         });
 

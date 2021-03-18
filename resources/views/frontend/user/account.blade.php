@@ -1,4 +1,4 @@
-@extends('frontend.layouts.app')
+@extends('backend.layouts.app')
 
 @section('title', __('My Account'))
 
@@ -24,7 +24,7 @@
                                     aria-controls="my-profile"
                                     aria-selected="true" />
 
-                                <x-utils.link
+                                <!-- <x-utils.link
                                     :text="__('Edit Information')"
                                     class="nav-link"
                                     id="information-tab"
@@ -32,7 +32,7 @@
                                     href="#information"
                                     role="tab"
                                     aria-controls="information"
-                                    aria-selected="false"/>
+                                    aria-selected="false"/> -->
 
                                 @if (! $logged_in_user->isSocial())
                                     <x-utils.link
@@ -46,15 +46,6 @@
                                         aria-selected="false" />
                                 @endif
 
-                                <x-utils.link
-                                    :text="__('Two Factor Authentication')"
-                                    class="nav-link"
-                                    id="two-factor-authentication-tab"
-                                    data-toggle="pill"
-                                    href="#two-factor-authentication"
-                                    role="tab"
-                                    aria-controls="two-factor-authentication"
-                                    aria-selected="false"/>
                             </div>
                         </nav>
 
