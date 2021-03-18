@@ -25,6 +25,8 @@ class UsersTable extends TableComponent
      */
     public $status;
 
+    public $role;
+
     /**
      * @var array
      */
@@ -36,9 +38,10 @@ class UsersTable extends TableComponent
     /**
      * @param  string  $status
      */
-    public function mount($status = 'active'): void
+    public function mount($status = 'active', $role = 'Administrator'): void
     {
         $this->status = $status;
+        $this->role = $role;
     }
 
     /**
@@ -49,23 +52,27 @@ class UsersTable extends TableComponent
         $query = User::with('roles', 'twoFactorAuth')
             ->withCount('twoFactorAuth');
 
-        if(current_user_role() == 'Super User') {
-            $query = $query->whereHas('roles', function($q) {
-                $q->whereIn('name', ['Finance Officer', 'Project Admin', 'Project Partner', 'Funder']);
-            });
-        } else if(current_user_role() == 'Finance Officer') {
-            $query = $query->whereHas('roles', function($q) {
-                $q->whereIn('name', ['Project Admin', 'Project Partner', 'Funder']);
-            });
-        } else if(current_user_role() == 'Project Admin') {
-            $query = $query->whereHas('roles', function($q) {
-                $q->whereIn('name', ['Project Partner', 'Funder']);
-            });
-        } else if(current_user_role() == 'Project Partner') {
-            $query = $query->whereHas('roles', function($q) {
-                $q->whereIn('name', ['Funder']);
-            });
-        }
+        // if(current_user_role() == 'Super User') {
+        //     $query = $query->whereHas('roles', function($q) {
+        //         $q->whereIn('name', ['Finance Officer', 'Project Admin', 'Project Partner', 'Funder']);
+        //     });
+        // } else if(current_user_role() == 'Finance Officer') {
+        //     $query = $query->whereHas('roles', function($q) {
+        //         $q->whereIn('name', ['Project Admin', 'Project Partner', 'Funder']);
+        //     });
+        // } else if(current_user_role() == 'Project Admin') {
+        //     $query = $query->whereHas('roles', function($q) {
+        //         $q->whereIn('name', ['Project Partner', 'Funder']);
+        //     });
+        // } else if(current_user_role() == 'Project Partner') {
+        //     $query = $query->whereHas('roles', function($q) {
+        //         $q->whereIn('name', ['Funder']);
+        //     });
+        // }
+
+        $query = $query->whereHas('roles', function($q) {
+            $q->whereIn('name', [$this->role->name]);
+        });
 
         if ($this->status === 'deleted') {
             return $query->onlyTrashed();

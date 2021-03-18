@@ -22,7 +22,7 @@
                 value="{{ $role->id }}"
                 class="form-check-input"
                 type="checkbox"
-                {{ (old('rules') && in_array($role->id, old('rules'), true)) || (isset($user) && in_array($role->id, $user->roles->modelKeys(), true)) ? 'checked' : '' }} />
+                {{ (old('rules') && in_array($role->id, old('rules'), true)) || (isset($user) && in_array($role->id, $user->roles->modelKeys(), true)) || ((!empty($defaultRole)) && $defaultRole == $role->name) ? 'checked' : '' }} />
 
             <label class="form-check-label" for="role_{{ $role->id }}">
                 {{ $role->name }}

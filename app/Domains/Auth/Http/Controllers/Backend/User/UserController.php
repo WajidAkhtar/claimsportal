@@ -68,17 +68,18 @@ class UserController
     public function index()
     {
         $allowToCreate = true;
+        $roles = $this->roleService->all();
         if(auth()->user()->hasRole('Project Partner') || auth()->user()->hasRole('Funder')) {
             $allowToCreate = false;
             return redirect()->route('admin.dashboard')->withFlashDanger(__('You do not have access to user management module.'));
         }
-        return view('backend.auth.user.index')->withAllowToCreate($allowToCreate);
+        return view('backend.auth.user.index')->withAllowToCreate($allowToCreate)->withRoles($roles);
     }
 
     /**
      * @return mixed
      */
-    public function create()
+    public function create($role = '')
     {
         $organisations = Organisation::ordered()->pluck('organisation_name', 'id');
         return view('backend.auth.user.create')
@@ -86,6 +87,7 @@ class UserController
             ->withCategories($this->permissionService->getCategorizedPermissions())
             ->withPools(current_user_pools()->pluck('full_name', 'id'))
             ->withOrganisations($organisations)
+            ->withDefaultRole($role)
             ->withProjectRoles([
                 'COLLABORATOR' => 'COLLABORATOR',
                 'FUNDER' => 'FUNDER',
@@ -136,6 +138,7 @@ class UserController
             ->withGeneral($this->permissionService->getUncategorizedPermissions())
             ->withPools(current_user_pools()->pluck('full_name', 'id'))
             ->withOrganisations($organisations)
+            ->withDefaultRole($user->roles()->first()->name)
             ->withCorrespondenceAddress($user->correspondenceAddress()->first())
             ->withProjectRoles([
                 'COLLABORATOR' => 'COLLABORATOR',

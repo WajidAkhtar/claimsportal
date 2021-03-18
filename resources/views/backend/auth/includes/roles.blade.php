@@ -1,4 +1,4 @@
-<div class="form-group row">
+<div class="form-group row" style="{{ (!empty($defaultRole) ? 'display: none;' : '') }}">
     <label for="roles" class="col-md-2 col-form-label">@lang('Roles')</label>
 
     <div class="col-md-10">

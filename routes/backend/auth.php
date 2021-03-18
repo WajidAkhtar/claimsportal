@@ -30,7 +30,7 @@ Route::group([
                         ->push(__('Deleted Users'), route('admin.auth.user.deleted'));
                 });
 
-            Route::get('create', [UserController::class, 'create'])
+            Route::get('create/{role?}', [UserController::class, 'create'])
                 ->name('create')
                 ->breadcrumbs(function (Trail $trail) {
                     $trail->parent('admin.auth.user.index')

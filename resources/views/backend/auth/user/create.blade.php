@@ -223,7 +223,7 @@
                                         value="1"
                                         class="form-check-input"
                                         x-on:click="emailVerified = !emailVerified"
-                                        {{ old('email_verified') ? 'checked' : '' }} />
+                                        {{ old('email_verified') ? 'checked' : 'checked' }} />
                                 </div><!--form-check-->
                             </div>
                         </div><!--form-group-->
