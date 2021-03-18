@@ -30,7 +30,7 @@ return [
 
         'middleware' => [
             'confirm' => 'password.confirm:frontend.auth.password.confirm',
-            'verified' => 'verified:frontend.auth.verification.notice',
+            'verified' => '',
         ],
 
         'user' => [
