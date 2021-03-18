@@ -53,13 +53,13 @@
                             <form action="#" id="filter_project_claims_data">
                                 <select class="form-control" onchange="this.form.submit()" name="partner">
                                     @php $partnerCount = 1; @endphp
-                                    @if($project->userHasFullAccessToProject())
-                                    <option value="">Master Sheet</option>
-                                    @foreach($project->allpartners as $partner)
-                                        @if($partner->organisation_id != 0 && $partner->organisation_id != NULL)
-                                            <option value="{{ $partner->organisation->id ?? 0 }}" {{ (!empty($partner->organisation) && request()->partner == $partner->organisation->id ? 'selected':'') }}>{{ $partner->organisation->organisation_name ?? 'Partener - '.$partnerCount++ }}</option>
-                                        @endif
-                                    @endforeach
+                                    @if($project->userHasFullAccessToProject() || $userHasMasterAccess)
+                                        <option value="">Master Sheet</option>
+                                        @foreach($project->allpartners as $partner)
+                                            @if($partner->organisation_id != 0 && $partner->organisation_id != NULL)
+                                                <option value="{{ $partner->organisation->id ?? 0 }}" {{ (!empty($partner->organisation) && request()->partner == $partner->organisation->id ? 'selected':'') }}>{{ $partner->organisation->organisation_name ?? 'Partener - '.$partnerCount++ }}</option>
+                                            @endif
+                                        @endforeach
                                     @else
                                         <option value="">Select Sheet</option>
                                         @foreach($sheetUserPermissions as $partner)
@@ -485,13 +485,18 @@
                                     else {
                                         $isForeCast = 1;
                                     }
+
                                     $readOnly = false;
-                                    if($currentSheetUserPermission == 'READ_WRITE_ALL')
-                                        $readOnly = false;
+
+                                    if($userHasMasterAccess && $userHasMasterAccessWithPermission == 'READ_ONLY')
+                                        $readOnly = true;
+                                    if($userHasMasterAccess && $userHasMasterAccessWithPermission == 'WRITE_ONLY_FORECAST' && !$isForeCast)
+                                        $readOnly = true;
                                     else if($currentSheetUserPermission == 'WRITE_ONLY_FORECAST' && !$isForeCast)
                                         $readOnly = true;
                                     else if($currentSheetUserPermission == 'READ_ONLY')
                                         $readOnly = true;
+
                                 @endphp
                                 <td>
                                     <div class="input-group">
@@ -538,14 +543,23 @@
                                     </div>
                                 </td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+
+                                @php
+                                    $readOnly = false;
+                                    if($userHasMasterAccessWithPermission == 'READ_ONLY')
+                                        $readOnly = true;
+                                    else if($currentSheetUserPermission == 'READ_ONLY')
+                                        $readOnly = true;
+                                @endphp
                                 <td>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text">£</span>
+                                            <span class="input-group-text {{ $readOnly ? 'readonly' : '' }}">£</span>
                                         </div>
                                         {{ html()->input('number', 'claim_values['.$costItem->id.'][yearwise]['.$i.'][budget]', optional(optional($costItem->claims_data)->yearwise)[$i]->budget ?? '')
                                             ->placeholder('0.00')
                                             ->class('form-control')
+                                            ->readOnly($readOnly)
                                             ->required() }}
                                     </div>
                                 </td>

@@ -115,6 +115,20 @@ class ProjectController
         if(!empty(request()->partner)) {
             $project->costItems = $project->costItems()->whereNull('project_cost_items.deleted_at')->where('organisation_id', request()->partner)->orderByRaw($project->costItemOrderRaw())->get();
         }
+
+        $userHasMasterAccess = false;
+        $userHasMasterAccessWithPermission = '';
+
+        if(SheetUserPermissions::where('user_id', auth()->user()->id)->where('project_id', $project->id)->where('is_master', '1')->count() > 0) {
+            $userHasMasterAccess = true;
+            $userHasMasterAccessWithPermissionId = SheetUserPermissions::where('project_id', $project->id)->where('is_master', '1')->pluck('sheet_permission_id');
+            $userHasMasterAccessWithPermission = SheetPermission::find($userHasMasterAccessWithPermissionId)->first()->permission;
+        }
+
+        if(in_array(current_user_role(), ['Administrator', 'Super User'])) {
+            $userHasMasterAccess = true;
+            $userHasMasterAccessWithPermission = 'READ_WRITE_ALL';
+        }
         
         $data = [];
         if(empty(request()->partner) && $project->userHasFullAccessToProject()) {
@@ -228,6 +242,8 @@ class ProjectController
             ->withOrganisationTypes($organisationTypes)
             ->withSheetUserPermissions($SheetUserPermissions)
             ->withOrganisationRoles($organisationRoles)
+            ->withUserHasMasterAccess($userHasMasterAccess)
+            ->withUserHasMasterAccessWithPermission($userHasMasterAccessWithPermission)
             ->withCurrentSheetUserPermission($currentSheetUserPermission)
             ->withyearwiseHtml($yearwiseHtml);
         }
@@ -376,7 +392,13 @@ class ProjectController
             }
             return response()->json(['success' => TRUE, 'message' => 'Sheet users & permissions saved successfully!']);   
         } else {
-            return response()->json(['success' => FALSE, 'message' => 'Nothing to save!']);   
+            if(!empty($request->is_master) && $request->is_master == 1) {
+                SheetUserPermissions::where('partner_id', $request->sheet_owner_for_permission)->where('project_id', $project->id)->where('is_master', '1')->delete();
+                return response()->json(['success' => TRUE, 'message' => 'Master Sheet permissions cleared successfully.']);
+            } else {
+                SheetUserPermissions::where('partner_id', $request->sheet_owner_for_permission)->where('project_id', $project->id)->where('is_master', '0')->delete();
+                return response()->json(['success' => TRUE, 'message' => 'Sheet users & permissions cleared successfully.']);
+            }
         }
     }
 
