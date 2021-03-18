@@ -380,7 +380,7 @@ class ProjectController
                         $is_master = '0';
                     }
                     SheetUserPermissions::where('is_master', $is_master)->where('project_id', $project->id)->where('user_id', $user_id)->where('partner_id', $partner_id)->delete();
-                    SheetUserPermissions::where('is_master', $is_master)->where('project_id', $project->id)->where('user_id', $user_id)->where('is_master', '1')->delete();
+                    SheetUserPermissions::where('project_id', $project->id)->where('user_id', $user_id)->where('is_master', '1')->delete();
                     $created = SheetUserPermissions::create([
                         'partner_id' => $partner_id,
                         'is_master' => $is_master,
