@@ -11,6 +11,7 @@ use App\Domains\Claim\Models\CostItem;
 use App\Domains\Claim\Models\ProjectCostItem;
 use App\Domains\Claim\Models\ProjectPartners;
 use App\Domains\System\Models\SheetUserPermissions;
+use Illuminate\Support\Facades\Schema;
 
 /**
  * Class ProjectService.
@@ -187,11 +188,13 @@ class ProjectService extends BaseService
     {
         // if ($this->deleteById($project->id)) {
         if ($project->forceDelete()) {
+            Schema::disableForeignKeyConstraints();
             $project->allpartners()->forceDelete();
             $project->innerData()->forceDelete();
             $project->funders()->forceDelete();
             $project->allpartners()->forceDelete();
             SheetUserPermissions::where('project_id', $project->id)->forceDelete();
+            Schema::enableForeignKeyConstraints();
             return $project;
         }
 
