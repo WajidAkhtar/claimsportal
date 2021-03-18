@@ -25,9 +25,13 @@
                         @php continue; @endphp;
                     @endif
                 @endif
+                @php $roleName = $role->name; @endphp
+                @if($roleName == 'Administrator')
+                    @php $roleName = 'Executive'; @endphp
+                @endif
                 <x-backend.card>
                     <x-slot name="header">
-                        {{ $role->name }} Accounts
+                        {{ $roleName }} Accounts
                     </x-slot>
 
                     <x-slot name="headerActions">
@@ -35,7 +39,7 @@
                             icon="icon-plus"
                             class=""
                             :href="route('admin.auth.user.create', [$role->name])"
-                            :text="__('Create '.$role->name)"
+                            :text="__('Create '.$roleName)"
                         />
                     </x-slot>
 

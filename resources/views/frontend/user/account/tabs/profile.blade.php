@@ -2,7 +2,7 @@
     <table class="table table-striped table-hover table-bordered mb-0">
         <tr>
             <th>@lang('Type')</th>
-            <td>{{ current_user_role() }}</td>
+            <td>{{ (current_user_role() == 'Administrator') ? 'Executive' : current_user_role() }}</td>
         </tr>
 
         @if (1 == 2) 
