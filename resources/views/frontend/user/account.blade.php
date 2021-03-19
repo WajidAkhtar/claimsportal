@@ -8,13 +8,13 @@
             <div class="col-md-12">
                 <x-frontend.card>
                     <x-slot name="header">
-                        @lang('My Account')
+                        @lang('Change Password')
                     </x-slot>
 
                     <x-slot name="body">
                         <nav>
                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                <x-utils.link
+                                <!-- <x-utils.link
                                     :text="__('My Profile')"
                                     class="nav-link active"
                                     id="my-profile-tab"
@@ -22,7 +22,7 @@
                                     href="#my-profile"
                                     role="tab"
                                     aria-controls="my-profile"
-                                    aria-selected="true" />
+                                    aria-selected="true" /> -->
 
                                 <!-- <x-utils.link
                                     :text="__('Edit Information')"
@@ -35,31 +35,25 @@
                                     aria-selected="false"/> -->
 
                                 @if (! $logged_in_user->isSocial())
-                                    <x-utils.link
+                                    <!-- <x-utils.link
                                         :text="__('Password')"
-                                        class="nav-link"
+                                        class="nav-link active"
                                         id="password-tab"
                                         data-toggle="pill"
                                         href="#password"
                                         role="tab"
                                         aria-controls="password"
-                                        aria-selected="false" />
+                                        aria-selected="false" /> -->
                                 @endif
 
                             </div>
                         </nav>
 
                         <div class="tab-content" id="my-profile-tabsContent">
-                            <div class="tab-pane fade pt-3 show active" id="my-profile" role="tabpanel" aria-labelledby="my-profile-tab">
-                                @include('frontend.user.account.tabs.profile')
-                            </div><!--tab-profile-->
-
-                            <div class="tab-pane fade pt-3" id="information" role="tabpanel" aria-labelledby="information-tab">
-                                @include('frontend.user.account.tabs.information')
-                            </div><!--tab-information-->
+                            
 
                             @if (! $logged_in_user->isSocial())
-                                <div class="tab-pane fade pt-3" id="password" role="tabpanel" aria-labelledby="password-tab">
+                                <div class="tab-pane fade show active" id="password" role="tabpanel" aria-labelledby="password-tab">
                                     @include('frontend.user.account.tabs.password')
                                 </div><!--tab-password-->
                             @endif

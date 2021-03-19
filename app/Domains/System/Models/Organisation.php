@@ -27,6 +27,7 @@ class Organisation extends Model
         'city',
         'postcode',
         'logo',
+        'logo_high',
     ];
 
     /**
