@@ -13,7 +13,8 @@
                 <x-slot name="header">
                     @lang(__('Project Management'))
                 </x-slot>
-        
+                
+                @if($allowToCreate)
                 <x-slot name="headerActions">
                     <x-utils.link
                         icon="icon-plus"
@@ -22,6 +23,7 @@
                         :text="__('Create Project')"
                     />
                 </x-slot>
+                @endif
         
                 <x-slot name="body">
                     <livewire:backend.projects-table />

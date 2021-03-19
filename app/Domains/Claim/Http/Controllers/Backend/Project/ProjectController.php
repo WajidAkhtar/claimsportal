@@ -54,7 +54,11 @@ class ProjectController
      */
     public function index()
     {
-        return view('backend.claim.project.index');
+        $allowToCreate = TRUE;
+        if(in_array(current_user_role(), ['Project Partner', 'Funder'])) {
+            $allowToCreate = FALSE;
+        }
+        return view('backend.claim.project.index')->withAllowToCreate($allowToCreate);
     }
 
     /**
@@ -63,7 +67,7 @@ class ProjectController
     public function create()
     {
         if(!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User') && !auth()->user()->hasRole('Finance Officer') && !auth()->user()->hasRole('Project Admin')) {
-            
+            return redirect()->route('admin.claim.project.index')->withFlashDanger(__('you have no access to create project.'));
         }
         $organisations = Organisation::ordered()->pluck('organisation_name', 'id');
         $costItems = CostItem::onlyActive()->onlySystemGenerated()->get();
