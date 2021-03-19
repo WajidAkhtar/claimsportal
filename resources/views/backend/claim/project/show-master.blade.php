@@ -93,7 +93,7 @@
 
                         <div class="row">
                             <div class="col">
-                                {{ html()->label('Organisation')->for('organisation_id') }}
+                                {{ html()->label('Department Name')->for('organisation_id') }}
                                 <div class="form-group"> 
                                     {{ html()->select('organisation_id', $organisations, $partnerAdditionalInfo->invoiceOrganisation ?? '')
                                         ->class('form-control additional-info select2')
@@ -134,7 +134,7 @@
                                 </div>
                             </div>
                             <div class="col">
-                                {{ html()->label('Bulding Name/No')->for('building_name') }}
+                                {{ html()->label('Building Name/No')->for('building_name') }}
                                 <div class="form-group"> 
                                     {{ html()->text('building_name', $partnerAdditionalInfo->building_name ?? '')
                                         ->class('form-control additional-info')
@@ -143,7 +143,7 @@
                                 </div>
                             </div>
                             <div class="col">
-                                {{ html()->label('Street')->for('street') }}
+                                {{ html()->label('Address Line 1')->for('street') }}
                                 <div class="form-group"> 
                                     {{ html()->text('street', $partnerAdditionalInfo->street ?? '')
                                         ->class('form-control additional-info')
@@ -194,13 +194,13 @@
                         </div>
                         <div class="row mt-2">
                             <div class="col">
-                                {{ html()->label('Finance TEL')->for('finance_tel') }}
+                                {{ html()->label('Finance Tel')->for('finance_tel') }}
                                 {{ html()->text('finance_tel', $partnerAdditionalInfo->finance_tel ?? '')
                                     ->class('form-control additional-info')
                                  }}
                             </div>
                             <div class="col">
-                                {{ html()->label('Finance FAX')->for('finance_fax') }}
+                                {{ html()->label('Finance Fax')->for('finance_fax') }}
                                 {{ html()->text('finance_fax', $partnerAdditionalInfo->finance_fax ?? '')
                                     ->class('form-control additional-info')
                                  }}
@@ -248,7 +248,7 @@
                         </div>
                         <div class="row mt-3">
                             <div class="col">
-                                {{ html()->label('SORT Code')->for('sort_code') }}
+                                {{ html()->label('Sort Code')->for('sort_code') }}
                                 {{ html()->text('sort_code', $partnerAdditionalInfo->sort_code ?? '')
                                     ->class('form-control additional-info')
                                  }}
