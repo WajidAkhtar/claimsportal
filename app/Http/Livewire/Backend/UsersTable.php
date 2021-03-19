@@ -96,16 +96,16 @@ class UsersTable extends TableComponent
             //     ->format(function (User $model) {
             //         return view('backend.auth.user.includes.type', ['user' => $model]);
             //     }),
-            Column::make(__('Name'), 'first_name')
+            Column::make(__('First Name'), 'first_name')
                 ->searchable()
                 ->sortable(),
-            Column::make(__('Last Name'), 'last_name')
+            Column::make(__('Surname'), 'last_name')
                 ->searchable()
                 ->sortable(),
             Column::make(__('Job Title'), 'job_title')
                 ->searchable()
                 ->sortable(),
-            Column::make(__('Department'), 'department')
+            Column::make(__('Organisation'), 'department')
                 ->searchable()
                 ->sortable(),
             Column::make(__('E-mail'), 'email')
@@ -126,24 +126,24 @@ class UsersTable extends TableComponent
             //     ->format(function (User $model) {
             //         return view('backend.auth.user.includes.2fa', ['user' => $model]);
             //     }),
-            Column::make(__('Roles'), 'roles_label')
-                ->searchable(function ($builder, $term) {
-                    return $builder->orWhereHas('roles', function ($query) use ($term) {
-                        return $query->where('name', 'like', '%'.$term.'%');
-                    });
-                })
-                ->format(function (User $model) {
-                    return $this->html($model->roles_label);
-                }),
-            Column::make(__('Additional Permissions'), 'permissions_label')
-                ->searchable(function ($builder, $term) {
-                    return $builder->orWhereHas('permissions', function ($query) use ($term) {
-                        return $query->where('name', 'like', '%'.$term.'%');
-                    });
-                })
-                ->format(function (User $model) {
-                    return $this->html($model->permissions_label);
-                }),
+            // Column::make(__('Roles'), 'roles_label')
+            //     ->searchable(function ($builder, $term) {
+            //         return $builder->orWhereHas('roles', function ($query) use ($term) {
+            //             return $query->where('name', 'like', '%'.$term.'%');
+            //         });
+            //     })
+            //     ->format(function (User $model) {
+            //         return $this->html($model->roles_label);
+            //     }),
+            // Column::make(__('Additional Permissions'), 'permissions_label')
+            //     ->searchable(function ($builder, $term) {
+            //         return $builder->orWhereHas('permissions', function ($query) use ($term) {
+            //             return $query->where('name', 'like', '%'.$term.'%');
+            //         });
+            //     })
+            //     ->format(function (User $model) {
+            //         return $this->html($model->permissions_label);
+            //     }),
             Column::make(__('Actions'))
                 ->format(function (User $model) {
                     return view('backend.auth.user.includes.actions', ['user' => $model]);
