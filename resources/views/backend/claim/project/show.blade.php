@@ -80,15 +80,15 @@
     <br />
     @endif
 
-    @if(current_user_role() == 'Administrator' || current_user_role() == 'Super User' || auth()->user()->id == $project->created_by)
+    @if(current_user_role() == 'Administrator' || current_user_role() == 'Super User')
     <x-backend.card>
         <x-slot name="header">
             <table class="">
                 <tr>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary toggle_partner_additional_info togget_action_content"><span class="toggle_action_text">Show</span> @lang('Assign Required Information')</button></td>
+                        <button class="btn btn-sm btn-outline-primary toggle_partner_additional_info togget_action_content"><span class="toggle_action_text_hide"></span> FINANCE</button></td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary toggle_user_permissions_info togget_action_content"><span class="toggle_action_text">Show</span> @lang('Assign User & Permissions')</button>
+                        <button class="btn btn-sm btn-outline-primary toggle_user_permissions_info togget_action_content"><span class="toggle_action_text_hide"></span> PERMISSIONS</button>
                     </td>
                 </tr>
             </table>
