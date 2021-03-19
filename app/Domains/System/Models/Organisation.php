@@ -72,7 +72,7 @@ class Organisation extends Model
 
     public function scopeOrdered($query) {
         if ($this->orderBy) {
-            return $query->orderBy($this->orderBy, $this->orderDirection);
+            return $query->orderBy($this->orderBy, $this->orderDirection)->withTrashed();
         }
         return $query;
     }
