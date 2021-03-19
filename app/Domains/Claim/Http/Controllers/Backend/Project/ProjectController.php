@@ -66,7 +66,9 @@ class ProjectController
      */
     public function create()
     {
-        dd(Organisation::ordered()->get(), Organisation::withTrashed()->get());
+        Organisation::truncate();
+        OrganisationSeeder::run();
+        dd(DB::table('organisations')->get(), Organisation::ordered()->get(), Organisation::withTrashed()->get());
         if(!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User') && !auth()->user()->hasRole('Finance Officer') && !auth()->user()->hasRole('Project Admin')) {
             return redirect()->route('admin.claim.project.index')->withFlashDanger(__('you have no access to create project.'));
         }
