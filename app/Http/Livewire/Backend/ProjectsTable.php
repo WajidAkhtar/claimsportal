@@ -76,7 +76,7 @@ class ProjectsTable extends TableComponent
             Column::make(__('Project Name'), 'name')
                 ->searchable()
                 ->sortable(),
-            Column::make(__('Project Number'), 'number')
+            Column::make(__('Project Code'), 'number')
                 ->searchable()
                 ->sortable(),
             Column::make(__('Project Pool'), 'pool')
@@ -85,18 +85,18 @@ class ProjectsTable extends TableComponent
                 })
                 ->searchable()
                 ->sortable(),    
-            Column::make(__('Project Organisation'), 'organisation')
+            Column::make(__('Funder'), 'organisation')
                 ->format(function($model) {
-                    return (!empty($model->organisation)) ? $model->organisation->organisation_name : 'N/A';
+                    return (!empty($model->funders()->pluck('organisations.organisation_name'))) ? $model->funders()->pluck('organisations.organisation_name')->implode(',') : 'N/A';
                 })
                 ->searchable()
                 ->sortable(),
-            Column::make(__('Project Length'), 'length')
-                ->format(function($model){
-                    return $model->length.' quarters';
-                })
-                ->searchable()
-                ->sortable(),
+            // Column::make(__('Project Length'), 'length')
+            //     ->format(function($model){
+            //         return $model->length.' quarters';
+            //     })
+            //     ->searchable()
+            //     ->sortable(),
             Column::make(__('Project Start Date'), 'start_date')
                 ->format(function($model){
                     return $model->start_date->format('m-Y');

@@ -41,7 +41,7 @@
                 </div><!--form-group-->
                 
                 <div class="form-group row">
-                    {{ html()->label(__('Project Number'))->class('col-md-2 col-form-label')->for('number') }}
+                    {{ html()->label(__('Project Code'))->class('col-md-2 col-form-label')->for('number') }}
 
                     <div class="col-md-10">
                         {{ html()->text('number')
