@@ -196,13 +196,10 @@ class ProjectService extends BaseService
     {
         // if ($this->deleteById($project->id)) {
         if ($project->forceDelete()) {
-            Schema::disableForeignKeyConstraints();
-            $project->allpartners()->forceDelete();
-            $project->innerData()->forceDelete();
-            $project->funders()->forceDelete();
-            $project->allpartners()->forceDelete();
-            SheetUserPermissions::where('project_id', $project->id)->forceDelete();
-            Schema::enableForeignKeyConstraints();
+            DB::table('project_cost_items')->where('project_id', $project->id)->delete();
+            DB::table('project_funders')->where('project_id', $project->id)->delete();
+            ProjectPartners::where('project_id', $project->id)->delete();
+            SheetUserPermissions::where('project_id', $project->id)->delete();
             return $project;
         }
 
