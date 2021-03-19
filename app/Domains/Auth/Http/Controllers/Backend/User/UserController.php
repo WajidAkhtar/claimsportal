@@ -160,7 +160,7 @@ class UserController
     {
         $this->userService->update($user, $request->validated());
 
-        if(!$user->isMasterAdmin()) {
+        if(!in_array(current_user_role(), ['Administrator', 'Super User'])) {
             return redirect()->route('admin.auth.user.edit', [$user->id])->withFlashSuccess(__('Your information has successfully saved.'));    
         }
         return redirect()->route('admin.auth.user.index')->withFlashSuccess(__('The user was successfully updated.'));

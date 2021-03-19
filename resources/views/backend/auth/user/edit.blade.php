@@ -79,7 +79,7 @@
                         </div>
                     </div>
 
-                    <div class="row" style="{{ (!$user->isMasterAdmin()) ? 'display: none;' : '' }}">
+                    <div class="row" style="{{ (!in_array(current_user_role(), ['Administrator', 'Super User'])) ? 'display: none;' : '' }}">
                         <div class="col">
                             <div class="form-group">
                                 <label for="pools[]">Pools</label>
