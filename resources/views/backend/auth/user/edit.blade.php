@@ -79,7 +79,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" style="{{ (!$user->isMasterAdmin()) ? 'display: none;' : '' }}">
                         <div class="col">
                             <div class="form-group">
                                 <label for="pools[]">Pools</label>
