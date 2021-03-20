@@ -308,8 +308,8 @@
                                                 </td>
                                             </tr>
                                         @else
-                                            {{ html()->input('sheet_user_id[]', $permission->user_id) }}
-                                            {{ html()->input('sheet_permission_id[]', $permission->sheet_permission_id) }}
+                                            {{ html()->hidden('sheet_user_id[]', $permission->user_id) }}
+                                            {{ html()->hidden('sheet_permission_id[]', $permission->sheet_permission_id) }}
                                         @endif
                                     @endforeach
                                 @endif
