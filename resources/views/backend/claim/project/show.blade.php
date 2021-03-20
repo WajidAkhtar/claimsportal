@@ -300,23 +300,28 @@
                             <tbody class="repeatable">
                                 @if(!empty($sheetUserPermissions))
                                     @foreach($sheetUserPermissions as $permission)
-                                        <tr class="field-group" style="{{ (!is_under_current_user($permission->user_id)) ? 'display: none;' : ''  }}">
-                                            <td>
-                                                {{ html()->select('sheet_user_id[]', $users, $permission->user_id)
-                                                    ->class('form-control')
-                                                    ->placeholder('Select User')
-                                                 }}
-                                            </td>
-                                            <td>
-                                                {{ html()->select('sheet_permission_id[]', $sheetPermissions, $permission->sheet_permission_id)
-                                                    ->class('form-control')
-                                                    ->placeholder('Select Permission')
-                                                 }}
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-danger btn-sm delete"><i class="fa fa-trash"></i></button>
-                                            </td>
-                                        </tr>
+                                        @if(is_under_current_user($permission->user_id))
+                                            <tr class="field-group">
+                                                <td>
+                                                    {{ html()->select('sheet_user_id[]', $users, $permission->user_id)
+                                                        ->class('form-control')
+                                                        ->placeholder('Select User')
+                                                     }}
+                                                </td>
+                                                <td>
+                                                    {{ html()->select('sheet_permission_id[]', $sheetPermissions, $permission->sheet_permission_id)
+                                                        ->class('form-control')
+                                                        ->placeholder('Select Permission')
+                                                     }}
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-danger btn-sm delete"><i class="fa fa-trash"></i></button>
+                                                </td>
+                                            </tr>
+                                        @else
+                                            {{ html()->input('sheet_user_id[]', $permission->user_id) }}
+                                            {{ html()->input('sheet_permission_id[]', $permission->sheet_permission_id) }}
+                                        @endif
                                     @endforeach
                                 @endif
                             </tbody>
