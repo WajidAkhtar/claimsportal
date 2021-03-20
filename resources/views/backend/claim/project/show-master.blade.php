@@ -310,10 +310,10 @@
                                         @else
                                             <tr>
                                                 <td>
-                                                    {{ html()->hidden('sheet_user_id[]', (string) $permission->user_id) }}
+                                                    {{ html()->hidden('sheet_user_id[]', ''.$permission->user_id) }}
                                                 </td>
                                                 <td>
-                                                    {{ html()->hidden('sheet_permission_id[]', (string) $permission->sheet_permission_id) }}
+                                                    {{ html()->hidden('sheet_permission_id[]', ''.$permission->sheet_permission_id) }}
                                                 </td>
                                             </tr>
                                         @endif
