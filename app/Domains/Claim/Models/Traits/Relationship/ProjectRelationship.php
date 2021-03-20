@@ -103,7 +103,7 @@ trait ProjectRelationship
     * @return mixed
     */
     public function usersInSamePool($belowCurrentUser = false) {
-        $users = User::whereIn('id', UserPools::where('pool_id', $this->pool_id);
+        $users = User::whereIn('id', UserPools::where('pool_id', $this->pool_id));
         if($belowCurrentUser) {
           if(current_user_role() == 'Super User') {
             $users = $users->whereHas('roles', function($q) {
@@ -123,7 +123,7 @@ trait ProjectRelationship
               });
           }
         }
-        $users = $users->pluck('user_id'))->get();
+        $users = $users->pluck('user_id')->get();
         return $users;
     }
 
