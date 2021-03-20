@@ -46,7 +46,7 @@ class ProjectsTable extends TableComponent
      */
     public function query(): Builder
     {
-        $project = Project::find(50)->get();
+        $project = Project::find(50)->with('usersWithPermissions');
         dd($project, 1);
         $query = Project::with('funders');
 
