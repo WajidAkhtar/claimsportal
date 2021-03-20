@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use App\Domains\System\Models\Pool;
+use App\Domains\Auth\Models\User;
 
 if (! function_exists('appName')) {
     /**
