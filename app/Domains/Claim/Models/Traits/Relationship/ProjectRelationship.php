@@ -102,8 +102,29 @@ trait ProjectRelationship
     /**
     * @return mixed
     */
-    public function usersInSamePool() {
-        return User::whereIn('id', UserPools::where('pool_id', $this->pool_id)->pluck('user_id'))->get();
+    public function usersInSamePool($belowCurrentUser = false) {
+        $users = User::whereIn('id', UserPools::where('pool_id', $this->pool_id);
+        if($belowCurrentUser) {
+          if(current_user_role() == 'Super User') {
+            $users = $users->whereHas('roles', function($q) {
+                $q->whereIn('name', ['Finance Officer', 'Project Admin', 'Project Partner', 'Funder']);
+            });
+          } else if(current_user_role() == 'Finance Officer') {
+              $users = $users->whereHas('roles', function($q) {
+                  $q->whereIn('name', ['Project Admin', 'Project Partner', 'Funder']);
+              });
+          } else if(current_user_role() == 'Project Admin') {
+              $users = $users->whereHas('roles', function($q) {
+                  $q->whereIn('name', ['Project Partner', 'Funder']);
+              });
+          } else if(current_user_role() == 'Project Partner') {
+              $users = $users->whereHas('roles', function($q) {
+                  $q->whereIn('name', ['Funder']);
+              });
+          }
+        }
+        $users = $users->pluck('user_id'))->get();
+        return $users;
     }
 
     /**

@@ -110,7 +110,7 @@ class ProjectController
         }
         $organisations = Organisation::ordered()->pluck('organisation_name', 'id');
         $allowToEdit = true;
-        $users = $project->usersInSamePool()->pluck('full_name', 'id');
+        $users = $project->usersInSamePool(true)->pluck('full_name', 'id');
         $organisationTypes = Organisation::organisationTypes();
         $organisationRoles = Organisation::organisationRoles();
 
