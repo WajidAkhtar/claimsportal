@@ -289,7 +289,7 @@
                             <tbody class="repeatable">
                                 @if(!empty($sheetUserPermissions))
                                     @foreach($sheetUserPermissions as $permission)
-                                        <tr class="field-group">
+                                        <tr class="field-group" style="{{ (is_under_current_user($permission->user_id)) ? 'display: none;' : ''  }}">
                                             <td>
                                                 {{ html()->select('sheet_user_id[]', $users, $permission->user_id)
                                                     ->class('form-control')
