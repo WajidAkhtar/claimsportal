@@ -76,3 +76,42 @@ if(! function_exists('current_user_pools')) {
         return auth()->user()->pools()->get();
     }
 }
+
+if(! function_exists('is_under_current_user')) {
+    /**
+    * Check if user is under user
+    *
+    * @return boolean
+    */
+    function is_under_current_user($user_id = '') {
+        if(current_user_role() == 'Administrator' || current_user_role() == 'Super User') {
+            return true;
+        }
+        $isUnderCurrentUser = false;
+        $role = User::find($user_id)->roles()->first()->name;
+        if(!empty($role)) {
+            switch (current_user_role()) {
+                case 'Finance Officer':
+                    if(in_array($role, ['Project Admin', 'Project Partner', 'Funder'])) {
+                        $isUnderCurrentUser = true;
+                    }
+                    break;
+                case 'Project Admin':
+                    if(in_array($role, ['Project Partner', 'Funder'])) {
+                        $isUnderCurrentUser = true;
+                    }
+                    break;
+                case 'Project Partner':
+                    if(in_array($role, ['Funder'])) {
+                        $isUnderCurrentUser = true;
+                    }
+                    break;
+                default:
+                    $isUnderCurrentUser = false;
+                    break;
+            }    
+        }
+        
+        return $isUnderCurrentUser;
+    }
+}
