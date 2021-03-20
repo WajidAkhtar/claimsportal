@@ -46,6 +46,8 @@ class ProjectsTable extends TableComponent
      */
     public function query(): Builder
     {
+        Project::find(50)->get();
+        dd(1);
         $query = Project::with('funders');
 
         if(!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User')) {
