@@ -106,6 +106,9 @@ class UsersTable extends TableComponent
                 ->searchable()
                 ->sortable(),
             Column::make(__('Organisation'), 'department')
+                ->format(function($model) {
+                    return (!empty($model->organisation)) ? $model->organisation->organisation_name: 'N/A';
+                })
                 ->searchable()
                 ->sortable(),
             Column::make(__('E-mail'), 'email')

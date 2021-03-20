@@ -66,8 +66,8 @@
     </x-backend.card>
     <br />
     @endif
-
-    @if(current_user_role() == 'Administrator' || current_user_role() == 'Super User')
+    
+    @if((current_user_role() == 'Administrator' || current_user_role() == 'Super User' || current_user_role() == 'Finance Officer' || current_user_role() == 'Project Admin') &&  $project->created_by != auth()->user()->id)
     <x-backend.card>
         <x-slot name="header">
             <table class="">
