@@ -31,7 +31,7 @@
                 @endif
                 <x-backend.card>
                     <x-slot name="header">
-                        {{ $roleName }} Accounts
+                        {{ $roleName }}
                     </x-slot>
 
                     <x-slot name="headerActions">

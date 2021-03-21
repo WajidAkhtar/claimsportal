@@ -54,7 +54,7 @@
 
                         <div class="dropdown-menu border dropdown-menu-right p-0">
                             <a href="{{ route('admin.auth.user.edit', [$logged_in_user->id]) }}" class="dropdown-item px-2 align-self-center d-flex">
-                                <span class="icon-pencil mr-2 h6 mb-0"></span> Edit Personal Information</a>
+                                <span class="icon-pencil mr-2 h6 mb-0"></span> Edit Profile</a>
                             <a href="{{ route('frontend.user.account') }}" class="dropdown-item px-2 align-self-center d-flex">
                                 <span class="icon-eye mr-2 h6 mb-0"></span> Change Password</a>
                             <div class="dropdown-divider"></div>

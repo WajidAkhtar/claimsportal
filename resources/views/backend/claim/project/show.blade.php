@@ -66,7 +66,7 @@
                                             @if(auth()->user()->id == $partner->user_id && $partner->partner_id == 0 && $partner->is_master == '1')
                                                 <option value="">Master Sheet</option>
                                             @elseif($partner->partner_id != 0 && $partner->partner_id != NULL && \App\Domains\System\Models\Organisation::find($partner->partner_id)->organisation_name)
-                                                <option value="{{ $partner->partner_id ?? 0 }}" {{ (request()->partner == $partner->partner_id ? 'selected':'') }}>{{ \App\Domains\System\Models\Organisation::find($partner->partner_id)->organisation_name ?? 'Partener - '.$partnerCount++ }}</option>
+                                                <option value="{{ $partner->partner_id ?? 0 }}" {{ (request()->partner == $partner->partner_id || $sheetOwner == $partner->partner_id ? 'selected':'') }}>{{ \App\Domains\System\Models\Organisation::find($partner->partner_id)->organisation_name ?? 'Partener - '.$partnerCount++ }}</option>
                                             @endif
                                         @endforeach
                                     @endif
@@ -310,7 +310,7 @@
                                             <td>
                                                 {{ html()->select('sheet_permission_id[]', $sheetPermissions, $permission->sheet_permission_id)
                                                     ->class('form-control')
-                                                    ->placeholder('Select Permission')
+                                                    
                                                  }}
                                             </td>
                                             <td>
@@ -348,7 +348,7 @@
             <td>
                 {{ html()->select('sheet_permission_id[]', $sheetPermissions)
                     ->class('form-control')
-                    ->placeholder('Select Permission')
+                    
                  }}
             </td>
             <td>
@@ -375,7 +375,7 @@
                 <div><strong>Project Start Date:</strong> {{$project->start_date->format('m-Y')}}</div>
                 <div><strong>Funders:</strong> {{ $project->funders->implode('organisation_name', ', ') }}</div>
             </div>
-            @if(!empty(request()->partner))
+            @if(!empty($sheetOwner))
             <form action="#" id="claims_form">
                 {{ html()->input('hidden', 'sheet_owner', $sheetOwner) }}
                 <div class="col-sm-12 mt-5">

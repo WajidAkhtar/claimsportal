@@ -299,7 +299,6 @@
                                             <td>
                                                 {{ html()->select('sheet_permission_id[]', $sheetPermissions, $permission->sheet_permission_id)
                                                     ->class('form-control')
-                                                    ->placeholder('Select Permission')
                                                  }}
                                             </td>
                                             <td>
@@ -337,7 +336,6 @@
             <td>
                 {{ html()->select('sheet_permission_id[]', $sheetPermissions)
                     ->class('form-control')
-                    ->placeholder('Select Permission')
                  }}
             </td>
             <td>

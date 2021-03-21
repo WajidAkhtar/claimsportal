@@ -8,7 +8,7 @@
 @for ($yearIndex = 0; $yearIndex < ceil($project->length/4); $yearIndex++)
 {{-- {{var_dump($fromDate1->format('Y-m-d'))}} --}}
 <div class="col-sm-12 mt-5">
-    <h4>Year {{$yearIndex + 1}} Accounting</h4>
+    <h4>Year {{$yearIndex + 1}} Finance</h4>
     <table class="table table-responsive table-borders table-sm" style="overflow-x: auto;">
         <thead>
             <tr>
