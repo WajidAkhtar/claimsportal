@@ -233,7 +233,6 @@ class ProjectController
                     $allowToEdit = FALSE;
                 }
             }
-            
             $project->costItems = $project->costItems()->where('organisation_id', $sheet_owner)->whereNull('project_cost_items.deleted_at')->groupBy('cost_item_id')->orderByRaw($project->costItemOrderRaw())->get();  
 
             return view('backend.claim.project.show')

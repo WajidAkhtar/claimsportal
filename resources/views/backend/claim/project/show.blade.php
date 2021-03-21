@@ -66,7 +66,7 @@
                                             @if(auth()->user()->id == $partner->user_id && $partner->partner_id == 0 && $partner->is_master == '1')
                                                 <option value="">Master Sheet</option>
                                             @elseif($partner->partner_id != 0 && $partner->partner_id != NULL && \App\Domains\System\Models\Organisation::find($partner->partner_id)->organisation_name)
-                                                <option value="{{ $partner->partner_id ?? 0 }}" {{ (request()->partner == $partner->partner_id || $sheetOwner == $partner->partner_id ? 'selected':'') }}>{{ \App\Domains\System\Models\Organisation::find($partner->partner_id)->organisation_name ?? 'Partener - '.$partnerCount++ }}</option>
+                                                <option value="{{ $partner->partner_id ?? 0 }}" {{ (request()->partner == $partner->partner_id ? 'selected':'') }}>{{ \App\Domains\System\Models\Organisation::find($partner->partner_id)->organisation_name ?? 'Partener - '.$partnerCount++ }}</option>
                                             @endif
                                         @endforeach
                                     @endif
@@ -375,7 +375,7 @@
                 <div><strong>Project Start Date:</strong> {{$project->start_date->format('m-Y')}}</div>
                 <div><strong>Funders:</strong> {{ $project->funders->implode('organisation_name', ', ') }}</div>
             </div>
-            @if(!empty($sheetOwner))
+            @if(!empty(request()->partner))
             <form action="#" id="claims_form">
                 {{ html()->input('hidden', 'sheet_owner', $sheetOwner) }}
                 <div class="col-sm-12 mt-5">
