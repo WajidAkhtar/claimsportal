@@ -114,7 +114,7 @@ class ProjectsTable extends TableComponent
         ];
     }
 
-    public function $sort($attribute) : void {
+    public function sort($attribute) : void {
         dump($attribute);
     }
 
