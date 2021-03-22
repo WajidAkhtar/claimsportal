@@ -79,7 +79,7 @@ class ProjectsTable extends TableComponent
             Column::make(__('Project Code'), 'number')
                 ->searchable()
                 ->sortable(),
-            Column::make(__('Project Pool'), 'pool')
+            Column::make(__('Project Pool'), 'pool_id')
                 ->format(function($model) {
                     return (!empty($model->pool)) ? $model->pool->full_name: 'N/A';
                 })
