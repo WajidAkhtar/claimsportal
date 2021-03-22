@@ -73,5 +73,15 @@ class Project extends Model
             'Closed' => 'Closed',
         ];
     }
+
+    public function getStartDateMonthAttribute() {
+        $start_date = explode('-', $this->start_date);
+        return $start_date[1];
+    }
+
+    public function getStartDateYearAttribute() {
+        $start_date = explode('-', $this->start_date);
+        return $start_date[0];
+    }
     
 }

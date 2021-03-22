@@ -41,12 +41,14 @@ class ProjectService extends BaseService
 
         $cost_items_order = [];
 
+        $data['start_date'] = '01-'.$data['start_date_month'].'-'.$data['start_date_year'];
+
         try {
             $project = $this->model::create([
                 'name' => $data['name'],
                 'number' => $data['number'],
                 'pool_id' => $data['pool_id'],
-                'start_date' => '01-'.$data['start_date'],
+                'start_date' => $data['start_date'],
                 'length' => $data['length'],
                 'status' => $data['status'],
                 'active' => 1,
@@ -115,13 +117,14 @@ class ProjectService extends BaseService
         DB::beginTransaction();
 
         $cost_items_order = [];
+        $data['start_date'] = '01-'.$data['start_date_month'].'-'.$data['start_date_year'];
 
         try {
             $project->update([
                 'name' => $data['name'],
                 'number' => $data['number'],
                 'pool_id' => $data['pool_id'],
-                'start_date' => '01-'.$data['start_date'],
+                'start_date' => $data['start_date'],
                 'length' => $data['length'],
                 'status' => $data['status'],
                 'project_funder_ref' => $data['project_funder_ref'],

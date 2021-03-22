@@ -95,11 +95,22 @@
                     {{ html()->label(__('Project Start Date'))->class('col-md-2 col-form-label')->for('start_date') }}
 
                     <div class="col-md-10">
-                        {{ html()->text('start_date', $project->start_date)
-                            ->class('form-control')
-                            ->placeholder('MM-YYYY')
-                            ->attribute('readonly')
-                            ->required() }}
+                        <div class="row">
+                            <div class="col-md-2">
+                                {{ html()->select('start_date_month', months(), $project->start_date_month)
+                                ->class('form-control')
+                                ->placeholder('Select Month')
+                                ->attribute('autocomplete', 'off')
+                                ->required() }}
+                            </div>
+                            <div class="col-md-2">
+                                {{ html()->select('start_date_year', years(), $project->start_date_year)
+                                ->class('form-control')
+                                ->placeholder('Select Year')
+                                ->attribute('autocomplete', 'off')
+                                ->required() }}
+                            </div>
+                        </div>
                     </div>
                 </div><!--form-group-->
                 

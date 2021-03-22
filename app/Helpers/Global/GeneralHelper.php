@@ -76,3 +76,33 @@ if(! function_exists('current_user_pools')) {
         return auth()->user()->pools()->get();
     }
 }
+
+if(! function_exists('get_months_list')) {
+    /**
+    * Return the months
+    *
+    * @return array
+    */
+    function months() {
+        $months= [];
+        for ($month = 1; $month <= 12; $month++) {
+            $months[str_pad($month, 2, '0', STR_PAD_LEFT)] = str_pad($month, 2, '0', STR_PAD_LEFT);
+        }
+        return $months;
+    }
+}
+
+if(! function_exists('years')) {
+    /**
+    * Return the months
+    *
+    * @return array
+    */
+    function years() {
+        $years= [];
+        for ($year = (date('Y') - 15); $year <= (date('Y') + 20); $year++) {
+            $years[$year] = $year;
+        }
+        return $years;
+    }
+}
