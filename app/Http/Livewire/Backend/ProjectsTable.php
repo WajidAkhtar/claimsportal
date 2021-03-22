@@ -91,9 +91,7 @@ class ProjectsTable extends TableComponent
                     return (!empty($model->funders()->pluck('organisations.organisation_name'))) ? $model->funders()->pluck('organisations.organisation_name')->implode(',') : 'N/A';
                 })
                 ->searchable()
-                ->sortable(function(Builder $builder, $direction) {
-                    return $builder->orderBy($direction);
-                }),
+                ->sortable(),
             // Column::make(__('Project Length'), 'length')
             //     ->format(function($model){
             //         return $model->length.' quarters';
