@@ -86,7 +86,7 @@ class ProjectsTable extends TableComponent
                 })
                 ->searchable()
                 ->sortable(),    
-            Column::make(__('Funder'), 'organisation')
+            Column::make(__('Funder'), 'funders')
                 ->format(function($model) {
                     return (!empty($model->funders()->pluck('organisations.organisation_name'))) ? $model->funders()->pluck('organisations.organisation_name')->implode(',') : 'N/A';
                 })
