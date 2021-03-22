@@ -85,10 +85,10 @@ class ProjectsTable extends TableComponent
                 })
                 ->searchable()
                 ->sortable(),    
-            Column::make(__('Funder'), 'funders.organisation_name')
-                ->format(function($model) {
-                    return $model->funders->implode('organisation_name', ', ');
-                })
+            Column::make(__('Funder'), 'funders')
+                // ->format(function($model) {
+                //     return $model->funders->implode('organisation_name', ', ');
+                // })
                 ->searchable()
                 ->sortable(),
             // Column::make(__('Project Length'), 'length')
