@@ -20,7 +20,6 @@ class ProjectsTable extends TableComponent
      */
     public $sortField = 'name';
     public $sort_attribute = 'organisations.organisation_name';
-    public $sort_direction = 'asc';
 
     /**
      * @var string
@@ -92,10 +91,7 @@ class ProjectsTable extends TableComponent
                     return (!empty($model->funders()->pluck('organisations.organisation_name'))) ? $model->funders()->pluck('organisations.organisation_name')->implode(',') : 'N/A';
                 })
                 ->searchable()
-                ->sortable()
-                ->sortUsing(function ($models, $sort_attribute, $sort_direction) {
-                    return $models->orderByRaw('?->\'$.color_code\' ?', [$sort_attribute, $sort_direction]);  
-                }),
+                ->sortable(),
             // Column::make(__('Project Length'), 'length')
             //     ->format(function($model){
             //         return $model->length.' quarters';
