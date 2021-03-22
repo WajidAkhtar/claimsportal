@@ -113,13 +113,4 @@ class ProjectsTable extends TableComponent
         ];
     }
 
-    public function sort($attribute) : void {
-        // dump($attribute, $this->sortDirection);
-        // switch($attribute) {
-        //     case 'funders':
-        //         return (!empty($model->funders()->pluck('organisations.organisation_name')->orderBy('organisation_name', $this->sortDirection))) ? $model->funders()->pluck('organisations.organisation_name')->implode(',') : 'N/A';
-        //         break;
-        // }
-    }
-
 }
