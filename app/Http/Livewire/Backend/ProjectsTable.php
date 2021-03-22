@@ -85,7 +85,7 @@ class ProjectsTable extends TableComponent
                 })
                 ->searchable()
                 ->sortable(),    
-            Column::make(__('Funder'), 'funders')
+            Column::make(__('Funder'), 'funders.organisation_name')
                 ->format(function($model) {
                     return (!empty($model->funders()->pluck('organisations.organisation_name'))) ? $model->funders()->pluck('organisations.organisation_name')->implode(',') : 'N/A';
                 })
@@ -115,11 +115,11 @@ class ProjectsTable extends TableComponent
 
     public function sort($attribute) : void {
         // dump($attribute, $this->sortDirection);
-        switch($attribute) {
-            case 'funders':
-                return (!empty($model->funders()->pluck('organisations.organisation_name')->orderBy('organisation_name', $this->sortDirection))) ? $model->funders()->pluck('organisations.organisation_name')->implode(',') : 'N/A';
-                break;
-        }
+        // switch($attribute) {
+        //     case 'funders':
+        //         return (!empty($model->funders()->pluck('organisations.organisation_name')->orderBy('organisation_name', $this->sortDirection))) ? $model->funders()->pluck('organisations.organisation_name')->implode(',') : 'N/A';
+        //         break;
+        // }
     }
 
 }
