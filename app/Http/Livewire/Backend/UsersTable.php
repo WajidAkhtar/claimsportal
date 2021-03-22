@@ -105,7 +105,7 @@ class UsersTable extends TableComponent
             Column::make(__('Job Title'), 'job_title')
                 ->searchable()
                 ->sortable(),
-            Column::make(__('Organisation'), 'department')
+            Column::make(__('Organisation'), 'organisation_id')
                 ->format(function($model) {
                     return (!empty($model->organisation)) ? $model->organisation->organisation_name: 'N/A';
                 })
