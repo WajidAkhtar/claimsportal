@@ -85,7 +85,7 @@ class ProjectsTable extends TableComponent
                 })
                 ->searchable()
                 ->sortable(),    
-            Column::make(__('Funder'), 'funders')
+            Column::make(__('Funder'), 'funders[0].organisation_name')
                 ->format(function($model) {
                     return $model->funders[0]->organisation_name;
                 })
