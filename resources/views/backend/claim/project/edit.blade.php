@@ -82,7 +82,7 @@
                     {{ html()->label(__('Project Status'))->class('col-md-2 col-form-label')->for('status') }}
 
                     <div class="col-md-10">
-                        {{ html()->select('status', $projectStatuses)
+                        {{ html()->select('status', $projectStatuses, $project->status)
                             ->class('form-control')
                             ->required() }}
                     </div>
@@ -122,16 +122,6 @@
                         {{ html()->multiselect('project_partners[]', $partners,  $project->allpartners()->pluck('organisation_id'))
                             ->class('form-control select2')
                             // ->placeholder('Choose Project Partners')
-                            ->required() }}
-                    </div>
-                </div><!--form-group-->
-
-                <div class="form-group row">
-                    {{ html()->label(__('Project Status'))->class('col-md-2 col-form-label')->for('status') }}
-
-                    <div class="col-md-10">
-                        {{ html()->text('status')
-                            ->class('form-control')
                             ->required() }}
                     </div>
                 </div><!--form-group-->
