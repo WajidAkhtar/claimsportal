@@ -19,7 +19,6 @@ class ProjectsTable extends TableComponent
      * @var string
      */
     public $sortField = 'name';
-    public $sort_attribute = 'organisations.organisation_name';
 
     /**
      * @var string
@@ -115,7 +114,7 @@ class ProjectsTable extends TableComponent
     }
 
     public function sort($attribute) : void {
-        dump($attribute, $this->sort_direction);
+        dump($attribute, $this->sortDirection);
     }
 
 }
