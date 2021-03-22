@@ -115,23 +115,32 @@ class ProjectController
         $organisationRoles = Organisation::organisationRoles();
 
         $sheetPermissions = SheetPermission::whereIn('permission', ['READ_WRITE_ALL', 'WRITE_ONLY_FORECAST', 'READ_ONLY'])->pluck('permission', 'id');
+
+        $SheetUserPermissions = SheetUserPermissions::where('project_id', $project->id);
+        if(!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User')) {
+            $SheetUserPermissions = $SheetUserPermissions->where('user_id', auth()->user()->id);
+        }
+        $SheetUserPermissions = $SheetUserPermissions->get();
+        if(!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User') && count($SheetUserPermissions) >= 1 && empty(request()->partner)) {
+            request()->partner = $SheetUserPermissions[0]->partner_id;
+        }
         
         if(!empty(request()->partner)) {
             $project->costItems = $project->costItems()->whereNull('project_cost_items.deleted_at')->where('organisation_id', request()->partner)->orderByRaw($project->costItemOrderRaw())->get();
         }
 
-        $userHasMasterAccess = false;
-        $userHasMasterAccessWithPermission = '';
+        if(in_array(current_user_role(), ['Administrator', 'Super User'])) {
+            $userHasMasterAccess = true;
+            $userHasMasterAccessWithPermission = 'READ_WRITE_ALL';
+        } else {
+            $userHasMasterAccess = false;
+            $userHasMasterAccessWithPermission = '';
+        }
 
         if(SheetUserPermissions::where('user_id', auth()->user()->id)->where('project_id', $project->id)->where('is_master', '1')->count() > 0) {
             $userHasMasterAccess = true;
             $userHasMasterAccessWithPermissionId = SheetUserPermissions::where('project_id', $project->id)->where('is_master', '1')->pluck('sheet_permission_id');
             $userHasMasterAccessWithPermission = SheetPermission::find($userHasMasterAccessWithPermissionId)->first()->permission;
-        }
-
-        if(in_array(current_user_role(), ['Administrator', 'Super User'])) {
-            $userHasMasterAccess = true;
-            $userHasMasterAccessWithPermission = 'READ_WRITE_ALL';
         }
         
         $data = [];

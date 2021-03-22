@@ -61,7 +61,6 @@
                                             @endif
                                         @endforeach
                                     @else
-                                        <option value="">Select Sheet</option>
                                         @foreach($sheetUserPermissions as $partner)
                                             @if(auth()->user()->id == $partner->user_id && $partner->partner_id == 0 && $partner->is_master == '1')
                                                 <option value="">Master Sheet</option>
