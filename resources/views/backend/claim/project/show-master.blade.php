@@ -299,6 +299,7 @@
                                             <td>
                                                 {{ html()->select('sheet_permission_id[]', $sheetPermissions, $permission->sheet_permission_id)
                                                     ->class('form-control')
+                                                    ->placeholder('Select Permission')
                                                  }}
                                             </td>
                                             <td>
@@ -336,6 +337,7 @@
             <td>
                 {{ html()->select('sheet_permission_id[]', $sheetPermissions)
                     ->class('form-control')
+                    ->placeholder('Select Permission')
                  }}
             </td>
             <td>
@@ -1078,6 +1080,23 @@
         }
 
         function saveSheetUserPermissions() {
+            var isError = false;
+            $("select[name='sheet_user_id[]']").each(function() {
+                if($(this).val() == '') {
+                    isError = true;
+                    return false;
+                }
+            });
+            $("select[name='sheet_permission_id[]']").each(function() {
+                if($(this).val() == '') {
+                    isError = true;
+                    return false;
+                }
+            });
+            if(isError) {
+                toastr.error('User and Permission must be assigned for giving access to the sheet.');
+                return;
+            }
             var formData = new FormData($('#user_permissions_info')[0]);
             $.ajax({
                     url: '{{route('admin.claim.project.save.sheet.user.permissions', $project)}}',
