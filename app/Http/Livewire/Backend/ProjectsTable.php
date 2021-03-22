@@ -47,7 +47,7 @@ class ProjectsTable extends TableComponent
      */
     public function query(): Builder
     {
-        $query = Project::with('funders');
+        $query = Project::with('funders')->select('*', DB::raw('SELECT p.id, GROUP_CONCAT(o.organisation_name) as funders FROM `project_funders` pf LEFT JOIN projects p on p.id = pf.project_id LEFT JOIN organisations o on o.id = pf.organisation_id WHERE p.id IS NOT NULL group by pf.project_id'));
 
         if(!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User')) {
             $query = $query->whereHas('usersWithPermissions', function($q) use ($query) {
@@ -91,7 +91,9 @@ class ProjectsTable extends TableComponent
                     return (!empty($model->funders()->pluck('organisations.organisation_name'))) ? $model->funders()->pluck('organisations.organisation_name')->implode(',') : 'N/A';
                 })
                 ->searchable()
-                ->sortable(),
+                ->sortable(function(Builder $builder, $direction) {
+                    return $builder->orderBy($direction);
+                }),
             // Column::make(__('Project Length'), 'length')
             //     ->format(function($model){
             //         return $model->length.' quarters';
