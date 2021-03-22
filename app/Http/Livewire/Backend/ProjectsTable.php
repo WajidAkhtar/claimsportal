@@ -47,7 +47,7 @@ class ProjectsTable extends TableComponent
      */
     public function query(): Builder
     {
-        $query = Project::with('funders')->select('*', \DB::raw('SELECT p.id, GROUP_CONCAT(o.organisation_name) as funders FROM `project_funders` pf LEFT JOIN projects p on p.id = pf.project_id LEFT JOIN organisations o on o.id = pf.organisation_id WHERE p.id IS NOT NULL group by pf.project_id'));
+        $query = Project::with('funders');
 
         if(!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User')) {
             $query = $query->whereHas('usersWithPermissions', function($q) use ($query) {
