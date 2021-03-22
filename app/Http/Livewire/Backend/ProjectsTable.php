@@ -46,7 +46,7 @@ class ProjectsTable extends TableComponent
      */
     public function query(): Builder
     {
-        $query = Project::with('funders');
+        $query = Project::select('projects.*')->addSelect(\DB::raw('GROUP_CONCAT(o.organisation_name) as funders'))->leftJoin('project_funders as pf', 'pf.project_id', 'projects.id')->leftJoin('organisations as o', 'o.id', 'pf.organisation_id')->groupBy('pf.project_id')->whereNotNull('pf.project_id');
 
         if(!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User')) {
             $query = $query->whereHas('usersWithPermissions', function($q) use ($query) {
@@ -85,18 +85,9 @@ class ProjectsTable extends TableComponent
                 })
                 ->searchable()
                 ->sortable(),    
-            Column::make(__('Funder'), 'funders[0].organisation_name')
-                ->format(function($model) {
-                    return $model->funders[0]->organisation_name;
-                })
+            Column::make(__('Funder'), 'funders')
                 ->searchable()
                 ->sortable(),
-            // Column::make(__('Project Length'), 'length')
-            //     ->format(function($model){
-            //         return $model->length.' quarters';
-            //     })
-            //     ->searchable()
-            //     ->sortable(),
             Column::make(__('Project Start Date'), 'start_date')
                 ->format(function($model){
                     return $model->start_date->format('m-Y');
