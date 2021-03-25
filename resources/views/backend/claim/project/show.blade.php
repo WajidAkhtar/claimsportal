@@ -450,7 +450,7 @@
                         <div class="row mt-2">
                             <div class="col">
                                 <div><strong>FUNDER</strong></div>
-                                <div>Name: {{$partnerAdditionalInfo->invoiceOrganisation->organisation_name}}</div>
+                                <div>Name: {{$project->funders()->first()->organisation_name}}</div>
                                 <div>Contact: {{$partnerAdditionalInfo->finance_contact_name ?? 'N/A'}}</div>
                                 <div>Web URL: 
                                     @if($partnerAdditionalInfo->web_url) 
