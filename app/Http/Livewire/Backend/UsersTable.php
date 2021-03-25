@@ -69,7 +69,6 @@ class UsersTable extends TableComponent
         //         $q->whereIn('name', ['Funder']);
         //     });
         // }
-
         $query = $query->whereHas('roles', function($q) {
             $q->whereIn('name', [$this->role->name]);
         });

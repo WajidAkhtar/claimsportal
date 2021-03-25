@@ -6,10 +6,8 @@
     <div class="container py-4">
         <div class="row justify-content-center">
             <div class="col-md-12">
+                <h2 class="page-main-title">Change Password</h2>
                 <x-frontend.card>
-                    <x-slot name="header">
-                        @lang('Change Password')
-                    </x-slot>
 
                     <x-slot name="body">
                         <nav>

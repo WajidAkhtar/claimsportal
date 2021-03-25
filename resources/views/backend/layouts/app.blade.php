@@ -135,6 +135,13 @@
                 }
             });
             $('.select2').select2();
+            $(".toggle-user-actions").on("click", function() {
+                if($(this).find('i').hasClass('icon-arrow-down')) {
+                    $(this).find('i').removeClass('icon-arrow-down').addClass('icon-arrow-up');
+                } else {
+                    $(this).find('i').removeClass('icon-arrow-up').addClass('icon-arrow-down');
+                }
+            });
         </script>
         <!-- END: APP JS-->
         @stack('after-scripts')

@@ -1,10 +1,9 @@
 <!-- START: Main Menu-->
 <div class="sidebar">
-    <div class="site-width">
+    <div class="site-width mt-5">
         <!-- START: Menu-->
         <ul id="side-menu" class="sidebar-menu">
-            <li class="dropdown active">
-                {{-- <a href="#"><i class="icon-home mr-1"></i> Dashboard</a>                   --}}
+            <li class="dropdown active" style="display: none;">
                 <ul>
                     <li class="{{activeClass(Route::is('admin.dashboard'), 'active')}}">
                         <a href="{{route('admin.dashboard')}}"><i class="icon-rocket"></i> @lang('Dashboard')</a>
@@ -12,7 +11,35 @@
                 </ul>
             </li>
 
+            <li class="dropdown">
+                <ul class="{{activeClass(Route::is('admin.claim.project.*'), 'active')}}">
+                    <a href="{{route('admin.claim.project.index')}}">
+                        <center>
+                            <i class="icon-chart" style="font-size: 50px;"></i>
+                            <li>
+                                @lang('PROJECTS')
+                            </li>
+                        </center>
+                    </a>
+                </ul>
+            </li>
+
             @if(!auth()->user()->hasRole('Project Partner') && !auth()->user()->hasRole('Funder'))
+            <li class="dropdown">
+                <ul class="{{activeClass(Route::is('admin.auth.user.*'), 'active')}}">
+                    <a href="{{route('admin.auth.user.index')}}">
+                        <center>
+                            <i class="icon-user" style="font-size: 50px;"></i>
+                            <li>
+                             @lang('USERS')
+                        </li>
+                        </center>
+                    </a>
+                </ul>
+            </li>
+            @endif
+
+            <!-- @if(!auth()->user()->hasRole('Project Partner') && !auth()->user()->hasRole('Funder'))
             <li class="dropdown active">
                 <a href="javascript:void(0)"><i class="fa fa-users mr-1"></i> Users</a>
                 <ul>
@@ -21,16 +48,16 @@
                     </li>
                 </ul>
             </li>
-            @endif
+            @endif -->
 
-            <li class="dropdown active">
+            <!-- <li class="dropdown active">
                 <a href="javascript:void(0)"><i class="fa fa-sticky-note mr-1"></i> Claims</a>
                 <ul>
                     <li class="{{activeClass(Route::is('admin.claim.project.*'), 'active')}}">
                         <a href="{{route('admin.claim.project.index')}}"><i class="fa fa-project-diagram"></i> @lang('Projects')</a>
                     </li>
                 </ul>
-            </li>
+            </li> -->
             
         </ul>
         <!-- END: Menu-->

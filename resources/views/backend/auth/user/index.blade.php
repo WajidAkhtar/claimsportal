@@ -9,7 +9,14 @@
 @section('content')
     <div class="row">
         <div class="col-12 mt-3">
+            <h2 class="page-main-title">USERS</h2>
+
             @foreach($roles as $role)
+                @if(current_user_role() == 'Administrator')
+                    @if(!in_array($role->name, ['Super User', 'Finance Officer', 'Project Admin', 'Project Partner', 'Funder']))
+                        @php continue; @endphp;
+                    @endif
+                @endif
                 @if(current_user_role() == 'Super User')
                     @if(!in_array($role->name, ['Finance Officer', 'Project Admin', 'Project Partner', 'Funder']))
                         @php continue; @endphp;

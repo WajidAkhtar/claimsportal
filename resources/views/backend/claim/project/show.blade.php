@@ -40,6 +40,7 @@
     <link rel="stylesheet" href="{{asset('assets/backend/vendors/select2/css/select2.css')}}">
 @endpush
 @section('content')
+    <h2 class="page-main-title">VIEW PROJECT</h2>
 
     @if($project->userHasPartialAccessToProject())
     <x-backend.card>
@@ -54,7 +55,7 @@
                                 <select class="form-control" onchange="this.form.submit()" name="partner">
                                     @php $partnerCount = 1; @endphp
                                     @if($project->userHasFullAccessToProject() || $userHasMasterAccess)
-                                        <option value="">Master Sheet</option>
+                                        <option value="">Project Totals</option>
                                         @foreach($project->allpartners as $partner)
                                             @if($partner->organisation_id != 0 && $partner->organisation_id != NULL)
                                                 <option value="{{ $partner->organisation->id ?? 0 }}" {{ (!empty($partner->organisation) && request()->partner == $partner->organisation->id ? 'selected':'') }}>{{ $partner->organisation->organisation_name ?? 'Partener - '.$partnerCount++ }}</option>
@@ -63,7 +64,7 @@
                                     @else
                                         @foreach($sheetUserPermissions as $partner)
                                             @if(auth()->user()->id == $partner->user_id && $partner->partner_id == 0 && $partner->is_master == '1')
-                                                <option value="">Master Sheet</option>
+                                                <option value="">Project Totals</option>
                                             @elseif($partner->partner_id != 0 && $partner->partner_id != NULL && \App\Domains\System\Models\Organisation::find($partner->partner_id)->organisation_name)
                                                 <option value="{{ $partner->partner_id ?? 0 }}" {{ (request()->partner == $partner->partner_id ? 'selected':'') }}>{{ \App\Domains\System\Models\Organisation::find($partner->partner_id)->organisation_name ?? 'Partener - '.$partnerCount++ }}</option>
                                             @endif
@@ -99,12 +100,12 @@
                         {{ html()->input('hidden', 'project_id', $project->id) }}
                         {{ html()->input('hidden', 'sheet_owner', $sheetOwner) }}
 
-                        <h6>Invoicing Details</h6>
+                        <h6>Finance Contact</h6>
                         <hr />
 
                         <div class="row">
                             <div class="col">
-                                {{ html()->label('Department Name')->for('organisation_id') }}
+                                {{ html()->label('Organisation')->for('organisation_id') }}
                                 <div class="form-group"> 
                                     {{ html()->select('organisation_id', $organisations, $partnerAdditionalInfo->invoiceOrganisation ?? '')
                                         ->class('form-control additional-info select2')
@@ -113,6 +114,17 @@
                                      }}
                                 </div>
                             </div>
+                            <div class="col">
+                                {{ html()->label('Office')->for('office_team_name') }}
+                                <div class="form-group"> 
+                                    {{ html()->text('office_team_name', $partnerAdditionalInfo->office_team_name ?? '')
+                                        ->class('form-control additional-info')
+                                        ->required()
+                                     }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col">
                                 {{ html()->label('Organisation Type')->for('organisation_type') }}
                                 <div class="form-group"> 
@@ -124,11 +136,10 @@
                                 </div>
                             </div>
                             <div class="col">
-                                {{ html()->label('Organisation Role')->for('organisation_role') }}
+                                {{ html()->label('Building Name/No')->for('building_name') }}
                                 <div class="form-group"> 
-                                    {{ html()->select('organisation_role', $organisationRoles, $partnerAdditionalInfo->organisation_role ?? '')
+                                    {{ html()->text('building_name', $partnerAdditionalInfo->building_name ?? '')
                                         ->class('form-control additional-info')
-                                        ->placeholder('Select Organisation Type')
                                         ->required()
                                      }}
                                 </div>
@@ -136,19 +147,11 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                {{ html()->label('Office/Team Name')->for('office_team_name') }}
+                                {{ html()->label('Organisation Role')->for('organisation_role') }}
                                 <div class="form-group"> 
-                                    {{ html()->text('office_team_name', $partnerAdditionalInfo->office_team_name ?? '')
+                                    {{ html()->select('organisation_role', $organisationRoles, $partnerAdditionalInfo->organisation_role ?? '')
                                         ->class('form-control additional-info')
-                                        ->required()
-                                     }}
-                                </div>
-                            </div>
-                            <div class="col">
-                                {{ html()->label('Building Name/No')->for('building_name') }}
-                                <div class="form-group"> 
-                                    {{ html()->text('building_name', $partnerAdditionalInfo->building_name ?? '')
-                                        ->class('form-control additional-info')
+                                        ->placeholder('Select Organisation Type')
                                         ->required()
                                      }}
                                 </div>
@@ -165,40 +168,28 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                {{ html()->label('Address Line 2')->for('address_line_2') }}
-                                {{ html()->text('address_line_2', $partnerAdditionalInfo->address_line_2 ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
-                            </div>
-                            <div class="col">
-                                {{ html()->label('City')->for('city') }}
-                                {{ html()->text('city', $partnerAdditionalInfo->city ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
-                            </div>
-                            <div class="col">
-                                {{ html()->label('County')->for('county') }}
-                                {{ html()->text('county', $partnerAdditionalInfo->county ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col">
-                                {{ html()->label('Post Code')->for('post_code') }}
-                                {{ html()->text('post_code', $partnerAdditionalInfo->post_code ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
-                            </div>
-                            <div class="col">
                                 {{ html()->label('Finance Contact Name')->for('finance_contact_name') }}
                                 {{ html()->text('finance_contact_name', $partnerAdditionalInfo->finance_contact_name ?? '')
                                     ->class('form-control additional-info')
                                  }}
                             </div>
                             <div class="col">
+                                {{ html()->label('Address Line 2')->for('address_line_2') }}
+                                {{ html()->text('address_line_2', $partnerAdditionalInfo->address_line_2 ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
                                 {{ html()->label('Finance Email')->for('finance_email') }}
                                 {{ html()->text('finance_email', $partnerAdditionalInfo->finance_email ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                            <div class="col">
+                                {{ html()->label('City')->for('city') }}
+                                {{ html()->text('city', $partnerAdditionalInfo->city ?? '')
                                     ->class('form-control additional-info')
                                  }}
                             </div>
@@ -211,22 +202,22 @@
                                  }}
                             </div>
                             <div class="col">
-                                {{ html()->label('Finance Fax')->for('finance_fax') }}
-                                {{ html()->text('finance_fax', $partnerAdditionalInfo->finance_fax ?? '')
+                                {{ html()->label('County')->for('county') }}
+                                {{ html()->text('county', $partnerAdditionalInfo->county ?? '')
                                     ->class('form-control additional-info')
                                  }}
                             </div>
                         </div>
                         <div class="row mt-2">
                             <div class="col">
-                                {{ html()->label('VAT')->for('vat') }}
-                                {{ html()->text('vat', $partnerAdditionalInfo->vat ?? '')
+                                {{ html()->label('Finance Fax')->for('finance_fax') }}
+                                {{ html()->text('finance_fax', $partnerAdditionalInfo->finance_fax ?? '')
                                     ->class('form-control additional-info')
                                  }}
                             </div>
                             <div class="col">
-                                {{ html()->label('EORI')->for('eori') }}
-                                {{ html()->text('eori', $partnerAdditionalInfo->eori ?? '')
+                                {{ html()->label('Post Code')->for('post_code') }}
+                                {{ html()->text('post_code', $partnerAdditionalInfo->post_code ?? '')
                                     ->class('form-control additional-info')
                                  }}
                             </div>
@@ -245,11 +236,27 @@
                                  }}
                             </div>
                             <div class="col">
+                                {{ html()->label('Web URL')->for('web_url') }}
+                                {{ html()->text('web_url', $partnerAdditionalInfo->web_url ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
                                 {{ html()->label('Bank Name')->for('bank_name') }}
                                 {{ html()->text('bank_name', $partnerAdditionalInfo->bank_name ?? '')
                                     ->class('form-control additional-info')
                                  }}
                             </div>
+                            <div class="col">
+                                {{ html()->label('Customer Ref')->for('customer_ref') }}
+                                {{ html()->text('customer_ref', $partnerAdditionalInfo->customer_ref ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                        </div>
+                        <div class="row mt-2">
                             <div class="col">
                                 {{ html()->label('Bank Address')->for('bank_address') }}
                                 {{ html()->text('bank_address', $partnerAdditionalInfo->bank_address ?? '')
@@ -257,7 +264,7 @@
                                  }}
                             </div>
                         </div>
-                        <div class="row mt-3">
+                        <div class="row mt-2">
                             <div class="col">
                                 {{ html()->label('Sort Code')->for('sort_code') }}
                                 {{ html()->text('sort_code', $partnerAdditionalInfo->sort_code ?? '')
@@ -265,19 +272,35 @@
                                  }}
                             </div>
                             <div class="col">
+                                {{ html()->label('VAT No')->for('vat') }}
+                                {{ html()->text('vat', $partnerAdditionalInfo->vat ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
                                 {{ html()->label('Account Number')->for('account_no') }}
                                 {{ html()->text('account_no', $partnerAdditionalInfo->account_no ?? '')
                                     ->class('form-control additional-info')
                                  }}
                             </div>
-                        </div>
-                        <div class="row mt-3">
                             <div class="col">
-                                {{ html()->label('SWIFT')->for('swift') }}
+                                {{ html()->label('EORI No')->for('eori') }}
+                                {{ html()->text('eori', $partnerAdditionalInfo->eori ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                {{ html()->label('SWIFT Code')->for('swift') }}
                                 {{ html()->text('swift', $partnerAdditionalInfo->swift ?? '')
                                     ->class('form-control additional-info')
                                  }}
                             </div>
+                        </div>
+                        <div class="row mt-2">
                             <div class="col">
                                 {{ html()->label('IBAN')->for('iban') }}
                                 {{ html()->text('iban', $partnerAdditionalInfo->iban ?? '')
@@ -359,7 +382,7 @@
     <x-backend.card>
 
         <x-slot name="header">
-            @lang('View Project')
+            &nbsp;
         </x-slot>
 
         <x-slot name="headerActions">
@@ -367,12 +390,81 @@
         </x-slot>
 
         <x-slot name="body">
-            <div class="col-sm-12">
+            <!-- <div class="col-sm-12">
                 <h4>Project Profile</h4>
                 <div><strong>Project Name:</strong> {{$project->name}}</div>
-                <div><strong>Project Number:</strong> {{$project->number}}</div>
+                <div><strong>Project Code:</strong> {{$project->number}}</div>
                 <div><strong>Project Start Date:</strong> {{$project->start_date->format('m-Y')}}</div>
                 <div><strong>Funders:</strong> {{ $project->funders->implode('organisation_name', ', ') }}</div>
+            </div> -->
+            <div class="row">
+                @if(!empty($project->logo) && file_exists(public_path('uploads/projects/logos/'.$project->logo)))
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col">
+                                <img src="{{ asset('uploads/projects/logos/'.$project->logo) }}" height="160" width="160" />
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                <div><strong>PROJECT</strong></div>
+                                <div>Name: {{$project->name}}</div>
+                                <div>Code: {{$project->number}}</div>
+                                <div>Start: {{$project->start_date->format('m-Y')}}</div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+                @if(!empty(request()->partner) && !empty($organisation))
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col">
+                                <img src="{{ asset('uploads/organisations/logos/'.$organisation->logo) }}" height="160" width="160" />
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                <div><strong>PARTNER</strong></div>
+                                <div>Name: {{$organisation->organisation_name}}</div>
+                                <div>Contact: {{$partnerAdditionalInfo->finance_contact_name ?? 'N/A'}}</div>
+                                <div>Web URL: 
+                                    @if($partnerAdditionalInfo->web_url) 
+                                        <a class="text-primary" href="{{ $partnerAdditionalInfo->web_url }}">
+                                            {{ $partnerAdditionalInfo->web_url }}
+                                        </a>
+                                    @else 
+                                        {{ 'N/A' }}
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+                @if(!empty($project->funders()))
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col">
+                                <img src="{{ asset('uploads/organisations/logos/'.$project->funders()->first()->logo) }}" height="160" width="160" />
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                <div><strong>FUNDER</strong></div>
+                                <div>Name: {{$partnerAdditionalInfo->invoiceOrganisation->organisation_name}}</div>
+                                <div>Contact: {{$partnerAdditionalInfo->finance_contact_name ?? 'N/A'}}</div>
+                                <div>Web URL: 
+                                    @if($partnerAdditionalInfo->web_url) 
+                                        <a class="text-primary" href="{{ $partnerAdditionalInfo->web_url }}">
+                                            {{ $partnerAdditionalInfo->web_url }}
+                                        </a>
+                                    @else 
+                                        {{ 'N/A' }}
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
             @if(!empty(request()->partner))
             <form action="#" id="claims_form">
@@ -437,7 +529,7 @@
                                 
                                 @for ($i = 1; $i <= ceil(($project->length/4)); $i++)
                                 <th>YR{{$i}} BUDGET</th>
-                                <th>YEAR{{$i}}</th>
+                                <th>YR{{$i}} TOTAL</th>
                                 <th class="border-right">VARIANCE</th>
                                 @endfor
                             </tr>
@@ -594,7 +686,7 @@
                             <tr class="light-grey-bg">
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td><strong>Total Cost(for each item)</strong></td>
+                                <td><strong>Total Cost (for each item)</strong></td>
                                 <td>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -706,7 +798,7 @@
                             <tr class="dark-grey-bg">
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td><strong>Total Cost(cumulative)</strong></td>
+                                <td><strong>Total Cost (cumulative)</strong></td>
                                 <td style="color: #fff;">&nbsp;</td>
                                 @php
                                     $fromDate = clone $project->start_date;

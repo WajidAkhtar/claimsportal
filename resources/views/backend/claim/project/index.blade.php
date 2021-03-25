@@ -9,9 +9,11 @@
 @section('content')
     <div class="row">
         <div class="col-12 mt-3">
+            <h2>PROJECTS</h2>
+            <br />
             <x-backend.card>
                 <x-slot name="header">
-                    @lang(__('Project Management'))
+                    <h2></h2>
                 </x-slot>
                 
                 @if($allowToCreate)

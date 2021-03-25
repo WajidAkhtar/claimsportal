@@ -5,10 +5,12 @@
 @section('title', __('Update User'))
 
 @section('content')
+    <h2 class="page-main-title">UPDATE USER</h2>
+    
     <x-forms.patch :action="route('admin.auth.user.update', $user)">
         <x-backend.card>
             <x-slot name="header">
-                @lang('Update User')
+                Update user with below information
             </x-slot>
 
             <x-slot name="headerActions">
@@ -33,13 +35,40 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
+                                <label for="organisation_id" class="col-form-label">@lang('Organisation')</label>
+                                {{ 
+                                    html()->select('organisation_id', $organisations, old('organisation_id') ?? $user->organisation_id)
+                                    ->class('form-control select2')
+                                    ->required()
+                                 }}
+                            </div><!--form-group-->
+                        </div>
+                    </div>
+
+                    <div class="row" style="{{ (in_array(current_user_role(), ['Administrator', 'Super User', 'Finance Officer', 'Project Admin']) && $user->id == auth()->user()->id) ? 'display: none;' : '' }}">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="pools[]">Colleges</label>
+                                {{ html()->multiselect('pools[]', $pools, $user->pools->pluck('id'))
+                                    ->class('form-control select2')
+                                    ->required()
+                                 }}
+                             </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
                                 <label for="first_name" class="col-form-label">@lang('First Name')</label>
                                 <input type="text" name="first_name" class="form-control" placeholder="{{ __('First Name') }}" value="{{ old('first_name') ?? $user->first_name }}" maxlength="100" required />
                             </div><!--form-group-->
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label for="last_name" class="col-form-label">@lang('Last Name')</label>
+                                <label for="last_name" class="col-form-label">@lang('Surname')</label>
                                 <input type="text" name="last_name" class="form-control" placeholder="{{ __('Last Name') }}" value="{{ old('last_name') ?? $user->last_name }}" maxlength="100" required />
                             </div><!--form-group-->
                         </div>
@@ -54,8 +83,8 @@
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <label for="department" class="col-form-label">@lang('Department')</label>
-                                <input type="text" name="department" class="form-control" placeholder="{{ __('Department') }}" value="{{ old('department') ?? $user->department }}" maxlength="100" required />
+                                <label for="email" class="col-form-label">@lang('E-mail Address')</label>
+                                <input type="email" name="email" id="email" class="form-control" placeholder="{{ __('E-mail Address') }}" value="{{ old('email') ?? $user->email }}" maxlength="255" required />
                             </div><!--form-group-->
                         </div>
                     </div>
@@ -63,31 +92,28 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label for="organisation_id" class="col-form-label">@lang('Organisation')</label>
-                                {{ 
-                                    html()->select('organisation_id', $organisations, old('organisation_id') ?? $user->organisation_id)
-                                    ->class('form-control select2')
-                                    ->required()
-                                 }}
+                                <label for="department" class="col-form-label">@lang('Department')</label>
+                                <input type="text" name="department" class="form-control" placeholder="{{ __('Department') }}" value="{{ old('department') ?? $user->department }}" maxlength="100" required />
                             </div><!--form-group-->
                         </div>
-                        <div class="col">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label for="email" class="col-form-label">@lang('E-mail Address')</label>
-                                <input type="email" name="email" id="email" class="form-control" placeholder="{{ __('E-mail Address') }}" value="{{ old('email') ?? $user->email }}" maxlength="255" required />
-                            </div><!--form-group-->
+                                <label for="direct_dial">Direct Dial</label>
+                                {{ html()->text('direct_dial', (!empty($correspondenceAddress)) ? $correspondenceAddress->direct_dial ?? '' : '')
+                                    ->class('form-control')
+                                 }}
+                            </div>
                         </div>
                     </div>
 
-                    <div class="row" style="{{ (in_array(current_user_role(), ['Administrator', 'Super User', 'Finance Officer', 'Project Admin']) && $user->id == auth()->user()->id) ? 'display: none;' : '' }}">
-                        <div class="col">
+                    <div class="row">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label for="pools[]">Pools</label>
-                                {{ html()->multiselect('pools[]', $pools, $user->pools->pluck('id'))
-                                    ->class('form-control select2')
-                                    ->required()
+                                <label for="mobile">Mobile</label>
+                                {{ html()->text('mobile', (!empty($correspondenceAddress)) ? $correspondenceAddress->mobile ?? '' : '')
+                                    ->class('form-control')
                                  }}
-                             </div>
+                            </div>
                         </div>
                     </div>
 
@@ -102,7 +128,7 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label for="building_name_no">Building Name No:</label>
+                                <label for="building_name_no">Building Name/No</label>
                                 {{ html()->text('building_name_no', (!empty($correspondenceAddress)) ? $correspondenceAddress->building_name_no ?? '' : '' )
                                     ->class('form-control')
                                  }}
@@ -110,7 +136,7 @@
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <label for="street">Street</label>
+                                <label for="street">Address Line 1</label>
                                 {{ html()->text('street', (!empty($correspondenceAddress)) ? $correspondenceAddress->street ?? '' : '')
                                     ->class('form-control')
                                  }}
@@ -163,25 +189,6 @@
                                 {{ html()->text('correspending_email', (!empty($correspondenceAddress)) ? $correspondenceAddress->email ?? '' : '')
                                     ->class('form-control')
                                     ->required()
-                                 }}
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="mobile">Mobile</label>
-                                {{ html()->text('mobile', (!empty($correspondenceAddress)) ? $correspondenceAddress->mobile ?? '' : '')
-                                    ->class('form-control')
-                                 }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="direct_dial">Direct Dial</label>
-                                {{ html()->text('direct_dial', (!empty($correspondenceAddress)) ? $correspondenceAddress->direct_dial ?? '' : '')
-                                    ->class('form-control')
                                  }}
                             </div>
                         </div>

@@ -31,6 +31,7 @@ class Project extends Model
         'project_funder_ref',
         'status',
         'active',
+        'logo',
     ];
 
     /**

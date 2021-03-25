@@ -63,6 +63,10 @@ class ProjectPartners extends Model
         return $this->belongsTo(Organisation::class, 'invoice_organisation_id', 'id');
     }
 
+    public function invoiceFunder() {
+        return $this->belongsTo(Organisation::class, 'funder_id', 'id');
+    }
+
     public function project() {
         return $this->belongsTo(Project::class);
     }

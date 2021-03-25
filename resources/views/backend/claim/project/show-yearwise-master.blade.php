@@ -62,7 +62,7 @@
                     $fromDate->addMonths(3);
                 @endphp
                 @endfor
-                <th>PROJECT TOTAL</th>
+                <th>TOTAL</th>
                 <th class="border-right">VARIANCE</th>
             </tr>
         </thead>
@@ -143,7 +143,7 @@
             <tr class="light-grey-bg">
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td><strong>Total Cost(for each item)</strong></td>
+                <td><strong>Total Cost (for each item)</strong></td>
                 <td>
                     <div class="input-group">
                         <div class="input-group-prepend">
@@ -213,7 +213,7 @@
             <tr class="dark-grey-bg">
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td><strong>Total Cost(cumulative)</strong></td>
+                <td><strong>Total Cost (cumulative)</strong></td>
                 <td>&nbsp;</td>
                 @php
                 $fromDate3 = clone $globalFromDate;

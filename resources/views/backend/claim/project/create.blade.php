@@ -3,10 +3,11 @@
 @section('title', __('Create Project'))
 
 @section('content')
-    <x-forms.post :action="route('admin.claim.project.store')">
+    <h2 class="page-main-title">CREATE PROJECT</h2>
+    <x-forms.post :action="route('admin.claim.project.store')" enctype="multipart/form-data">
         <x-backend.card>
             <x-slot name="header">
-                @lang('Create Project')
+                Create project with below details
             </x-slot>
 
             <x-slot name="headerActions">
@@ -83,6 +84,15 @@
                     </div>
                 </div><!--form-group-->
 
+                <div class="form-group row">
+                    {{ html()->label(__('Project Logo'))->class('col-md-2 col-form-label')->for('project_logo') }}
+                    <div class="col-md-10">
+                        {{ html()->file('project_logo')
+                            ->required()
+                         }}
+                    </div>
+                </div>
+
                 <h6 class="mt-4">PROJECT CLAIM TABLE</h6>
                 <hr/>
 
@@ -110,13 +120,12 @@
                 </div><!--form-group-->
 
                 <div class="form-group row">
-                    {{ html()->label(__('Project Length (No. of Quarters)'))->class('col-md-2 col-form-label')->for('length') }}
+                    {{ html()->label(__('Number of Quarters'))->class('col-md-2 col-form-label')->for('length') }}
 
                     <div class="col-md-10">
                         {{ html()->input('number', 'length')
                             ->class('form-control')
                             ->maxlength('5')
-                            // ->placeholder('Select no of quarters')
                             ->required() }}
                     </div>
                 </div><!--form-group-->
@@ -133,7 +142,7 @@
                 </div><!--form-group-->
                 
                 <div class="form-group row">
-                    {{ html()->label(__('Cost Items'))->class('col-md-2 col-form-label')->for('cost_items') }}
+                    {{ html()->label(__('Claims Table'))->class('col-md-2 col-form-label')->for('cost_items') }}
 
                     <div class="col-md-10">
                         <table class="table cost_items">

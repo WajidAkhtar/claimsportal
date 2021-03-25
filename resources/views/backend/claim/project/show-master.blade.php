@@ -39,6 +39,8 @@
     </style>
 @endpush
 @section('content')
+    <h2 class="page-main-title">VIEW PROJECT</h2>
+
     @if($project->userHasPartialAccessToProject())
     <x-backend.card>
             <x-slot name="header">
@@ -51,7 +53,7 @@
                             <form action="#" id="filter_project_claims_data">
                                 <select class="form-control" onchange="this.form.submit()" name="partner">
                                     @php $partnerCount = 1; @endphp
-                                    <option value="">Master Sheet</option>
+                                    <option value="">Project Totals</option>
                                     @foreach($project->allpartners as $partner)
                                         @if($partner->organisation_id != 0 && $partner->organisation_id != NULL)
                                             <option value="{{ $partner->organisation->id ?? 0 }}" {{ (!empty($partner->organisation) && request()->partner == $partner->organisation->id ? 'selected':'') }}>{{ $partner->organisation->organisation_name ?? 'Partener - '.$partnerCount++ }}</option>
@@ -88,12 +90,12 @@
                         {{ html()->input('hidden', 'sheet_owner', $sheetOwner) }}
                         {{ html()->input('hidden', 'is_master', 1) }}
 
-                        <h6>Invoicing Details</h6>
+                        <h6>Finance Contact</h6>
                         <hr />
 
                         <div class="row">
                             <div class="col">
-                                {{ html()->label('Department Name')->for('organisation_id') }}
+                                {{ html()->label('Organisation')->for('organisation_id') }}
                                 <div class="form-group"> 
                                     {{ html()->select('organisation_id', $organisations, $partnerAdditionalInfo->invoiceOrganisation ?? '')
                                         ->class('form-control additional-info select2')
@@ -102,6 +104,17 @@
                                      }}
                                 </div>
                             </div>
+                            <div class="col">
+                                {{ html()->label('Office')->for('office_team_name') }}
+                                <div class="form-group"> 
+                                    {{ html()->text('office_team_name', $partnerAdditionalInfo->office_team_name ?? '')
+                                        ->class('form-control additional-info')
+                                        ->required()
+                                     }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col">
                                 {{ html()->label('Organisation Type')->for('organisation_type') }}
                                 <div class="form-group"> 
@@ -113,11 +126,10 @@
                                 </div>
                             </div>
                             <div class="col">
-                                {{ html()->label('Organisation Role')->for('organisation_role') }}
+                                {{ html()->label('Building Name/No')->for('building_name') }}
                                 <div class="form-group"> 
-                                    {{ html()->select('organisation_role', $organisationRoles, $partnerAdditionalInfo->organisation_role ?? '')
+                                    {{ html()->text('building_name', $partnerAdditionalInfo->building_name ?? '')
                                         ->class('form-control additional-info')
-                                        ->placeholder('Select Organisation Type')
                                         ->required()
                                      }}
                                 </div>
@@ -125,19 +137,11 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                {{ html()->label('Office/Team Name')->for('office_team_name') }}
+                                {{ html()->label('Organisation Role')->for('organisation_role') }}
                                 <div class="form-group"> 
-                                    {{ html()->text('office_team_name', $partnerAdditionalInfo->office_team_name ?? '')
+                                    {{ html()->select('organisation_role', $organisationRoles, $partnerAdditionalInfo->organisation_role ?? '')
                                         ->class('form-control additional-info')
-                                        ->required()
-                                     }}
-                                </div>
-                            </div>
-                            <div class="col">
-                                {{ html()->label('Building Name/No')->for('building_name') }}
-                                <div class="form-group"> 
-                                    {{ html()->text('building_name', $partnerAdditionalInfo->building_name ?? '')
-                                        ->class('form-control additional-info')
+                                        ->placeholder('Select Organisation Type')
                                         ->required()
                                      }}
                                 </div>
@@ -154,40 +158,28 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                {{ html()->label('Address Line 2')->for('address_line_2') }}
-                                {{ html()->text('address_line_2', $partnerAdditionalInfo->address_line_2 ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
-                            </div>
-                            <div class="col">
-                                {{ html()->label('City')->for('city') }}
-                                {{ html()->text('city', $partnerAdditionalInfo->city ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
-                            </div>
-                            <div class="col">
-                                {{ html()->label('County')->for('county') }}
-                                {{ html()->text('county', $partnerAdditionalInfo->county ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col">
-                                {{ html()->label('Post Code')->for('post_code') }}
-                                {{ html()->text('post_code', $partnerAdditionalInfo->post_code ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
-                            </div>
-                            <div class="col">
                                 {{ html()->label('Finance Contact Name')->for('finance_contact_name') }}
                                 {{ html()->text('finance_contact_name', $partnerAdditionalInfo->finance_contact_name ?? '')
                                     ->class('form-control additional-info')
                                  }}
                             </div>
                             <div class="col">
+                                {{ html()->label('Address Line 2')->for('address_line_2') }}
+                                {{ html()->text('address_line_2', $partnerAdditionalInfo->address_line_2 ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
                                 {{ html()->label('Finance Email')->for('finance_email') }}
                                 {{ html()->text('finance_email', $partnerAdditionalInfo->finance_email ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                            <div class="col">
+                                {{ html()->label('City')->for('city') }}
+                                {{ html()->text('city', $partnerAdditionalInfo->city ?? '')
                                     ->class('form-control additional-info')
                                  }}
                             </div>
@@ -200,78 +192,194 @@
                                  }}
                             </div>
                             <div class="col">
+                                {{ html()->label('County')->for('county') }}
+                                {{ html()->text('county', $partnerAdditionalInfo->county ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
                                 {{ html()->label('Finance Fax')->for('finance_fax') }}
                                 {{ html()->text('finance_fax', $partnerAdditionalInfo->finance_fax ?? '')
                                     ->class('form-control additional-info')
                                  }}
                             </div>
+                            <div class="col">
+                                {{ html()->label('Post Code')->for('post_code') }}
+                                {{ html()->text('post_code', $partnerAdditionalInfo->post_code ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
                         </div>
                         <div class="row mt-2">
                             <div class="col">
-                                {{ html()->label('VAT')->for('vat') }}
+                                {{ html()->label('VAT No')->for('vat') }}
                                 {{ html()->text('vat', $partnerAdditionalInfo->vat ?? '')
                                     ->class('form-control additional-info')
                                  }}
                             </div>
                             <div class="col">
-                                {{ html()->label('EORI')->for('eori') }}
+                                {{ html()->label('Web URL')->for('web_url') }}
+                                {{ html()->text('web_url', $partnerAdditionalInfo->web_url ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                {{ html()->label('EORI No')->for('eori') }}
                                 {{ html()->text('eori', $partnerAdditionalInfo->eori ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                            <div class="col">
+                                {{ html()->label('Customer Ref')->for('customer_ref') }}
+                                {{ html()->text('customer_ref', $partnerAdditionalInfo->customer_ref ?? '')
                                     ->class('form-control additional-info')
                                  }}
                             </div>
                         </div>
                         <div class="row mt-4">
-                            <div class="col">
-                                <h6>Banking Details</h6>
-                                <hr />
+                            <div class="col-md-6">
+                                <div class="row mt-2">
+                                    <div class="col">
+                                        <h6>Banking Details</h6>
+                                        <hr />
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col">
+                                        {{ html()->label('Account Name')->for('account_name') }}
+                                        {{ html()->text('account_name', $partnerAdditionalInfo->account_name ?? '')
+                                            ->class('form-control additional-info')
+                                         }}
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col">
+                                        {{ html()->label('Bank Name')->for('bank_name') }}
+                                        {{ html()->text('bank_name', $partnerAdditionalInfo->bank_name ?? '')
+                                            ->class('form-control additional-info')
+                                         }}
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col">
+                                        {{ html()->label('Bank Address')->for('bank_address') }}
+                                        {{ html()->text('bank_address', $partnerAdditionalInfo->bank_address ?? '')
+                                            ->class('form-control additional-info')
+                                         }}
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col">
+                                        {{ html()->label('Sort Code')->for('sort_code') }}
+                                        {{ html()->text('sort_code', $partnerAdditionalInfo->sort_code ?? '')
+                                            ->class('form-control additional-info')
+                                         }}
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col">
+                                        {{ html()->label('Account Number')->for('account_no') }}
+                                        {{ html()->text('account_no', $partnerAdditionalInfo->account_no ?? '')
+                                            ->class('form-control additional-info')
+                                         }}
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col">
+                                        {{ html()->label('SWIFT Code')->for('swift') }}
+                                        {{ html()->text('swift', $partnerAdditionalInfo->swift ?? '')
+                                            ->class('form-control additional-info')
+                                         }}
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col">
+                                        {{ html()->label('IBAN')->for('iban') }}
+                                        {{ html()->text('iban', $partnerAdditionalInfo->iban ?? '')
+                                            ->class('form-control additional-info')
+                                         }}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col">
-                                {{ html()->label('Account Name')->for('account_name') }}
-                                {{ html()->text('account_name', $partnerAdditionalInfo->account_name ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
-                            </div>
-                            <div class="col">
-                                {{ html()->label('Bank Name')->for('bank_name') }}
-                                {{ html()->text('bank_name', $partnerAdditionalInfo->bank_name ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
-                            </div>
-                            <div class="col">
-                                {{ html()->label('Bank Address')->for('bank_address') }}
-                                {{ html()->text('bank_address', $partnerAdditionalInfo->bank_address ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col">
-                                {{ html()->label('Sort Code')->for('sort_code') }}
-                                {{ html()->text('sort_code', $partnerAdditionalInfo->sort_code ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
-                            </div>
-                            <div class="col">
-                                {{ html()->label('Account Number')->for('account_no') }}
-                                {{ html()->text('account_no', $partnerAdditionalInfo->account_no ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col">
-                                {{ html()->label('SWIFT')->for('swift') }}
-                                {{ html()->text('swift', $partnerAdditionalInfo->swift ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
-                            </div>
-                            <div class="col">
-                                {{ html()->label('IBAN')->for('iban') }}
-                                {{ html()->text('iban', $partnerAdditionalInfo->iban ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
+                            <div class="col-md-6">
+                                <div class="row mt-2">
+                                    <div class="col">
+                                        <h6>Funder</h6>
+                                        <hr />
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col">
+                                        {{ html()->label('Funder')->for('funder_id') }}
+                                        <div class="form-group"> 
+                                            {{ html()->select('funder_id', $organisations, $partnerAdditionalInfo->invoiceFunder ?? '')
+                                                ->class('form-control additional-info select2')
+                                                ->attribute('style', 'width:100%;')
+                                                ->required()
+                                             }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col">
+                                        {{ html()->label('Office')->for('funder_office') }}
+                                        {{ html()->text('funder_office', $partnerAdditionalInfo->funder_office ?? '')
+                                            ->class('form-control additional-info')
+                                         }}
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col">
+                                        {{ html()->label('Building Name/No')->for('funder_building_name') }}
+                                        {{ html()->text('funder_building_name', $partnerAdditionalInfo->funder_building_name ?? '')
+                                            ->class('form-control additional-info')
+                                         }}
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col">
+                                        {{ html()->label('Address Line 1')->for('funder_address_line_1') }}
+                                        {{ html()->text('funder_address_line_1', $partnerAdditionalInfo->funder_address_line_1 ?? '')
+                                            ->class('form-control additional-info')
+                                         }}
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col">
+                                        {{ html()->label('Address Line 2')->for('funder_address_line_2') }}
+                                        {{ html()->text('funder_address_line_2', $partnerAdditionalInfo->funder_address_line_2 ?? '')
+                                            ->class('form-control additional-info')
+                                         }}
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col">
+                                        {{ html()->label('City')->for('funder_city') }}
+                                        {{ html()->text('funder_city', $partnerAdditionalInfo->funder_city ?? '')
+                                            ->class('form-control additional-info')
+                                         }}
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col">
+                                        {{ html()->label('County')->for('funder_county') }}
+                                        {{ html()->text('funder_county', $partnerAdditionalInfo->funder_county ?? '')
+                                            ->class('form-control additional-info')
+                                         }}
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col">
+                                        {{ html()->label('Post Code')->for('funder_post_code') }}
+                                        {{ html()->text('funder_post_code', $partnerAdditionalInfo->funder_post_code ?? '')
+                                            ->class('form-control additional-info')
+                                         }}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -349,7 +457,7 @@
     <x-backend.card>
 
         <x-slot name="header">
-            @lang('View Project')
+            &nbsp;
         </x-slot>
 
         <x-slot name="headerActions">
@@ -357,12 +465,49 @@
         </x-slot>
 
         <x-slot name="body">
-            <div class="col-sm-12">
-                <h4>Project Profile</h4>
-                <div><strong>Project Name:</strong> {{$project->name}}</div>
-                <div><strong>Project Number:</strong> {{$project->number}}</div>
-                <div><strong>Project Start Date:</strong> {{$project->start_date->format('m-Y')}}</div>
-                <div><strong>Funders:</strong> {{$project->funders->implode('organisation_name', ', ')}}</div>
+            <div class="row">
+                @if(!empty($project->logo) && file_exists(public_path('uploads/projects/logos/'.$project->logo)))
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col">
+                                <img src="{{ asset('uploads/projects/logos/'.$project->logo) }}" height="160" width="160" />
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                <div><strong>PROJECT</strong></div>
+                                <div>Name: {{$project->name}}</div>
+                                <div>Code: {{$project->number}}</div>
+                                <div>Start: {{$project->start_date->format('m-Y')}}</div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+                @if(!empty($project->funders()))
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col">
+                                <img src="{{ asset('uploads/organisations/logos/'.$project->funders()->first()->logo) }}" height="160" width="160" />
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                <div><strong>FUNDER</strong></div>
+                                <div>Name: {{$project->funders()->first()->organisation_name}}</div>
+                                <div>Contact: {{$partnerAdditionalInfo->finance_contact_name ?? 'N/A'}}</div>
+                                <div>Web URL: 
+                                    @if($partnerAdditionalInfo->web_url) 
+                                        <a class="text-primary" href="{{ $partnerAdditionalInfo->web_url }}">
+                                            {{ $partnerAdditionalInfo->web_url }}
+                                        </a>
+                                    @else 
+                                        {{ 'N/A' }}
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
             <form action="#" id="claims_form">
                 <div class="col-sm-12 mt-5">
@@ -425,7 +570,7 @@
                                 
                                 @for ($i = 1; $i <= ceil(($project->length/4)); $i++)
                                 <th>YR{{$i}} BUDGET</th>
-                                <th>YEAR{{$i}}</th>
+                                <th>YR{{$i}} TOTAL</th>
                                 <th class="border-right">VARIANCE</th>
                                 @endfor
                             </tr>
@@ -548,7 +693,7 @@
                             <tr class="light-grey-bg">
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td><strong>Total Cost(for each item)</strong></td>
+                                <td><strong>Total Cost (for each item)</strong></td>
                                 <td>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -660,7 +805,7 @@
                             <tr class="dark-grey-bg">
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td><strong>Total Cost(cumulative)</strong></td>
+                                <td><strong>Total Cost (cumulative)</strong></td>
                                 <td style="color: #fff;">&nbsp;</td>
                                 @php
                                     $fromDate = clone $project->start_date;

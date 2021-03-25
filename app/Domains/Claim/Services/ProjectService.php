@@ -55,6 +55,14 @@ class ProjectService extends BaseService
                 'project_funder_ref' => $data['project_funder_ref'],
             ]);
 
+            if(!empty($data['project_logo'])) {
+                $project_logo_name = time().'.'.$data['project_logo']->extension();
+                $data['project_logo']->move(public_path('uploads/projects/logos'), $project_logo_name);
+                $project->update([
+                    'logo' => $project_logo_name
+                ]);
+            }
+
             foreach ($data['cost_items'] as $key => $value) {
                 $cost_items_order[] = $value['name'];
             }
@@ -129,6 +137,20 @@ class ProjectService extends BaseService
                 'status' => $data['status'],
                 'project_funder_ref' => $data['project_funder_ref'],
             ]);
+
+            if(!empty($data['project_logo'])) {
+                if(!empty($project->logo)) {
+                    $current_project_logo = public_path('uploads/projects/logos/'.$project->logo);
+                    if(file_exists($current_project_logo)) {
+                        unlink($current_project_logo);
+                    }
+                }
+                $project_logo_name = time().'.'.$data['project_logo']->extension();
+                $data['project_logo']->move(public_path('uploads/projects/logos'), $project_logo_name);
+                $project->update([
+                    'logo' => $project_logo_name
+                ]);
+            }
 
             // Sync Funders
             $project->funders()->sync($data['funders']);

@@ -247,6 +247,7 @@ class ProjectController
             return view('backend.claim.project.show')
             ->withProject($project)
             ->withSheetOwner($sheet_owner)
+            ->withOrganisation(($sheet_owner != 0) ? Organisation::find($sheet_owner) : NULL)
             ->withPartnerAdditionalInfo($partnerAdditionalInfo)
             ->withOrganisations($organisations)
             ->withAllowToEdit($allowToEdit)
@@ -371,6 +372,15 @@ class ProjectController
             'account_no' => $request->account_no,
             'swift' => $request->swift,
             'iban' => $request->iban,
+            'web_url' => $request->web_url,
+            'funder_id' => $request->funder_id,
+            'funder_office' => $request->funder_office,
+            'funder_building_name' => $request->funder_building_name,
+            'funder_address_line_1' => $request->funder_address_line_1,
+            'funder_address_line_2' => $request->funder_address_line_2,
+            'funder_city' => $request->funder_city,
+            'funder_county' => $request->funder_county,
+            'funder_post_code' => $request->funder_post_code,
         ];
         if(!empty($request->is_master) && $request->is_master == 1) {
             $isSaved = ProjectPartners::where('is_master', '1')->where('project_id', $project->id)->update($data);

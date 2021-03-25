@@ -40,7 +40,7 @@ if (! function_exists('homeRoute')) {
     {
         if (auth()->check()) {
             if (auth()->user()->isAdmin()) {
-                return 'admin.dashboard';
+                return 'admin.claim.project.index';
             }
 
             if (auth()->user()->isUser()) {

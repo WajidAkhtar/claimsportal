@@ -6,13 +6,14 @@
 <link rel="stylesheet" href="{{asset('assets/backend/vendors/select2/css/select2.css')}}">
 @endpush
 @section('content')
-    <x-forms.patch :action="route('admin.claim.project.update', $project)">
+    <h2 class="page-main-title">EDIT PROJECT</h2>
+    <x-forms.patch :action="route('admin.claim.project.update', $project)" enctype="multipart/form-data">
         @php
             html()->model($project);
         @endphp
         <x-backend.card>
             <x-slot name="header">
-                @lang('Edit Project')
+                Edit project details
             </x-slot>
 
             <x-slot name="headerActions">
@@ -35,7 +36,7 @@
                 </div><!--form-group-->
 
                 <div class="form-group row">
-                    {{ html()->label(__('Project Code'))->class('col-md-2 col-form-label')->for('name') }}
+                    {{ html()->label(__('Project Name'))->class('col-md-2 col-form-label')->for('name') }}
 
                     <div class="col-md-10">
                         {{ html()->text('name')
@@ -47,7 +48,7 @@
                 </div><!--form-group-->
                 
                 <div class="form-group row">
-                    {{ html()->label(__('Project Number'))->class('col-md-2 col-form-label')->for('number') }}
+                    {{ html()->label(__('Project Code'))->class('col-md-2 col-form-label')->for('number') }}
 
                     <div class="col-md-10">
                         {{ html()->text('number')
@@ -88,6 +89,22 @@
                     </div>
                 </div><!--form-group-->
 
+                <div class="form-group row">
+                    {{ html()->label(__('Project Logo'))->class('col-md-2 col-form-label')->for('project_logo') }}
+                    
+                    @if(!empty($project->logo) && file_exists(public_path('uploads/projects/logos/'.$project->logo)))
+                        <div class="col-md-1">
+                            <img src="{{ asset('uploads/projects/logos/'.$project->logo) }}" height="72" width="72" />
+                        </div>
+                    @endif
+                    
+                    <div class="col">
+                        {{ html()->file('project_logo')
+                            ->required()
+                         }}
+                    </div>
+                </div>
+
                 <h6 class="mt-4">PROJECT CLAIM TABLE</h6>
                 <hr/>
                 
@@ -115,7 +132,7 @@
                 </div><!--form-group-->
                 
                 <div class="form-group row">
-                    {{ html()->label(__('Project Length (No. of Quarters)'))->class('col-md-2 col-form-label')->for('length') }}
+                    {{ html()->label(__('Number of Quarters'))->class('col-md-2 col-form-label')->for('length') }}
 
                     <div class="col-md-10">
                         {{ html()->input('number', 'length')
@@ -138,7 +155,7 @@
                 </div><!--form-group-->
                 
                 <div class="form-group row">
-                    {{ html()->label(__('Cost Items'))->class('col-md-2 col-form-label')->for('cost_items') }}
+                    {{ html()->label(__('Claims Table'))->class('col-md-2 col-form-label')->for('cost_items') }}
 
                     <div class="col-md-10">
                         <table class="table cost_items">
