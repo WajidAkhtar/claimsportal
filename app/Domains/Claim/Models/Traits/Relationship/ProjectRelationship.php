@@ -3,12 +3,13 @@
 namespace App\Domains\Claim\Models\Traits\Relationship;
 
 use App\Domains\Auth\Models\User;
+use App\Domains\System\Models\Pool;
 use App\Domains\Claim\Models\CostItem;
+use App\Domains\System\Models\UserPools;
+use App\Domains\System\Models\Organisation;
+use App\Domains\Claim\Models\ProjectQuarter;
 use App\Domains\Claim\Models\ProjectCostItem;
 use App\Domains\Claim\Models\ProjectPartners;
-use App\Domains\System\Models\Pool;
-use App\Domains\System\Models\Organisation;
-use App\Domains\System\Models\UserPools;
 use App\Domains\System\Models\SheetUserPermissions;
 
 /**
@@ -53,7 +54,8 @@ trait ProjectRelationship
      */
     public function partners()
     {
-        return $this->belongsToMany(User::class, 'project_partners', 'project_id', 'organisation_id');
+        // return $this->belongsToMany(User::class, 'project_partners', 'project_id', 'organisation_id');
+        return $this->belongsToMany(Organisation::class, 'project_partners', 'project_id', 'organisation_id');
     }
 
     /**
@@ -170,6 +172,13 @@ trait ProjectRelationship
           return false;
         }
         return true;
+    }
+    
+    /**
+    * @return mixed
+    */
+    public function quarters() {
+        return $this->hasMany(ProjectQuarter::class);
     }
 
 }

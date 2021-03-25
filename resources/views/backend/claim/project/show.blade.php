@@ -477,53 +477,26 @@
                                 <th>&nbsp;</th>
                                 <th>&nbsp;</th>
                                 <th>&nbsp;</th>
+                                @foreach ($project->quarters as $quarter)
                                 @php
-                                    $startDate = $project->start_date;
+                                    $lableClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
                                 @endphp
-                                @for ($i = 0; $i < $project->length; $i++)
-                                    @php
-                                        $date = clone $startDate;
-                                        $date->addMonths(2)->endOfMonth();
-                                        $lableClass = '';
-                                        if (now()->betweenIncluded($startDate, $date)){
-                                            $lableClass = 'text-danger';
-                                        }
-                                    @endphp
-                                    <th class="text-center light-grey-bg">
-                                        <label class="{{$lableClass}} text-uppercase"> {{$startDate->format('My')}} - {{$date->format('My')}}</label><br>
-                                        <label class="{{$lableClass}}">Q{{$i+1}}</label>
-                                    </th>
-                                    @php
-                                        $startDate->addMonths(3);
-                                    @endphp
-                                @endfor
+                                <th class="text-center light-grey-bg">
+                                    <label class="{{$lableClass}} text-uppercase"> {{ $quarter->length }}</label><br>
+                                    <label class="{{$lableClass}}">{{$quarter->name}}</label>
+                                </th>
+                                @endforeach
                             </tr>
                             <tr class="dark-grey-bg">
                                 <th style="max-width: 20px;min-width:auto;">#</th>
                                 <th>COST ITEM</th>
                                 <th>DESCRIPTION</th>
                                 <th>TOTAL BUDGET</th>
-                                @php
-                                    $fromDate = clone $project->start_date;
-                                @endphp
-                                @for ($i = 0; $i < $project->length; $i++)
-                                @php
-                                    $toDate = clone $fromDate;
-                                    $toDate->addMonths(2)->endOfMonth();
-                                @endphp
+                                @foreach ($project->quarters as $quarter)
                                 <th class="text-center">
-                                    @if (now()->betweenIncluded($fromDate, $toDate))
-                                        <label class="current-bg mb-0">&nbsp;CURRENT&nbsp;</label>
-                                        @elseif($fromDate->lt(now()))
-                                        <label class="mb-0">HISTORIC</label>
-                                        @else
-                                        <label class="mb-0">FORECAST</label>
-                                    @endif
+                                    <label class="{{$quarter->partner(request()->partner)->pivot->status == 'current' ? 'current-bg' : ''}} mb-0">&nbsp;{{strtoupper($quarter->partner(request()->partner)->pivot->status)}}&nbsp;</label>
                                 </th>
-                                @php
-                                    $fromDate->addMonths(3);
-                                @endphp
-                                @endfor
+                                @endforeach
                                 <th>PROJECT TOTAL</th>
                                 <th class="border-right">VARIANCE</th>
                                 
@@ -831,6 +804,36 @@
                                 @endfor
                                 <td style="color: #fff;">&nbsp;</td>
                                 <td class="border-right" style="color: #fff;">&nbsp;</td>
+                                @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                @endfor
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td><strong>PO NUMBER</strong></td>
+                                <td>&nbsp;</td>
+                                @php
+                                    $fromDate = clone $project->start_date;
+                                @endphp
+                                @for ($i = 0; $i < $project->length; $i++)
+                                @php
+                                    $toDate = clone $fromDate;
+                                    $toDate->addMonths(2)->endOfMonth();
+                                @endphp
+                                <td class="text-center">
+                                    {{ html()->input('number', 'po_number['.$fromDate->timestamp.']')
+                                            // ->placeholder('0.00')
+                                            ->class('form-control invoice-field') }}
+                                </td>
+                                @php
+                                    $fromDate->addMonths(3);
+                                @endphp
+                                @endfor
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>

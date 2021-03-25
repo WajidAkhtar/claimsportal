@@ -100,7 +100,7 @@
                     
                     <div class="col">
                         {{ html()->file('project_logo')
-                            ->required()
+                            ->requiredIf(empty($project->logo))
                          }}
                     </div>
                 </div>

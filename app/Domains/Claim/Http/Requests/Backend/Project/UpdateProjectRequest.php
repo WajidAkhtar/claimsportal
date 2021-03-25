@@ -27,6 +27,7 @@ class UpdateProjectRequest extends FormRequest
      */
     public function rules()
     {
+        $logo_required = (!empty($this->project->logo))? 'sometimes|nullable|' : 'required|';
         return [
             'name' => 'required|max:191',
             'number' => 'required|max:191',
@@ -44,7 +45,7 @@ class UpdateProjectRequest extends FormRequest
             'cost_items.*.name' => 'required|max:191',
             'cost_items.*.description' => 'required|max:191',
             'project_funder_ref' => 'required|max:191',
-            'project_logo' => 'required|mimes:png,jpg,bmp,jpeg,gif',
+            'project_logo' => $logo_required.'mimes:png,jpg,bmp,jpeg,gif',
         ];
     }
 

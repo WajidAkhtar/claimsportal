@@ -518,6 +518,12 @@
                                 <th>&nbsp;</th>
                                 <th>&nbsp;</th>
                                 <th>&nbsp;</th>
+                                {{-- @foreach ($project->quarters as $quarter)
+                                <th class="text-center light-grey-bg">
+                                    <label class="{{$lableClass ?? ''}} text-uppercase"> {{ $quarter->length }}</label><br>
+                                    <label class="{{$lableClass ?? ''}}">{{$quarter->name}}</label>
+                                </th>
+                                @endforeach --}}
                                 @php
                                     $startDate = $project->start_date;
                                 @endphp
@@ -844,6 +850,125 @@
                                 <td class="border-right">&nbsp;</td>
                                 @endfor
                             </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td><strong>PO NUMBER</strong></td>
+                                <td>&nbsp;</td>
+                                @php
+                                    $fromDate = clone $project->start_date;
+                                @endphp
+                                @for ($i = 0; $i < $project->length; $i++)
+                                @php
+                                    $toDate = clone $fromDate;
+                                    $toDate->addMonths(2)->endOfMonth();
+                                @endphp
+                                <td class="text-center">
+                                    {{ html()->input('number', 'po_number['.$fromDate->timestamp.']')
+                                            // ->placeholder('0.00')
+                                            ->class('form-control invoice-field')
+                                            ->required() }}
+                                </td>
+                                @php
+                                    $fromDate->addMonths(3);
+                                @endphp
+                                @endfor
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                @endfor
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td><strong>INVOICE DATE</strong></td>
+                                <td>&nbsp;</td>
+                                @php
+                                    $fromDate = clone $project->start_date;
+                                @endphp
+                                @for ($i = 0; $i < $project->length; $i++)
+                                @php
+                                    $toDate = clone $fromDate;
+                                    $toDate->addMonths(2)->endOfMonth();
+                                @endphp
+                                <td class="text-center">
+                                    {{ html()->input('number', 'invoice_date['.$fromDate->timestamp.']')
+                                            // ->placeholder('0.00')
+                                            ->class('form-control invoice-field') }}
+                                </td>
+                                @php
+                                    $fromDate->addMonths(3);
+                                @endphp
+                                @endfor
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                @endfor
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td><strong>INVOICE NO</strong></td>
+                                <td>&nbsp;</td>
+                                @php
+                                    $fromDate = clone $project->start_date;
+                                @endphp
+                                @for ($i = 0; $i < $project->length; $i++)
+                                @php
+                                    $toDate = clone $fromDate;
+                                    $toDate->addMonths(2)->endOfMonth();
+                                @endphp
+                                <td class="text-center">
+                                    {{ html()->input('number', 'invoice_no['.$fromDate->timestamp.']')
+                                            // ->placeholder('0.00')
+                                            ->class('form-control invoice-field') }}
+                                </td>
+                                @php
+                                    $fromDate->addMonths(3);
+                                @endphp
+                                @endfor
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                @endfor
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                @php
+                                    $fromDate = clone $project->start_date;
+                                @endphp
+                                @for ($i = 0; $i < $project->length; $i++)
+                                @php
+                                    $toDate = clone $fromDate;
+                                    $toDate->addMonths(2)->endOfMonth();
+                                @endphp
+                                <td class="text-center">
+                                    <a href="" class="btn btn-sm btn-primary" role="button">Invoice</a>
+                                </td>
+                                @php
+                                    $fromDate->addMonths(3);
+                                @endphp
+                                @endfor
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                @endfor
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -1134,7 +1259,7 @@
 
             var allowToEdit = '{{ $allowToEdit }}';
             if(!allowToEdit) {
-                $('table input').each(function() {
+                $('table input:not(.invoice-field)').each(function() {
                     $(this).attr('disabled', 'disabled');
                     $(this).attr('readonly', 'readonly');
                     $(this).parent().find('.input-group-prepend span').addClass('readonly');

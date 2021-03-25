@@ -114,7 +114,7 @@ class ProjectController
         $organisationTypes = Organisation::organisationTypes();
         $organisationRoles = Organisation::organisationRoles();
 
-        $sheetPermissions = SheetPermission::whereIn('permission', ['READ_WRITE_ALL', 'WRITE_ONLY_FORECAST', 'READ_ONLY'])->pluck('permission', 'id');
+        $sheetPermissions = SheetPermission::pluck('permission', 'id');
 
         $SheetUserPermissions = SheetUserPermissions::where('project_id', $project->id);
         if(!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User')) {

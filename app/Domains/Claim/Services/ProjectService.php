@@ -100,6 +100,37 @@ class ProjectService extends BaseService
                 }
             }
 
+            // Sync Quarters
+            $quarters = [];
+            $fromDate = clone $project->start_date;
+            for ($i = 0; $i < $project->length; $i++) {
+                $toDate = clone $fromDate;
+                $toDate->addMonths(2)->endOfMonth();
+
+                $quarters[$i]['length'] = $fromDate->format('My').' - '.$toDate->format('My');
+                $quarters[$i]['name'] = 'Q'.($i + 1);
+                $quarters[$i]['start_timestamp'] = $fromDate->timestamp;
+
+                $fromDate->addMonths(3);
+            }
+
+            if(!empty($quarters)) {
+                $project->quarters()->createMany($quarters);
+            }
+
+            // Sync Quarter Partner Data
+            foreach($project->quarters as $key => $quarter) {
+                foreach($project->partners as $partner){
+                    $quarter->partners()->attach($partner->id, [
+                        'status' => $key == 0 ? 'current' : 'forecast',
+                        'po_number' => null,
+                        'invoice_date' => null,
+                        'invoice_no' => null,
+                        'claim_status' => 0,
+                    ]);
+                }
+            }
+            
         } catch (Exception $e) {
             DB::rollBack();
             throw new GeneralException(__('There was a problem creating this project. Please try again.'));

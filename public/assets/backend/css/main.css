@@ -706,7 +706,8 @@ hr {
 main {
     margin-top: 65px;
     top: 0px;
-    margin-left: 250px;
+    /* margin-left: 250px; */
+    margin-left: 170px;
 }
 
 @media (max-width: 991px) {
