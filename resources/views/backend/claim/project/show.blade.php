@@ -787,7 +787,7 @@
                                     {{ html()->input('text', 'po_number['.$quarter->start_timestamp.']', $quarter->partner(request()->partner)->pivot->po_number)
                                             // ->placeholder('0.00')
                                             ->class('form-control invoice-field')
-                                            ->readOnly($quarter->partner(request()->partner)->pivot->claim_status !== 0) }}
+                                            ->readOnly($currentSheetUserPermission == 'LEAD_USER' || $userHasMasterAccess || $quarter->partner(request()->partner)->pivot->claim_status !== 0) }}
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
@@ -808,7 +808,7 @@
                                     {{ html()->input('text', 'invoice_date['.$quarter->start_timestamp.']', $quarter->partner(request()->partner)->pivot->invoice_date)
                                             ->placeholder('YYYY-MM-DD')
                                             ->class('form-control invoice-field')
-                                            ->readOnly($quarter->partner(request()->partner)->pivot->claim_status !== 0) }}
+                                            ->readOnly($currentSheetUserPermission == 'LEAD_USER' || $userHasMasterAccess || $quarter->partner(request()->partner)->pivot->claim_status !== 0) }}
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
@@ -829,7 +829,7 @@
                                     {{ html()->input('text', 'invoice_no['.$quarter->start_timestamp.']', $quarter->partner(request()->partner)->pivot->invoice_no)
                                             // ->placeholder('0.00')
                                             ->class('form-control invoice-field')
-                                            ->readOnly($quarter->partner(request()->partner)->pivot->claim_status !== 0) }}
+                                            ->readOnly($currentSheetUserPermission == 'LEAD_USER' || $userHasMasterAccess || $quarter->partner(request()->partner)->pivot->claim_status !== 0) }}
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
@@ -852,9 +852,10 @@
                                             <a href="#" class="btn btn-sm btn-primary" role="button">Invoice</a>
                                             @break
                                         @case('current')
-                                            @if (($userHasMasterAccess || $userHasMasterAccessWithPermission == 'LEAD_USER') && $quarter->partner(request()->partner)->pivot->claim_status == 1)
+                                            @if (!$userHasMasterAccess || $userHasMasterAccessWithPermission == 'LEAD_USER' && $quarter->partner(request()->partner)->pivot->claim_status == 1)
                                             <a href="javascript:void(0)" class="btn btn-sm btn-success" role="button" onclick="closeClaim(this, {{$quarter->id}}, {{request()->partner}})">Close Claim</a>
-                                            @else
+                                            @endif
+                                            @if(!$userHasMasterAccess && $userHasMasterAccessWithPermission != 'LEAD_USER' && $quarter->partner(request()->partner)->pivot->claim_status == 0)
                                             <a href="javascript:void(0)" class="btn btn-sm btn-success {{$quarter->partner(request()->partner)->pivot->claim_status == 1 ? 'disabled' : ''}}" role="button" onclick="submitClaim(this, {{$quarter->id}}, {{$quarter->start_timestamp}})">Submit Claim</a>
                                             @endif
                                             @break
@@ -870,7 +871,7 @@
                                 <td class="border-right">&nbsp;</td>
                                 @endfor
                             </tr>
-                            @if ($userHasMasterAccess && $userHasMasterAccessWithPermission == 'LEAD_USER'))
+                            @if (!$userHasMasterAccess && $userHasMasterAccessWithPermission == 'LEAD_USER' && $quarter->partner(request()->partner)->pivot->claim_status == 2)
                             <tr>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
