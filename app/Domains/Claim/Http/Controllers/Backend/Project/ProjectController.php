@@ -446,7 +446,7 @@ class ProjectController
         }
 
         $quarter = $project->quarters()->whereId($request->quarterId)->first();
-        dd(auth()->user()->organisation->id, $quarter->partners, $quarter);
+        dd(auth()->user()->organisation->id, $quarter->partners->pluck('id', 'organisation_name'), $quarter);
         $quarterPartner = $quarter->partner();
         if($quarterPartner->pivot->claim_status == 1) {
             return response()->json([
