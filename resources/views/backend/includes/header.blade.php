@@ -5,7 +5,7 @@
             <div class="navbar-header  h-100 h4 mb-0 align-self-center logo-bar text-left bottom-shadow-transparent">  
                 <a href="{{route('frontend.index')}}" class="horizontal-logo text-left">
                     <center>
-                        <img src="{{ asset('assets/backend/images/logo_with_title.png') }}" class="logo" height="100">
+                        <img src="{{ asset('assets/backend/images/logo.png') }}" class="logo" height="100">
                     </center>
                 </a>                   
             </div>
