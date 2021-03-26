@@ -48,13 +48,13 @@ class ProjectsTable extends TableComponent
     {
         $query = Project::select('projects.*')->addSelect(\DB::raw('GROUP_CONCAT(o.organisation_name) as funders'))->leftJoin('project_funders as pf', 'pf.project_id', 'projects.id')->leftJoin('organisations as o', 'o.id', 'pf.organisation_id')->groupBy('pf.project_id')->whereNotNull('pf.project_id');
 
-        if(!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User')) {
-            $query = $query->whereHas('usersWithPermissions', function($q) use ($query) {
-                $q->where('user_id', auth()->user()->id);
-                // $query->orWhere('created_by', auth()->user()->id);
-            });
-            $query = $query->whereIn('pool_id', current_user_pools()->pluck('id')->toArray());
-        }
+        // if(!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User')) {
+        //     $query = $query->whereHas('usersWithPermissions', function($q) use ($query) {
+        //         $q->where('user_id', auth()->user()->id);
+        //         // $query->orWhere('created_by', auth()->user()->id);
+        //     });
+        //     $query = $query->whereIn('pool_id', current_user_pools()->pluck('id')->toArray());
+        // }
 
         if ($this->status === 'deleted') {
             return $query->onlyTrashed();
