@@ -107,7 +107,7 @@ class ProjectController
             return redirect()->route('admin.claim.project.index')->withFlashDanger(__('you have no access to this project.'));
         }
         if(!in_array(current_user_role(), ['Administrator', 'Super User']) && !in_array($project->pool_id, current_user_pools()->pluck('id')->toArray())) {
-            return redirect()->route('admin.claim.project.index')->withFlashDanger(__('you have no access to this project.'));
+            // return redirect()->route('admin.claim.project.index')->withFlashDanger(__('you have no access to this project.'));
         }
         $organisations = Organisation::ordered()->pluck('organisation_name', 'id');
         $allowToEdit = true;
