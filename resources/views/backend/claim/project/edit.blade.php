@@ -128,6 +128,7 @@
                                 ->required() }}
                             </div>
                         </div>
+                        <p class="text-info">*If you change these values, then all saved data will be reset.</p>
                     </div>
                 </div><!--form-group-->
                 
@@ -140,6 +141,7 @@
                             ->maxlength('5')
                             // ->placeholder('Select no of quarters')
                             ->required() }}
+                            <p class="text-info">*If you change this value, then all saved data will be reset.</p>
                     </div>
                 </div><!--form-group-->
 

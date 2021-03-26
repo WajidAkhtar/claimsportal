@@ -3,24 +3,25 @@
 namespace App\Domains\Claim\Http\Controllers\Backend\Project;
 
 use Illuminate\Http\Request;
+use App\Domains\Auth\Models\User;
+use App\Domains\System\Models\Pool;
+use App\Exceptions\GeneralException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use App\Domains\Claim\Models\Project;
 use App\Domains\Claim\Models\CostItem;
-use App\Domains\Claim\Models\ProjectPartners;
+use Illuminate\Support\Facades\Validator;
 use App\Domains\Auth\Services\UserService;
+use App\Domains\System\Models\Organisation;
+use App\Domains\Claim\Models\ProjectCostItem;
+use App\Domains\Claim\Models\ProjectPartners;
 use App\Domains\Claim\Services\ProjectService;
+use App\Domains\System\Models\SheetPermission;
+use App\Domains\System\Models\SheetUserPermissions;
 use App\Domains\Claim\Http\Requests\Backend\Project\EditProjectRequest;
 use App\Domains\Claim\Http\Requests\Backend\Project\StoreProjectRequest;
 use App\Domains\Claim\Http\Requests\Backend\Project\DeleteProjectRequest;
 use App\Domains\Claim\Http\Requests\Backend\Project\UpdateProjectRequest;
-use App\Domains\Claim\Models\ProjectCostItem;
-use Illuminate\Support\Facades\Auth;
-use App\Exceptions\GeneralException;
-use App\Domains\System\Models\Organisation;
-use App\Domains\System\Models\Pool;
-use App\Domains\System\Models\SheetPermission;
-use App\Domains\System\Models\SheetUserPermissions;
-use App\Domains\Auth\Models\User;
 
 /**
  * Class ProjectController.
@@ -423,6 +424,84 @@ class ProjectController
                 return response()->json(['success' => TRUE, 'message' => 'Sheet users & permissions cleared successfully.']);
             }
         }
+    }
+
+    /**
+     * @param Request $request
+     * @param Project $project
+     */
+    public function submitClaim(Request $request, Project $project) {
+        $validator = Validator::make($request->all(), [
+            'quarterId' => 'required|exists:project_quarters,id',
+            'po_number' => 'required',
+            'invoice_no' => 'required',
+            'invoice_date' => 'required|date_format:Y-m-d',
+        ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                'success' => 0,
+                'message' => $validator->errors()->first()
+            ]);
+        }
+
+        $quarter = $project->quarters()->whereId($request->quarterId)->first();
+        $quarterPartner = $quarter->partner();
+        if($quarterPartner->pivot->claim_status == 1) {
+            return response()->json([
+                'success' => 0,
+                'message' => 'You already submitted claim for this quarter'
+            ]);
+        }
+
+        $quarterPartner->pivot->po_number = $request->po_number;
+        $quarterPartner->pivot->invoice_no = $request->invoice_no;
+        $quarterPartner->pivot->invoice_date = $request->invoice_date;
+        $quarterPartner->pivot->claim_status = 1;
+        $quarterPartner->pivot->save();
+
+        return response()->json(['success' => 1, 'message' => 'Claim submitted successfully!']);
+    }
+    
+    /**
+     * @param Request $request
+     * @param Project $project
+     */
+    public function closeClaim(Request $request, Project $project) {
+        $validator = Validator::make($request->all(), [
+            'quarterId' => 'required|exists:project_quarters,id',
+            'organisationId' => 'required|exists:organisations,id',
+        ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                'success' => 0,
+                'message' => $validator->errors()->first()
+            ]);
+        }
+
+        $quarter = $project->quarters()->whereId($request->quarterId)->first();
+        $quarterPartner = $quarter->partner($request->organisationId);
+        if($quarterPartner->pivot->claim_status == 2) {
+            return response()->json([
+                'success' => 0,
+                'message' => 'You already closed claim for this quarter'
+            ]);
+        }
+
+        // Generate PDF
+
+        $quarterPartner->pivot->status = 'historic';
+        $quarterPartner->pivot->claim_status = 2;
+        $quarterPartner->pivot->save();
+        
+        // Next Quarter
+        $nextQuarter = $project->quarters()->where('id', '>', $quarter->id)->first();
+        $nextQuarterPartner = $nextQuarter->partner($request->organisationId);
+        $nextQuarterPartner->pivot->status = 'current';
+        $nextQuarterPartner->pivot->save();
+
+        return response()->json(['success' => 1, 'message' => 'Claim closed successfully!']);
     }
 
 }

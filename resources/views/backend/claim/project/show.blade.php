@@ -479,11 +479,11 @@
                                 <th>&nbsp;</th>
                                 @foreach ($project->quarters as $quarter)
                                 @php
-                                    $lableClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
+                                    $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
                                 @endphp
                                 <th class="text-center light-grey-bg">
-                                    <label class="{{$lableClass}} text-uppercase"> {{ $quarter->length }}</label><br>
-                                    <label class="{{$lableClass}}">{{$quarter->name}}</label>
+                                    <label class="{{$labelClass}} text-uppercase"> {{ $quarter->length }}</label><br>
+                                    <label class="{{$labelClass}}">{{$quarter->name}}</label>
                                 </th>
                                 @endforeach
                             </tr>
@@ -509,9 +509,6 @@
                         </thead>
                         <tbody>
                             @foreach ($project->costItems as $index => $costItem)
-                            @php
-                                $fromDate = clone $project->start_date;
-                            @endphp
                             <tr>
                                 <td style="max-width: 10px;min-width:auto;">{{$index+1}}</td>
                                 <td>{{$costItem->pivot->cost_item_name}}</td>
@@ -531,43 +528,33 @@
                                 @php
                                     $yearIndex = 0;
                                 @endphp
-                                @for ($i = 0; $i < $project->length; $i++)
+                                @foreach ($project->quarters as $quarter)
                                 @php
                                     $isForeCast = 0;
-                                    $toDate = clone $fromDate;
-                                    $toDate->addMonths(2)->endOfMonth();
-                                    $labelClass = '';
-                                    if(now()->betweenIncluded($fromDate, $toDate)){
-                                        $labelClass = 'text-danger';
-                                    }
-                                    if (now()->betweenIncluded($fromDate, $toDate)) {
-                                        $isForeCast = 1;
-                                    }
-                                    elseif($fromDate->lt(now())) {
-                                        $isForeCast = 0;
-                                    }
-                                    else {
-                                        $isForeCast = 1;
-                                    }
+                                    $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
+                                    $isForeCast = collect(['current', 'forecast'])->contains($quarter->partner(request()->partner)->pivot->status) ? 1 : 0;
 
                                     $readOnly = false;
 
-                                    if($userHasMasterAccess && $userHasMasterAccessWithPermission == 'READ_ONLY')
+                                    if($userHasMasterAccess && $userHasMasterAccessWithPermission == 'READ_ONLY') {
                                         $readOnly = true;
-                                    if($userHasMasterAccess && $userHasMasterAccessWithPermission == 'WRITE_ONLY_FORECAST' && !$isForeCast)
+                                    }
+                                    if($userHasMasterAccess && $userHasMasterAccessWithPermission == 'WRITE_ONLY_FORECAST' && !$isForeCast) {
                                         $readOnly = true;
-                                    else if($currentSheetUserPermission == 'WRITE_ONLY_FORECAST' && !$isForeCast)
+                                    }
+                                    else if($currentSheetUserPermission == 'WRITE_ONLY_FORECAST' && !$isForeCast) {
                                         $readOnly = true;
-                                    else if($currentSheetUserPermission == 'READ_ONLY')
+                                    }
+                                    else if($currentSheetUserPermission == 'READ_ONLY') {
                                         $readOnly = true;
-
+                                    }
                                 @endphp
                                 <td>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text {{ $readOnly ? 'readonly' : '' }}">£</span>
                                         </div>
-                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][quarter_values]['.$fromDate->timestamp.']', optional(optional($costItem->claims_data)->quarter_values)->{"$fromDate->timestamp"} ?? '')
+                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][quarter_values]['.$quarter->start_timestamp.']', optional(optional($costItem->claims_data)->quarter_values)->{"$quarter->start_timestamp"} ?? '')
                                             ->placeholder('0.00')
                                             ->class('form-control '.$labelClass)
                                             ->attribute('data-year-index', $yearIndex)
@@ -576,12 +563,11 @@
                                     </div>
                                 </td>
                                 @php
-                                    $fromDate->addMonths(3);
-                                    if(($i+1) % 4 == 0){
+                                    if($loop->iteration % 4 == 0){
                                         $yearIndex++;
                                     }
                                 @endphp
-                                @endfor
+                                @endforeach
                                 <td>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -607,7 +593,6 @@
                                     </div>
                                 </td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
-
                                 @php
                                     $readOnly = false;
                                     $yearBudgetReadOnly = false;
@@ -673,24 +658,18 @@
                                     </div>
                                 </td>
                                 @php
-                                    $fromDate = clone $project->start_date;
                                     $yearIndex = 0;
                                 @endphp
-                                @for ($i = 0; $i < $project->length; $i++)
+                                @foreach ($project->quarters as $quarter)
                                 @php
-                                    $toDate = clone $fromDate;
-                                    $toDate->addMonths(2)->endOfMonth();
-                                    $labelClass = '';
-                                    if(now()->betweenIncluded($fromDate, $toDate)){
-                                        $labelClass = 'text-danger';
-                                    }
+                                    $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
                                 @endphp
                                 <td class="text-center">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text readonly">£</span>
                                         </div>
-                                        {{ html()->input('number', 'total_costs[for_each_item][quarter_values]['.$fromDate->timestamp.']')
+                                        {{ html()->input('number', 'total_costs[for_each_item][quarter_values]['.$quarter->start_timestamp.']')
                                             // ->placeholder('0.00')
                                             ->class('form-control '.$labelClass)
                                             ->attribute('data-year-index', $yearIndex)
@@ -699,12 +678,11 @@
                                     </div>
                                 </td>
                                 @php
-                                    $fromDate->addMonths(3);
-                                    if(($i+1) % 4 == 0) {
+                                    if(($loop->iteration) % 4 == 0) {
                                         $yearIndex++;
                                     }
                                 @endphp
-                                @endfor
+                                @endforeach
                                 <td class="text-center">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -773,24 +751,16 @@
                                 <td>&nbsp;</td>
                                 <td><strong>Total Cost (cumulative)</strong></td>
                                 <td style="color: #fff;">&nbsp;</td>
+                                @foreach ($project->quarters as $quarter)
                                 @php
-                                    $fromDate = clone $project->start_date;
-                                @endphp
-                                @for ($i = 0; $i < $project->length; $i++)
-                                @php
-                                    $toDate = clone $fromDate;
-                                    $toDate->addMonths(2)->endOfMonth();
-                                    $labelClass = '';
-                                    if(now()->betweenIncluded($fromDate, $toDate)){
-                                        $labelClass = 'text-danger';
-                                    }
+                                    $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
                                 @endphp
                                 <td class="text-center" style="color: #fff;">
                                     <div class="input-group" style="color: #fff;">
                                         <div class="input-group-prepend" style="color: #fff;">
                                             <span class="input-group-text readonly" style="color: #fff;">£</span>
                                         </div>
-                                        {{ html()->input('number', 'total_costs[cumulative]['.$fromDate->timestamp.']')
+                                        {{ html()->input('number', 'total_costs[cumulative]['.$quarter->start_timestamp.']')
                                             // ->placeholder('0.00')
                                             ->class('form-control '.$labelClass)
                                             ->attribute('style', 'color: #fff;')
@@ -798,10 +768,7 @@
                                             ->required() }}
                                     </div>
                                 </td>
-                                @php
-                                    $fromDate->addMonths(3);
-                                @endphp
-                                @endfor
+                                @endforeach
                                 <td style="color: #fff;">&nbsp;</td>
                                 <td class="border-right" style="color: #fff;">&nbsp;</td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
@@ -815,23 +782,14 @@
                                 <td>&nbsp;</td>
                                 <td><strong>PO NUMBER</strong></td>
                                 <td>&nbsp;</td>
-                                @php
-                                    $fromDate = clone $project->start_date;
-                                @endphp
-                                @for ($i = 0; $i < $project->length; $i++)
-                                @php
-                                    $toDate = clone $fromDate;
-                                    $toDate->addMonths(2)->endOfMonth();
-                                @endphp
+                                @foreach ($project->quarters as $quarter)
                                 <td class="text-center">
-                                    {{ html()->input('number', 'po_number['.$fromDate->timestamp.']')
+                                    {{ html()->input('text', 'po_number['.$quarter->start_timestamp.']', $quarter->partner(request()->partner)->pivot->po_number)
                                             // ->placeholder('0.00')
-                                            ->class('form-control invoice-field') }}
+                                            ->class('form-control invoice-field')
+                                            ->readOnly($quarter->partner(request()->partner)->pivot->claim_status !== 0) }}
                                 </td>
-                                @php
-                                    $fromDate->addMonths(3);
-                                @endphp
-                                @endfor
+                                @endforeach
                                 <td>&nbsp;</td>
                                 <td class="border-right">&nbsp;</td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
@@ -840,6 +798,103 @@
                                 <td class="border-right">&nbsp;</td>
                                 @endfor
                             </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td><strong>INVOICE DATE</strong></td>
+                                <td>&nbsp;</td>
+                                @foreach ($project->quarters as $quarter)
+                                <td class="text-center">
+                                    {{ html()->input('text', 'invoice_date['.$quarter->start_timestamp.']', $quarter->partner(request()->partner)->pivot->invoice_date)
+                                            ->placeholder('YYYY-MM-DD')
+                                            ->class('form-control invoice-field')
+                                            ->readOnly($quarter->partner(request()->partner)->pivot->claim_status !== 0) }}
+                                </td>
+                                @endforeach
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                @endfor
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td><strong>INVOICE NO</strong></td>
+                                <td>&nbsp;</td>
+                                @foreach ($project->quarters as $quarter)
+                                <td class="text-center">
+                                    {{ html()->input('text', 'invoice_no['.$quarter->start_timestamp.']', $quarter->partner(request()->partner)->pivot->invoice_no)
+                                            // ->placeholder('0.00')
+                                            ->class('form-control invoice-field')
+                                            ->readOnly($quarter->partner(request()->partner)->pivot->claim_status !== 0) }}
+                                </td>
+                                @endforeach
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                @endfor
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                @foreach ($project->quarters as $quarter)
+                                <td class="text-center">
+                                    @switch($quarter->partner(request()->partner)->pivot->status)
+                                        @case('historic')
+                                            <a href="#" class="btn btn-sm btn-primary" role="button">Invoice</a>
+                                            @break
+                                        @case('current')
+                                            @if (($userHasMasterAccess || $userHasMasterAccessWithPermission == 'LEAD_USER') && $quarter->partner(request()->partner)->pivot->claim_status == 1)
+                                            <a href="javascript:void(0)" class="btn btn-sm btn-success" role="button" onclick="closeClaim(this, {{$quarter->id}}, {{request()->partner}})">Close Claim</a>
+                                            @else
+                                            <a href="javascript:void(0)" class="btn btn-sm btn-success {{$quarter->partner(request()->partner)->pivot->claim_status == 1 ? 'disabled' : ''}}" role="button" onclick="submitClaim(this, {{$quarter->id}}, {{$quarter->start_timestamp}})">Submit Claim</a>
+                                            @endif
+                                            @break
+                                        @default
+                                    @endswitch
+                                </td>
+                                @endforeach
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                @endfor
+                            </tr>
+                            @if ($userHasMasterAccess && $userHasMasterAccessWithPermission == 'LEAD_USER'))
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                @foreach ($project->quarters as $quarter)
+                                <td class="text-center">
+                                    @switch($quarter->partner(request()->partner)->pivot->status)
+                                        @case('historic')
+                                            <a href="#" class="btn btn-sm btn-primary" role="button">Regenerate Invoice</a>
+                                            @break
+                                        @default
+                                    @endswitch
+                                </td>
+                                @endforeach
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                @endfor
+                            </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>
@@ -1193,7 +1248,7 @@
         });
 
         function formatNegativeValue() {
-            $('table input').each(function(i, v){
+            $('table input:not(.invoice-field)').each(function(i, v){
                 if(parseFloat($(v).val()) < 0) {
                     $(v).addClass('text-danger');
                 }
@@ -1243,20 +1298,20 @@
             }
             var formData = new FormData($('#user_permissions_info')[0]);
             $.ajax({
-                    url: '{{route('admin.claim.project.save.sheet.user.permissions', $project)}}',
-                    data: formData,
-                    type: 'POST',
-                    contentType: false,
-                    processData: false,
-                    success: function(response){
-                        if(response.success) {
-                            toastr.success(response.message);
-                        }
-                        else{
-                            toastr.error('Something goes wrong...');
-                        }
+                url: '{{route('admin.claim.project.save.sheet.user.permissions', $project)}}',
+                data: formData,
+                type: 'POST',
+                contentType: false,
+                processData: false,
+                success: function(response){
+                    if(response.success) {
+                        toastr.success(response.message);
                     }
-                })
+                    else{
+                        toastr.error('Something goes wrong...');
+                    }
+                }
+            })
         }
 
         function hideAllActionsContainers() {
@@ -1268,5 +1323,49 @@
             });
         }
         
+        function submitClaim(element, quarterId, timestamp) {
+            var po_number = $('[name="po_number['+timestamp+']"]').val();
+            var invoice_no = $('[name="invoice_no['+timestamp+']"]').val();
+            var invoice_date = $('[name="invoice_date['+timestamp+']"]').val();
+            if(po_number.length == 0 || invoice_no.length == 0 || invoice_date.length == 0) {
+                toastr.error('Please fill all invoice related fields!');
+                return false;
+            }
+
+            $.ajax({
+                url: '{{route('admin.claim.project.submit.claim', $project)}}',
+                data: {quarterId: quarterId, po_number: po_number, invoice_no: invoice_no, invoice_date: invoice_date},
+                type: 'POST',
+                dataType: 'json',
+                success: function(response){
+                    if(response.success) {
+                        toastr.success(response.message);
+                        $(element).attr('disabled', 'disabled').addClass('disabled');
+                        $('[name="po_number['+timestamp+']"], [name="invoice_no['+timestamp+']"], [name="invoice_date['+timestamp+']"]').attr('readonly', 'readonly');
+                    }
+                    else{
+                        toastr.error(response.message);
+                    }
+                }
+            })
+        }
+        
+        function closeClaim(element, quarterId, organisationId) {
+            $.ajax({
+                url: '{{route('admin.claim.project.close.claim', $project)}}',
+                data: {quarterId: quarterId, organisationId: organisationId},
+                type: 'POST',
+                dataType: 'json',
+                success: function(response){
+                    if(response.success) {
+                        toastr.success(response.message);
+                        $(element).attr('disabled', 'disabled').addClass('disabled');
+                    }
+                    else{
+                        toastr.error(response.message);
+                    }
+                }
+            })
+        }
     </script>
 @endpush
