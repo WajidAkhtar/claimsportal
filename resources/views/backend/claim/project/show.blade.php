@@ -1328,6 +1328,7 @@
             var po_number = $('[name="po_number['+timestamp+']"]').val();
             var invoice_no = $('[name="invoice_no['+timestamp+']"]').val();
             var invoice_date = $('[name="invoice_date['+timestamp+']"]').val();
+            var organisationId = '{{$sheetOwner}}';
             if(po_number.length == 0 || invoice_no.length == 0 || invoice_date.length == 0) {
                 toastr.error('Please fill all invoice related fields!');
                 return false;
@@ -1335,7 +1336,7 @@
 
             $.ajax({
                 url: '{{route('admin.claim.project.submit.claim', $project)}}',
-                data: {quarterId: quarterId, po_number: po_number, invoice_no: invoice_no, invoice_date: invoice_date},
+                data: {quarterId: quarterId, po_number: po_number, invoice_no: invoice_no, invoice_date: invoice_date, organisationId : organisationId},
                 type: 'POST',
                 dataType: 'json',
                 success: function(response){

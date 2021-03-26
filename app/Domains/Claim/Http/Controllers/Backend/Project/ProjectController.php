@@ -433,6 +433,7 @@ class ProjectController
     public function submitClaim(Request $request, Project $project) {
         $validator = Validator::make($request->all(), [
             'quarterId' => 'required|exists:project_quarters,id',
+            'organisationId' => 'required|exists:organisations,id',
             'po_number' => 'required',
             'invoice_no' => 'required',
             'invoice_date' => 'required|date_format:Y-m-d',
@@ -446,8 +447,7 @@ class ProjectController
         }
 
         $quarter = $project->quarters()->whereId($request->quarterId)->first();
-        dd(auth()->user()->organisation->id, $quarter->partners->pluck('id', 'organisation_name'), $quarter);
-        $quarterPartner = $quarter->partner();
+        $quarterPartner = $quarter->partner($request->organisationId);
         if($quarterPartner->pivot->claim_status == 1) {
             return response()->json([
                 'success' => 0,
