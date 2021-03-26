@@ -24,7 +24,7 @@
                     @php
                         $date = clone $startDate;
                         
-                        $quarter = $project->quarters()->whereStartTimestamp($date->timestamp)->first();
+                        $quarter = $project->quarters()->whereStartTimestamp($startDate->timestamp)->first();
                         $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
                         
                         $date->addMonths(2)->endOfMonth();
