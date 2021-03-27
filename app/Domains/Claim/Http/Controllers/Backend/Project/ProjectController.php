@@ -106,7 +106,7 @@ class ProjectController
     public function show(Project $project)
     {
         $user=auth()->user();
-        $user->organisation_id = 25;
+        $user->organisation_id = Organisation::first()->id;
         $user->save();
         $userHasPartialAccessToProject = $project->userHasPartialAccessToProject();
         if(!$userHasPartialAccessToProject) {
