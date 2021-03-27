@@ -847,11 +847,13 @@
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
                                 <td class="text-center">
+                                    @dump($quarter->partner(request()->partner), $quarter->partner(request()->partner)->pivot->status)
                                     @switch($quarter->partner(request()->partner)->pivot->status)
                                         @case('historic')
                                             <a target="_blank" href="{{asset('uploads/invoices/'.$quarter->id.'.pdf')}}" class="btn btn-sm btn-primary" role="button">Invoice</a>
                                             @break
                                         @case('current')
+                                            {{dd($userHasMasterAccess, $userHasMasterAccessWithPermission, $quarter->partner(request()->partner), $quarter->partner(request()->partner)->pivot->claim_status)}}
                                             @if (!$userHasMasterAccess && $userHasMasterAccessWithPermission == 'LEAD_USER' && $quarter->partner(request()->partner)->pivot->claim_status == 1)
                                             <a href="javascript:void(0)" class="btn btn-sm btn-success" role="button" onclick="closeClaim(this, {{$quarter->id}}, {{request()->partner}})">Close Claim</a>
                                             @endif
