@@ -849,7 +849,7 @@
                                 <td class="text-center">
                                     @switch($quarter->partner(request()->partner)->pivot->status)
                                         @case('historic')
-                                            <a href="#" class="btn btn-sm btn-primary" role="button">Invoice</a>
+                                            <a target="_blank" href="{{asset('uploads/invoices/'.$quarter->id.'.pdf')}}" class="btn btn-sm btn-primary" role="button">Invoice</a>
                                             @break
                                         @case('current')
                                             @if (!$userHasMasterAccess && $userHasMasterAccessWithPermission == 'LEAD_USER' && $quarter->partner(request()->partner)->pivot->claim_status == 1)

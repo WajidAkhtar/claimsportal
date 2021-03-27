@@ -810,7 +810,7 @@
                                 @foreach ($project->quarters as $quarter)
                                 <td class="text-center">
                                     @if ($quarter->partner(request()->partner)->pivot->status == 'historic')
-                                        <a href="" class="btn btn-sm btn-primary" role="button">Invoice</a>
+                                        <a target="_blank" href="{{asset('uploads/invoices/'.$quarter->id.'.pdf')}}" class="btn btn-sm btn-primary" role="button">Invoice</a>
                                     @endif
                                 </td>
                                 @endforeach
