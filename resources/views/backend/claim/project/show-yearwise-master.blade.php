@@ -6,7 +6,6 @@
     $quarterNo = 1;
 @endphp
 @for ($yearIndex = 0; $yearIndex < ceil($project->length/4); $yearIndex++)
-{{-- {{var_dump($fromDate1->format('Y-m-d'))}} --}}
 <div class="col-sm-12 mt-5">
     <h4>Year {{$yearIndex + 1}} Total</h4>
     <table class="table table-responsive table-borders table-sm" style="overflow-x: auto;">
@@ -24,15 +23,18 @@
                 @for ($i = 0; $i < $currentYearQuarters; $i++)
                     @php
                         $date = clone $startDate;
+                        // $quarter = $project->quarters()->whereStartTimestamp($startDate->timestamp)->first();
+                        // $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
+                        $labelClass = '';
                         $date->addMonths(2)->endOfMonth();
-                        $lableClass = '';
-                        if (now()->betweenIncluded($startDate, $date)){
-                            $lableClass = 'text-danger';
-                        }
+                        // $labelClass = '';
+                        // if (now()->betweenIncluded($startDate, $date)){
+                        //     $labelClass = 'text-danger';
+                        // }
                     @endphp
                     <th class="text-center light-grey-bg">
-                        <label class="{{$lableClass}} text-uppercase"> {{$startDate->format('My')}} - {{$date->format('My')}}</label><br>
-                        <label class="{{$lableClass}}">Q{{$quarterNo++}}</label>
+                        <label class="{{$labelClass}} text-uppercase"> {{$startDate->format('My')}} - {{$date->format('My')}}</label><br>
+                        <label class="{{$labelClass}}">Q{{$quarterNo++}}</label>
                     </th>
                     @php
                         $startDate->addMonths(3);
@@ -47,16 +49,17 @@
                 @for ($i = 0; $i < $currentYearQuarters; $i++)
                 @php
                     $toDate = clone $fromDate;
+                    // $quarter = $project->quarters()->whereStartTimestamp($fromDate->timestamp)->first();
                     $toDate->addMonths(2)->endOfMonth();
                 @endphp
                 <th class="text-center">
-                    @if (now()->betweenIncluded($fromDate, $toDate))
+                    {{-- @if (now()->betweenIncluded($fromDate, $toDate))
                         <label class="current-bg mb-0">CURRENT</label>
                         @elseif($fromDate->lt(now()))
                         <label class="mb-0">HISTORIC</label>
                         @else
                         <label class="mb-0">FORECAST</label>
-                    @endif
+                    @endif --}}
                 </th>
                 @php
                     $fromDate->addMonths(3);
@@ -91,11 +94,16 @@
                 @for ($i = 0; $i < $currentYearQuarters; $i++)
                 @php
                     $toDate = clone $fromDate1;
+
+                    // $quarter = $project->quarters()->whereStartTimestamp($fromDate1->timestamp)->first();
+                    // $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
+                    $labelClass = '';
+
                     $toDate->addMonths(2)->endOfMonth();
-                    $lableClass = '';
-                    if (now()->betweenIncluded($fromDate1, $toDate)){
-                        $lableClass = 'text-danger';
-                    }
+                    // $labelClass = '';
+                    // if (now()->betweenIncluded($fromDate1, $toDate)){
+                    //     $labelClass = 'text-danger';
+                    // }
                     $projectTotal += $data->claims_data[$costItem->id]['quarter_values'][$fromDate1->timestamp] ?? 0;
                 @endphp
                 <td>
@@ -105,7 +113,7 @@
                         </div>
                         {{ html()->input('number', 'yearly_data['.$yearIndex.'][claim_values]['.$costItem->id.'][quarter_values]['.$fromDate1->timestamp.']', $data->claims_data[$costItem->id]['quarter_values'][$fromDate1->timestamp] ?? 0.00)
                             ->placeholder('0.00')
-                            ->class('form-control '.$lableClass)
+                            ->class('form-control '.$labelClass)
                             ->readOnly()
                             ->required() }}
                     </div>
@@ -163,11 +171,16 @@
                 @php
                     // $fromDate2 = clone $globalFromDate;
                     $toDate = clone $fromDate2;
+
+                    // $quarter = $project->quarters()->whereStartTimestamp($fromDate2->timestamp)->first();
+                    // $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
+                    $labelClass = '';
+
                     $toDate->addMonths(2)->endOfMonth();
-                    $lableClass = '';
-                    if (now()->betweenIncluded($fromDate2, $toDate)){
-                        $lableClass = 'text-danger';
-                    }
+                    // $labelClass = '';
+                    // if (now()->betweenIncluded($fromDate2, $toDate)){
+                    //     $labelClass = 'text-danger';
+                    // }
                 @endphp
                 <td class="text-center">
                     <div class="input-group">
@@ -176,7 +189,7 @@
                         </div>
                         {{ html()->input('number', 'yearly_data['.$yearIndex.'][total_costs][for_each_item][quarter_values]['.$fromDate2->timestamp.']', 0)
                             // ->placeholder('0.00')
-                            ->class('form-control '.$lableClass)
+                            ->class('form-control '.$labelClass)
                             ->readOnly()
                             ->required() }}
                     </div>
@@ -221,11 +234,16 @@
                 @for ($i = 0; $i < $currentYearQuarters; $i++)
                 @php
                     $toDate = clone $fromDate3;
+
+                    // $quarter = $project->quarters()->whereStartTimestamp($fromDate3->timestamp)->first();
+                    // $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
+                    $labelClass = '';
+
                     $toDate->addMonths(2)->endOfMonth();
-                    $lableClass = '';
-                    if (now()->betweenIncluded($fromDate3, $toDate)){
-                        $lableClass = 'text-danger';
-                    }
+                    // $labelClass = '';
+                    // if (now()->betweenIncluded($fromDate3, $toDate)){
+                    //     $labelClass = 'text-danger';
+                    // }
                 @endphp
                 <td class="text-center" style="color: #fff;">
                     <div class="input-group" style="color: #fff;">
@@ -234,7 +252,7 @@
                         </div>
                         {{ html()->input('number', 'yearly_data['.$yearIndex.'][total_costs][cumulative]['.$fromDate3->timestamp.']', 0)
                             // ->placeholder('0.00')
-                            ->class('form-control '.$lableClass)
+                            ->class('form-control '.$labelClass)
                             ->attribute('style', 'color: #fff;')
                             ->readOnly()
                             ->required() }}

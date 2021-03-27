@@ -11,7 +11,9 @@
     "require": {
         "php": "^7.3|^8.0",
         "arcanedev/log-viewer": "8.x",
+        "barryvdh/laravel-dompdf": "^0.9.0",
         "darkghosthunter/laraguard": "dev-master",
+        "dompdf/dompdf": "^1.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -23,6 +25,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.0",
         "livewire/livewire": "^2.0",
+        "maatwebsite/excel": "^3.1",
         "rappasoft/laravel-livewire-tables": "^0.3",
         "rappasoft/lockout": "^3.0",
         "spatie/laravel-activitylog": "^3.14",

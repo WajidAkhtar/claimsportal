@@ -23,7 +23,7 @@ class Organisation extends Model
         'building_name_no',
         'street',
         'address_line_2',
-        'country',
+        'county',
         'city',
         'postcode',
         'logo',

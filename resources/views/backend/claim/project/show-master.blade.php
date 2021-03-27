@@ -518,59 +518,35 @@
                                 <th>&nbsp;</th>
                                 <th>&nbsp;</th>
                                 <th>&nbsp;</th>
-                                {{-- @foreach ($project->quarters as $quarter)
+                                @foreach ($project->quarters as $quarter)
+                                @php
+                                    // $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
+                                @endphp
                                 <th class="text-center light-grey-bg">
                                     <label class="{{$lableClass ?? ''}} text-uppercase"> {{ $quarter->length }}</label><br>
                                     <label class="{{$lableClass ?? ''}}">{{$quarter->name}}</label>
                                 </th>
-                                @endforeach --}}
-                                @php
-                                    $startDate = $project->start_date;
-                                @endphp
-                                @for ($i = 0; $i < $project->length; $i++)
-                                    @php
-                                        $date = clone $startDate;
-                                        $date->addMonths(2)->endOfMonth();
-                                        $lableClass = '';
-                                        if (now()->betweenIncluded($startDate, $date)){
-                                            $lableClass = 'text-danger';
-                                        }
-                                    @endphp
-                                    <th class="text-center light-grey-bg">
-                                        <label class="{{$lableClass}} text-uppercase"> {{$startDate->format('My')}} - {{$date->format('My')}}</label><br>
-                                        <label class="{{$lableClass}}">Q{{$i+1}}</label>
-                                    </th>
-                                    @php
-                                        $startDate->addMonths(3);
-                                    @endphp
-                                @endfor
+                                @endforeach
                             </tr>
                             <tr class="dark-grey-bg">
                                 <th style="max-width: 20px;min-width:auto;">#</th>
                                 <th>COST ITEM</th>
                                 <th>DESCRIPTION</th>
                                 <th>TOTAL BUDGET</th>
+                                @foreach ($project->quarters as $quarter)
                                 @php
-                                    $fromDate = clone $project->start_date;
-                                @endphp
-                                @for ($i = 0; $i < $project->length; $i++)
-                                @php
-                                    $toDate = clone $fromDate;
-                                    $toDate->addMonths(2)->endOfMonth();
+                                    // $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
                                 @endphp
                                 <th class="text-center">
-                                    @if (now()->betweenIncluded($fromDate, $toDate))
+                                    {{-- @if (now()->betweenIncluded($fromDate, $toDate))
                                         <label class="current-bg mb-0">&nbsp;CURRENT&nbsp;</label>
                                         @elseif($fromDate->lt(now()))
                                         <label class="mb-0">HISTORIC</label>
                                         @else
                                         <label class="mb-0">FORECAST</label>
-                                    @endif
+                                    @endif --}}
                                 </th>
-                                @php
-                                    $fromDate->addMonths(3);
-                                @endphp
-                                @endfor
+                                @endforeach
                                 <th>PROJECT TOTAL</th>
                                 <th class="border-right">VARIANCE</th>
                                 
@@ -583,9 +559,6 @@
                         </thead>
                         <tbody>
                             @foreach ($project->costItems as $index => $costItem)
-                            @php
-                                $fromDate = clone $project->start_date;
-                            @endphp
                             <tr>
                                 <td style="max-width: 10px;min-width:auto;">{{$index+1}}</td>
                                 <td>{{$costItem->pivot->cost_item_name}}</td>
@@ -605,21 +578,17 @@
                                 @php
                                     $yearIndex = 0;
                                 @endphp
-                                @for ($i = 0; $i < $project->length; $i++)
+                                @foreach ($project->quarters as $quarter)
                                 @php
-                                    $toDate = clone $fromDate;
-                                    $toDate->addMonths(2)->endOfMonth();
+                                    // $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
                                     $labelClass = '';
-                                    if(now()->betweenIncluded($fromDate, $toDate)){
-                                        $labelClass = 'text-danger';
-                                    }
                                 @endphp
                                 <td>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">£</span>
                                         </div>
-                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][quarter_values]['.$fromDate->timestamp.']', $data->claims_data[$costItem->id]['quarter_values'][$fromDate->timestamp] ?? '')
+                                        {{ html()->input('number', 'claim_values['.$costItem->id.'][quarter_values]['.$quarter->start_timestamp.']', $data->claims_data[$costItem->id]['quarter_values'][$quarter->start_timestamp] ?? '')
                                             ->placeholder('0.00')
                                             ->class('form-control '.$labelClass)
                                             ->attribute('data-year-index', $yearIndex)
@@ -627,12 +596,11 @@
                                     </div>
                                 </td>
                                 @php
-                                    $fromDate->addMonths(3);
-                                    if(($i+1) % 4 == 0){
+                                    if(($loop->iteration) % 4 == 0){
                                         $yearIndex++;
                                     }
                                 @endphp
-                                @endfor
+                                @endforeach
                                 <td>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -713,24 +681,19 @@
                                     </div>
                                 </td>
                                 @php
-                                    $fromDate = clone $project->start_date;
                                     $yearIndex = 0;
                                 @endphp
-                                @for ($i = 0; $i < $project->length; $i++)
+                                @foreach ($project->quarters as $quarter)
                                 @php
-                                    $toDate = clone $fromDate;
-                                    $toDate->addMonths(2)->endOfMonth();
+                                    // $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
                                     $labelClass = '';
-                                    if(now()->betweenIncluded($fromDate, $toDate)){
-                                        $labelClass = 'text-danger';
-                                    }
                                 @endphp
                                 <td class="text-center">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text readonly">£</span>
                                         </div>
-                                        {{ html()->input('number', 'total_costs[for_each_item][quarter_values]['.$fromDate->timestamp.']')
+                                        {{ html()->input('number', 'total_costs[for_each_item][quarter_values]['.$quarter->start_timestamp.']')
                                             // ->placeholder('0.00')
                                             ->class('form-control '.$labelClass)
                                             ->attribute('data-year-index', $yearIndex)
@@ -739,12 +702,11 @@
                                     </div>
                                 </td>
                                 @php
-                                    $fromDate->addMonths(3);
-                                    if(($i+1) % 4 == 0) {
+                                    if(($loop->iteration) % 4 == 0) {
                                         $yearIndex++;
                                     }
                                 @endphp
-                                @endfor
+                                @endforeach
                                 <td class="text-center">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -813,24 +775,17 @@
                                 <td>&nbsp;</td>
                                 <td><strong>Total Cost (cumulative)</strong></td>
                                 <td style="color: #fff;">&nbsp;</td>
+                                @foreach ($project->quarters as $quarter)
                                 @php
-                                    $fromDate = clone $project->start_date;
-                                @endphp
-                                @for ($i = 0; $i < $project->length; $i++)
-                                @php
-                                    $toDate = clone $fromDate;
-                                    $toDate->addMonths(2)->endOfMonth();
+                                    // $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
                                     $labelClass = '';
-                                    if(now()->betweenIncluded($fromDate, $toDate)){
-                                        $labelClass = 'text-danger';
-                                    }
                                 @endphp
                                 <td class="text-center" style="color: #fff;">
                                     <div class="input-group" style="color: #fff;">
                                         <div class="input-group-prepend" style="color: #fff;">
                                             <span class="input-group-text readonly" style="color: #fff;">£</span>
                                         </div>
-                                        {{ html()->input('number', 'total_costs[cumulative]['.$fromDate->timestamp.']')
+                                        {{ html()->input('number', 'total_costs[cumulative]['.$quarter->start_timestamp.']')
                                             // ->placeholder('0.00')
                                             ->class('form-control '.$labelClass)
                                             ->attribute('style', 'color: #fff;')
@@ -838,10 +793,7 @@
                                             ->required() }}
                                     </div>
                                 </td>
-                                @php
-                                    $fromDate->addMonths(3);
-                                @endphp
-                                @endfor
+                                @endforeach
                                 <td style="color: #fff;">&nbsp;</td>
                                 <td class="border-right" style="color: #fff;">&nbsp;</td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
@@ -853,114 +805,15 @@
                             <tr>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td><strong>PO NUMBER</strong></td>
                                 <td>&nbsp;</td>
-                                @php
-                                    $fromDate = clone $project->start_date;
-                                @endphp
-                                @for ($i = 0; $i < $project->length; $i++)
-                                @php
-                                    $toDate = clone $fromDate;
-                                    $toDate->addMonths(2)->endOfMonth();
-                                @endphp
+                                <td>&nbsp;</td>
+                                @foreach ($project->quarters as $quarter)
                                 <td class="text-center">
-                                    {{ html()->input('number', 'po_number['.$fromDate->timestamp.']')
-                                            // ->placeholder('0.00')
-                                            ->class('form-control invoice-field')
-                                            ->required() }}
+                                    @if ($quarter->partner(request()->partner)->pivot->status == 'historic')
+                                        <a href="" class="btn btn-sm btn-primary" role="button">Invoice</a>
+                                    @endif
                                 </td>
-                                @php
-                                    $fromDate->addMonths(3);
-                                @endphp
-                                @endfor
-                                <td>&nbsp;</td>
-                                <td class="border-right">&nbsp;</td>
-                                @for ($i = 0; $i < ceil(($project->length/4)); $i++)
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td class="border-right">&nbsp;</td>
-                                @endfor
-                            </tr>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td><strong>INVOICE DATE</strong></td>
-                                <td>&nbsp;</td>
-                                @php
-                                    $fromDate = clone $project->start_date;
-                                @endphp
-                                @for ($i = 0; $i < $project->length; $i++)
-                                @php
-                                    $toDate = clone $fromDate;
-                                    $toDate->addMonths(2)->endOfMonth();
-                                @endphp
-                                <td class="text-center">
-                                    {{ html()->input('number', 'invoice_date['.$fromDate->timestamp.']')
-                                            // ->placeholder('0.00')
-                                            ->class('form-control invoice-field') }}
-                                </td>
-                                @php
-                                    $fromDate->addMonths(3);
-                                @endphp
-                                @endfor
-                                <td>&nbsp;</td>
-                                <td class="border-right">&nbsp;</td>
-                                @for ($i = 0; $i < ceil(($project->length/4)); $i++)
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td class="border-right">&nbsp;</td>
-                                @endfor
-                            </tr>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td><strong>INVOICE NO</strong></td>
-                                <td>&nbsp;</td>
-                                @php
-                                    $fromDate = clone $project->start_date;
-                                @endphp
-                                @for ($i = 0; $i < $project->length; $i++)
-                                @php
-                                    $toDate = clone $fromDate;
-                                    $toDate->addMonths(2)->endOfMonth();
-                                @endphp
-                                <td class="text-center">
-                                    {{ html()->input('number', 'invoice_no['.$fromDate->timestamp.']')
-                                            // ->placeholder('0.00')
-                                            ->class('form-control invoice-field') }}
-                                </td>
-                                @php
-                                    $fromDate->addMonths(3);
-                                @endphp
-                                @endfor
-                                <td>&nbsp;</td>
-                                <td class="border-right">&nbsp;</td>
-                                @for ($i = 0; $i < ceil(($project->length/4)); $i++)
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td class="border-right">&nbsp;</td>
-                                @endfor
-                            </tr>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                @php
-                                    $fromDate = clone $project->start_date;
-                                @endphp
-                                @for ($i = 0; $i < $project->length; $i++)
-                                @php
-                                    $toDate = clone $fromDate;
-                                    $toDate->addMonths(2)->endOfMonth();
-                                @endphp
-                                <td class="text-center">
-                                    <a href="" class="btn btn-sm btn-primary" role="button">Invoice</a>
-                                </td>
-                                @php
-                                    $fromDate->addMonths(3);
-                                @endphp
-                                @endfor
+                                @endforeach
                                 <td>&nbsp;</td>
                                 <td class="border-right">&nbsp;</td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)

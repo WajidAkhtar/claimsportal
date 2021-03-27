@@ -3,11 +3,14 @@
 namespace App\Domains\Claim\Http\Controllers\Backend\Project;
 
 use Illuminate\Http\Request;
+use App\Exports\InvoiceExport;
 use App\Domains\Auth\Models\User;
+use Barryvdh\DomPDF\Facade as PDF;
 use App\Domains\System\Models\Pool;
 use App\Exceptions\GeneralException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Domains\Claim\Models\Project;
 use App\Domains\Claim\Models\CostItem;
 use Illuminate\Support\Facades\Validator;
@@ -102,6 +105,51 @@ class ProjectController
      */
     public function show(Project $project)
     {
+        $quarterId = 1;
+        $organisationId = 25;
+        $quarter = $project->quarters()->whereId($quarterId)->first();
+        $quarterPartner = $quarter->partner($organisationId);
+
+        $invoiceTo = Organisation::findOrFail($organisationId);
+        $invoiceToPartner = $project->allpartners()->whereOrganisationId($organisationId)->first();
+        $invoiceFrom = auth()->user()->organisation;
+        $invoiceFromPartner = $project->allpartners()->whereOrganisationId($invoiceFrom->id)->first();
+
+        $invoiceItems = [];
+        $project->costItems = $project->costItems()->whereNull('project_cost_items.deleted_at')->where('organisation_id', $organisationId)->orderByRaw($project->costItemOrderRaw())->get();
+        foreach ($project->costItems as $index => $costItem) {
+            $invoiceItems[$index]['item_name'] = $costItem->pivot->cost_item_name;
+            $invoiceItems[$index]['item_description'] = $costItem->pivot->cost_item_description;
+            $invoiceItems[$index]['item_price'] = optional(optional($costItem->claims_data)->quarter_values)->{"$quarter->start_timestamp"} ?? 0;
+            $invoiceItems[$index]['vat_perc'] = 0;
+        }
+
+        // return view('backend.claim.project.invoice')
+        //     ->withQuarter($quarter)
+        //     ->withQuarterPartner($quarterPartner)
+        //     ->withInvoiceItems(json_decode(json_encode($invoiceItems)))
+        //     ->withInvoiceTo($invoiceTo)
+        //     ->withInvoiceToPartner($invoiceToPartner)
+        //     ->withInvoiceFrom($invoiceFrom)
+        //     ->withInvoiceFromPartner($invoiceFromPartner);
+        
+        // return Excel::download(new InvoiceExport($quarter, $quarterPartner, $invoiceItems, $invoiceTo, $invoiceToPartner, $invoiceFrom, $invoiceFromPartner), $quarter->id.'.pdf');
+        
+        $pdf = PDF::loadView('backend.claim.project.invoice', [
+            'quarter' => $quarter,
+            'quarterPartner' => $quarterPartner,
+            'invoiceItems' => json_decode(json_encode($invoiceItems)),
+            'invoiceTo' => $invoiceTo,
+            'invoiceToPartner' => $invoiceToPartner,
+            'invoiceFrom' => $invoiceFrom,
+            'invoiceFromPartner' => $invoiceFromPartner,
+        ]);
+        return $pdf->download($quarter->id.'.pdf');
+
+        dd($quarterPartner);
+        // END PDF
+        dd(1);
+
         $userHasPartialAccessToProject = $project->userHasPartialAccessToProject();
         if(!$userHasPartialAccessToProject) {
             return redirect()->route('admin.claim.project.index')->withFlashDanger(__('you have no access to this project.'));
@@ -491,6 +539,47 @@ class ProjectController
         }
 
         // Generate PDF
+        $quarterId = $$request->quarterId;
+        $organisationId = $request->organisationId;
+        // $quarter = $project->quarters()->whereId($quarterId)->first();
+        // $quarterPartner = $quarter->partner($organisationId);
+
+        $invoiceTo = Organisation::findOrFail($organisationId);
+        $invoiceToPartner = $project->partners()->whereOrganisationId($organisationId)->first();
+        $invoiceFrom = auth()->user()->organisation;
+        $invoiceFromPartner = $project->partners()->whereOrganisationId($invoiceFrom->id)->first();
+
+        $invoiceItems = [];
+        $project->costItems = $project->costItems()->whereNull('project_cost_items.deleted_at')->where('organisation_id', $organisationId)->orderByRaw($project->costItemOrderRaw())->get();
+        foreach ($project->costItems as $index => $costItem) {
+            $invoiceItems[$index]['item_name'] = $costItem->pivot->cost_item_name;
+            $invoiceItems[$index]['item_description'] = $costItem->pivot->cost_item_description;
+            $invoiceItems[$index]['item_price'] = optional(optional($costItem->claims_data)->quarter_values)->{"$quarter->start_timestamp"} ?? 0;
+            $invoiceItems[$index]['vat_perc'] = 0;
+        }
+
+        // return view('backend.claim.project.invoice')
+        //     ->withQuarter($quarter)
+        //     ->withQuarterPartner($quarterPartner)
+        //     ->withInvoiceItems(json_decode(json_encode($invoiceItems)))
+        //     ->withInvoiceTo($invoiceTo)
+        //     ->withInvoiceToPartner($invoiceToPartner)
+        //     ->withInvoiceFrom($invoiceFrom)
+        //     ->withInvoiceFromPartner($invoiceFromPartner);
+        
+        // return Excel::download(new InvoiceExport($quarter, $quarterPartner, $invoiceItems, $invoiceTo, $invoiceToPartner, $invoiceFrom, $invoiceFromPartner), $quarter->id.'.pdf');
+        
+        $pdf = PDF::loadView('backend.claim.project.invoice', [
+            'quarter' => $quarter,
+            'quarterPartner' => $quarterPartner,
+            'invoiceItems' => json_decode(json_encode($invoiceItems)),
+            'invoiceTo' => $invoiceTo,
+            'invoiceToPartner' => $invoiceToPartner,
+            'invoiceFrom' => $invoiceFrom,
+            'invoiceFromPartner' => $invoiceFromPartner,
+        ]);
+        $pdf->save(public_path('invoices/'.$quarter->id.'.pdf'));
+        // return $pdf->download($quarter->id.'.pdf');
 
         $quarterPartner->pivot->status = 'historic';
         $quarterPartner->pivot->claim_status = 2;
