@@ -505,7 +505,6 @@ class ProjectController
         $invoiceTo = Organisation::findOrFail($organisationId);
         $invoiceToPartner = $project->allpartners()->whereOrganisationId($organisationId)->first();
         $invoiceFrom = auth()->user()->organisation;
-        dd($invoiceFrom);
         $invoiceFromPartner = $project->allpartners()->whereOrganisationId($invoiceFrom->id)->first();
 
         $invoiceItems = [];
