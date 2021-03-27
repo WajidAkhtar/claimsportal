@@ -14,6 +14,7 @@ trait ProjectQuarterMethod
      */
     public function partner($organisationId = null)
     {
+        dd(auth()->user()->organisation->id);
         return $this->partners()->whereProjectOrganisationId($organisationId ?? optional(auth()->user()->organisation)->id)->first();
     }
 }

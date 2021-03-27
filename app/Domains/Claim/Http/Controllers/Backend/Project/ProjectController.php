@@ -105,9 +105,6 @@ class ProjectController
      */
     public function show(Project $project)
     {
-        $user=auth()->user();
-        $user->organisation_id = Organisation::first()->id;
-        $user->save();
         $userHasPartialAccessToProject = $project->userHasPartialAccessToProject();
         if(!$userHasPartialAccessToProject) {
             return redirect()->route('admin.claim.project.index')->withFlashDanger(__('you have no access to this project.'));
