@@ -806,7 +806,7 @@
                                 @foreach ($project->quarters as $quarter)
                                 <td class="text-center">
                                     {{ html()->input('text', 'invoice_date['.$quarter->start_timestamp.']', $quarter->partner(request()->partner)->pivot->invoice_date)
-                                            ->placeholder('YYYY-MM-DD')
+                                            // ->placeholder('YYYY-MM-DD')
                                             ->class('form-control invoice-field')
                                             ->readOnly($currentSheetUserPermission == 'LEAD_USER' || $userHasMasterAccess || $quarter->partner(request()->partner)->pivot->claim_status !== 0 || $quarter->partner(request()->partner)->pivot->status != 'current') }}
                                 </td>
