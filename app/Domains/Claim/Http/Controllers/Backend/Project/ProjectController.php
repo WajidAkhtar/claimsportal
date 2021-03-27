@@ -497,7 +497,7 @@ class ProjectController
         }
 
         // Generate PDF
-        $quarterId = $$request->quarterId;
+        $quarterId = $request->quarterId;
         $organisationId = $request->organisationId;
         // $quarter = $project->quarters()->whereId($quarterId)->first();
         // $quarterPartner = $quarter->partner($organisationId);
