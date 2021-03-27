@@ -145,6 +145,9 @@ class ProjectController
             $userHasMasterAccess = true;
             $userHasMasterAccessWithPermissionId = SheetUserPermissions::where('project_id', $project->id)->where('is_master', '1')->pluck('sheet_permission_id');
             $userHasMasterAccessWithPermission = SheetPermission::find($userHasMasterAccessWithPermissionId)->first()->permission;
+            if($userHasMasterAccessWithPermission == 'LEAD_USER'){
+                $userHasMasterAccess = false;
+            }
         }
         
         $data = [];
