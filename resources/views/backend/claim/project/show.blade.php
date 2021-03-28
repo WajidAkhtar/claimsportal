@@ -425,7 +425,7 @@
                         <div class="row mt-2">
                             <div class="col">
                                 <div><strong>PROJECT LEAD</strong></div>
-                                <div>Name: {{$leadUserPartner->invoiceOrganisation->organisation_name}}</div>
+                                <div>Name: {{$leadUser->organisation->organisation_name}}</div>
                                 <div>Contact: {{optional($leadUserPartner)->finance_contact_name ?? 'N/A'}}</div>
                                 <div>Web URL: 
                                     @if(optional($leadUserPartner)->web_url) 
