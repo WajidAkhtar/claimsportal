@@ -520,14 +520,14 @@ class ProjectController
         if(empty($invoiceFromPartner) || (!empty($invoiceFromPartner) && empty($invoiceFromPartner->invoiceOrganisation))) {
             return response()->json([
                 'success' => 0,
-                'message' => 'Please fill up finance information for '.$invoiceFrom->organisation_name
+                'message' => 'Finance information for '.$invoiceFrom->organisation_name.' is not available'
             ]);
         }
         
         if(empty($invoiceToPartner) || (!empty($invoiceToPartner) && empty($invoiceToPartner->invoiceOrganisation))) {
             return response()->json([
                 'success' => 0,
-                'message' => 'Please fill up finance information for '.$invoiceTo->organisation_name
+                'message' => 'Pleae fill up your finance information',
             ]);
         }
 
