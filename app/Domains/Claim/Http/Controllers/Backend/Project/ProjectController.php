@@ -517,15 +517,14 @@ class ProjectController
         $invoiceFromPartner = $project->allpartners()->whereOrganisationId($organisationId)->first();
         $invoiceTo = auth()->user()->organisation;
         $invoiceToPartner = $project->allpartners()->whereNull('organisation_id')->whereIsMaster('1')->first();
-        dd($invoiceFromPartner, $invoiceToPartner);
-        if(empty($invoiceFromPartner)) {
+        if(empty($invoiceFromPartner) || (!empty($invoiceFromPartner) && empty($invoiceFromPartner->invoiceOrganisation))) {
             return response()->json([
                 'success' => 0,
                 'message' => 'Please fill up finance information for '.$invoiceFrom->organisation_name
             ]);
         }
         
-        if(empty($invoiceToPartner)) {
+        if(empty($invoiceToPartner) || (!empty($invoiceToPartner) && empty($invoiceToPartner->invoiceOrganisation))) {
             return response()->json([
                 'success' => 0,
                 'message' => 'Please fill up finance information for '.$invoiceTo->organisation_name
