@@ -149,6 +149,11 @@ class ProjectController
                 $userHasMasterAccess = false;
             }
         }
+
+        $leadUser = optional(SheetUserPermissions::where('project_id', $project->id)->where('is_master', '1')->whereHas('sheetPermissions', function($q){
+            return $q->wherePermission('LEAD_USER');
+        })->first())->user;
+        $leadUserPartner = $project->allpartners()->whereNull('organisation_id')->whereIsMaster('1')->first();
         
         $data = [];
         if(empty(request()->partner) && $project->userHasFullAccessToProject()) {
@@ -208,7 +213,9 @@ class ProjectController
             ->withOrganisationTypes($organisationTypes)
             ->withOrganisationRoles($organisationRoles)
             ->withAllowToEdit(FALSE)
-            ->withyearwiseHtml($yearwiseHtml);
+            ->withyearwiseHtml($yearwiseHtml)
+            ->withLeadUser($leadUser)
+            ->withLeadUserPartner($leadUserPartner);
         } else {
             $sheet_owner = (!empty(request()->partner)) ? request()->partner : 0;
             $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project])->render();
@@ -266,7 +273,9 @@ class ProjectController
             ->withUserHasMasterAccess($userHasMasterAccess)
             ->withUserHasMasterAccessWithPermission($userHasMasterAccessWithPermission)
             ->withCurrentSheetUserPermission($currentSheetUserPermission)
-            ->withyearwiseHtml($yearwiseHtml);
+            ->withyearwiseHtml($yearwiseHtml)
+            ->withLeadUser($leadUser)
+            ->withLeadUserPartner($leadUserPartner);
         }
     }
 
@@ -388,6 +397,7 @@ class ProjectController
             'funder_city' => $request->funder_city,
             'funder_county' => $request->funder_county,
             'funder_post_code' => $request->funder_post_code,
+            'customer_ref' => $request->customer_ref
         ];
         if(!empty($request->is_master) && $request->is_master == 1) {
             $isSaved = ProjectPartners::where('is_master', '1')->where('project_id', $project->id)->update($data);
@@ -489,7 +499,7 @@ class ProjectController
 
         $quarter = $project->quarters()->whereId($request->quarterId)->first();
         $quarterPartner = $quarter->partner($request->organisationId);
-        if($quarterPartner->pivot->claim_status == 2) {
+        if($quarterPartner->pivot->claim_status == 2 && !$request->regenerate) {
             return response()->json([
                 'success' => 0,
                 'message' => 'You already closed claim for this quarter'
@@ -502,11 +512,40 @@ class ProjectController
         // $quarter = $project->quarters()->whereId($quarterId)->first();
         // $quarterPartner = $quarter->partner($organisationId);
 
-        $invoiceTo = Organisation::findOrFail($organisationId);
-        $invoiceToPartner = $project->allpartners()->whereOrganisationId($organisationId)->first();
-        $invoiceFrom = auth()->user()->organisation;
-        $invoiceFromPartner = $project->allpartners()->whereOrganisationId($invoiceFrom->id)->first();
+        // Invoice To Lead
+        $invoiceFrom = Organisation::findOrFail($organisationId);
+        $invoiceFromPartner = $project->allpartners()->whereOrganisationId($organisationId)->first();
+        $invoiceTo = auth()->user()->organisation;
+        $invoiceToPartner = $project->allpartners()->whereNull('organisation_id')->whereIsMaster('1')->first();
+        
+        $this->generateAndSaveInvoice($project, $organisationId, $quarter, $quarterPartner, $invoiceFrom, $invoiceFromPartner, $invoiceTo, $invoiceToPartner);
+        
+        // // Invoice To Funder
+        // $invoiceFrom = auth()->user()->organisation;
+        // $invoiceFromPartner = $project->allpartners()->whereNull('organisation_id')->whereIsMaster('1')->first();
+        // $invoiceTo = Organisation::findOrFail($invoiceFromPartner->funder_id);
+        // $invoiceToPartner = $project->allpartners()->whereOrganisationId($invoiceTo->id)->first();
 
+        // $this->generateAndSaveInvoice($project, $organisationId, $quarter, $quarterPartner, $invoiceFrom, $invoiceFromPartner, $invoiceTo, $invoiceToPartner);
+        
+        $quarterPartner->pivot->status = 'historic';
+        $quarterPartner->pivot->claim_status = 2;
+        $quarterPartner->pivot->save();
+        
+        // Next Quarter
+        if(!$request->regenerate) {
+            $nextQuarter = $project->quarters()->where('id', '>', $quarter->id)->first();
+            $nextQuarterPartner = $nextQuarter->partner($request->organisationId);
+            $nextQuarterPartner->pivot->status = 'current';
+            $nextQuarterPartner->pivot->save();
+        }
+
+        $message = ($request->regenerate)? 'Invoice regenerated successfully' : 'Claim closed successfully!';
+        return response()->json(['success' => 1, 'message' => $message]);
+    }
+
+    protected function generateAndSaveInvoice($project, $organisationId, $quarter, $quarterPartner, $invoiceFrom, $invoiceFromPartner, $invoiceTo, $invoiceToPartner)
+    {
         $invoiceItems = [];
         $project->costItems = $project->costItems()->whereNull('project_cost_items.deleted_at')->where('organisation_id', $organisationId)->orderByRaw($project->costItemOrderRaw())->get();
         foreach ($project->costItems as $index => $costItem) {
@@ -516,17 +555,6 @@ class ProjectController
             $invoiceItems[$index]['vat_perc'] = 0;
         }
 
-        // return view('backend.claim.project.invoice')
-        //     ->withQuarter($quarter)
-        //     ->withQuarterPartner($quarterPartner)
-        //     ->withInvoiceItems(json_decode(json_encode($invoiceItems)))
-        //     ->withInvoiceTo($invoiceTo)
-        //     ->withInvoiceToPartner($invoiceToPartner)
-        //     ->withInvoiceFrom($invoiceFrom)
-        //     ->withInvoiceFromPartner($invoiceFromPartner);
-        
-        // return Excel::download(new InvoiceExport($quarter, $quarterPartner, $invoiceItems, $invoiceTo, $invoiceToPartner, $invoiceFrom, $invoiceFromPartner), $quarter->id.'.pdf');
-        
         $pdf = PDF::loadView('backend.claim.project.invoice', [
             'quarter' => $quarter,
             'quarterPartner' => $quarterPartner,
@@ -536,20 +564,8 @@ class ProjectController
             'invoiceFrom' => $invoiceFrom,
             'invoiceFromPartner' => $invoiceFromPartner,
         ]);
-        $pdf->save(public_path('invoices/'.$quarter->id.'.pdf'));
-        // return $pdf->download($quarter->id.'.pdf');
+        $pdf->save(public_path('uploads/invoices/'.$quarter->id.'.pdf'));
 
-        $quarterPartner->pivot->status = 'historic';
-        $quarterPartner->pivot->claim_status = 2;
-        $quarterPartner->pivot->save();
-        
-        // Next Quarter
-        $nextQuarter = $project->quarters()->where('id', '>', $quarter->id)->first();
-        $nextQuarterPartner = $nextQuarter->partner($request->organisationId);
-        $nextQuarterPartner->pivot->status = 'current';
-        $nextQuarterPartner->pivot->save();
-
-        return response()->json(['success' => 1, 'message' => 'Claim closed successfully!']);
+        return true;
     }
-
 }

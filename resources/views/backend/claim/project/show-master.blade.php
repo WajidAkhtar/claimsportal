@@ -483,6 +483,31 @@
                         </div>
                     </div>
                 @endif
+                @if(!empty($leadUser))
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col">
+                                <img src="{{ asset('uploads/organisations/logos/'.$leadUser->organisation->logo) }}" height="160" width="160" />
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                <div><strong>PROJECT LEAD</strong></div>
+                                <div>Name: {{$leadUser->organisation->organisation_name}}</div>
+                                <div>Contact: {{optional($leadUserPartner)->finance_contact_name ?? 'N/A'}}</div>
+                                <div>Web URL: 
+                                    @if(optional($leadUserPartner)->web_url) 
+                                        <a class="text-primary" href="{{ optional($leadUserPartner)->web_url }}">
+                                            {{ optional($leadUserPartner)->web_url }}
+                                        </a>
+                                    @else 
+                                        {{ 'N/A' }}
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
                 @if(!empty($project->funders()))
                     <div class="col-md-4">
                         <div class="row">

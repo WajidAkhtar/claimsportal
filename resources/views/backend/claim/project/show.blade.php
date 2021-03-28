@@ -399,7 +399,7 @@
             </div> -->
             <div class="row">
                 @if(!empty($project->logo) && file_exists(public_path('uploads/projects/logos/'.$project->logo)))
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="row">
                             <div class="col">
                                 <img src="{{ asset('uploads/projects/logos/'.$project->logo) }}" height="160" width="160" />
@@ -415,8 +415,33 @@
                         </div>
                     </div>
                 @endif
+                @if(!empty($leadUser))
+                    <div class="col-md-3">
+                        <div class="row">
+                            <div class="col">
+                                <img src="{{ asset('uploads/organisations/logos/'.$leadUser->organisation->logo) }}" height="160" width="160" />
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                <div><strong>PROJECT LEAD</strong></div>
+                                <div>Name: {{$leadUserPartner->invoiceOrganisation->organisation_name}}</div>
+                                <div>Contact: {{optional($leadUserPartner)->finance_contact_name ?? 'N/A'}}</div>
+                                <div>Web URL: 
+                                    @if(optional($leadUserPartner)->web_url) 
+                                        <a class="text-primary" href="{{ optional($leadUserPartner)->web_url }}">
+                                            {{ optional($leadUserPartner)->web_url }}
+                                        </a>
+                                    @else 
+                                        {{ 'N/A' }}
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
                 @if(!empty(request()->partner) && !empty($organisation))
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="row">
                             <div class="col">
                                 <img src="{{ asset('uploads/organisations/logos/'.$organisation->logo) }}" height="160" width="160" />
@@ -441,7 +466,7 @@
                     </div>
                 @endif
                 @if(!empty($project->funders()))
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="row">
                             <div class="col">
                                 <img src="{{ asset('uploads/organisations/logos/'.$project->funders()->first()->logo) }}" height="160" width="160" />
@@ -846,7 +871,7 @@
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
-                                <td class="text-center">
+                                <td>
                                     @switch($quarter->partner(request()->partner)->pivot->status)
                                         @case('historic')
                                             <a target="_blank" href="{{asset('uploads/invoices/'.$quarter->id.'.pdf')}}" class="btn btn-sm btn-primary" role="button">Invoice</a>
@@ -871,21 +896,23 @@
                                 <td class="border-right">&nbsp;</td>
                                 @endfor
                             </tr>
-                            @if (!$userHasMasterAccess && $userHasMasterAccessWithPermission == 'LEAD_USER' && $quarter->partner(request()->partner)->pivot->claim_status == 2)
+                            @if (!$userHasMasterAccess && $userHasMasterAccessWithPermission == 'LEAD_USER')
                             <tr>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
-                                <td class="text-center">
+                                @if( $quarter->partner(request()->partner)->pivot->claim_status == 2)
+                                <td>
                                     @switch($quarter->partner(request()->partner)->pivot->status)
                                         @case('historic')
-                                            <a href="#" class="btn btn-sm btn-primary" role="button">Regenerate Invoice</a>
+                                            <a href="javascript:void(0)" class="btn btn-sm btn-secondary" role="button" onclick="closeClaim(this, {{$quarter->id}}, {{request()->partner}}, true)">Regenerate</a>
                                             @break
                                         @default
                                     @endswitch
                                 </td>
+                                @endif
                                 @endforeach
                                 <td>&nbsp;</td>
                                 <td class="border-right">&nbsp;</td>
@@ -1339,31 +1366,46 @@
                 data: {quarterId: quarterId, po_number: po_number, invoice_no: invoice_no, invoice_date: invoice_date, organisationId : organisationId},
                 type: 'POST',
                 dataType: 'json',
+                beforeSend: function(){
+                    $(element).html('Please wait....');
+                    $(element).attr('disabled', 'disabled').addClass('disabled');
+                },
                 success: function(response){
+                    $(element).html('Submit Claim');
                     if(response.success) {
                         toastr.success(response.message);
                         $(element).attr('disabled', 'disabled').addClass('disabled');
                         $('[name="po_number['+timestamp+']"], [name="invoice_no['+timestamp+']"], [name="invoice_date['+timestamp+']"]').attr('readonly', 'readonly');
+                        window.location.href = '{{route("admin.claim.project.show", [$project, "partner" => request()->partner])}}'
                     }
                     else{
+                        $(element).removeAttr('disabled').removeClass('disabled');
                         toastr.error(response.message);
                     }
                 }
             })
         }
         
-        function closeClaim(element, quarterId, organisationId) {
+        function closeClaim(element, quarterId, organisationId, regenerate = false) {
+            var text = $(element).text();
             $.ajax({
                 url: '{{route('admin.claim.project.close.claim', $project)}}',
-                data: {quarterId: quarterId, organisationId: organisationId},
+                data: {quarterId: quarterId, organisationId: organisationId, regenerate: regenerate},
                 type: 'POST',
                 dataType: 'json',
+                beforeSend: function(){
+                    $(element).html('Please wait....');
+                    $(element).attr('disabled', 'disabled').addClass('disabled');
+                },
                 success: function(response){
+                    $(element).html(text);
                     if(response.success) {
                         toastr.success(response.message);
                         $(element).attr('disabled', 'disabled').addClass('disabled');
+                        window.location.href = '{{route("admin.claim.project.show", [$project, "partner" => request()->partner])}}'
                     }
                     else{
+                        $(element).removeAttr('disabled').removeClass('disabled');
                         toastr.error(response.message);
                     }
                 }

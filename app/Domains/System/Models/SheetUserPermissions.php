@@ -3,6 +3,7 @@
 namespace App\Domains\System\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Domains\Auth\Models\User;
 
 /**
  * Class SheetUserPermissions.
@@ -58,4 +59,13 @@ class SheetUserPermissions extends Model
      */
     protected $with = [];
     
+    public function sheetPermissions()
+    {
+        return $this->belongsTo(SheetPermission::class, 'sheet_permission_id');
+    }
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

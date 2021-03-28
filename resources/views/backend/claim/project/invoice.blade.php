@@ -2,16 +2,18 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>@yield('title', $quarter->name.' Invoice')</title>
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+        <title>{{$quarter->name.' Invoice'}}</title>
         <!-- START: Template CSS-->
         <link rel="stylesheet" href="{{ asset('assets/backend/vendors/bootstrap/css/bootstrap.min.css') }}">
         <!-- START: Custom CSS-->
-        <link rel="stylesheet" href="{{ asset('assets/backend/css/main.css') }}">
+        <!-- <link rel="stylesheet" href="{{ asset('assets/backend/css/main.css') }}"> -->
         <style>
             body {
                 background-color: #FFF;
-                color: #000
+                color: #000;
+                font-family: 'DejaVu Sans';
+                font-size: 13px;
             }
 
             .padding {
@@ -32,15 +34,17 @@
             }
 
             h3 {
-                font-size: 20px
+                font-size: 16px;
+                font-family: 'DejaVu Sans' !important;
             }
 
             h5 {
-                font-size: 15px;
+                font-size: 13px;
                 line-height: 26px;
                 /* color: #c2c2c4; */
                 margin: 0px 0px 15px 0px;
                 /* font-family: 'Circular Std Medium' */
+                font-family: 'DejaVu Sans' !important;
             }
 
             .text-dark {
@@ -56,18 +60,35 @@
                     <table class="w-100">
                         <tr>
                             <td>
-                                @if(!empty($invoiceFrom->logo) && file_exists(public_path('uploads/organisations/logos/'.$invoiceFrom->logo)))
-                                    <img src="{{ asset('uploads/organisations/logos/'.$invoiceFrom->logo) }}" height="160" width="160" />
+                                @if(!empty($invoiceFromPartner->invoiceOrganisation->logo) && file_exists(public_path('uploads/organisations/logos/'.$invoiceFromPartner->invoiceOrganisation->logo)))
+                                    <img src="{{ asset('uploads/organisations/logos/'.$invoiceFromPartner->invoiceOrganisation->logo) }}" height="160" width="160" />
                                 @else
-                                    {{ $invoiceFrom->organisation_name }}
+                                    {{ $invoiceFromPartner->invoiceOrganisation->organisation_name }}
                                 @endif
                             </td>
                             <td class="float-right">
-                                <h5><strong>Invoice Date: </strong> {{$quarterPartner->pivot->invoice_date}}</h5>
-                                <h5><strong>Invoice Number: </strong> #{{$quarterPartner->pivot->invoice_no}}</h5>
-                                <h5><strong>PO Number: </strong> {{$quarterPartner->pivot->po_number}}</h4>
-                                <h5><strong>Customer Account Number: </strong> {{$invoiceToPartner->account_no}}</h4>
-                                <h5><strong>Contract Ref: </strong> {{$invoiceToPartner->customer_ref}}</h4>
+                                <table class="w-100">
+                                    <tr>
+                                        <td><strong>Invoice Date: </strong></td>
+                                        <td>{{$quarterPartner->pivot->invoice_date}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Invoice Number: </strong></td>
+                                        <td>#{{$quarterPartner->pivot->invoice_no}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>PO Number: </strong></td>
+                                        <td>{{$quarterPartner->pivot->po_number}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Customer Account Number: </strong></td>
+                                        <td>{{$invoiceToPartner->account_no}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Contract Ref: </strong></td>
+                                        <td>{{$invoiceToPartner->customer_ref}}</td>
+                                    </tr>
+                                </table>
                             </td>
                         </tr>
                     </table>
@@ -77,24 +98,28 @@
                         <table class="w-100">
                             <tr>
                                 <td>
-                                    <h5 class="mb-3">Invoice To:</h5>
-                                    <h3 class="text-dark mb-1">{{$invoiceTo->organisation_name}}</h3>
-                                    <div>{{$invoiceTo->street_address}}</div>
-                                    <div>{{$invoiceTo->address_line_2}}</div>
-                                    <div>{{$invoiceTo->county}}</div>
-                                    <div>{{$invoiceTo->city}}</div>
-                                    <div>{{$invoiceTo->postcode}}</div>
+                                    <p>
+                                        <strong class="mb-3 text-sm">Invoice To:</strong>
+                                    </p>
+                                    <strong class="text-dark mb-1">{{$invoiceToPartner->invoiceOrganisation->organisation_name}}</strong>
+                                    <div>{{$invoiceToPartner->street_address}}</div>
+                                    <div>{{$invoiceToPartner->address_line_2}}</div>
+                                    <div>{{$invoiceToPartner->county}}</div>
+                                    <div>{{$invoiceToPartner->city}}</div>
+                                    <div>{{$invoiceToPartner->post_code}}</div>
                                     <div><strong>Finance Tel:</strong> {{$invoiceToPartner->finance_tel ?? 'N/A'}}</div>
                                     <div><strong>Finance Email:</strong> {{$invoiceToPartner->finance_email ?? 'N/A'}}</div>
                                 </td>
                                 <td class="float-right">
-                                    <h5 class="mb-3">Invoice From:</h5>
-                                    <h3 class="text-dark mb-1">{{$invoiceFrom->organisation_name}}</h3>
-                                    <div>{{$invoiceFrom->street_address}}</div>
-                                    <div>{{$invoiceFrom->address_line_2}}</div>
-                                    <div>{{$invoiceFrom->county}}</div>
-                                    <div>{{$invoiceFrom->city}}</div>
-                                    <div>{{$invoiceFrom->postcode}}</div>
+                                    <p>
+                                        <strong class="mb-3 text-sm">Invoice From:</strong>
+                                    </p>
+                                    <strong class="text-dark mb-1">{{$invoiceFromPartner->invoiceOrganisation->organisation_name}}</strong>
+                                    <div>{{$invoiceFromPartner->street_address}}</div>
+                                    <div>{{$invoiceFromPartner->address_line_2}}</div>
+                                    <div>{{$invoiceFromPartner->county}}</div>
+                                    <div>{{$invoiceFromPartner->city}}</div>
+                                    <div>{{$invoiceFromPartner->post_code}}</div>
                                     <div><strong>Finance Tel:</strong> {{$invoiceFromPartner->finance_tel ?? 'N/A'}}</div>
                                     <div><strong>Finance Email:</strong> {{$invoiceFromPartner->finance_email ?? 'N/A'}}</div>
                                 </td>
@@ -178,15 +203,18 @@
                         <table class="w-100 mb-3">
                             <tr style="background-color:#000000;color: #FFFFFF;">
                                 <td>
-                                    <h3>BANK DETAILS</h3>
+                                    <strong>BANK DETAILS</strong>
                                 </td>
                             </tr>
                         </table>
-                        <table class="w-50">
+                    </div>
+                    <div class="row">
+                        <table class="w-100 mt-3">
                             <tr>
-                                <td>
-                                    <h5 style="background-color:#000000;color: #FFFFFF;">FOR BACS PAYMENTS</h5>
+                                <td style="background-color:#000000;color: #FFFFFF;">
+                                    <strong>FOR BACS PAYMENTS</strong>
                                 </td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td class="left">
@@ -227,20 +255,23 @@
                         </table>
                     </div>
                     <div class="row">
-                        <table class="w-100">
+                        <table class="w-100 mt-3">
                             <tr>
-                                <td>
-                                    <h5 style="background-color:#000000;color: #FFFFFF;">ONLINE PAYEMENTS</h5>
+                                <td style="background-color:#000000;color: #FFFFFF;">
+                                    <strong>ONLINE PAYEMENTS</strong>
                                 </td>
+                                <td width="60%"></td>
                             </tr>
                             <tr>
                                 <td>
+                                    <!-- <a href="{{$invoiceFromPartner->web_url}}">{{$invoiceFromPartner->web_url}}</a> -->
                                     {{$invoiceFromPartner->web_url}}
                                 </td>
+                                <td></td>
                             </tr>
-                        </table
+                        </table>
                     </div>
-                    <div class="row mt-5">
+                    <div class="row">
                         <table class="w-100">
                             <tr>
                                 <td>
