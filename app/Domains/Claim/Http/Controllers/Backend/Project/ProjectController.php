@@ -518,6 +518,20 @@ class ProjectController
         $invoiceTo = auth()->user()->organisation;
         $invoiceToPartner = $project->allpartners()->whereNull('organisation_id')->whereIsMaster('1')->first();
         
+        if(empty($invoiceFromPartner)) {
+            return response()->json([
+                'success' => 0,
+                'message' => 'Please fill up finance information for '.$invoiceFrom->organisation_name
+            ]);
+        }
+        
+        if(empty($invoiceToPartner)) {
+            return response()->json([
+                'success' => 0,
+                'message' => 'Please fill up finance information for '.$invoiceTo->organisation_name
+            ]);
+        }
+        
         $this->generateAndSaveInvoice($project, $organisationId, $quarter, $quarterPartner, $invoiceFrom, $invoiceFromPartner, $invoiceTo, $invoiceToPartner);
         
         // // Invoice To Funder
