@@ -316,8 +316,8 @@
                                     <div class="col">
                                         {{ html()->label('Funder')->for('funder_id') }}
                                         <div class="form-group"> 
-                                            {{ html()->hidden('funder_id', $partnerAdditionalInfo->invoiceFunder ?? optional($project->funders()->first()->partner->invoiceOrganisation)->id) }}
-                                            {{ html()->select('sel_funder_id', $organisations, $partnerAdditionalInfo->invoiceFunder ?? optional($project->funders()->first()->partner->invoiceOrganisation)->id)
+                                            {{ html()->hidden('funder_id', $partnerAdditionalInfo->invoiceFunder ?? optional($project->funders()->first())->id) }}
+                                            {{ html()->select('sel_funder_id', $organisations, $partnerAdditionalInfo->invoiceFunder ?? optional($project->funders()->first())->id)
                                                 ->class('form-control additional-info select2')
                                                 ->attribute('style', 'width:100%;')
                                                 ->required()
