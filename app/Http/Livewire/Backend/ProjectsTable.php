@@ -73,6 +73,14 @@ class ProjectsTable extends TableComponent
     public function columns(): array
     {
         return [
+            Column::make(__('Logo'), 'logo')
+                ->format(function(Project $model){
+                    if(!empty($model->logo) && file_exists(public_path('uploads/projects/logos/'.$model->logo))) {
+                        return $this->image(asset('uploads/projects/logos/'.$model->logo), 'Logo', ['class' => 'img-fluid img-responsive', 'style' => 'max-width:100px;']);
+                    }
+
+                    return 'N/A';
+                }),
             Column::make(__('Project Name'), 'name')
                 ->searchable()
                 ->sortable(),
