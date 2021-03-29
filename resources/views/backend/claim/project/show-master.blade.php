@@ -316,10 +316,12 @@
                                     <div class="col">
                                         {{ html()->label('Funder')->for('funder_id') }}
                                         <div class="form-group"> 
-                                            {{ html()->select('funder_id', $organisations, $partnerAdditionalInfo->invoiceFunder ?? '')
+                                            {{ html()->hidden('funder_id', $partnerAdditionalInfo->invoiceFunder ?? optional($project->funders()->first()->partner->invoiceOrganisation)->id) }}
+                                            {{ html()->select('sel_funder_id', $organisations, $partnerAdditionalInfo->invoiceFunder ?? optional($project->funders()->first()->partner->invoiceOrganisation)->id)
                                                 ->class('form-control additional-info select2')
                                                 ->attribute('style', 'width:100%;')
                                                 ->required()
+                                                ->disabled()
                                              }}
                                         </div>
                                     </div>
@@ -483,17 +485,19 @@
                         </div>
                     </div>
                 @endif
-                @if(!empty($leadUser))
+                @if(!empty($leadUserPartner))
                     <div class="col-md-4">
                         <div class="row">
                             <div class="col">
-                                <img src="{{ asset('uploads/organisations/logos/'.$leadUser->organisation->logo) }}" height="160" width="160" />
+                                @if (!empty(optional($leadUserPartner->invoiceOrganisation)->logo))
+                                    <img src="{{ asset('uploads/organisations/logos/'.optional($leadUserPartner->invoiceOrganisation)->logo) }}" height="160" width="160" />
+                                @endif
                             </div>
                         </div>
                         <div class="row mt-2">
                             <div class="col">
                                 <div><strong>PROJECT LEAD</strong></div>
-                                <div>Name: {{$leadUser->organisation->organisation_name}}</div>
+                                <div>Name: {{optional($leadUserPartner->invoiceOrganisation)->organisation_name}}</div>
                                 <div>Contact: {{optional($leadUserPartner)->finance_contact_name ?? 'N/A'}}</div>
                                 <div>Web URL: 
                                     @if(optional($leadUserPartner)->web_url) 
@@ -512,13 +516,13 @@
                     <div class="col-md-4">
                         <div class="row">
                             <div class="col">
-                                <img src="{{ asset('uploads/organisations/logos/'.$project->funders()->first()->logo) }}" height="160" width="160" />
+                                <img src="{{ asset('uploads/organisations/logos/'.optional($project->funders()->first()->partner->invoiceOrganisation)->logo) }}" height="160" width="160" />
                             </div>
                         </div>
                         <div class="row mt-2">
                             <div class="col">
                                 <div><strong>FUNDER</strong></div>
-                                <div>Name: {{$project->funders()->first()->organisation_name}}</div>
+                                <div>Name: {{optional($project->funders()->first()->partner->invoiceOrganisation)->organisation_name}}</div>
                                 <div>Contact: {{$partnerAdditionalInfo->finance_contact_name ?? 'N/A'}}</div>
                                 <div>Web URL: 
                                     @if($partnerAdditionalInfo->web_url) 
@@ -545,11 +549,11 @@
                                 <th>&nbsp;</th>
                                 @foreach ($project->quarters as $quarter)
                                 @php
-                                    // $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
+                                    $labelClass = $quarter->user->status == 'current' ? 'text-danger' : '';
                                 @endphp
                                 <th class="text-center light-grey-bg">
-                                    <label class="{{$lableClass ?? ''}} text-uppercase"> {{ $quarter->length }}</label><br>
-                                    <label class="{{$lableClass ?? ''}}">{{$quarter->name}}</label>
+                                    <label class="{{$labelClass ?? ''}} text-uppercase"> {{ $quarter->length }}</label><br>
+                                    <label class="{{$labelClass ?? ''}}">{{$quarter->name}}</label>
                                 </th>
                                 @endforeach
                             </tr>
@@ -559,17 +563,20 @@
                                 <th>DESCRIPTION</th>
                                 <th>TOTAL BUDGET</th>
                                 @foreach ($project->quarters as $quarter)
-                                @php
-                                    // $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
-                                @endphp
                                 <th class="text-center">
-                                    {{-- @if (now()->betweenIncluded($fromDate, $toDate))
-                                        <label class="current-bg mb-0">&nbsp;CURRENT&nbsp;</label>
-                                        @elseif($fromDate->lt(now()))
-                                        <label class="mb-0">HISTORIC</label>
-                                        @else
-                                        <label class="mb-0">FORECAST</label>
-                                    @endif --}}
+                                    @switch($quarter->user->status)
+                                        @case('current')
+                                            <label class="current-bg mb-0">&nbsp;CURRENT&nbsp;</label>
+                                            @break
+                                        @case('historic')
+                                            <label class="mb-0">HISTORIC</label>
+                                            @break
+                                        @case('forecast')
+                                            <label class="mb-0">FORECAST</label>
+                                            @break
+                                        @default
+                                            
+                                    @endswitch
                                 </th>
                                 @endforeach
                                 <th>PROJECT TOTAL</th>
@@ -605,8 +612,7 @@
                                 @endphp
                                 @foreach ($project->quarters as $quarter)
                                 @php
-                                    // $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
-                                    $labelClass = '';
+                                    $labelClass = $quarter->user->status == 'current' ? 'text-danger' : '';
                                 @endphp
                                 <td>
                                     <div class="input-group">
@@ -710,8 +716,7 @@
                                 @endphp
                                 @foreach ($project->quarters as $quarter)
                                 @php
-                                    // $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
-                                    $labelClass = '';
+                                    $labelClass = $quarter->user->status == 'current' ? 'text-danger' : '';
                                 @endphp
                                 <td class="text-center">
                                     <div class="input-group">
@@ -802,8 +807,7 @@
                                 <td style="color: #fff;">&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
                                 @php
-                                    // $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
-                                    $labelClass = '';
+                                    $labelClass = $quarter->user->status == 'current' ? 'text-danger' : '';
                                 @endphp
                                 <td class="text-center" style="color: #fff;">
                                     <div class="input-group" style="color: #fff;">
@@ -830,13 +834,102 @@
                             <tr>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
+                                <td><strong>PO NUMBER</strong></td>
+                                <td>&nbsp;</td>
+                                @foreach ($project->quarters as $quarter)
+                                <td class="text-center">
+                                    {{ html()->input('text', 'po_number['.$quarter->start_timestamp.']', $quarter->user->po_number)
+                                            // ->placeholder('0.00')
+                                            ->class('form-control invoice-field')
+                                            ->readOnly($quarter->user->status != 'current') }}
+                                </td>
+                                @endforeach
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                @endfor
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td><strong>INVOICE DATE</strong></td>
+                                <td>&nbsp;</td>
+                                @foreach ($project->quarters as $quarter)
+                                <td class="text-center">
+                                    {{ html()->input('text', 'invoice_date['.$quarter->start_timestamp.']', $quarter->user->invoice_date)
+                                            // ->placeholder('YYYY-MM-DD')
+                                            ->class('form-control invoice-field')
+                                            ->readOnly($quarter->user->status != 'current') }}
+                                </td>
+                                @endforeach
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                @endfor
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td><strong>INVOICE NO</strong></td>
+                                <td>&nbsp;</td>
+                                @foreach ($project->quarters as $quarter)
+                                <td class="text-center">
+                                    {{ html()->input('text', 'invoice_no['.$quarter->start_timestamp.']', $quarter->user->invoice_no)
+                                            // ->placeholder('0.00')
+                                            ->class('form-control invoice-field')
+                                            ->readOnly($quarter->user->status != 'current') }}
+                                </td>
+                                @endforeach
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                @endfor
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
                                 <td class="text-center">
-                                    {{-- @if ($quarter->partner(request()->partner)->pivot->status == 'historic')
-                                        <a target="_blank" href="{{asset('uploads/invoices/'.$quarter->id.'.pdf')}}" class="btn btn-sm btn-primary" role="button">Invoice</a>
-                                    @endif --}}
+                                    @if ($quarter->user->status == 'historic')
+                                        <a target="_blank" href="{{asset('uploads/invoices/master-'.$quarter->id.'.pdf')}}" class="btn btn-sm btn-primary" role="button">Invoice</a>
+                                    @endif
+                                </td>
+                                @endforeach
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                @endfor
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                @foreach ($project->quarters as $quarter)
+                                <td>
+                                    @switch($quarter->user->status)
+                                        @case('historic')
+                                            <a href="javascript:void(0)" class="btn btn-sm btn-secondary" role="button" onclick="generateInvoice(this, {{$quarter->id}}, {{$quarter->start_timestamp}}, true)">Regenerate Invoice</a>
+                                            @break
+                                        @case('current')
+                                            <a href="javascript:void(0)" class="btn btn-sm btn-primary" role="button" onclick="generateInvoice(this, {{$quarter->id}}, {{$quarter->start_timestamp}}, false)">Generate Invoice</a>
+                                            @break
+                                        @default
+                                    @endswitch
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
@@ -1197,7 +1290,7 @@
         });
 
         function formatNegativeValue() {
-            $('table input').each(function(i, v){
+            $('table input:not(.invoice-field)').each(function(i, v){
                 if(parseFloat($(v).val()) < 0) {
                     $(v).addClass('text-danger');
                 }
@@ -1272,5 +1365,39 @@
             });
         }
         
+        function generateInvoice(element, quarterId, timestamp, regenerate = false) {
+            var text = $(element).text();
+
+            var po_number = $('[name="po_number['+timestamp+']"]').val();
+            var invoice_no = $('[name="invoice_no['+timestamp+']"]').val();
+            var invoice_date = $('[name="invoice_date['+timestamp+']"]').val();
+            if(po_number.length == 0 || invoice_no.length == 0 || invoice_date.length == 0) {
+                toastr.error('Please fill all invoice related fields!');
+                return false;
+            }
+
+            $.ajax({
+                url: '{{route('admin.claim.project.invoice.generate', $project)}}',
+                data: {quarterId: quarterId, po_number: po_number, invoice_no: invoice_no, invoice_date: invoice_date, regenerate: regenerate},
+                type: 'POST',
+                dataType: 'json',
+                beforeSend: function(){
+                    $(element).html('Please wait....');
+                    $(element).attr('disabled', 'disabled').addClass('disabled');
+                },
+                success: function(response){
+                    $(element).html(text);
+                    if(response.success) {
+                        toastr.success(response.message);
+                        $(element).attr('disabled', 'disabled').addClass('disabled');
+                        window.location.href = '{{route("admin.claim.project.show", [$project])}}'
+                    }
+                    else{
+                        $(element).removeAttr('disabled').removeClass('disabled');
+                        toastr.error(response.message);
+                    }
+                }
+            })
+        }
     </script>
 @endpush

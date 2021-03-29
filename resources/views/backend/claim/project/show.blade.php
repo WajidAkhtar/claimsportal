@@ -415,17 +415,19 @@
                         </div>
                     </div>
                 @endif
-                @if(!empty($leadUser))
-                    <div class="col-md-3">
+                @if(!empty($leadUserPartner))
+                    <div class="col-md-4">
                         <div class="row">
                             <div class="col">
-                                <img src="{{ asset('uploads/organisations/logos/'.$leadUser->organisation->logo) }}" height="160" width="160" />
+                                @if (!empty(optional($leadUserPartner->invoiceOrganisation)->logo))
+                                    <img src="{{ asset('uploads/organisations/logos/'.optional($leadUserPartner->invoiceOrganisation)->logo) }}" height="160" width="160" />
+                                @endif
                             </div>
                         </div>
                         <div class="row mt-2">
                             <div class="col">
                                 <div><strong>PROJECT LEAD</strong></div>
-                                <div>Name: {{$leadUser->organisation->organisation_name}}</div>
+                                <div>Name: {{optional($leadUserPartner->invoiceOrganisation)->organisation_name}}</div>
                                 <div>Contact: {{optional($leadUserPartner)->finance_contact_name ?? 'N/A'}}</div>
                                 <div>Web URL: 
                                     @if(optional($leadUserPartner)->web_url) 
@@ -440,17 +442,19 @@
                         </div>
                     </div>
                 @endif
-                @if(!empty(request()->partner) && !empty($organisation))
+                @if(!empty(request()->partner) && !empty($partnerAdditionalInfo))
                     <div class="col-md-3">
                         <div class="row">
                             <div class="col">
-                                <img src="{{ asset('uploads/organisations/logos/'.$organisation->logo) }}" height="160" width="160" />
+                                @if (!empty(optional($partnerAdditionalInfo->invoiceOrganisation)->logo))
+                                    <img src="{{ asset('uploads/organisations/logos/'.optional($partnerAdditionalInfo->invoiceOrganisation)->logo) }}" height="160" width="160" />
+                                @endif
                             </div>
                         </div>
                         <div class="row mt-2">
                             <div class="col">
                                 <div><strong>PARTNER</strong></div>
-                                <div>Name: {{$organisation->organisation_name}}</div>
+                                <div>Name: {{optional($partnerAdditionalInfo->invoiceOrganisation)->organisation_name}}</div>
                                 <div>Contact: {{$partnerAdditionalInfo->finance_contact_name ?? 'N/A'}}</div>
                                 <div>Web URL: 
                                     @if($partnerAdditionalInfo->web_url) 
@@ -469,13 +473,15 @@
                     <div class="col-md-3">
                         <div class="row">
                             <div class="col">
-                                <img src="{{ asset('uploads/organisations/logos/'.$project->funders()->first()->logo) }}" height="160" width="160" />
+                                @if (!empty(optional($project->funders()->first()->partner->invoiceOrganisation)->logo))
+                                    <img src="{{ asset('uploads/organisations/logos/'.optional($project->funders()->first()->partner->invoiceOrganisation)->logo) }}" height="160" width="160" />
+                                @endif
                             </div>
                         </div>
                         <div class="row mt-2">
                             <div class="col">
                                 <div><strong>FUNDER</strong></div>
-                                <div>Name: {{$project->funders()->first()->organisation_name}}</div>
+                                <div>Name: {{optional($project->funders()->first()->partner->invoiceOrganisation)->organisation_name}}</div>
                                 <div>Contact: {{$partnerAdditionalInfo->finance_contact_name ?? 'N/A'}}</div>
                                 <div>Web URL: 
                                     @if($partnerAdditionalInfo->web_url) 
@@ -874,7 +880,11 @@
                                 <td>
                                     @switch($quarter->partner(request()->partner)->pivot->status)
                                         @case('historic')
+                                            @if ($userHasMasterAccessWithPermission == 'LEAD_USER')
+                                            <a target="_blank" href="{{asset('uploads/invoices/lead-'.$quarter->id.'.pdf')}}" class="btn btn-sm btn-primary" role="button">Invoice</a>
+                                            @else
                                             <a target="_blank" href="{{asset('uploads/invoices/'.$quarter->id.'.pdf')}}" class="btn btn-sm btn-primary" role="button">Invoice</a>
+                                            @endif
                                             @break
                                         @case('current')
                                             @if (!$userHasMasterAccess && $userHasMasterAccessWithPermission == 'LEAD_USER' && $quarter->partner(request()->partner)->pivot->claim_status == 1)

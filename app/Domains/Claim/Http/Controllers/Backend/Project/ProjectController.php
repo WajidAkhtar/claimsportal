@@ -531,15 +531,15 @@ class ProjectController
             ]);
         }
 
-        $this->generateAndSaveInvoice($project, $organisationId, $quarter, $quarterPartner, $invoiceFrom, $invoiceFromPartner, $invoiceTo, $invoiceToPartner);
+        $this->generateAndSaveInvoice('', $project, $organisationId, $quarter, $quarterPartner, $invoiceFrom, $invoiceFromPartner, $invoiceTo, $invoiceToPartner);
         
-        // // Invoice To Funder
-        // $invoiceFrom = auth()->user()->organisation;
-        // $invoiceFromPartner = $project->allpartners()->whereNull('organisation_id')->whereIsMaster('1')->first();
-        // $invoiceTo = Organisation::findOrFail($invoiceFromPartner->funder_id);
-        // $invoiceToPartner = $project->allpartners()->whereOrganisationId($invoiceTo->id)->first();
+        // Invoice To Funder
+        $invoiceFrom = auth()->user()->organisation;
+        $invoiceFromPartner = $project->allpartners()->whereNull('organisation_id')->whereIsMaster('1')->first();
+        $invoiceTo = $invoiceFrom;
+        $invoiceToPartner = $invoiceFromPartner;
 
-        // $this->generateAndSaveInvoice($project, $organisationId, $quarter, $quarterPartner, $invoiceFrom, $invoiceFromPartner, $invoiceTo, $invoiceToPartner);
+        $this->generateAndSaveInvoice('lead', $project, $organisationId, $quarter, $quarterPartner, $invoiceFrom, $invoiceFromPartner, $invoiceTo, $invoiceToPartner);
         
         $quarterPartner->pivot->status = 'historic';
         $quarterPartner->pivot->claim_status = 2;
@@ -557,7 +557,7 @@ class ProjectController
         return response()->json(['success' => 1, 'message' => $message]);
     }
 
-    protected function generateAndSaveInvoice($project, $organisationId, $quarter, $quarterPartner, $invoiceFrom, $invoiceFromPartner, $invoiceTo, $invoiceToPartner)
+    protected function generateAndSaveInvoice($invoiceNamePrefix = '', $project, $organisationId, $quarter, $quarterPartner, $invoiceFrom, $invoiceFromPartner, $invoiceTo, $invoiceToPartner)
     {
         $invoiceItems = [];
         $project->costItems = $project->costItems()->whereNull('project_cost_items.deleted_at')->where('organisation_id', $organisationId)->orderByRaw($project->costItemOrderRaw())->get();
@@ -577,8 +577,145 @@ class ProjectController
             'invoiceFrom' => $invoiceFrom,
             'invoiceFromPartner' => $invoiceFromPartner,
         ]);
-        $pdf->save(public_path('uploads/invoices/'.$quarter->id.'.pdf'));
+        $pdf->save(public_path('uploads/invoices/'.($invoiceNamePrefix ? $invoiceNamePrefix.'-' : '').$quarter->id.'.pdf'));
 
         return true;
+    }
+
+    /**
+     * @param Request $request
+     * @param Project $project
+     */
+    public function generateInvoiceForMastersheet(Request $request, Project $project) {
+        $validator = Validator::make($request->all(), [
+            'quarterId' => 'required|exists:project_quarters,id',
+            'po_number' => 'required',
+            'invoice_no' => 'required',
+            'invoice_date' => 'required|date_format:Y-m-d',
+        ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                'success' => 0,
+                'message' => $validator->errors()->first()
+            ]);
+        }
+
+        $quarter = $project->quarters()->whereId($request->quarterId)->first();
+        $quarterPartner = $quarter->user;
+        if($quarterPartner->status == 'historic' && !$request->regenerate) {
+            return response()->json([
+                'success' => 0,
+                'message' => 'You already generated invoice for this quarter'
+            ]);
+        }
+
+        // Generate PDF
+        $quarterId = $request->quarterId;
+        $organisationId = $request->organisationId;
+        // $quarter = $project->quarters()->whereId($quarterId)->first();
+        // $quarterPartner = $quarter->partner($organisationId);
+
+        // Invoice From Lead To Funder
+        $invoiceFrom = auth()->user()->organisation;
+        $invoiceFromPartner = $project->allpartners()->whereNull('organisation_id')->whereIsMaster('1')->first();
+        
+        if(empty($invoiceFromPartner) || (!empty($invoiceFromPartner) && empty($invoiceFromPartner->invoiceOrganisation))) {
+            return response()->json([
+                'success' => 0,
+                'message' => 'Finance information for master sheet is not available'
+            ]);
+        }
+
+        $response = $this->generateAndSaveMasterInvoice($project, $quarter, $quarterPartner, $invoiceFrom, $invoiceFromPartner);
+        if($response['success'] == 0) {
+            return response()->json($response);
+        }
+
+        $quarterPartner->status = 'historic';
+        $quarterPartner->po_number = $request->po_number;
+        $quarterPartner->invoice_no = $request->invoice_no;
+        $quarterPartner->invoice_date = $request->invoice_date;
+        $quarterPartner->save();
+        
+        // Next Quarter
+        if(!$request->regenerate) {
+            $nextQuarter = $project->quarters()->where('id', '>', $quarter->id)->first();
+            $nextQuarterPartner = $nextQuarter->user;
+            $nextQuarterPartner->status = 'current';
+            $nextQuarterPartner->save();
+        }
+
+        $message = ($request->regenerate)? 'Invoice regenerated successfully' : 'Invoice generated successfully!';
+        return response()->json(['success' => 1, 'message' => $message]);
+    }
+
+    protected function generateAndSaveMasterInvoice($project, $quarter, $quarterPartner, $invoiceFrom, $invoiceFromPartner)
+    {
+        $costItems = $project->costItems->whereNull('project_cost_items.deleted_at')->whereIn('pivot.organisation_id', $project->allpartners()->pluck('project_partners.organisation_id'))->groupBy('pivot.cost_item_id')->all();
+        $data = [];
+        foreach ($costItems as $key => $costItem) {
+            $quarterDates = [];
+            if(!empty($costItem)) {
+                foreach($costItem as $ckey => $ciClaimData) {
+                    if(!empty($ciClaimData) && !empty($ciClaimData->claims_data)) {
+                        $quarterDates = array_keys((array) $ciClaimData->claims_data->quarter_values);
+                        break;
+                    }
+                }
+            }
+            
+            if(empty($quarterDates)) {
+                continue;
+            }
+            foreach ($quarterDates as $key => $timestamp) {
+                $data['claims_data'][$costItem[0]->id]['quarter_values'][$timestamp] = $costItem->pluck('claims_data.quarter_values.'.$timestamp)->sum(); 
+            }
+        }
+
+        // dd($data);
+
+        if(empty($data)) {
+            return [
+                'success' => 0,
+                'message' => 'Sheet Data not available!'
+            ];
+        }
+
+        $invoiceItems = [];
+        $data = (object) $data;
+        
+        $project->costItems = $project->costItems()->whereNull('project_cost_items.deleted_at')->groupBy('cost_item_id')->orderByRaw($project->costItemOrderRaw())->get();
+        foreach ($project->costItems as $index => $costItem) {
+            $invoiceItems[$index]['item_name'] = $costItem->pivot->cost_item_name;
+            $invoiceItems[$index]['item_description'] = $costItem->pivot->cost_item_description;
+            $invoiceItems[$index]['item_price'] = $data->claims_data[$costItem->id]['quarter_values'][$quarter->start_timestamp];
+            $invoiceItems[$index]['vat_perc'] = 0;
+        }
+
+        // return view('backend.claim.project.invoice-master', [
+        //     'quarter' => $quarter,
+        //     'quarterPartner' => $quarterPartner,
+        //     'invoiceItems' => json_decode(json_encode($invoiceItems)),
+        //     'invoiceFrom' => $invoiceFrom,
+        //     'invoiceFromPartner' => $invoiceFromPartner,
+        // ]);
+
+        $pdf = PDF::loadView('backend.claim.project.invoice-master', [
+            'quarter' => $quarter,
+            'quarterPartner' => $quarterPartner,
+            'invoiceItems' => json_decode(json_encode($invoiceItems)),
+            'invoiceFrom' => $invoiceFrom,
+            'invoiceTo' => $invoiceFrom,
+            'invoiceFromPartner' => $invoiceFromPartner,
+            'invoiceToPartner' => $invoiceFromPartner,
+            'invoiceFunder' => $invoiceFromPartner->invoiceFunder ?? $project->funders()->first(),
+        ]);
+        $pdf->save(public_path('uploads/invoices/master-'.$quarter->id.'.pdf'));
+
+        return [
+            'success' => 1,
+            'message' => 'Invoice Saved!'
+        ];
     }
 }

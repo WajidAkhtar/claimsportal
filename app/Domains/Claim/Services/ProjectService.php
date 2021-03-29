@@ -120,6 +120,12 @@ class ProjectService extends BaseService
 
             // Sync Quarter Partner Data
             foreach($project->quarters as $key => $quarter) {
+                $quarter->user()->create([
+                    'status' => $key == 0 ? 'current' : 'forecast',
+                    'po_number' => null,
+                    'invoice_date' => null,
+                    'invoice_no' => null,
+                ]);
                 foreach($project->partners as $partner){
                     $quarter->partners()->attach($partner->id, [
                         'status' => $key == 0 ? 'current' : 'forecast',
@@ -233,6 +239,7 @@ class ProjectService extends BaseService
             }
 
             if($project->wasChanged(['start_date', 'length'])) {
+                $project->quarters()->delete();
                 // Sync Quarters
                 $quarters = [];
                 $fromDate = clone $project->start_date;
@@ -253,6 +260,12 @@ class ProjectService extends BaseService
 
                 // Sync Quarter Partner Data
                 foreach($project->quarters as $key => $quarter) {
+                    $quarter->user()->create([
+                        'status' => $key == 0 ? 'current' : 'forecast',
+                        'po_number' => null,
+                        'invoice_date' => null,
+                        'invoice_no' => null,
+                    ]);
                     foreach($project->partners as $partner){
                         $quarter->partners()->attach($partner->id, [
                             'status' => $key == 0 ? 'current' : 'forecast',

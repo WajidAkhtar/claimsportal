@@ -1,0 +1,35 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class ProjectQuarterUser extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('project_quarter_users', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('project_quarter_id');
+            $table->string('status');
+            $table->string('po_number')->nullable();
+            $table->string('invoice_date')->nullable();
+            $table->string('invoice_no')->nullable();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('project_quarter_user');
+    }
+}

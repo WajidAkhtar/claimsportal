@@ -42,6 +42,7 @@ Route::group([
                 Route::post('/save-sheet-user-permissions', [ProjectController::class, 'saveSheetUserPermissions'])->name('save.sheet.user.permissions');
                 Route::post('/submit-claim', [ProjectController::class, 'submitClaim'])->name('submit.claim');
                 Route::post('/close-claim', [ProjectController::class, 'closeClaim'])->name('close.claim');
+                Route::post('/generate-invoice', [ProjectController::class, 'generateInvoiceForMastersheet'])->name('invoice.generate');
             });
         });
 

@@ -2,6 +2,7 @@
 
 namespace App\Domains\System\Models;
 
+use App\Domains\Claim\Models\ProjectPartners;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -95,4 +96,8 @@ class Organisation extends Model
         ];
     }
     
+    public function partner()
+    {
+        return $this->hasOne(ProjectPartners::class);
+    }
 }
