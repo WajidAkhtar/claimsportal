@@ -516,13 +516,13 @@
                     <div class="col-md-4">
                         <div class="row">
                             <div class="col">
-                                <img src="{{ asset('uploads/organisations/logos/'.optional($project->funders()->first()->partner->invoiceOrganisation)->logo) }}" height="160" width="160" />
+                                <img src="{{ asset('uploads/organisations/logos/'.optional($project->funders()->first())->logo) }}" height="160" width="160" />
                             </div>
                         </div>
                         <div class="row mt-2">
                             <div class="col">
                                 <div><strong>FUNDER</strong></div>
-                                <div>Name: {{optional($project->funders()->first()->partner->invoiceOrganisation)->organisation_name}}</div>
+                                <div>Name: {{optional($project->funders()->first())->organisation_name}}</div>
                                 <div>Contact: {{$partnerAdditionalInfo->finance_contact_name ?? 'N/A'}}</div>
                                 <div>Web URL: 
                                     @if($partnerAdditionalInfo->web_url) 
