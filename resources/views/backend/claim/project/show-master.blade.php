@@ -617,7 +617,7 @@
                                 <td>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text">£</span>
+                                            <span class="input-group-text readonly">£</span>
                                         </div>
                                         {{ html()->input('number', 'claim_values['.$costItem->id.'][quarter_values]['.$quarter->start_timestamp.']', $data->claims_data[$costItem->id]['quarter_values'][$quarter->start_timestamp] ?? '')
                                             ->placeholder('0.00')
