@@ -76,7 +76,7 @@ class ProjectsTable extends TableComponent
             Column::make(__('Logo'), 'logo')
                 ->format(function(Project $model){
                     if(!empty($model->logo) && file_exists(public_path('uploads/projects/logos/'.$model->logo))) {
-                        $project_log_path = $this->image(asset('uploads/projects/logos/'.$model->logo), 'Logo', ['class' => '', 'style' => 'height:56px; width: 200px;max-width:200px;']);
+                        // $project_log_path = $this->image(asset('uploads/projects/logos/'.$model->logo), 'Logo', ['class' => '', 'style' => 'height:56px; width: 200px;max-width:200px;']);
                         $img = '<div style="background: url('.asset('uploads/projects/logos/'.$model->logo).');height: 56px; width:100px;background-size: contain;background-repeat: no-repeat;")></div>';
                         return $this->html($img);
                     }

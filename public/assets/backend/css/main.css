@@ -5923,3 +5923,7 @@ img.header-logo {
     width: 180px;
     height: auto;
 }
+
+td {
+    vertical-align: middle !important;
+}
