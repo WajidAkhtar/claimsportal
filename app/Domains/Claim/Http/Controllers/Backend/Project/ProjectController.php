@@ -150,6 +150,8 @@ class ProjectController
             }
         }
 
+        dd($userHasMasterAccessWithPermission);
+
         $leadUser = optional(SheetUserPermissions::where('project_id', $project->id)->where('is_master', '1')->whereHas('sheetPermissions', function($q){
             return $q->wherePermission('LEAD_USER');
         })->first())->user;
