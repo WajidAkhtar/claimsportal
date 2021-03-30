@@ -125,6 +125,7 @@ class ProjectController
             $SheetUserPermissions = $SheetUserPermissions->where('user_id', auth()->user()->id);
         }
         $SheetUserPermissions = $SheetUserPermissions->get();
+        dd($SheetUserPermissions);
         if(!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User') && count($SheetUserPermissions) >= 1 && empty(request()->partner)) {
             request()->partner = $SheetUserPermissions[0]->partner_id;
         }
