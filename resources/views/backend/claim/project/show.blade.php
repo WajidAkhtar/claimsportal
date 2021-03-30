@@ -402,9 +402,9 @@
                     <div class="row">
                         <div class="col">
                             @if(!empty($project->logo) && file_exists(public_path('uploads/projects/logos/'.$project->logo)))
-                                <img src="{{ asset('uploads/projects/logos/'.$project->logo) }}" style="width: inherit;" />
+                                <img src="{{ asset('uploads/projects/logos/'.$project->logo) }}" class="header-logo" />
                             @else
-                                <img src="{{ asset('uploads/projects/logos/default-logo.png') }}" style="width: inherit;" />
+                                <img src="{{ asset('uploads/projects/logos/default-logo.png') }}" class="header-logo" />
                             @endif
                         </div>
                     </div>
@@ -422,9 +422,9 @@
                         <div class="row">
                             <div class="col">
                                 @if (!empty(optional($leadUserPartner->invoiceOrganisation)->logo))
-                                    <img src="{{ asset('uploads/organisations/logos/'.optional($leadUserPartner->invoiceOrganisation)->logo) }}" style="width: inherit;" />
+                                    <img src="{{ asset('uploads/organisations/logos/'.optional($leadUserPartner->invoiceOrganisation)->logo) }}" class="header-logo" />
                                 @else
-                                    <img src="{{ asset('uploads/projects/logos/default-logo.png') }}" style="width: inherit;" />
+                                    <img src="{{ asset('uploads/projects/logos/default-logo.png') }}" class="header-logo" />
                                 @endif
                             </div>
                         </div>
@@ -451,9 +451,9 @@
                         <div class="row">
                             <div class="col">
                                 @if (!empty(optional($partnerAdditionalInfo->invoiceOrganisation)->logo))
-                                    <img src="{{ asset('uploads/organisations/logos/'.optional($partnerAdditionalInfo->invoiceOrganisation)->logo) }}" style="width: inherit;" />
+                                    <img src="{{ asset('uploads/organisations/logos/'.optional($partnerAdditionalInfo->invoiceOrganisation)->logo) }}" class="header-logo" />
                                 @else
-                                    <img src="{{ asset('uploads/projects/logos/default-logo.png') }}" style="width: inherit;" />
+                                    <img src="{{ asset('uploads/projects/logos/default-logo.png') }}" class="header-logo" />
                                 @endif
                             </div>
                         </div>
@@ -480,9 +480,9 @@
                         <div class="row">
                             <div class="col">
                                 @if (!empty(optional($project->funders()->first())->logo))
-                                    <img src="{{ asset('uploads/organisations/logos/'.optional($project->funders()->first())->logo) }}" style="width: inherit;" />
+                                    <img src="{{ asset('uploads/organisations/logos/'.optional($project->funders()->first())->logo) }}" class="header-logo" />
                                 @else
-                                    <img src="{{ asset('uploads/projects/logos/default-logo.png') }}" style="width: inherit;" />
+                                    <img src="{{ asset('uploads/projects/logos/default-logo.png') }}" class="header-logo" />
                                 @endif
                             </div>
                         </div>
