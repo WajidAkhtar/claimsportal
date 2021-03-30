@@ -420,7 +420,7 @@
                         <div class="row">
                             <div class="col">
                                 @if (!empty(optional($leadUserPartner->invoiceOrganisation)->logo))
-                                    <img src="{{ asset('uploads/organisations/logos/'.optional($leadUserPartner->invoiceOrganisation)->logo) }}" />
+                                    <img src="{{ asset('uploads/organisations/logos/'.optional($leadUserPartner->invoiceOrganisation)->logo) }}" height="160" width="160" />
                                 @endif
                             </div>
                         </div>
@@ -447,7 +447,7 @@
                         <div class="row">
                             <div class="col">
                                 @if (!empty(optional($partnerAdditionalInfo->invoiceOrganisation)->logo))
-                                    <img src="{{ asset('uploads/organisations/logos/'.optional($partnerAdditionalInfo->invoiceOrganisation)->logo) }}" />
+                                    <img src="{{ asset('uploads/organisations/logos/'.optional($partnerAdditionalInfo->invoiceOrganisation)->logo) }}" height="160" width="160" />
                                 @endif
                             </div>
                         </div>
@@ -473,7 +473,7 @@
                     <div class="col-md-4">
                         <div class="row">
                             <div class="col">
-                                <img src="{{ asset('uploads/organisations/logos/'.optional($project->funders()->first())->logo) }}" />
+                                <img src="{{ asset('uploads/organisations/logos/'.optional($project->funders()->first())->logo) }}" height="160" width="160" />
                             </div>
                         </div>
                         <div class="row mt-2">
