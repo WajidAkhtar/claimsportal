@@ -398,36 +398,40 @@
                 <div><strong>Funders:</strong> {{ $project->funders->implode('organisation_name', ', ') }}</div>
             </div> -->
             <div class="row">
-                @if(!empty($project->logo) && file_exists(public_path('uploads/projects/logos/'.$project->logo)))
-                    <div class="col-md-3">
-                        <div class="row">
-                            <div class="col">
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col">
+                            @if(!empty($project->logo) && file_exists(public_path('uploads/projects/logos/'.$project->logo)))
                                 <img src="{{ asset('uploads/projects/logos/'.$project->logo) }}" style="width: inherit;" />
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col">
-                                <div><strong>PROJECT</strong></div>
-                                <div>Name: {{$project->name}}</div>
-                                <div>Code: {{$project->number}}</div>
-                                <div>Start: {{$project->start_date->format('m-Y')}}</div>
-                            </div>
+                            @else
+                                <img src="{{ asset('uploads/projects/logos/default-logo.png') }}" style="width: inherit;" />
+                            @endif
                         </div>
                     </div>
-                @endif
+                    <div class="row mt-2">
+                        <div class="col">
+                            <div><strong>PROJECT</strong></div>
+                            <div>Name: {{$project->name}}</div>
+                            <div>Code: {{$project->number}}</div>
+                            <div>Start: {{$project->start_date->format('m-Y')}}</div>
+                        </div>
+                    </div>
+                </div>
                 @if(!empty($leadUserPartner))
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="row">
                             <div class="col">
                                 @if (!empty(optional($leadUserPartner->invoiceOrganisation)->logo))
                                     <img src="{{ asset('uploads/organisations/logos/'.optional($leadUserPartner->invoiceOrganisation)->logo) }}" style="width: inherit;" />
+                                @else
+                                    <img src="{{ asset('uploads/projects/logos/default-logo.png') }}" style="width: inherit;" />
                                 @endif
                             </div>
                         </div>
                         <div class="row mt-2">
                             <div class="col">
                                 <div><strong>PROJECT LEAD</strong></div>
-                                <div>Name: {{optional($leadUserPartner->invoiceOrganisation)->organisation_name}}</div>
+                                <div>Name: {{optional($leadUserPartner->invoiceOrganisation)->organisation_name ?? 'N/A'}}</div>
                                 <div>Contact: {{optional($leadUserPartner)->finance_contact_name ?? 'N/A'}}</div>
                                 <div>Web URL: 
                                     @if(optional($leadUserPartner)->web_url) 
@@ -448,13 +452,15 @@
                             <div class="col">
                                 @if (!empty(optional($partnerAdditionalInfo->invoiceOrganisation)->logo))
                                     <img src="{{ asset('uploads/organisations/logos/'.optional($partnerAdditionalInfo->invoiceOrganisation)->logo) }}" style="width: inherit;" />
+                                @else
+                                    <img src="{{ asset('uploads/projects/logos/default-logo.png') }}" style="width: inherit;" />
                                 @endif
                             </div>
                         </div>
                         <div class="row mt-2">
                             <div class="col">
                                 <div><strong>PARTNER</strong></div>
-                                <div>Name: {{optional($partnerAdditionalInfo->invoiceOrganisation)->organisation_name}}</div>
+                                <div>Name: {{optional($partnerAdditionalInfo->invoiceOrganisation)->organisation_name ?? 'N/A'}}</div>
                                 <div>Contact: {{$partnerAdditionalInfo->finance_contact_name ?? 'N/A'}}</div>
                                 <div>Web URL: 
                                     @if($partnerAdditionalInfo->web_url) 
@@ -470,16 +476,20 @@
                     </div>
                 @endif
                 @if(!empty($project->funders()))
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="row">
                             <div class="col">
-                                <img src="{{ asset('uploads/organisations/logos/'.optional($project->funders()->first())->logo) }}" style="width: inherit;" />
+                                @if (!empty(optional($project->funders()->first())->logo))
+                                    <img src="{{ asset('uploads/organisations/logos/'.optional($project->funders()->first())->logo) }}" style="width: inherit;" />
+                                @else
+                                    <img src="{{ asset('uploads/projects/logos/default-logo.png') }}" style="width: inherit;" />
+                                @endif
                             </div>
                         </div>
                         <div class="row mt-2">
                             <div class="col">
                                 <div><strong>FUNDER</strong></div>
-                                <div>Name: {{optional($project->funders()->first())->organisation_name}}</div>
+                                <div>Name: {{optional($project->funders()->first())->organisation_name ?? 'N/A'}}</div>
                                 <div>Contact: {{$partnerAdditionalInfo->finance_contact_name ?? 'N/A'}}</div>
                                 <div>Web URL: 
                                     @if($partnerAdditionalInfo->web_url) 
