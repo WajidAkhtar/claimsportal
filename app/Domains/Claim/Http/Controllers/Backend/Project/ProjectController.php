@@ -142,8 +142,6 @@ class ProjectController
             $userHasMasterAccessWithPermission = '';
         }
 
-        dd($userHasMasterAccess, $userHasMasterAccessWithPermission, auth()->user()->id);
-
         if(SheetUserPermissions::where('user_id', auth()->user()->id)->where('project_id', $project->id)->where('is_master', '1')->count() > 0) {
             $userHasMasterAccess = true;
             $userHasMasterAccessWithPermissionId = SheetUserPermissions::where('project_id', $project->id)->where('is_master', '1')->pluck('sheet_permission_id');
@@ -152,6 +150,8 @@ class ProjectController
                 $userHasMasterAccess = false;
             }
         }
+
+        dd($userHasMasterAccess, $userHasMasterAccessWithPermission, auth()->user()->id);
 
         $leadUser = optional(SheetUserPermissions::where('project_id', $project->id)->where('is_master', '1')->whereHas('sheetPermissions', function($q){
             return $q->wherePermission('LEAD_USER');
