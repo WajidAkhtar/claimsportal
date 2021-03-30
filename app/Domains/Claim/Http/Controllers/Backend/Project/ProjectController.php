@@ -105,8 +105,8 @@ class ProjectController
      */
     public function show(Project $project)
     {
-        SheetUserPermissions::where('user_id', auth()->user()->id)->where('sheet_permission_id', 3)->where('project_id', $project->id)->delete();
-        dd(1);
+        // SheetUserPermissions::where('user_id', auth()->user()->id)->where('sheet_permission_id', 3)->where('project_id', $project->id)->delete();
+        // dd(1);
         $userHasPartialAccessToProject = $project->userHasPartialAccessToProject();
         if(!$userHasPartialAccessToProject) {
             return redirect()->route('admin.claim.project.index')->withFlashDanger(__('you have no access to this project.'));
