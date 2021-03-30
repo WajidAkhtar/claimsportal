@@ -234,9 +234,19 @@
                                  }}
                             </div>
                             <div class="col">
+                                {{ html()->label('Contact')->for('contact') }}
+                                {{ html()->text('contact', $partnerAdditionalInfo->contact ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                            </div>
+                            <div class="col">
                                 {{ html()->label('Customer Ref')->for('customer_ref') }}
                                 {{ html()->text('customer_ref', $partnerAdditionalInfo->customer_ref ?? '')
-                                    ->class('form-control additional-info')
+                                    ->class('form-control float-right additional-info')
                                  }}
                             </div>
                         </div>
@@ -382,6 +392,22 @@
                                          }}
                                     </div>
                                 </div>
+                                <div class="row mt-2">
+                                    <div class="col">
+                                        {{ html()->label('Web URL')->for('funder_web_url') }}
+                                        {{ html()->text('funder_web_url', $partnerAdditionalInfo->funder_web_url ?? '')
+                                            ->class('form-control additional-info')
+                                         }}
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col">
+                                        {{ html()->label('Contact')->for('funder_contact') }}
+                                        {{ html()->text('funder_contact', $partnerAdditionalInfo->funder_contact ?? '')
+                                            ->class('form-control additional-info')
+                                         }}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -503,7 +529,7 @@
                             <div class="col">
                                 <div><strong>PROJECT LEAD</strong></div>
                                 <div>Name: {{optional($leadUserPartner->invoiceOrganisation)->organisation_name ?? 'N/A'}}</div>
-                                <div>Contact: {{optional($leadUserPartner)->finance_contact_name ?? 'N/A'}}</div>
+                                <div>Contact: {{optional($leadUserPartner)->contact ?? 'N/A'}}</div>
                                 <div>Web URL: 
                                     @if(optional($leadUserPartner)->web_url) 
                                         <a class="text-primary" href="{{ optional($leadUserPartner)->web_url }}">
@@ -532,11 +558,11 @@
                             <div class="col">
                                 <div><strong>FUNDER</strong></div>
                                 <div>Name: {{optional($project->funders()->first())->organisation_name ?? 'N/A'}}</div>
-                                <div>Contact: {{$partnerAdditionalInfo->finance_contact_name ?? 'N/A'}}</div>
+                                <div>Contact: {{$partnerAdditionalInfo->funder_contact ?? 'N/A'}}</div>
                                 <div>Web URL: 
-                                    @if($partnerAdditionalInfo->web_url) 
-                                        <a class="text-primary" href="{{ $partnerAdditionalInfo->web_url }}">
-                                            {{ $partnerAdditionalInfo->web_url }}
+                                    @if($partnerAdditionalInfo->funder_web_url) 
+                                        <a class="text-primary" href="{{ $partnerAdditionalInfo->funder_web_url }}">
+                                            {{ $partnerAdditionalInfo->funder_web_url }}
                                         </a>
                                     @else 
                                         {{ 'N/A' }}

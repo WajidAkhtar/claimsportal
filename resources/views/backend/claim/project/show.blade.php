@@ -432,7 +432,7 @@
                             <div class="col">
                                 <div><strong>PROJECT LEAD</strong></div>
                                 <div>Name: {{optional($leadUserPartner->invoiceOrganisation)->organisation_name ?? 'N/A'}}</div>
-                                <div>Contact: {{optional($leadUserPartner)->finance_contact_name ?? 'N/A'}}</div>
+                                <div>Contact: {{optional($leadUserPartner)->contact ?? 'N/A'}}</div>
                                 <div>Web URL: 
                                     @if(optional($leadUserPartner)->web_url) 
                                         <a class="text-primary" href="{{ optional($leadUserPartner)->web_url }}">
@@ -490,11 +490,11 @@
                             <div class="col">
                                 <div><strong>FUNDER</strong></div>
                                 <div>Name: {{optional($project->funders()->first())->organisation_name ?? 'N/A'}}</div>
-                                <div>Contact: {{$partnerAdditionalInfo->finance_contact_name ?? 'N/A'}}</div>
+                                <div>Contact: {{$funderAdditionalInfo->funder_contact ?? 'N/A'}}</div>
                                 <div>Web URL: 
-                                    @if($partnerAdditionalInfo->web_url) 
-                                        <a class="text-primary" href="{{ $partnerAdditionalInfo->web_url }}">
-                                            {{ $partnerAdditionalInfo->web_url }}
+                                    @if($funderAdditionalInfo->funder_web_url) 
+                                        <a class="text-primary" href="{{ $funderAdditionalInfo->funder_web_url }}">
+                                            {{ $funderAdditionalInfo->funder_web_url }}
                                         </a>
                                     @else 
                                         {{ 'N/A' }}

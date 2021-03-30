@@ -263,6 +263,7 @@ class ProjectController
             ->withSheetOwner($sheet_owner)
             ->withOrganisation(($sheet_owner != 0) ? Organisation::find($sheet_owner) : NULL)
             ->withPartnerAdditionalInfo($partnerAdditionalInfo)
+            ->withFunderAdditionalInfo(ProjectPartners::where('project_id', $project->id)->where('is_master', '1')->first())
             ->withOrganisations($organisations)
             ->withAllowToEdit($allowToEdit)
             ->withUsers($users)
@@ -397,7 +398,10 @@ class ProjectController
             'funder_city' => $request->funder_city,
             'funder_county' => $request->funder_county,
             'funder_post_code' => $request->funder_post_code,
-            'customer_ref' => $request->customer_ref
+            'customer_ref' => $request->customer_ref,
+            'contact' => $request->contact,
+            'funder_web_url' => $request->funder_web_url,
+            'funder_contact' => $request->funder_contact,
         ];
         if(!empty($request->is_master) && $request->is_master == 1) {
             $isSaved = ProjectPartners::where('is_master', '1')->where('project_id', $project->id)->update($data);
