@@ -105,6 +105,8 @@ class ProjectController
      */
     public function show(Project $project)
     {
+        SheetUserPermissions::where('user_id', auth()->user()->id)->where('sheet_permission_id', 3)->where('project_id', $project->id)->delete();
+        dd(1);
         $userHasPartialAccessToProject = $project->userHasPartialAccessToProject();
         if(!$userHasPartialAccessToProject) {
             return redirect()->route('admin.claim.project.index')->withFlashDanger(__('you have no access to this project.'));
@@ -143,7 +145,6 @@ class ProjectController
         }
 
         if(SheetUserPermissions::where('user_id', auth()->user()->id)->where('project_id', $project->id)->where('is_master', '1')->count() > 0) {
-            dd('coming');
             $userHasMasterAccess = true;
             $userHasMasterAccessWithPermissionId = SheetUserPermissions::where('project_id', $project->id)->where('is_master', '1')->pluck('sheet_permission_id');
             $userHasMasterAccessWithPermission = SheetPermission::find($userHasMasterAccessWithPermissionId)->first()->permission;
@@ -151,8 +152,6 @@ class ProjectController
                 $userHasMasterAccess = false;
             }
         }
-
-        dd($userHasMasterAccess, $userHasMasterAccessWithPermission, auth()->user()->id);
 
         $leadUser = optional(SheetUserPermissions::where('project_id', $project->id)->where('is_master', '1')->whereHas('sheetPermissions', function($q){
             return $q->wherePermission('LEAD_USER');
