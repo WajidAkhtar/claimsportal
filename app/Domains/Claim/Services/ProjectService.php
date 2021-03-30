@@ -12,6 +12,7 @@ use App\Domains\Claim\Models\ProjectCostItem;
 use App\Domains\Claim\Models\ProjectPartners;
 use App\Domains\System\Models\SheetUserPermissions;
 use Illuminate\Support\Facades\Schema;
+use Intervention\Image\Facades\Image as Image;
 
 /**
  * Class ProjectService.
@@ -57,7 +58,15 @@ class ProjectService extends BaseService
 
             if(!empty($data['project_logo'])) {
                 $project_logo_name = time().'.'.$data['project_logo']->extension();
-                $data['project_logo']->move(public_path('uploads/projects/logos'), $project_logo_name);
+                
+                // Resize project logo to 425 X 425
+                $canvas = Image::canvas(425, 425);
+                $image  = Image::make($data['project_logo']->getRealPath())->resize(425, 425, function($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $canvas->insert($image, 'center');
+                $canvas->save('uploads/projects/logos/'.$project_logo_name);
+
                 $project->update([
                     'logo' => $project_logo_name
                 ]);
@@ -183,7 +192,15 @@ class ProjectService extends BaseService
                     }
                 }
                 $project_logo_name = time().'.'.$data['project_logo']->extension();
-                $data['project_logo']->move(public_path('uploads/projects/logos'), $project_logo_name);
+
+                // Resize project logo to 425 X 425
+                $canvas = Image::canvas(425, 425);
+                $image  = Image::make($data['project_logo']->getRealPath())->resize(425, 425, function($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $canvas->insert($image, 'center');
+                $canvas->save('uploads/projects/logos/'.$project_logo_name);
+
                 $project->update([
                     'logo' => $project_logo_name
                 ]);
@@ -279,6 +296,7 @@ class ProjectService extends BaseService
             }
         } catch (Exception $e) {
             DB::rollBack();
+            dd($e);
             throw new GeneralException(__('There was a problem updating this project. Please try again.'));
         }
 

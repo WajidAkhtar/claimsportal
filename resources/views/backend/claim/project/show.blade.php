@@ -402,7 +402,7 @@
                     <div class="col-md-3">
                         <div class="row">
                             <div class="col">
-                                <img src="{{ asset('uploads/projects/logos/'.$project->logo) }}" />
+                                <img src="{{ asset('uploads/projects/logos/'.$project->logo) }}" style="width: inherit;" />
                             </div>
                         </div>
                         <div class="row mt-2">
@@ -420,7 +420,7 @@
                         <div class="row">
                             <div class="col">
                                 @if (!empty(optional($leadUserPartner->invoiceOrganisation)->logo))
-                                    <img src="{{ asset('uploads/organisations/logos/'.optional($leadUserPartner->invoiceOrganisation)->logo) }}" height="160" width="160" />
+                                    <img src="{{ asset('uploads/organisations/logos/'.optional($leadUserPartner->invoiceOrganisation)->logo) }}" style="width: inherit;" />
                                 @endif
                             </div>
                         </div>
@@ -447,7 +447,7 @@
                         <div class="row">
                             <div class="col">
                                 @if (!empty(optional($partnerAdditionalInfo->invoiceOrganisation)->logo))
-                                    <img src="{{ asset('uploads/organisations/logos/'.optional($partnerAdditionalInfo->invoiceOrganisation)->logo) }}" height="160" width="160" />
+                                    <img src="{{ asset('uploads/organisations/logos/'.optional($partnerAdditionalInfo->invoiceOrganisation)->logo) }}" style="width: inherit;" />
                                 @endif
                             </div>
                         </div>
@@ -473,7 +473,7 @@
                     <div class="col-md-4">
                         <div class="row">
                             <div class="col">
-                                <img src="{{ asset('uploads/organisations/logos/'.optional($project->funders()->first())->logo) }}" height="160" width="160" />
+                                <img src="{{ asset('uploads/organisations/logos/'.optional($project->funders()->first())->logo) }}" style="width: inherit;" />
                             </div>
                         </div>
                         <div class="row mt-2">
