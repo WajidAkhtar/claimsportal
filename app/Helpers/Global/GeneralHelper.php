@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use App\Domains\System\Models\Pool;
+use App\Domains\System\Models\SheetUserPermissions;
 
 if (! function_exists('appName')) {
     /**
@@ -104,5 +105,17 @@ if(! function_exists('years')) {
             $years[$year] = $year;
         }
         return $years;
+    }
+}
+
+if(! function_exists('projectLead')) {
+    /**
+    * @return mixed
+    */
+    function projectLead($project) {
+        $lead = optional(SheetUserPermissions::where('project_id', $project->id)->where('is_master', '1')->whereHas('sheetPermissions', function($q){
+            return $q->wherePermission('LEAD_USER');
+        })->first())->user;
+        return $lead;
     }
 }

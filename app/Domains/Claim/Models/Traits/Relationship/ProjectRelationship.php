@@ -180,5 +180,4 @@ trait ProjectRelationship
     public function quarters() {
         return $this->hasMany(ProjectQuarter::class);
     }
-
 }

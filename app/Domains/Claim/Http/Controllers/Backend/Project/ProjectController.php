@@ -503,7 +503,7 @@ class ProjectController
 
         $quarter = $project->quarters()->whereId($request->quarterId)->first();
         $quarterPartner = $quarter->partner($request->organisationId);
-        if($quarterPartner->pivot->claim_status == 2 && !$request->regenerate) {
+        if($quarterPartner->pivot->claim_status == 2 && $request->regenerate == 'false') {
             return response()->json([
                 'success' => 0,
                 'message' => 'You already closed claim for this quarter'
@@ -550,14 +550,14 @@ class ProjectController
         $quarterPartner->pivot->save();
         
         // Next Quarter
-        if(!$request->regenerate) {
+        if($request->regenerate == 'false') {
             $nextQuarter = $project->quarters()->where('id', '>', $quarter->id)->first();
             $nextQuarterPartner = $nextQuarter->partner($request->organisationId);
             $nextQuarterPartner->pivot->status = 'current';
             $nextQuarterPartner->pivot->save();
         }
 
-        $message = ($request->regenerate)? 'Invoice regenerated successfully' : 'Claim closed successfully!';
+        $message = ($request->regenerate == 'false')? 'Invoice regenerated successfully' : 'Claim closed successfully!';
         return response()->json(['success' => 1, 'message' => $message]);
     }
 
@@ -607,7 +607,7 @@ class ProjectController
 
         $quarter = $project->quarters()->whereId($request->quarterId)->first();
         $quarterPartner = $quarter->user;
-        if($quarterPartner->status == 'historic' && !$request->regenerate) {
+        if($quarterPartner->status == 'historic' && $request->regenerate == 'false') {
             return response()->json([
                 'success' => 0,
                 'message' => 'You already generated invoice for this quarter'
@@ -643,14 +643,14 @@ class ProjectController
         $quarterPartner->save();
         
         // Next Quarter
-        if(!$request->regenerate) {
+        if($request->regenerate == 'false') {
             $nextQuarter = $project->quarters()->where('id', '>', $quarter->id)->first();
             $nextQuarterPartner = $nextQuarter->user;
             $nextQuarterPartner->status = 'current';
             $nextQuarterPartner->save();
         }
 
-        $message = ($request->regenerate)? 'Invoice regenerated successfully' : 'Invoice generated successfully!';
+        $message = ($request->regenerate == 'false')? 'Invoice regenerated successfully' : 'Invoice generated successfully!';
         return response()->json(['success' => 1, 'message' => $message]);
     }
 
