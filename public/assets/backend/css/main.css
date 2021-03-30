@@ -5918,3 +5918,8 @@ ul.active > a {
     margin-bottom: 1em !important;
     text-transform: capitalize !important;
 }
+
+img.header-logo {
+    width: 180px;
+    height: auto;
+}
