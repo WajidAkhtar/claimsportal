@@ -143,6 +143,7 @@ class ProjectController
         }
 
         if(SheetUserPermissions::where('user_id', auth()->user()->id)->where('project_id', $project->id)->where('is_master', '1')->count() > 0) {
+            dd('coming');
             $userHasMasterAccess = true;
             $userHasMasterAccessWithPermissionId = SheetUserPermissions::where('project_id', $project->id)->where('is_master', '1')->pluck('sheet_permission_id');
             $userHasMasterAccessWithPermission = SheetPermission::find($userHasMasterAccessWithPermissionId)->first()->permission;
