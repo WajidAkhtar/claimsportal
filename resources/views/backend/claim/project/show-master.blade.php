@@ -623,6 +623,7 @@
                                             ->placeholder('0.00')
                                             ->class('form-control '.$labelClass)
                                             ->attribute('data-year-index', $yearIndex)
+                                            ->readOnly()
                                             ->required() }}
                                     </div>
                                 </td>

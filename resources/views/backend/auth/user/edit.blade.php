@@ -45,17 +45,30 @@
                         </div>
                     </div>
 
-                    <div class="row" style="{{ (in_array(current_user_role(), ['Administrator', 'Super User', 'Finance Officer', 'Project Admin']) && $user->id == auth()->user()->id) ? 'display: none;' : '' }}">
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="pools[]">Colleges</label>
-                                {{ html()->multiselect('pools[]', $pools, $user->pools->pluck('id'))
-                                    ->class('form-control select2')
-                                    ->required()
-                                 }}
-                             </div>
+                    @if((in_array(current_user_role(), ['Administrator', 'Super User', 'Finance Officer', 'Project Admin']) && $user->id == auth()->user()->id))
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Colleges</label>
+                                    <div class="form-control">
+                                        <p>{{ $user->pools->pluck('name')->implode(',') }}</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    @else
+                        <div class="row" style="{{ (in_array(current_user_role(), ['Administrator', 'Super User', 'Finance Officer', 'Project Admin']) && $user->id == auth()->user()->id) ? 'display: none;' : '' }}">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="pools[]">Colleges</label>
+                                    {{ html()->multiselect('pools[]', $pools, $user->pools->pluck('id'))
+                                        ->class('form-control select2')
+                                        ->required()
+                                     }}
+                                 </div>
+                            </div>
+                        </div>
+                    @endif
 
                     <div class="row">
                         <div class="col">
@@ -134,6 +147,8 @@
                                  }}
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col">
                             <div class="form-group">
                                 <label for="street">Address Line 1</label>
@@ -153,6 +168,8 @@
                                  }}
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col">
                             <div class="form-group">
                                 <label for="county">County</label>
@@ -172,6 +189,8 @@
                                  }}
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col">
                             <div class="form-group">
                                 <label for="postcode">Post Code</label>
@@ -185,7 +204,7 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label for="correspending_email">Email</label>
+                                <label for="correspending_email">Correspondance Email</label>
                                 {{ html()->text('correspending_email', (!empty($correspondenceAddress)) ? $correspondenceAddress->email ?? '' : '')
                                     ->class('form-control')
                                     ->required()
