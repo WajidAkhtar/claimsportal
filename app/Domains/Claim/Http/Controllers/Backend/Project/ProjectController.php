@@ -125,7 +125,7 @@ class ProjectController
             $SheetUserPermissions = $SheetUserPermissions->where('user_id', auth()->user()->id);
         }
         $SheetUserPermissions = $SheetUserPermissions->get();
-        dd($SheetUserPermissions);
+
         if(!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User') && count($SheetUserPermissions) >= 1 && empty(request()->partner)) {
             request()->partner = $SheetUserPermissions[0]->partner_id;
         }
@@ -141,6 +141,8 @@ class ProjectController
             $userHasMasterAccess = false;
             $userHasMasterAccessWithPermission = '';
         }
+
+        dd($userHasMasterAccess, $userHasMasterAccessWithPermission, auth()->user()->id);
 
         if(SheetUserPermissions::where('user_id', auth()->user()->id)->where('project_id', $project->id)->where('is_master', '1')->count() > 0) {
             $userHasMasterAccess = true;
