@@ -5,7 +5,7 @@
 @section('title', __('Create User'))
 
 @section('content')
-    <h2 class="page-main-title">CREATE USER</h2>
+    <h2 class="page-main-title">Create User</h2>
     
     <x-forms.post :action="route('admin.auth.user.store')">
         <x-backend.card>

@@ -39,7 +39,7 @@
     </style>
 @endpush
 @section('content')
-    <h2 class="page-main-title">VIEW PROJECT</h2>
+    <h2 class="page-main-title">View Project</h2>
 
     @if($project->userHasPartialAccessToProject())
     <x-backend.card>

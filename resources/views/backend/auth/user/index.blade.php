@@ -9,7 +9,7 @@
 @section('content')
     <div class="row">
         <div class="col-12 mt-3">
-            <h2 class="page-main-title">USERS</h2>
+            <h2 class="page-main-title">Users</h2>
 
             @foreach($roles as $role)
                 @if(current_user_role() == 'Administrator')
@@ -38,7 +38,7 @@
                 @endif
                 <x-backend.card>
                     <x-slot name="header">
-                        {{ $roleName }}
+                        <strong class="page-main-title">{{ $roleName }}</strong>
                     </x-slot>
 
                     <x-slot name="headerActions">

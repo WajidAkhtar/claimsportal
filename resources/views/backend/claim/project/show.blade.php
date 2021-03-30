@@ -40,7 +40,7 @@
     <link rel="stylesheet" href="{{asset('assets/backend/vendors/select2/css/select2.css')}}">
 @endpush
 @section('content')
-    <h2 class="page-main-title">VIEW PROJECT</h2>
+    <h2 class="page-main-title">View Project</h2>
 
     @if($project->userHasPartialAccessToProject())
     <x-backend.card>

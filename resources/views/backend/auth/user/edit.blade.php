@@ -5,7 +5,7 @@
 @section('title', __('Update User'))
 
 @section('content')
-    <h2 class="page-main-title">UPDATE USER</h2>
+    <h2 class="page-main-title">Update User</h2>
     
     <x-forms.patch :action="route('admin.auth.user.update', $user)">
         <x-backend.card>

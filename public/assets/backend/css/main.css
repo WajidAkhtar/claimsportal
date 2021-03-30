@@ -5916,4 +5916,5 @@ ul.active > a {
 .page-main-title {
     color: #1e3d73 !important;
     margin-bottom: 1em !important;
+    text-transform: capitalize !important;
 }

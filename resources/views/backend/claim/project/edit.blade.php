@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="{{asset('assets/backend/vendors/select2/css/select2.css')}}">
 @endpush
 @section('content')
-    <h2 class="page-main-title">EDIT PROJECT</h2>
+    <h2 class="page-main-title">Edit Project</h2>
     <x-forms.patch :action="route('admin.claim.project.update', $project)" enctype="multipart/form-data">
         @php
             html()->model($project);
