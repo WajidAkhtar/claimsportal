@@ -402,7 +402,7 @@
                     <div class="col-md-3">
                         <div class="row">
                             <div class="col">
-                                <img src="{{ asset('uploads/projects/logos/'.$project->logo) }}" style="object-fit: cover;width: 100%;height: auto;max-height: 195px;" />
+                                <img src="{{ asset('uploads/projects/logos/'.$project->logo) }}" />
                             </div>
                         </div>
                         <div class="row mt-2">
@@ -420,7 +420,7 @@
                         <div class="row">
                             <div class="col">
                                 @if (!empty(optional($leadUserPartner->invoiceOrganisation)->logo))
-                                    <img src="{{ asset('uploads/organisations/logos/'.optional($leadUserPartner->invoiceOrganisation)->logo) }}" style="object-fit: cover;width: 100%;height: auto;max-height: 195px;" />
+                                    <img src="{{ asset('uploads/organisations/logos/'.optional($leadUserPartner->invoiceOrganisation)->logo) }}" />
                                 @endif
                             </div>
                         </div>
@@ -447,7 +447,7 @@
                         <div class="row">
                             <div class="col">
                                 @if (!empty(optional($partnerAdditionalInfo->invoiceOrganisation)->logo))
-                                    <img src="{{ asset('uploads/organisations/logos/'.optional($partnerAdditionalInfo->invoiceOrganisation)->logo) }}" style="object-fit: cover;width: 100%;height: auto;max-height: 195px;" />
+                                    <img src="{{ asset('uploads/organisations/logos/'.optional($partnerAdditionalInfo->invoiceOrganisation)->logo) }}" />
                                 @endif
                             </div>
                         </div>
@@ -473,7 +473,7 @@
                     <div class="col-md-4">
                         <div class="row">
                             <div class="col">
-                                <img src="{{ asset('uploads/organisations/logos/'.optional($project->funders()->first())->logo) }}" style="object-fit: cover;width: 100%;height: auto;max-height: 195px;" />
+                                <img src="{{ asset('uploads/organisations/logos/'.optional($project->funders()->first())->logo) }}" />
                             </div>
                         </div>
                         <div class="row mt-2">
