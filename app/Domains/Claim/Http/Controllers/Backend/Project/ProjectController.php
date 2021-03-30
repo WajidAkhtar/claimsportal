@@ -552,9 +552,11 @@ class ProjectController
         // Next Quarter
         if($request->regenerate == 'false') {
             $nextQuarter = $project->quarters()->where('id', '>', $quarter->id)->first();
-            $nextQuarterPartner = $nextQuarter->partner($request->organisationId);
-            $nextQuarterPartner->pivot->status = 'current';
-            $nextQuarterPartner->pivot->save();
+            if($nextQuarter){
+                $nextQuarterPartner = $nextQuarter->partner($request->organisationId);
+                $nextQuarterPartner->pivot->status = 'current';
+                $nextQuarterPartner->pivot->save();
+            }
         }
 
         $message = ($request->regenerate == 'false')? 'Invoice regenerated successfully' : 'Claim closed successfully!';
@@ -645,9 +647,11 @@ class ProjectController
         // Next Quarter
         if($request->regenerate == 'false') {
             $nextQuarter = $project->quarters()->where('id', '>', $quarter->id)->first();
-            $nextQuarterPartner = $nextQuarter->user;
-            $nextQuarterPartner->status = 'current';
-            $nextQuarterPartner->save();
+            if($nextQuarter){
+                $nextQuarterPartner = $nextQuarter->user;
+                $nextQuarterPartner->status = 'current';
+                $nextQuarterPartner->save();
+            }
         }
 
         $message = ($request->regenerate == 'false')? 'Invoice regenerated successfully' : 'Invoice generated successfully!';
