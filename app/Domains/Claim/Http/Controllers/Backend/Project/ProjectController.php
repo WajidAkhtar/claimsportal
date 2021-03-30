@@ -141,6 +141,8 @@ class ProjectController
             $userHasMasterAccessWithPermission = '';
         }
 
+        dump($userHasMasterAccessWithPermission);
+
         if(SheetUserPermissions::where('user_id', auth()->user()->id)->where('project_id', $project->id)->where('is_master', '1')->count() > 0) {
             $userHasMasterAccess = true;
             $userHasMasterAccessWithPermissionId = SheetUserPermissions::where('project_id', $project->id)->where('is_master', '1')->pluck('sheet_permission_id');
