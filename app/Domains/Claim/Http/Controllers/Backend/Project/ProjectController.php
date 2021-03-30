@@ -105,7 +105,8 @@ class ProjectController
      */
     public function show(Project $project)
     {
-        SheetUserPermissions::where('user_id', auth()->user()->id)->where('sheet_permission_id', 3)->where('project_id', $project->id)->where('is_master', '0')->delete();
+        $up = SheetUserPermissions::where('user_id', auth()->user()->id)->where('sheet_permission_id', 3)->where('project_id', $project->id)->where('is_master', '0')->get();
+        dd($up);
         // dd(1);
         $userHasPartialAccessToProject = $project->userHasPartialAccessToProject();
         if(!$userHasPartialAccessToProject) {
