@@ -587,6 +587,10 @@
                                     else if($currentSheetUserPermission == 'READ_ONLY') {
                                         $readOnly = true;
                                     }
+
+                                    if(!$userHasMasterAccess && $userHasMasterAccessWithPermission != 'LEAD_USER' && $quarter->partner(request()->partner)->pivot->status == 'current' && $quarter->partner(request()->partner)->pivot->claim_status == 1) {
+                                        $readOnly = true;
+                                    }
                                 @endphp
                                 <td>
                                     <div class="input-group">
