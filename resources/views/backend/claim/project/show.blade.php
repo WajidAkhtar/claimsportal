@@ -223,7 +223,7 @@
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col">
+                            <div class="col-md-6">
                                 {{ html()->label('Web URL')->for('web_url') }}
                                 {{ html()->text('web_url', $partnerAdditionalInfo->web_url ?? '')
                                     ->class('form-control additional-info')
