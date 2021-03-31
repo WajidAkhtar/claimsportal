@@ -2,6 +2,7 @@
 
 namespace App\Domains\Claim\Models\Traits\Relationship;
 
+use App\Domains\Claim\Models\Project;
 use App\Domains\System\Models\Organisation;
 use App\Domains\Claim\Models\ProjectQuarterUser;
 
@@ -25,6 +26,14 @@ trait ProjectQuarterRelationship
     public function user()
     {
         return $this->hasOne(ProjectQuarterUser::class);
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function project()
+    {
+        return $this->belongsTo(Project::class)->withTrashed();
     }
 
 }

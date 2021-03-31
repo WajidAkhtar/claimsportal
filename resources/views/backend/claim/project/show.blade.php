@@ -831,7 +831,7 @@
                                     {{ html()->input('text', 'po_number['.$quarter->start_timestamp.']', $quarter->partner(request()->partner)->pivot->po_number)
                                             // ->placeholder('0.00')
                                             ->class('form-control invoice-field')
-                                            ->readOnly($currentSheetUserPermission == 'LEAD_USER' || $userHasMasterAccess || $quarter->partner(request()->partner)->pivot->claim_status !== 0 || $quarter->partner(request()->partner)->pivot->status != 'current') }}
+                                            ->readOnly($userHasMasterAccess || ($currentSheetUserPermission != 'LEAD_USER' && ($quarter->partner(request()->partner)->pivot->claim_status !== 0 || $quarter->partner(request()->partner)->pivot->status != 'current')) || ($currentSheetUserPermission == 'LEAD_USER' && ($quarter->partner(request()->partner)->pivot->claim_status == 0 || $quarter->partner(request()->partner)->pivot->status == 'forecast'))) }}
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
@@ -850,9 +850,9 @@
                                 @foreach ($project->quarters as $quarter)
                                 <td class="text-center">
                                     {{ html()->input('text', 'invoice_date['.$quarter->start_timestamp.']', $quarter->partner(request()->partner)->pivot->invoice_date)
-                                            // ->placeholder('YYYY-MM-DD')
+                                            // ->placeholder('DD-MM-YYYY')
                                             ->class('form-control invoice-field')
-                                            ->readOnly($currentSheetUserPermission == 'LEAD_USER' || $userHasMasterAccess || $quarter->partner(request()->partner)->pivot->claim_status !== 0 || $quarter->partner(request()->partner)->pivot->status != 'current') }}
+                                            ->readOnly($userHasMasterAccess || ($currentSheetUserPermission != 'LEAD_USER' && ($quarter->partner(request()->partner)->pivot->claim_status !== 0 || $quarter->partner(request()->partner)->pivot->status != 'current')) || ($currentSheetUserPermission == 'LEAD_USER' && ($quarter->partner(request()->partner)->pivot->claim_status == 0 || $quarter->partner(request()->partner)->pivot->status == 'forecast'))) }}
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
@@ -873,7 +873,7 @@
                                     {{ html()->input('text', 'invoice_no['.$quarter->start_timestamp.']', $quarter->partner(request()->partner)->pivot->invoice_no)
                                             // ->placeholder('0.00')
                                             ->class('form-control invoice-field')
-                                            ->readOnly($currentSheetUserPermission == 'LEAD_USER' || $userHasMasterAccess || $quarter->partner(request()->partner)->pivot->claim_status !== 0  || $quarter->partner(request()->partner)->pivot->status != 'current') }}
+                                            ->readOnly($userHasMasterAccess || ($currentSheetUserPermission != 'LEAD_USER' && ($quarter->partner(request()->partner)->pivot->claim_status !== 0 || $quarter->partner(request()->partner)->pivot->status != 'current')) || ($currentSheetUserPermission == 'LEAD_USER' && ($quarter->partner(request()->partner)->pivot->claim_status == 0 || $quarter->partner(request()->partner)->pivot->status == 'forecast'))) }}
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>

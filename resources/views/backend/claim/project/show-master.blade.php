@@ -896,7 +896,7 @@
                                 @foreach ($project->quarters as $quarter)
                                 <td class="text-center">
                                     {{ html()->input('text', 'invoice_date['.$quarter->start_timestamp.']', $quarter->user->invoice_date)
-                                            // ->placeholder('YYYY-MM-DD')
+                                            // ->placeholder('DD/MM/YYYY')
                                             ->class('form-control invoice-field')
                                             ->readOnly($quarter->user->status != 'current') }}
                                 </td>

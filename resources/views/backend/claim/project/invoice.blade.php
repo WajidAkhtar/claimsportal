@@ -1,287 +1,288 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
-        <title>{{$quarter->name.' Invoice'}}</title>
-        <!-- START: Template CSS-->
-        <link rel="stylesheet" href="{{ asset('assets/backend/vendors/bootstrap/css/bootstrap.min.css') }}">
-        <!-- START: Custom CSS-->
-        <!-- <link rel="stylesheet" href="{{ asset('assets/backend/css/main.css') }}"> -->
-        <style>
-            body {
-                background-color: #FFF;
-                color: #000;
-                font-family: 'DejaVu Sans';
-                font-size: 13px;
-            }
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-            .padding {
-                padding: 2rem !important
-            }
+		<title>{{$quarter->name.' Invoice'}}</title>
 
-            .card {
-                margin-bottom: 30px;
-                border: none;
-                -webkit-box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22);
-                -moz-box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22);
-                box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22)
-            }
+		<!-- Favicon -->
+		{{-- <link rel="icon" href="./images/favicon.png" type="image/x-icon" /> --}}
 
-            .card-header {
-                background-color: #fff;
-                border-bottom: 1px solid #e6e6f2
-            }
+		<!-- Invoice styling -->
+		<style>
+			body {
+				font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+				text-align: center;
+				color: #777;
+			}
 
-            h3 {
-                font-size: 16px;
-                font-family: 'DejaVu Sans' !important;
-            }
+			body h1 {
+				font-weight: 200;
+				margin-bottom: 0px;
+				padding-bottom: 0px;
+				color: #000;
+			}
 
-            h5 {
-                font-size: 13px;
-                line-height: 26px;
-                /* color: #c2c2c4; */
-                margin: 0px 0px 15px 0px;
-                /* font-family: 'Circular Std Medium' */
-                font-family: 'DejaVu Sans' !important;
-            }
+			body h3 {
+				font-weight: 200;
+				/* margin-top: 10px; */
+				/* margin-bottom: 20px; */
+				font-style: italic;
+				color: #555;
+			}
 
-            .text-dark {
-                color: #3d405c !important
-            }
-        </style>
-        <!-- END: Custom CSS-->
-    </head>
-    <body id="main-container" class="default">
-        <div class="offset-xl-2 col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12 padding">
-            <div class="">
-                <div class=" p-4">
-                    <table class="w-100">
-                        <tr>
-                            <td>
-                                @if(!empty($invoiceFromPartner->invoiceOrganisation->logo) && file_exists(public_path('uploads/organisations/logos/'.$invoiceFromPartner->invoiceOrganisation->logo)))
-                                    <img src="{{ asset('uploads/organisations/logos/'.$invoiceFromPartner->invoiceOrganisation->logo) }}" height="160" width="160" />
-                                @else
-                                    {{ $invoiceFromPartner->invoiceOrganisation->organisation_name }}
-                                @endif
-                            </td>
-                            <td class="float-right">
-                                <table class="w-100">
-                                    <tr>
-                                        <td><strong>Invoice Date: </strong></td>
-                                        <td>{{$quarterPartner->pivot->invoice_date}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Invoice Number: </strong></td>
-                                        <td>#{{$quarterPartner->pivot->invoice_no}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>PO Number: </strong></td>
-                                        <td>{{$quarterPartner->pivot->po_number}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Customer Account Number: </strong></td>
-                                        <td>{{$invoiceToPartner->account_no}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Project Funder Ref: </strong></td>
-                                        <td>{{$invoiceToPartner->customer_ref}}</td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="">
-                    <div class="row mb-4 m-2">
-                        <table class="w-100">
-                            <tr>
-                                <td>
-                                    <p>
-                                        <strong class="mb-3 text-sm">Invoice To:</strong>
-                                    </p>
-                                    <strong class="text-dark mb-1">{{$invoiceToPartner->invoiceOrganisation->organisation_name}}</strong>
-                                    <div>{{$invoiceToPartner->street_address}}</div>
-                                    <div>{{$invoiceToPartner->address_line_2}}</div>
-                                    <div>{{$invoiceToPartner->county}}</div>
-                                    <div>{{$invoiceToPartner->city}}</div>
-                                    <div>{{$invoiceToPartner->post_code}}</div>
-                                    <div><strong>Finance Tel:</strong> {{$invoiceToPartner->finance_tel ?? 'N/A'}}</div>
-                                    <div><strong>Finance Email:</strong> {{$invoiceToPartner->finance_email ?? 'N/A'}}</div>
-                                </td>
-                                <td class="float-right">
-                                    <p>
-                                        <strong class="mb-3 text-sm">Invoice From:</strong>
-                                    </p>
-                                    <strong class="text-dark mb-1">{{$invoiceFromPartner->invoiceOrganisation->organisation_name}}</strong>
-                                    <div>{{$invoiceFromPartner->street_address}}</div>
-                                    <div>{{$invoiceFromPartner->address_line_2}}</div>
-                                    <div>{{$invoiceFromPartner->county}}</div>
-                                    <div>{{$invoiceFromPartner->city}}</div>
-                                    <div>{{$invoiceFromPartner->post_code}}</div>
-                                    <div><strong>Finance Tel:</strong> {{$invoiceFromPartner->finance_tel ?? 'N/A'}}</div>
-                                    <div><strong>Finance Email:</strong> {{$invoiceFromPartner->finance_email ?? 'N/A'}}</div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="table-responsive-sm">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Description</th>
-                                    <th class="right">Amount</th>
-                                    <th class="center">VAT</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($invoiceItems as $invoiceItem)
-                                <tr>
-                                    <td class="left strong">{{$invoiceItem->item_name.' '.$invoiceItem->item_description}}</td>
-                                    <td class="right">£{{$invoiceItem->item_price}}</td>
-                                    <td class="right">{{$invoiceItem->vat_perc}}%</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4 col-sm-5">
-                        </div>
-                        <div class="col-lg-4 col-sm-5 ml-auto">
-                            <table class="table table-clear">
-                                <tbody>
-                                    <tr>
-                                        <td class="left">
-                                            <strong class="text-dark">Total (Net)</strong>
-                                        </td>
-                                        <td class="right">£{{number_format($total = array_sum(array_column($invoiceItems, 'item_price')), 2)}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="left">
-                                            <strong class="text-dark">VAT</strong>
-                                        </td>
-                                        <td class="right">£{{number_format($vat = ($total * (array_sum(array_column($invoiceItems, 'vat_perc')) / 100)), 2)}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="left">
-                                            <strong class="text-dark">Balance Due</strong> </td>
-                                        <td class="right">
-                                            <strong class="text-dark">£{{number_format($total + $vat, 2)}}</strong>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <table class="w-50">
-                            <tr>
-                                <td>
-                                    <table class="table table-clear table-borderless">
-                                        <tbody>
-                                            <tr>
-                                                <td class="left">
-                                                    <strong class="text-dark">Payment Terms</strong>
-                                                </td>
-                                                <td class="left">Net 30/ 30 days</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="left">
-                                                    <strong class="text-dark">Payment Due Date</strong>
-                                                </td>
-                                                <td>{{carbon($quarterPartner->pivot->invoice_date)->addMonth()->format('Y-m-d')}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="row">
-                        <table class="w-100 mb-3">
-                            <tr style="background-color:#000000;color: #FFFFFF;">
-                                <td>
-                                    <strong>BANK DETAILS</strong>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="row">
-                        <table class="w-100 mt-3">
-                            <tr>
-                                <td style="background-color:#000000;color: #FFFFFF;">
-                                    <strong>FOR BACS PAYMENTS</strong>
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td class="left">
-                                    <strong class="text-dark">ACCOUNT NAME:</strong>
-                                </td>
-                                <td class="left">{{$invoiceFromPartner->account_name}}</td>
-                            </tr>
-                            <tr>
-                                <td class="left">
-                                    <strong class="text-dark">BANK NAME</strong>
-                                </td>
-                                <td>{{$invoiceFromPartner->bank_name}}</td>
-                            </tr>
-                            <tr>
-                                <td class="left">
-                                    <strong class="text-dark">SORT CODE</strong>
-                                </td>
-                                <td>{{$invoiceFromPartner->sort_code}}</td>
-                            </tr>
-                            <tr>
-                                <td class="left">
-                                    <strong class="text-dark">ACCOUNT NUMBER</strong>
-                                </td>
-                                <td>{{$invoiceFromPartner->account_no}}</td>
-                            </tr>
-                            <tr>
-                                <td class="left">
-                                    <strong class="text-dark">IBAN</strong>
-                                </td>
-                                <td>{{$invoiceFromPartner->iban}}</td>
-                            </tr>
-                            <tr>
-                                <td class="left">
-                                    <strong class="text-dark">SWIFT</strong>
-                                </td>
-                                <td>{{$invoiceFromPartner->swift}}</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="row">
-                        <table class="w-100 mt-3">
-                            <tr>
-                                <td style="background-color:#000000;color: #FFFFFF;">
-                                    <strong>ONLINE PAYEMENTS</strong>
-                                </td>
-                                <td width="60%"></td>
+			body a {
+				color: #06f;
+			}
+
+			.invoice-box {
+				max-width: 800px;
+				margin: auto;
+				padding: 5px;
+				border: 1px solid #eee;
+				box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+				font-size: 12px;
+				line-height: 20px;
+				font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+				color: #555;
+			}
+
+			.invoice-box table {
+				width: 100%;
+				line-height: inherit;
+				text-align: left;
+				border-collapse: collapse;
+			}
+
+			.invoice-box table td {
+				padding: 5px;
+				vertical-align: top;
+			}
+
+			.invoice-box table tr td:nth-child(2) {
+				text-align: right;
+			}
+
+			.invoice-box table tr.top table td {
+				padding-bottom: 20px;
+			}
+
+			.invoice-box table tr.top table td.title {
+				font-size: 25px;
+				line-height: 25px;
+				color: #333;
+			}
+
+			.invoice-box table tr.information table td {
+				padding-bottom: 40px;
+			}
+
+			.invoice-box table tr.heading td {
+				background: #eee;
+				border-bottom: 1px solid #ddd;
+				font-weight: bold;
+			}
+
+			.invoice-box table tr.details td {
+				padding-bottom: 20px;
+			}
+
+			.invoice-box table tr.item td {
+				border-bottom: 1px solid #eee;
+			}
+
+			.invoice-box table tr.item.last td {
+				border-bottom: none;
+			}
+
+			.invoice-box table tr.total td:nth-child(2) {
+				border-top: 2px solid #eee;
+				font-weight: bold;
+			}
+
+			@media only screen and (max-width: 600px) {
+				.invoice-box table tr.top table td {
+					width: 100%;
+					display: block;
+					text-align: center;
+				}
+
+				.invoice-box table tr.information table td {
+					width: 100%;
+					display: block;
+					text-align: center;
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="invoice-box">
+			<table>
+				<tr class="top">
+					<td colspan="3">
+						<table>
+							<tr>
+								<td class="title">
+                                    @if(!empty($invoiceFromPartner->invoiceOrganisation->logo) && file_exists(public_path('uploads/organisations/logos/'.$invoiceFromPartner->invoiceOrganisation->logo)))
+                                        <img src="{{ asset('uploads/organisations/logos/'.$invoiceFromPartner->invoiceOrganisation->logo) }}" style="width: 100%; max-width: 200px; max-height:100px" />
+                                    @else
+                                        {{ $invoiceFromPartner->invoiceOrganisation->organisation_name }}
+                                    @endif
+								</td>
+
+								<td style="text-align: left;float:right;">
+									<strong>Invoice Date: </strong>{{$quarterPartner->pivot->invoice_date}}<br />
+									<strong>Invoice Number: </strong>#{{$quarterPartner->pivot->invoice_no}}<br />
+									<strong>PO Number: </strong>{{$quarterPartner->pivot->po_number}}<br />
+									<strong>Customer A/C No: </strong>{{$invoiceToPartner->account_no}}<br />
+									<strong>Project Funder Ref: </strong>{{$quarter->project->project_funder_ref}}
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+
+				<tr class="information">
+					<td colspan="3">
+						<table>
+							<tr>
+								<td>
+                                    <strong>Invoice To:</strong><br>
+									@if (!$isInvoiceToFunder)
+                                    <strong>{{$invoiceToPartner->invoiceOrganisation->organisation_name}}</strong><br />
+                                    {{$invoiceToPartner->street_address}}<br />
+                                    {{$invoiceToPartner->address_line_2}}<br />
+                                    {{$invoiceToPartner->county}}<br />
+                                    {{$invoiceToPartner->city}}<br />
+                                    {{$invoiceToPartner->post_code}}<br />
+                                    <strong>Finance Tel:</strong> {{$invoiceToPartner->finance_tel ?? 'N/A'}}<br />
+                                    <strong>Finance Email:</strong> {{$invoiceToPartner->finance_email ?? 'N/A'}}<br />
+                                    @else    
+                                    <strong>{{$invoiceTo->organisation_name}}</strong><br />
+                                    {{$invoiceToPartner->funder_address_line_1}}<br />
+                                    {{$invoiceToPartner->funder_address_line_2}}<br />
+                                    {{$invoiceToPartner->funder_county}}<br />
+                                    {{$invoiceToPartner->funder_city}}<br />
+                                    {{$invoiceToPartner->funder_post_code}}<br />
+                                    <strong>Finance Tel:</strong> {{$invoiceToPartner->finance_tel ?? 'N/A'}}<br />
+                                    <strong>Finance Email:</strong> {{$invoiceToPartner->finance_email ?? 'N/A'}}<br />
+                                    @endif
+								</td>
+
+								<td style="text-align: left;float:right;">
+                                    <strong>Invoice From:</strong><br />
+                                    <strong>{{$invoiceFromPartner->invoiceOrganisation->organisation_name}}</strong><br />
+                                    {{$invoiceFromPartner->street_address}}<br />
+                                    {{$invoiceFromPartner->address_line_2}}<br />
+                                    {{$invoiceFromPartner->county}}<br />
+                                    {{$invoiceFromPartner->city}}<br />
+                                    {{$invoiceFromPartner->post_code}}<br />
+                                    <strong>Finance Tel:</strong> {{$invoiceFromPartner->finance_tel ?? 'N/A'}}<br />
+                                    <strong>Finance Email:</strong> {{$invoiceFromPartner->finance_email ?? 'N/A'}}<br />
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+
+				<tr class="heading">
+					<td>Description</td>
+					<td style="text-align:center;">Amount</td>
+					<td style="text-align:center;">VAT</td>
+				</tr>
+
+                @foreach (array_slice($invoiceItems, 0, 5) as $invoiceItem)
+                <tr class="item {{$loop->last ? 'last' : ''}}">
+                    <td>{{$invoiceItem->item_name.' '.$invoiceItem->item_description}}</td>
+                    <td style="text-align:center;">£{{$invoiceItem->item_price}}</td>
+                    <td style="text-align:center;">{{$invoiceItem->vat_perc}}%</td>
+                </tr>
+                @endforeach
+				<tr class="total">
+					<td style="text-align:right;"><strong>Total (Net):</strong> </td>
+					<td style="text-align:center;">£{{number_format($total = array_sum(array_column($invoiceItems, 'item_price')), 2)}}</td>
+					<td></td>
+				</tr>
+				<tr class="total">
+					<td style="text-align:right;"><strong>VAT:</strong> </td>
+					<td style="text-align:center;">£{{number_format($vat = ($total * (array_sum(array_column($invoiceItems, 'vat_perc')) / 100)), 2)}}</td>
+					<td></td>
+				</tr>
+				<tr class="total">
+					<td style="text-align:right;"><strong>Balance Due:</strong> </td>
+					<td style="text-align:center;">£{{number_format($total + $vat, 2)}}</td>
+					<td></td>
+				</tr>
+                <tr class="information">
+                    <td colspan="3"></td>
+                </tr>
+                <tr class="information">
+					<td colspan="3"><strong>Payment Terms: </strong>Net 30/ 30 days</td>
+				</tr>
+                <tr class="information">
+					<td colspan="3"><strong>Payment Due Date: </strong>{{\Carbon\Carbon::createFromFormat('d/m/Y', $quarterPartner->pivot->invoice_date)->addMonth()->format('d/m/Y')}}</td>
+				</tr>
+                <tr class="information">
+                    <td colspan="3"></td>
+                </tr>
+                <tr class="heading">
+					<td colspan="3">BANK DETAILS</td>
+				</tr>
+                <tr>
+					<td>
+                        <table>
+                            <tr class="heading">
+                                <td>FOR BACS PAYMENTS</td>
                             </tr>
                             <tr>
                                 <td>
-                                    <!-- <a href="{{$invoiceFromPartner->web_url}}">{{$invoiceFromPartner->web_url}}</a> -->
-                                    {{$invoiceFromPartner->web_url}}
+                                    <strong>ACCOUNT NAME: </strong>{{$invoiceFromPartner->account_name}}
                                 </td>
-                                <td></td>
                             </tr>
-                        </table>
-                    </div>
-                    <div class="row">
-                        <table class="w-100">
                             <tr>
                                 <td>
-                                    VAT REG No: {{$invoiceFromPartner->vat}}        
+                                    <strong>BANK NAME: </strong>{{$invoiceFromPartner->bank_name}}
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <strong>SORT CODE: </strong>{{$invoiceFromPartner->sort_code}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>ACCOUNT NUMBER: </strong>{{$invoiceFromPartner->account_no}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>IBAN: </strong>{{$invoiceFromPartner->iban}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>SWIFT: </strong>{{$invoiceFromPartner->swift}}
+                                </td>
+                            </tr>
+                            <tr class="heading">
+                                <td>FOR ONLINE PAYMENTS</td>
+                            </tr>
+                            <tr>
+                                <td><a href="{{$invoiceFromPartner->web_url}}">{{$invoiceFromPartner->web_url}}</a></td>
+                            </tr>
                         </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </body>
+                    </td>
+                    <td></td>
+                    <td></td>
+				</tr>
+                <tr>
+                    <td colspan="3">
+                        <strong>VAT REG No: </strong>{{$invoiceFromPartner->vat}}
+                    </td>
+                </tr>
+			</table>
+		</div>
+	</body>
 </html>

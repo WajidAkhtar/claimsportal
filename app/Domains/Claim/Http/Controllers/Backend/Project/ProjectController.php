@@ -105,13 +105,6 @@ class ProjectController
      */
     public function show(Project $project)
     {
-        foreach (Organisation::all() as $organisation) {
-            $organisation_name = $organisation->organisation_name;
-            $organisation->update([
-              'logo' => $organisation_name.' 72.jpg',
-              'logo_high' => $organisation_name.' 300.jpg',
-            ]);
-        }
         $userHasPartialAccessToProject = $project->userHasPartialAccessToProject();
         if(!$userHasPartialAccessToProject) {
             return redirect()->route('admin.claim.project.index')->withFlashDanger(__('you have no access to this project.'));
@@ -463,7 +456,7 @@ class ProjectController
             'organisationId' => 'required|exists:organisations,id',
             'po_number' => 'required',
             'invoice_no' => 'required',
-            'invoice_date' => 'required|date_format:Y-m-d',
+            'invoice_date' => 'required|date_format:d/m/Y',
         ]);
 
         if($validator->fails()) {
@@ -547,7 +540,7 @@ class ProjectController
         // Invoice To Funder
         $invoiceFrom = auth()->user()->organisation;
         $invoiceFromPartner = $project->allpartners()->whereNull('organisation_id')->whereIsMaster('1')->first();
-        $invoiceTo = $invoiceFrom;
+        $invoiceTo = $project->funders()->first();
         $invoiceToPartner = $invoiceFromPartner;
 
         $this->generateAndSaveInvoice('lead', $project, $organisationId, $quarter, $quarterPartner, $invoiceFrom, $invoiceFromPartner, $invoiceTo, $invoiceToPartner);
@@ -581,6 +574,17 @@ class ProjectController
             $invoiceItems[$index]['vat_perc'] = 0;
         }
 
+        // return view('backend.claim.project.invoice', [
+        //     'quarter' => $quarter,
+        //     'quarterPartner' => $quarterPartner,
+        //     'invoiceItems' => json_decode(json_encode($invoiceItems)),
+        //     'invoiceTo' => $invoiceTo,
+        //     'invoiceToPartner' => $invoiceToPartner,
+        //     'invoiceFrom' => $invoiceFrom,
+        //     'invoiceFromPartner' => $invoiceFromPartner,
+        //     'isInvoiceToFunder' => ($invoiceNamePrefix == 'lead')? true : false,
+        // ]);
+
         $pdf = PDF::loadView('backend.claim.project.invoice', [
             'quarter' => $quarter,
             'quarterPartner' => $quarterPartner,
@@ -589,6 +593,7 @@ class ProjectController
             'invoiceToPartner' => $invoiceToPartner,
             'invoiceFrom' => $invoiceFrom,
             'invoiceFromPartner' => $invoiceFromPartner,
+            'isInvoiceToFunder' => ($invoiceNamePrefix == 'lead')? true : false,
         ]);
         $pdf->save(public_path('uploads/invoices/'.($invoiceNamePrefix ? $invoiceNamePrefix.'-' : '').$quarter->id.'.pdf'));
 
@@ -604,7 +609,7 @@ class ProjectController
             'quarterId' => 'required|exists:project_quarters,id',
             'po_number' => 'required',
             'invoice_no' => 'required',
-            'invoice_date' => 'required|date_format:Y-m-d',
+            'invoice_date' => 'required|date_format:d/m/Y',
         ]);
 
         if($validator->fails()) {
@@ -713,7 +718,10 @@ class ProjectController
         //     'quarterPartner' => $quarterPartner,
         //     'invoiceItems' => json_decode(json_encode($invoiceItems)),
         //     'invoiceFrom' => $invoiceFrom,
+        //     'invoiceTo' => $invoiceFrom,
         //     'invoiceFromPartner' => $invoiceFromPartner,
+        //     'invoiceToPartner' => $invoiceFromPartner,
+        //     'invoiceFunder' => $invoiceFromPartner->invoiceFunder ?? $project->funders()->first(),
         // ]);
 
         $pdf = PDF::loadView('backend.claim.project.invoice-master', [
