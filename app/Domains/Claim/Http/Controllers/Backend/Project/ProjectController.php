@@ -112,7 +112,6 @@ class ProjectController
               'logo_high' => $organisation_name.' 300.jpg',
             ]);
         }
-        dd(1);
         $userHasPartialAccessToProject = $project->userHasPartialAccessToProject();
         if(!$userHasPartialAccessToProject) {
             return redirect()->route('admin.claim.project.index')->withFlashDanger(__('you have no access to this project.'));
