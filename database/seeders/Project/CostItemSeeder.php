@@ -16,77 +16,77 @@ class CostItemSeeder extends Seeder
     {
         CostItem::create([
             'name' => 'A1',
-            'description' => 'Directly Incurred Staff',
+            'description' => 'Directly Incurred: Staff',
             'active' => true,
             'is_system_generated' => true,
         ]);
         
         CostItem::create([
             'name' => 'A2',
-            'description' => 'Consumables',
+            'description' => 'Directly Incurred: Travel & Subsistence',
             'active' => true,
             'is_system_generated' => true,
         ]);
         
         CostItem::create([
             'name' => 'A3',
-            'description' => 'Travel & Subsistence',
+            'description' => 'Directly Incurred: Equipment',
             'active' => true,
             'is_system_generated' => true,
         ]);
 
         CostItem::create([
             'name' => 'A4',
-            'description' => 'Directly incurred: Other cost ',
+            'description' => 'Directly Incurred: Consumables',
             'active' => true,
             'is_system_generated' => true,
         ]);
 
         CostItem::create([
             'name' => 'A5',
-            'description' => 'Directly incurred: Exceptions Other',
+            'description' => 'Directly Allocated: Investigators',
             'active' => true,
             'is_system_generated' => true,
         ]);
 
         CostItem::create([
             'name' => 'A6',
-            'description' => 'Directly allocated: Investigators',
+            'description' => 'Directly Allocated: Estates',
             'active' => true,
             'is_system_generated' => true,
         ]);
 
         CostItem::create([
             'name' => 'A7',
-            'description' => 'Directly allocated: Estates',
+            'description' => 'Directly Allocated: Other Costs',
             'active' => true,
             'is_system_generated' => true,
         ]);
 
         CostItem::create([
             'name' => 'A8',
-            'description' => 'Directly allocated: Other cost',
+            'description' => 'Indirect Costs',
             'active' => true,
             'is_system_generated' => true,
         ]);
 
         CostItem::create([
             'name' => 'A9',
-            'description' => 'Indirect costs',
+            'description' => 'Exceptions: Staff',
             'active' => true,
             'is_system_generated' => true,
         ]);
 
         CostItem::create([
             'name' => 'A10',
-            'description' => '  Exceptions: Staff',
+            'description' => 'Exceptions: Travel & Subsistence',
             'active' => true,
             'is_system_generated' => true,
         ]);
 
         CostItem::create([
             'name' => 'A11',
-            'description' => 'Exceptions: Travel & Subsistence',
+            'description' => 'Exceptions: Other',
             'active' => true,
             'is_system_generated' => true,
         ]);
@@ -100,7 +100,7 @@ class CostItemSeeder extends Seeder
 
         CostItem::create([
             'name' => 'A13',
-            'description' => 'Exceptions: Other cost',
+            'description' => 'Exceptions:',
             'active' => true,
             'is_system_generated' => true,
         ]);

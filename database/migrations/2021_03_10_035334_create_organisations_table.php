@@ -23,7 +23,8 @@ class CreateOrganisationsTable extends Migration
             $table->string('county')->nullable();
             $table->string('city')->nullable();
             $table->string('postcode')->nullable();
-            $table->string('logo')->default(asset('backend/images/default_organisation_img.png'));
+            $table->string('logo')->nullable();
+            $table->string('logo_high')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
