@@ -105,6 +105,14 @@ class ProjectController
      */
     public function show(Project $project)
     {
+        foreach (Organisation::all() as $organisation) {
+            $organisation_name = $organisation->organisation_name;
+            $organisation->update([
+              'logo' => $organisation_name.' 72.jpg',
+              'logo_high' => $organisation_name.' 300.jpg',
+            ]);
+        }
+        dd(1);
         $userHasPartialAccessToProject = $project->userHasPartialAccessToProject();
         if(!$userHasPartialAccessToProject) {
             return redirect()->route('admin.claim.project.index')->withFlashDanger(__('you have no access to this project.'));
