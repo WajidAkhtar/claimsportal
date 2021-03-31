@@ -460,7 +460,7 @@
                         <div class="row mt-2">
                             <div class="col">
                                 <div><strong>PARTNER</strong></div>
-                                <div>Name: {{optional($partnerAdditionalInfo->invoiceOrganisation)->organisation_name ?? 'N/A'}}</div>
+                                <div>Name: {{optional($partnerAdditionalInfo->invoiceOrganisation)->organisation_name ?? optional($partnerAdditionalInfo->organisation)->organisation_name}}</div>
                                 <div>Contact: {{$partnerAdditionalInfo->finance_contact_name ?? 'N/A'}}</div>
                                 <div>Web URL: 
                                     @if($partnerAdditionalInfo->web_url) 
