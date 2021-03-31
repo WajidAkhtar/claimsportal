@@ -222,6 +222,14 @@
                                  }}
                             </div>
                         </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                {{ html()->label('Web URL')->for('web_url') }}
+                                {{ html()->text('web_url', $partnerAdditionalInfo->web_url ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                        </div>
                         <div class="row mt-4">
                             <div class="col">
                                 <h6>Banking Details</h6>
@@ -236,27 +244,19 @@
                                  }}
                             </div>
                             <div class="col">
-                                {{ html()->label('Web URL')->for('web_url') }}
-                                {{ html()->text('web_url', $partnerAdditionalInfo->web_url ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col">
                                 {{ html()->label('Bank Name')->for('bank_name') }}
                                 {{ html()->text('bank_name', $partnerAdditionalInfo->bank_name ?? '')
                                     ->class('form-control additional-info')
                                  }}
                             </div>
+                        </div>
+                        <div class="row mt-2">
                             <div class="col">
                                 {{ html()->label('Customer Ref')->for('customer_ref') }}
                                 {{ html()->text('customer_ref', $partnerAdditionalInfo->customer_ref ?? '')
                                     ->class('form-control additional-info')
                                  }}
                             </div>
-                        </div>
-                        <div class="row mt-2">
                             <div class="col">
                                 {{ html()->label('Bank Address')->for('bank_address') }}
                                 {{ html()->text('bank_address', $partnerAdditionalInfo->bank_address ?? '')
@@ -264,6 +264,7 @@
                                  }}
                             </div>
                         </div>
+                        
                         <div class="row mt-2">
                             <div class="col">
                                 {{ html()->label('Sort Code')->for('sort_code') }}

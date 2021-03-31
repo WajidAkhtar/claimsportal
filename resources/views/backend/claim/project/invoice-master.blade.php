@@ -85,7 +85,7 @@
                                         <td>{{$invoiceToPartner->account_no}}</td>
                                     </tr>
                                     <tr>
-                                        <td><strong>Contract Ref: </strong></td>
+                                        <td><strong>Project Funder Ref: </strong></td>
                                         <td>{{$invoiceToPartner->customer_ref}}</td>
                                     </tr>
                                 </table>
