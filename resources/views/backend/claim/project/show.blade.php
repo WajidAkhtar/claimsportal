@@ -446,14 +446,14 @@
                         </div>
                     </div>
                 @endif
-                @if(!empty(request()->partner))
+                @if(!empty(request()->partner) && !empty($partnerAdditionalInfo))
                     <div class="col-md-3">
                         <div class="row">
                             <div class="col">
                                 @if (!empty(optional($partnerAdditionalInfo->invoiceOrganisation)->logo))
                                     <img src="{{ asset('uploads/organisations/logos/'.optional($partnerAdditionalInfo->invoiceOrganisation)->logo) }}" class="header-logo" />
                                 @else
-                                    <img src="{{ asset('uploads/projects/logos/default-logo.png') }}" class="header-logo" />
+                                    <img src="{{ asset('uploads/organisations/logos/'.optional($partnerAdditionalInfo->organisation)->logo) }}" class="header-logo" />
                                 @endif
                             </div>
                         </div>
