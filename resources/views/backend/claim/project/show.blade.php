@@ -446,7 +446,7 @@
                         </div>
                     </div>
                 @endif
-                @if(!empty(request()->partner) && !empty($partnerAdditionalInfo))
+                @if(!empty(request()->partner))
                     <div class="col-md-3">
                         <div class="row">
                             <div class="col">
