@@ -91,7 +91,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <label for="job_title" class="col-form-label">@lang('Job Title')</label>
-                                <input type="text" name="job_title" class="form-control" placeholder="{{ __('Job Title') }}" value="{{ old('job_title') ?? $user->job_title }}" maxlength="100" required />
+                                <input type="text" name="job_title" class="form-control" placeholder="{{ __('Job Title') }}" value="{{ old('job_title') ?? $user->job_title }}" maxlength="100" />
                             </div><!--form-group-->
                         </div>
                         <div class="col">
@@ -106,7 +106,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <label for="department" class="col-form-label">@lang('Department')</label>
-                                <input type="text" name="department" class="form-control" placeholder="{{ __('Department') }}" value="{{ old('department') ?? $user->department }}" maxlength="100" required />
+                                <input type="text" name="department" class="form-control" placeholder="{{ __('Department') }}" value="{{ old('department') ?? $user->department }}" maxlength="100" />
                             </div><!--form-group-->
                         </div>
                         <div class="col-md-6">
@@ -207,7 +207,6 @@
                                 <label for="correspending_email">Correspondance Email</label>
                                 {{ html()->text('correspending_email', (!empty($correspondenceAddress)) ? $correspondenceAddress->email ?? '' : '')
                                     ->class('form-control')
-                                    ->required()
                                  }}
                             </div>
                         </div>

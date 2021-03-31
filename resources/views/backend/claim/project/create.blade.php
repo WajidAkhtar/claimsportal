@@ -87,9 +87,7 @@
                 <div class="form-group row">
                     {{ html()->label(__('Project Logo'))->class('col-md-2 col-form-label')->for('project_logo') }}
                     <div class="col-md-10">
-                        {{ html()->file('project_logo')
-                            ->required()
-                         }}
+                        {{ html()->file('project_logo') }}
                     </div>
                 </div>
 

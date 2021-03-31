@@ -43,7 +43,7 @@ class StoreProjectRequest extends FormRequest
             'cost_items.*.description' => 'required|max:191',
             'cost_items_order' => '',
             'project_funder_ref' => 'required|max:191',
-            'project_logo' => 'required|mimes:png,jpg,bmp,jpeg,gif',
+            'project_logo' => 'mimes:png,jpg,bmp,jpeg,gif',
         ];
     }
 

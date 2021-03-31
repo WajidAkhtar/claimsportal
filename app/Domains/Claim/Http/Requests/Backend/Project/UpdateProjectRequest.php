@@ -45,7 +45,7 @@ class UpdateProjectRequest extends FormRequest
             'cost_items.*.name' => 'required|max:191',
             'cost_items.*.description' => 'required|max:191',
             'project_funder_ref' => 'required|max:191',
-            'project_logo' => $logo_required.'mimes:png,jpg,bmp,jpeg,gif',
+            'project_logo' => 'mimes:png,jpg,bmp,jpeg,gif',
         ];
     }
 

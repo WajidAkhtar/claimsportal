@@ -99,9 +99,7 @@
                     @endif
                     
                     <div class="col">
-                        {{ html()->file('project_logo')
-                            ->requiredIf(empty($project->logo))
-                         }}
+                        {{ html()->file('project_logo') }}
                     </div>
                 </div>
 
@@ -128,7 +126,7 @@
                                 ->required() }}
                             </div>
                         </div>
-                        <p class="text-info">*If you change these values, then all saved data will be reset.</p>
+                        <p class="text-info">*Editing this field will reset quarter values for this project.</p>
                     </div>
                 </div><!--form-group-->
                 
@@ -141,7 +139,7 @@
                             ->maxlength('5')
                             // ->placeholder('Select no of quarters')
                             ->required() }}
-                            <p class="text-info">*If you change this value, then all saved data will be reset.</p>
+                            <p class="text-info">*Editing this field will reset quarter values for this project.</p>
                     </div>
                 </div><!--form-group-->
 
