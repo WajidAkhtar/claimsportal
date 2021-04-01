@@ -52,6 +52,11 @@
                                     <label>Colleges</label>
                                     <div class="form-control">
                                         <p>{{ $user->pools->pluck('name')->implode(',') }}</p>
+                                        <select name="pools[]" multiple="" style="display: none;">
+                                            @foreach($user->pools as $pool)
+                                                <option value="{{ $pool->id }}" selected="">{{ $pool->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>
