@@ -59,9 +59,9 @@ class ProjectService extends BaseService
             if(!empty($data['project_logo'])) {
                 $project_logo_name = time().'.'.$data['project_logo']->extension();
                 
-                // Resize project logo to 425 X 425
-                $canvas = Image::canvas(425, 425);
-                $image  = Image::make($data['project_logo']->getRealPath())->resize(425, 425, function($constraint) {
+                // Resize project logo to 225 X 225
+                $canvas = Image::canvas(225, 225);
+                $image  = Image::make($data['project_logo']->getRealPath())->resize(225, 225, function($constraint) {
                     $constraint->aspectRatio();
                 });
                 $canvas->insert($image, 'center');
@@ -193,9 +193,9 @@ class ProjectService extends BaseService
                 }
                 $project_logo_name = time().'.'.$data['project_logo']->extension();
 
-                // Resize project logo to 425 X 425
-                $canvas = Image::canvas(425, 425);
-                $image  = Image::make($data['project_logo']->getRealPath())->resize(425, 425, function($constraint) {
+                // Resize project logo to 225 X 225
+                $canvas = Image::canvas(225, 225);
+                $image  = Image::make($data['project_logo']->getRealPath())->resize(225, 225, function($constraint) {
                     $constraint->aspectRatio();
                 });
                 $canvas->insert($image, 'center');
