@@ -840,7 +840,7 @@
                                     {{ html()->input('text', 'po_number['.$quarter->start_timestamp.']', $quarter->partner(request()->partner)->pivot->po_number)
                                             // ->placeholder('0.00')
                                             ->class('form-control invoice-field')
-                                            ->readOnly($userHasMasterAccess || ($currentSheetUserPermission != 'LEAD_USER' && ($quarter->partner(request()->partner)->pivot->claim_status !== 0 || $quarter->partner(request()->partner)->pivot->status != 'current')) || ($currentSheetUserPermission == 'LEAD_USER' && ($quarter->partner(request()->partner)->pivot->claim_status == 0 || $quarter->partner(request()->partner)->pivot->status == 'forecast'))) }}
+                                            ->readOnly(($userHasMasterAccess && !auth()->user()->isMasterAdmin()) || ($currentSheetUserPermission != 'LEAD_USER' && ($quarter->partner(request()->partner)->pivot->claim_status !== 0 || $quarter->partner(request()->partner)->pivot->status != 'current')) || ($currentSheetUserPermission == 'LEAD_USER' && ($quarter->partner(request()->partner)->pivot->claim_status == 0 || $quarter->partner(request()->partner)->pivot->status == 'forecast'))) }}
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
@@ -861,7 +861,7 @@
                                     {{ html()->input('text', 'invoice_date['.$quarter->start_timestamp.']', $quarter->partner(request()->partner)->pivot->invoice_date)
                                             // ->placeholder('DD-MM-YYYY')
                                             ->class('form-control invoice-field')
-                                            ->readOnly($userHasMasterAccess || ($currentSheetUserPermission != 'LEAD_USER' && ($quarter->partner(request()->partner)->pivot->claim_status !== 0 || $quarter->partner(request()->partner)->pivot->status != 'current')) || ($currentSheetUserPermission == 'LEAD_USER' && ($quarter->partner(request()->partner)->pivot->claim_status == 0 || $quarter->partner(request()->partner)->pivot->status == 'forecast'))) }}
+                                            ->readOnly(($userHasMasterAccess && !auth()->user()->isMasterAdmin()) || ($currentSheetUserPermission != 'LEAD_USER' && ($quarter->partner(request()->partner)->pivot->claim_status !== 0 || $quarter->partner(request()->partner)->pivot->status != 'current')) || ($currentSheetUserPermission == 'LEAD_USER' && ($quarter->partner(request()->partner)->pivot->claim_status == 0 || $quarter->partner(request()->partner)->pivot->status == 'forecast'))) }}
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
@@ -882,7 +882,7 @@
                                     {{ html()->input('text', 'invoice_no['.$quarter->start_timestamp.']', $quarter->partner(request()->partner)->pivot->invoice_no)
                                             // ->placeholder('0.00')
                                             ->class('form-control invoice-field')
-                                            ->readOnly($userHasMasterAccess || ($currentSheetUserPermission != 'LEAD_USER' && ($quarter->partner(request()->partner)->pivot->claim_status !== 0 || $quarter->partner(request()->partner)->pivot->status != 'current')) || ($currentSheetUserPermission == 'LEAD_USER' && ($quarter->partner(request()->partner)->pivot->claim_status == 0 || $quarter->partner(request()->partner)->pivot->status == 'forecast'))) }}
+                                            ->readOnly(($userHasMasterAccess && !auth()->user()->isMasterAdmin()) || ($currentSheetUserPermission != 'LEAD_USER' && ($quarter->partner(request()->partner)->pivot->claim_status !== 0 || $quarter->partner(request()->partner)->pivot->status != 'current')) || ($currentSheetUserPermission == 'LEAD_USER' && ($quarter->partner(request()->partner)->pivot->claim_status == 0 || $quarter->partner(request()->partner)->pivot->status == 'forecast'))) }}
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
@@ -902,17 +902,13 @@
                                 <td>
                                     @switch($quarter->partner(request()->partner)->pivot->status)
                                         @case('historic')
-                                            @if ($userHasMasterAccessWithPermission == 'LEAD_USER')
-                                            <a target="_blank" href="{{asset('uploads/invoices/lead-'.$quarter->id.'.pdf')}}" class="btn btn-sm btn-primary" role="button">Invoice</a>
-                                            @else
                                             <a target="_blank" href="{{asset('uploads/invoices/'.$quarter->id.'.pdf')}}" class="btn btn-sm btn-primary" role="button">Invoice</a>
-                                            @endif
                                             @break
                                         @case('current')
                                             @if (!$userHasMasterAccess && $userHasMasterAccessWithPermission == 'LEAD_USER' && $quarter->partner(request()->partner)->pivot->claim_status == 1)
-                                            <a href="javascript:void(0)" class="btn btn-sm btn-success" role="button" onclick="closeClaim(this, {{$quarter->id}}, {{request()->partner}})">Close Claim</a>
+                                            <a href="javascript:void(0)" class="btn btn-sm btn-success" role="button" onclick="closeClaim(this, {{$quarter->id}}, {{request()->partner}}, {{$quarter->start_timestamp}})">Close Claim</a>
                                             @endif
-                                            @if(!$userHasMasterAccess && $userHasMasterAccessWithPermission != 'LEAD_USER' && $quarter->partner(request()->partner)->pivot->claim_status == 0)
+                                            @if(((!$userHasMasterAccess && $userHasMasterAccessWithPermission != 'LEAD_USER') || auth()->user()->isMasterAdmin()) && $quarter->partner(request()->partner)->pivot->claim_status == 0)
                                             <a href="javascript:void(0)" class="btn btn-sm btn-success {{$quarter->partner(request()->partner)->pivot->claim_status == 1 ? 'disabled' : ''}}" role="button" onclick="submitClaim(this, {{$quarter->id}}, {{$quarter->start_timestamp}})">Submit Claim</a>
                                             @endif
                                             @break
@@ -939,7 +935,7 @@
                                 <td>
                                     @switch($quarter->partner(request()->partner)->pivot->status)
                                         @case('historic')
-                                            <a href="javascript:void(0)" class="btn btn-sm btn-secondary" role="button" onclick="closeClaim(this, {{$quarter->id}}, {{request()->partner}}, true)">Regenerate</a>
+                                            <a href="javascript:void(0)" class="btn btn-sm btn-secondary" role="button" onclick="closeClaim(this, {{$quarter->id}}, {{request()->partner}}, {{$quarter->start_timestamp}}, true)">Regenerate</a>
                                             @break
                                         @default
                                     @endswitch
@@ -1214,13 +1210,11 @@
             calculateYearwiseFields();
             formatNegativeValue();
             $('.select2').select2();
-            $('[name^="invoice_date"]').inputmask("datetime",{
-                mask: "1/2/y", 
+            $('[name^="invoice_date"]').inputmask({
+                'alias': 'date',
                 placeholder: "__/__/____",
-                leapday: "-02-29", 
-                separator: "/", 
-                /* alias: "dd/mm/yyyy" */
             });
+            
             $('table.main-claims-table input[name*="[quarter_values]"], table.main-claims-table input[name*="[budget]"]').change(function(){
                 calculateFields();
                 var formData = new FormData($('#claims_form')[0]);
@@ -1425,11 +1419,20 @@
             })
         }
         
-        function closeClaim(element, quarterId, organisationId, regenerate = false) {
+        function closeClaim(element, quarterId, organisationId, timestamp, regenerate = false) {
             var text = $(element).text();
+
+            var po_number = $('[name="po_number['+timestamp+']"]').val();
+            var invoice_no = $('[name="invoice_no['+timestamp+']"]').val();
+            var invoice_date = $('[name="invoice_date['+timestamp+']"]').val();
+            if(po_number.length == 0 || invoice_no.length == 0 || invoice_date.length == 0) {
+                toastr.error('Please fill all invoice related fields!');
+                return false;
+            }
+
             $.ajax({
                 url: '{{route('admin.claim.project.close.claim', $project)}}',
-                data: {quarterId: quarterId, organisationId: organisationId, regenerate: regenerate},
+                data: {quarterId: quarterId, organisationId: organisationId, regenerate: regenerate, po_number: po_number, invoice_no: invoice_no, invoice_date: invoice_date},
                 type: 'POST',
                 dataType: 'json',
                 beforeSend: function(){

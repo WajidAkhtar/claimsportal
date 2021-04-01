@@ -499,6 +499,9 @@ class ProjectController
         $validator = Validator::make($request->all(), [
             'quarterId' => 'required|exists:project_quarters,id',
             'organisationId' => 'required|exists:organisations,id',
+            'po_number' => 'required',
+            'invoice_no' => 'required',
+            'invoice_date' => 'required|date_format:d/m/Y',
         ]);
 
         if($validator->fails()) {
@@ -516,6 +519,12 @@ class ProjectController
                 'message' => 'You already closed claim for this quarter'
             ]);
         }
+
+        // Update info from lead
+        $quarterPartner->pivot->po_number = $request->po_number;
+        $quarterPartner->pivot->invoice_no = $request->invoice_no;
+        $quarterPartner->pivot->invoice_date = $request->invoice_date;
+        $quarterPartner->pivot->save();
 
         // Generate PDF
         $quarterId = $request->quarterId;

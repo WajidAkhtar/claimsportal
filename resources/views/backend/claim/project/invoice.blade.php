@@ -157,8 +157,8 @@
                                     {{$invoiceToPartner->building_name}}<br />
                                     {{$invoiceToPartner->street_address}}<br />
                                     {{$invoiceToPartner->address_line_2}}<br />
-                                    {{$invoiceToPartner->county}}<br />
                                     {{$invoiceToPartner->city}}<br />
+                                    {{$invoiceToPartner->county}}<br />
                                     {{$invoiceToPartner->post_code}}<br />
                                     <strong>Finance Tel:</strong> {{$invoiceToPartner->finance_tel ?? 'N/A'}}<br />
                                     <strong>Finance Email:</strong> {{$invoiceToPartner->finance_email ?? 'N/A'}}<br />
@@ -168,8 +168,8 @@
                                     {{$invoiceToPartner->funder_building_name}}<br />
 									{{$invoiceToPartner->funder_address_line_1}}<br />
                                     {{$invoiceToPartner->funder_address_line_2}}<br />
-                                    {{$invoiceToPartner->funder_county}}<br />
                                     {{$invoiceToPartner->funder_city}}<br />
+                                    {{$invoiceToPartner->funder_county}}<br />
                                     {{$invoiceToPartner->funder_post_code}}<br />
                                     <strong>Finance Tel:</strong> {{$invoiceToPartner->finance_tel ?? 'N/A'}}<br />
                                     <strong>Finance Email:</strong> {{$invoiceToPartner->finance_email ?? 'N/A'}}<br />
@@ -183,8 +183,8 @@
                                     {{$invoiceFromPartner->building_name}}<br />
 									{{$invoiceFromPartner->street_address}}<br />
                                     {{$invoiceFromPartner->address_line_2}}<br />
-                                    {{$invoiceFromPartner->county}}<br />
                                     {{$invoiceFromPartner->city}}<br />
+                                    {{$invoiceFromPartner->county}}<br />
                                     {{$invoiceFromPartner->post_code}}<br />
                                     <strong>Finance Tel:</strong> {{$invoiceFromPartner->finance_tel ?? 'N/A'}}<br />
                                     <strong>Finance Email:</strong> {{$invoiceFromPartner->finance_email ?? 'N/A'}}<br />
