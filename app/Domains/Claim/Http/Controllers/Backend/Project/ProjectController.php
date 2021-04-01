@@ -220,6 +220,11 @@ class ProjectController
             $sheet_owner = (!empty(request()->partner)) ? request()->partner : 0;
             $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project])->render();
             $partnerAdditionalInfo = ProjectPartners::where('project_id', $project->id)->where('organisation_id', $sheet_owner)->first();
+            
+            if(empty($partnerAdditionalInfo->invoiceOrganisation)) {
+                ProjectPartners::where('project_id', $project->id)->where('organisation_id', $sheet_owner)->update(['invoice_organisation_id' => $sheet_owner]);
+            }
+
             $SheetUserPermissions = SheetUserPermissions::where('project_id', $project->id);
             if(!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User')) {
                 $SheetUserPermissions = $SheetUserPermissions->where('user_id', auth()->user()->id);

@@ -107,9 +107,10 @@
                             <div class="col">
                                 {{ html()->label('Organisation')->for('organisation_id') }}
                                 <div class="form-group"> 
-                                    {{ html()->select('organisation_id', $organisations, $partnerAdditionalInfo->invoiceOrganisation ?? '')
+                                    {{ html()->select('organisation_id', $organisations, $partnerAdditionalInfo->invoiceOrganisation ?? $partnerAdditionalInfo->organisation)
                                         ->class('form-control additional-info select2')
                                         ->attribute('style', 'width:100%;')
+                                        ->disabled()
                                         ->required()
                                      }}
                                 </div>
@@ -226,6 +227,12 @@
                             <div class="col-md-6">
                                 {{ html()->label('Web URL')->for('web_url') }}
                                 {{ html()->text('web_url', $partnerAdditionalInfo->web_url ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ html()->label('Contact')->for('contact') }}
+                                {{ html()->text('contact', $partnerAdditionalInfo->contact ?? '')
                                     ->class('form-control additional-info')
                                  }}
                             </div>
@@ -462,7 +469,7 @@
                             <div class="col">
                                 <div><strong>PARTNER</strong></div>
                                 <div>Name: {{optional($partnerAdditionalInfo->invoiceOrganisation)->organisation_name ?? optional($partnerAdditionalInfo->organisation)->organisation_name}}</div>
-                                <div>Contact: {{$partnerAdditionalInfo->finance_contact_name ?? 'N/A'}}</div>
+                                <div>Contact: {{$partnerAdditionalInfo->contact ?? 'N/A'}}</div>
                                 <div>Web URL: 
                                     @if($partnerAdditionalInfo->web_url) 
                                         <a class="text-primary" href="{{ $partnerAdditionalInfo->web_url }}">
