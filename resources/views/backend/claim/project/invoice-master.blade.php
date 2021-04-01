@@ -126,7 +126,7 @@
 							<tr>
 								<td class="title">
                                     @if(!empty($invoiceFromPartner->invoiceOrganisation->logo) && file_exists(public_path('uploads/organisations/logos/'.$invoiceFromPartner->invoiceOrganisation->logo)))
-                                        <img src="{{ asset('uploads/organisations/logos/'.$invoiceFromPartner->invoiceOrganisation->logo) }}" style="width: 100%; max-width: 200px" />
+                                        <img src="{{ asset('uploads/organisations/logos/'.$invoiceFromPartner->invoiceOrganisation->logo) }}" style="height: auto; width: 225px;" />
                                     @else
                                         {{ $invoiceFromPartner->invoiceOrganisation->organisation_name }}
                                     @endif
@@ -259,7 +259,7 @@
                                 <td>FOR ONLINE PAYMENTS</td>
                             </tr>
                             <tr>
-                                <td><a href="{{$invoiceFromPartner->web_url}}">{{$invoiceFromPartner->web_url}}</a></td>
+                                <td><a href="#"></a></td>
                             </tr>
                         </table>
                     </td>
