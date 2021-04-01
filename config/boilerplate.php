@@ -94,6 +94,7 @@ return [
              * It is not recommended to change
              */
             'admin' => 'Administrator',
+            'superadmin' => 'Developer',
         ],
     ],
 

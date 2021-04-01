@@ -80,7 +80,7 @@
     <br />
     @endif
 
-    @if(current_user_role() == 'Administrator' || current_user_role() == 'Super User' || current_user_role() == 'Finance Officer' || current_user_role() == 'Project Admin')
+    @if(current_user_role() == 'Developer' || current_user_role() == 'Administrator' || current_user_role() == 'Super User' || current_user_role() == 'Finance Officer' || current_user_role() == 'Project Admin')
     <x-backend.card>
         <x-slot name="header">
             <table class="">

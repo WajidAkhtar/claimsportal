@@ -153,7 +153,7 @@ trait ProjectRelationship
     * @return mixed
     */
     public function userHasFullAccessToProject() {
-        if(auth()->user()->hasRole('Administrator') || auth()->user()->hasRole('Super User')) {
+        if(auth()->user()->hasRole('Developer') || auth()->user()->hasRole('Administrator') || auth()->user()->hasRole('Super User')) {
           return true;
         }
         foreach($this->usersWithPermissions()->get() as $partner) {
@@ -168,7 +168,7 @@ trait ProjectRelationship
     * @return mixed
     */
     public function userHasPartialAccessToProject() {
-        if(!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User') && !in_array(auth()->user()->id, $this->usersWithPermissions()->pluck('user_id')->toArray())) {
+        if(!auth()->user()->hasRole('Developer') &&!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User') && !in_array(auth()->user()->id, $this->usersWithPermissions()->pluck('user_id')->toArray())) {
           return false;
         }
         return true;

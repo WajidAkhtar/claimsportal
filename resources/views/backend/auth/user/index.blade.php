@@ -12,6 +12,11 @@
             <h2 class="page-main-title">Users</h2>
 
             @foreach($roles as $role)
+                @if(current_user_role() == 'Developer')
+                    @if(!in_array($role->name, ['Administrator', 'Super User', 'Finance Officer', 'Project Admin', 'Project Partner', 'Funder']))
+                        @php continue; @endphp;
+                    @endif
+                @endif
                 @if(current_user_role() == 'Administrator')
                     @if(!in_array($role->name, ['Super User', 'Finance Officer', 'Project Admin', 'Project Partner', 'Funder']))
                         @php continue; @endphp;

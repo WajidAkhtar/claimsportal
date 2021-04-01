@@ -70,7 +70,7 @@ class ProjectController
      */
     public function create()
     {
-        if(!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User') && !auth()->user()->hasRole('Finance Officer') && !auth()->user()->hasRole('Project Admin')) {
+        if(!auth()->user()->hasRole('Developer') && !auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User') && !auth()->user()->hasRole('Finance Officer') && !auth()->user()->hasRole('Project Admin')) {
             return redirect()->route('admin.claim.project.index')->withFlashDanger(__('you have no access to create project.'));
         }
         $organisations = Organisation::ordered()->pluck('organisation_name', 'id');
@@ -109,7 +109,7 @@ class ProjectController
         if(!$userHasPartialAccessToProject) {
             return redirect()->route('admin.claim.project.index')->withFlashDanger(__('you have no access to this project.'));
         }
-        if(!in_array(current_user_role(), ['Administrator', 'Super User']) && !in_array($project->pool_id, current_user_pools()->pluck('id')->toArray())) {
+        if(!in_array(current_user_role(), ['Developer', 'Administrator', 'Super User']) && !in_array($project->pool_id, current_user_pools()->pluck('id')->toArray())) {
             return redirect()->route('admin.claim.project.index')->withFlashDanger(__('you have no access to this project.'));
         }
         $organisations = Organisation::ordered()->pluck('organisation_name', 'id');
@@ -121,11 +121,11 @@ class ProjectController
         $sheetPermissions = SheetPermission::pluck('permission', 'id');
 
         $SheetUserPermissions = SheetUserPermissions::where('project_id', $project->id);
-        if(!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User')) {
+        if(!auth()->user()->hasRole('Developer') && !auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User')) {
             $SheetUserPermissions = $SheetUserPermissions->where('user_id', auth()->user()->id);
         }
         $SheetUserPermissions = $SheetUserPermissions->get();
-        if(!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User') && count($SheetUserPermissions) >= 1 && empty(request()->partner)) {
+        if(!auth()->user()->hasRole('Developer') && !auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User') && count($SheetUserPermissions) >= 1 && empty(request()->partner)) {
             request()->partner = $SheetUserPermissions[0]->partner_id;
         }
         
@@ -133,7 +133,7 @@ class ProjectController
             $project->costItems = $project->costItems()->whereNull('project_cost_items.deleted_at')->where('organisation_id', request()->partner)->orderByRaw($project->costItemOrderRaw())->get();
         }
 
-        if(in_array(current_user_role(), ['Administrator', 'Super User'])) {
+        if(in_array(current_user_role(), ['Developer', 'Administrator', 'Super User'])) {
             $userHasMasterAccess = true;
             $userHasMasterAccessWithPermission = 'READ_WRITE_ALL';
         } else {
@@ -226,7 +226,7 @@ class ProjectController
             }
 
             $SheetUserPermissions = SheetUserPermissions::where('project_id', $project->id);
-            if(!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User') && (!empty($leadUser) && $leadUser->id != auth()->user()->id)) {
+            if(!auth()->user()->hasRole('Developer') && !auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User') && (!empty($leadUser) && $leadUser->id != auth()->user()->id)) {
                 $SheetUserPermissions = $SheetUserPermissions->where('user_id', auth()->user()->id);
             }
             if($sheet_owner != 0 && $project->userHasFullAccessToProject()) {
@@ -234,7 +234,7 @@ class ProjectController
             }
             $SheetUserPermissions = $SheetUserPermissions->get();
 
-            if($sheet_owner == 0 && !in_array(current_user_role(), ['Administrator', 'Super User'])) {
+            if($sheet_owner == 0 && !in_array(current_user_role(), ['Developer', 'Administrator', 'Super User'])) {
                 // $SheetUserPermissions = SheetUserPermissions::where('project_id', $project->id)->where('user_id', auth()->user()->id)->get();
             }
 
@@ -295,7 +295,7 @@ class ProjectController
      */
     public function edit(EditProjectRequest $request, Project $project)
     {
-        if(!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User') && !auth()->user()->hasRole('Finance Officer') && !auth()->user()->hasRole('Project Admin')) {
+        if(!auth()->user()->hasRole('Developer') && !auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User') && !auth()->user()->hasRole('Finance Officer') && !auth()->user()->hasRole('Project Admin')) {
             
         }
         $organisations = Organisation::ordered()->pluck('organisation_name', 'id');

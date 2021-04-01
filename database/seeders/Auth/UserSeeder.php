@@ -33,16 +33,18 @@ class UserSeeder extends Seeder
             'active' => true,
         ]);
 
-        if (app()->environment(['local', 'testing'])) {
-            // User::create([
-            //     'type' => User::TYPE_USER,
-            //     'name' => 'Test User',
-            //     'email' => 'user@user.com',
-            //     'password' => 'secret',
-            //     'email_verified_at' => now(),
-            //     'active' => true,
-            // ]);
-        }
+        // Add the super admin (Developer), user id of 2
+        User::create([
+            'type' => User::TYPE_ADMIN,
+            'first_name' => 'Developer',
+            'last_name' => '',
+            'job_title' => '',
+            'department' => '',
+            'email' => 'info@skylinx.co.uk',
+            'password' => 'secret',
+            'email_verified_at' => now(),
+            'active' => true,
+        ]);
 
         $this->enableForeignKeys();
     }
