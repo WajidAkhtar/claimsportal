@@ -226,7 +226,7 @@ class ProjectController
             }
 
             $SheetUserPermissions = SheetUserPermissions::where('project_id', $project->id);
-            if(!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User')) {
+            if(!auth()->user()->hasRole('Administrator') && !auth()->user()->hasRole('Super User') && (!empty($leadUser) && $leadUser->id != auth()->user()->id)) {
                 $SheetUserPermissions = $SheetUserPermissions->where('user_id', auth()->user()->id);
             }
             if($sheet_owner != 0 && $project->userHasFullAccessToProject()) {
