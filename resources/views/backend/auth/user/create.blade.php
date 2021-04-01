@@ -277,6 +277,7 @@
 @push('after-scripts')
     <script type="text/javascript">
         $(document).ready(function() {
+            $('input').attr('autocomplete', Math.random().toString(36).substring(7));
             $("input[name='roles[]']").on("change", function() {
                 if($(this).prop('checked')) {
                    $("input[name='roles[]']").each(function() {

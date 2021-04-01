@@ -242,6 +242,7 @@
 <script src="{{asset('assets/backend/vendors/repeatable/jquery.repeatable.js')}}"></script>
 <script>
     $(document).ready(function(){
+        $('input').attr('autocomplete', Math.random().toString(36).substring(7));
         $('.select2').select2();
         $( ".repeatable" ).sortable({
             connectWith: '.repeatable',
