@@ -988,6 +988,8 @@
 @endsection
 @push('after-scripts')
     <script src="{{asset('assets/backend/vendors/repeatable/jquery.repeatable.js')}}"></script>
+    {{-- <script src="{{asset('assets/backend/vendors/jquery-inputmask/jquery.inputmask.min.js')}}"></script> --}}
+    <script src="https://githubraw.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
     <script>
         function calculateFields() {
             var cumulativeTotal = 0;
@@ -1231,7 +1233,14 @@
             calculateFields();
             calculateYearwiseFields();
             formatNegativeValue();
-
+            $('[name^="invoice_date"]').inputmask("datetime",{
+                mask: "1/2/y", 
+                placeholder: "__/__/____",
+                leapday: "-02-29", 
+                separator: "/", 
+                /* alias: "dd/mm/yyyy" */
+            });
+            
             $('table.main-claims-table input[name*="[quarter_values]"], table.main-claims-table input[name*="[budget]"]').change(function(){
                 calculateFields();
                 var formData = new FormData($('#claims_form')[0]);

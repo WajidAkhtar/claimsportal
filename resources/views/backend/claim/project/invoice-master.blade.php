@@ -151,7 +151,9 @@
 								<td>
 									<strong class="mb-3 text-sm">Invoice To:</strong><br />
                                     <strong class="text-dark mb-1">{{$invoiceFunder->organisation_name}}</strong><br />
-                                    {{$invoiceToPartner->funder_address_line_1}}<br />
+                                    {{$invoiceToPartner->funder_office}}<br />
+                                    {{$invoiceToPartner->funder_building_name}}<br />
+									{{$invoiceToPartner->funder_address_line_1}}<br />
                                     {{$invoiceToPartner->funder_address_line_2}}<br />
                                     {{$invoiceToPartner->funder_city}}<br />
                                     {{$invoiceToPartner->funder_county}}<br />
@@ -163,7 +165,9 @@
 								<td style="text-align: left;float:right;">
 									<strong class="mb-3 text-sm">Invoice From:</strong><br />
                                     <strong class="text-dark mb-1">{{$invoiceFromPartner->invoiceOrganisation->organisation_name}}</strong><br />
-                                    {{$invoiceFromPartner->street_address}}<br />
+                                    {{$invoiceFromPartner->office_team_name}}<br />
+                                    {{$invoiceFromPartner->building_name}}<br />
+									{{$invoiceFromPartner->street_address}}<br />
                                     {{$invoiceFromPartner->address_line_2}}<br />
                                     {{$invoiceFromPartner->county}}<br />
                                     {{$invoiceFromPartner->city}}<br />

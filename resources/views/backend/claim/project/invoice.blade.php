@@ -153,6 +153,8 @@
                                     <strong>Invoice To:</strong><br>
 									@if (!$isInvoiceToFunder)
                                     <strong>{{$invoiceToPartner->invoiceOrganisation->organisation_name}}</strong><br />
+                                    {{$invoiceToPartner->office_team_name}}<br />
+                                    {{$invoiceToPartner->building_name}}<br />
                                     {{$invoiceToPartner->street_address}}<br />
                                     {{$invoiceToPartner->address_line_2}}<br />
                                     {{$invoiceToPartner->county}}<br />
@@ -162,7 +164,9 @@
                                     <strong>Finance Email:</strong> {{$invoiceToPartner->finance_email ?? 'N/A'}}<br />
                                     @else    
                                     <strong>{{$invoiceTo->organisation_name}}</strong><br />
-                                    {{$invoiceToPartner->funder_address_line_1}}<br />
+									{{$invoiceToPartner->funder_office}}<br />
+                                    {{$invoiceToPartner->funder_building_name}}<br />
+									{{$invoiceToPartner->funder_address_line_1}}<br />
                                     {{$invoiceToPartner->funder_address_line_2}}<br />
                                     {{$invoiceToPartner->funder_county}}<br />
                                     {{$invoiceToPartner->funder_city}}<br />
@@ -175,7 +179,9 @@
 								<td style="text-align: left;float:right;">
                                     <strong>Invoice From:</strong><br />
                                     <strong>{{$invoiceFromPartner->invoiceOrganisation->organisation_name}}</strong><br />
-                                    {{$invoiceFromPartner->street_address}}<br />
+                                    {{$invoiceFromPartner->office_team_name}}<br />
+                                    {{$invoiceFromPartner->building_name}}<br />
+									{{$invoiceFromPartner->street_address}}<br />
                                     {{$invoiceFromPartner->address_line_2}}<br />
                                     {{$invoiceFromPartner->county}}<br />
                                     {{$invoiceFromPartner->city}}<br />
