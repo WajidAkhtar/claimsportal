@@ -244,26 +244,28 @@
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col">
+                            <div class="col-md-6">
                                 {{ html()->label('Account Name')->for('account_name') }}
                                 {{ html()->text('account_name', $partnerAdditionalInfo->account_name ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
-                            </div>
-                            <div class="col">
-                                {{ html()->label('Bank Name')->for('bank_name') }}
-                                {{ html()->text('bank_name', $partnerAdditionalInfo->bank_name ?? '')
                                     ->class('form-control additional-info')
                                  }}
                             </div>
                         </div>
                         <div class="row mt-2">
                             <div class="col">
+                                {{ html()->label('Bank Name')->for('bank_name') }}
+                                {{ html()->text('bank_name', $partnerAdditionalInfo->bank_name ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                            </div>
+                            <div class="col">
                                 {{ html()->label('Customer Ref')->for('customer_ref') }}
                                 {{ html()->text('customer_ref', $partnerAdditionalInfo->customer_ref ?? '')
                                     ->class('form-control additional-info')
                                  }}
                             </div>
+                        </div>
+                        <div class="row mt-2">
                             <div class="col">
                                 {{ html()->label('Bank Address')->for('bank_address') }}
                                 {{ html()->text('bank_address', $partnerAdditionalInfo->bank_address ?? '')
@@ -301,7 +303,7 @@
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col">
+                            <div class="col-md-6">
                                 {{ html()->label('SWIFT Code')->for('swift') }}
                                 {{ html()->text('swift', $partnerAdditionalInfo->swift ?? '')
                                     ->class('form-control additional-info')
@@ -309,7 +311,7 @@
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col">
+                            <div class="col-md-6">
                                 {{ html()->label('IBAN')->for('iban') }}
                                 {{ html()->text('iban', $partnerAdditionalInfo->iban ?? '')
                                     ->class('form-control additional-info')
