@@ -5,12 +5,16 @@
             <div class="navbar-header  h-100 h4 mb-0 align-self-center logo-bar text-left bottom-shadow-transparent">  
                 <a href="{{route('admin.claim.project.index')}}" class="horizontal-logo text-left">
                     <center>
-                        <img src="{{ asset('assets/backend/images/logo.png') }}" class="logo" height="100">
+                        <img src="{{ asset('assets/backend/images/logo.png') }}" class="logo" height="70">
                     </center>
                 </a>                   
             </div>
-            <div class="navbar-header h4 mb-0 text-center h-100 collapse-menu-bar" style="display: none;">
+            <div class="navbar-header h4 mb-0 text-center h-100 collapse-menu-bar">
                 <a href="#" class="sidebarCollapse" id="collapse"><i class="icon-menu"></i></a>
+            </div>
+
+            <div class="form-group mb-0 position-relative nav-title">
+                <h4 class="mt-2 ml-2">Claims Portal</h4>
             </div>
             
             {{-- <form class="float-left d-none d-lg-block search-form">

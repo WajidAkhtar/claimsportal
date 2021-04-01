@@ -1,6 +1,6 @@
 <!-- START: Main Menu-->
 <div class="sidebar">
-    <div class="site-width mt-5">
+    <div class="site-width" style="margin-top: 4em !important;">
         <!-- START: Menu-->
         <ul id="side-menu" class="sidebar-menu">
             <li class="dropdown active" style="display: none;">
@@ -15,8 +15,8 @@
                 <ul class="{{activeClass(Route::is('admin.claim.project.*'), 'active')}}">
                     <a href="{{route('admin.claim.project.index')}}">
                         <center>
-                            <i class="icon-chart" style="font-size: 50px;"></i>
-                            <li>
+                            <i class="icon-chart menu-icon"></i>
+                            <li class="menu-link">
                                 @lang('PROJECTS')
                             </li>
                         </center>
@@ -29,10 +29,10 @@
                 <ul class="{{activeClass(Route::is('admin.auth.user.*'), 'active')}}">
                     <a href="{{route('admin.auth.user.index')}}">
                         <center>
-                            <i class="icon-user" style="font-size: 50px;"></i>
-                            <li>
-                             @lang('USERS')
-                        </li>
+                            <i class="icon-user menu-icon"></i>
+                            <li class="menu-link">
+                                @lang('USERS')
+                            </li>
                         </center>
                     </a>
                 </ul>
