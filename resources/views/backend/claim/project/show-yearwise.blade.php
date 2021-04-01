@@ -4,6 +4,7 @@
     $globalFromDate = clone $fromDate;
     $remainingQuarters = $project->length;
     $quarterNo = 1;
+    request()->partner = (!empty(request()->partner)) ? request()->partner : $partner;
 @endphp
 @for ($yearIndex = 0; $yearIndex < ceil($project->length/4); $yearIndex++)
 <div class="col-sm-12 mt-5">

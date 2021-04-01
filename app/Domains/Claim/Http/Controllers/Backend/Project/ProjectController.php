@@ -218,7 +218,7 @@ class ProjectController
             ->withLeadUserPartner($leadUserPartner);
         } else {
             $sheet_owner = (!empty(request()->partner)) ? request()->partner : 0;
-            $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project])->render();
+            
             $partnerAdditionalInfo = ProjectPartners::where('project_id', $project->id)->where('organisation_id', $sheet_owner)->first();
             
             if(empty($partnerAdditionalInfo->invoiceOrganisation)) {
@@ -262,6 +262,8 @@ class ProjectController
                 }
             }
             $project->costItems = $project->costItems()->where('organisation_id', $sheet_owner)->whereNull('project_cost_items.deleted_at')->groupBy('cost_item_id')->orderByRaw($project->costItemOrderRaw())->get();  
+
+            $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project, 'partner' => $sheet_owner])->render();
 
             return view('backend.claim.project.show')
             ->withProject($project)
@@ -365,7 +367,7 @@ class ProjectController
 
         $project->costItems = $project->costItems()->whereNull('project_cost_items.deleted_at')->where('organisation_id', $request->sheet_owner)->orderByRaw($project->costItemOrderRaw())->get();
 
-        $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project])->render();
+        $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project, 'partner' => $request->sheet_owner])->render();
         return response()->json(['success' => 1, 'message' => 'Data saved successfully!', 'data' => ['yearwiseHtml' => $yearwiseHtml]]);
     }
 
