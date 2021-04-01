@@ -32,6 +32,9 @@
                         </div><!--form-group-->
                     @endif
 
+                    @if($preventToEditConfidentialFields)
+                        {{ html()->hidden('organisation_id', old('organisation_id') ?? $user->organisation_id) }}
+                    @endif
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
@@ -39,13 +42,14 @@
                                 {{ 
                                     html()->select('organisation_id', $organisations, old('organisation_id') ?? $user->organisation_id)
                                     ->class('form-control select2')
+                                    ->disabled($preventToEditConfidentialFields)
                                     ->required()
                                  }}
                             </div><!--form-group-->
                         </div>
                     </div>
 
-                    @if((in_array(current_user_role(), ['Administrator', 'Super User', 'Finance Officer', 'Project Admin']) && $user->id == auth()->user()->id))
+                    @if($preventToEditConfidentialFields)
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
@@ -62,7 +66,7 @@
                             </div>
                         </div>
                     @else
-                        <div class="row" style="{{ (in_array(current_user_role(), ['Administrator', 'Super User', 'Finance Officer', 'Project Admin']) && $user->id == auth()->user()->id) ? 'display: none;' : '' }}">
+                        <div class="row" style="{{ $preventToEditConfidentialFields ? 'display: none;' : '' }}">
                             <div class="col">
                                 <div class="form-group">
                                     <label for="pools[]">Colleges</label>
@@ -102,7 +106,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <label for="email" class="col-form-label">@lang('E-mail Address')</label>
-                                <input type="email" name="email" id="email" class="form-control" placeholder="{{ __('E-mail Address') }}" value="{{ old('email') ?? $user->email }}" maxlength="255" required />
+                                <input type="email" name="email" id="email" class="form-control" placeholder="{{ __('E-mail Address') }}" value="{{ old('email') ?? $user->email }}" maxlength="255" required {{ ($preventToEditConfidentialFields) ? 'readonly="readonly"' : '' }} />
                             </div><!--form-group-->
                         </div>
                     </div>

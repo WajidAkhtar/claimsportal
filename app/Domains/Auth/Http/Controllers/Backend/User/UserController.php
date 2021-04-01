@@ -131,6 +131,7 @@ class UserController
     public function edit(EditUserRequest $request, User $user)
     {
         $organisations = Organisation::ordered()->pluck('organisation_name', 'id');
+        $preventToEditConfidentialFields = (in_array(current_user_role(), ['Administrator', 'Super User', 'Finance Officer', 'Project Admin']) && $user->id == auth()->user()->id);
         return view('backend.auth.user.edit')
             ->withUser($user)
             ->withRoles($this->roleService->get())
@@ -146,6 +147,7 @@ class UserController
                 'CO-FUNDER' => 'CO-FUNDER',
                 'LEAD' => 'LEAD',
             ])
+            ->withPreventToEditConfidentialFields($preventToEditConfidentialFields)
             ->withUsedPermissions($user->permissions->modelKeys());
     }
 
