@@ -709,6 +709,7 @@
                             <tr class="light-grey-bg">
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
+                                <td>&nbsp;</td>
                                 <td><strong>Total Cost (for each item)</strong></td>
                                 <td>
                                     <div class="input-group">
@@ -812,6 +813,7 @@
                                 @endfor
                             </tr>
                             <tr class="dark-grey-bg">
+                                <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td><strong>Total Cost (cumulative)</strong></td>
