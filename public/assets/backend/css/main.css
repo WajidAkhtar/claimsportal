@@ -5947,3 +5947,20 @@ td {
 .menu-icon {
     font-size: 50px !important;
 }
+
+.subtotals-row {
+    background-color: #c8dfc89e;
+    font-weight: bolder;
+}
+
+.subtotals-row input, .subtotals-row .input-group-text {
+    font-weight: bold;
+}
+
+.no-border {
+    border: none !important;
+}
+
+.calculation-row {
+    background-color: aliceblue;
+}

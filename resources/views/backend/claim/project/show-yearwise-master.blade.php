@@ -8,7 +8,7 @@
 @for ($yearIndex = 0; $yearIndex < ceil($project->length/4); $yearIndex++)
 <div class="col-sm-12 mt-5">
     <h4>Year {{$yearIndex + 1}} Total</h4>
-    <table class="table table-responsive table-borders table-sm" style="overflow-x: auto;">
+    <table class="table table-responsive table-borders table-sm" style="overflow-x: auto;" id="year-reporting-table-{{ ($yearIndex + 1) }}">
         <thead>
             <tr>
                 <th>&nbsp;</th>
@@ -37,6 +37,7 @@
                 @endfor
             </tr>
             <tr class="dark-grey-bg">
+                <th class="dynamic-calculator"></th>
                 <th style="max-width: 10px;min-width:auto;">#</th>
                 <th>COST ITEM</th>
                 <th>DESCRIPTION</th>
@@ -72,7 +73,13 @@
         </thead>
         <tbody>
             @foreach ($project->costItems as $index => $costItem)
-            <tr>
+            <tr data-rowid="{{ ($index+1) }}">
+                <td class="dynamic-calculator" data-calculationindex="{{ ($index+1) }}">
+                    {{ html()->checkbox('dynamic_calculator_'.($yearIndex+1).'_'.($index+1))
+                        ->class('dynamic-calculator')
+                        ->attribute('data-parenttable', 'year-reporting-table-'.($yearIndex + 1))
+                     }}
+                </td>
                 <td style="max-width: 10px;min-width:auto;">{{$index+1}}</td>
                 <td>{{$costItem->pivot->cost_item_name}}</td>
                 <td>{{$costItem->pivot->cost_item_description}}</td>
@@ -145,6 +152,7 @@
             <tr class="light-grey-bg">
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
+                <td>&nbsp;</td>
                 <td><strong>Total Cost (for each item)</strong></td>
                 <td>
                     <div class="input-group">
@@ -214,6 +222,7 @@
                 </td>
             </tr>
             <tr class="dark-grey-bg">
+                <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td><strong>Total Cost (cumulative)</strong></td>

@@ -1281,6 +1281,43 @@
                 });
             }
 
+            $(".dynamic-calculator").removeAttr('disabled');
+
+            $("input:checkbox.dynamic-calculator").on('change', function() {
+                $('#'+$(this).attr('data-parenttable')).find('.subtotals-row').remove();
+                var selector = $('#'+$(this).attr('data-parenttable')).find('input:checkbox.dynamic-calculator:checked:last');
+                var calculationIndex = $(selector).parent().attr('data-calculationindex');
+                var calculationRow = initiateCalculationRow(selector);
+                $(calculationRow).find('td').each(function(crindex, crvalue) {
+                    if(crindex > 3) {
+                        var field_to_set = $(this);
+                        var field_sum = 0;
+                        $('#'+$(calculationRow).attr('data-parenttable')).find('tr').each(function(mt, me) {
+                            var row = $(this);
+                            if($(row).attr('data-rowid') != 'undefined' && parseInt($(row).attr('data-rowid')) <= calculationIndex && $(row).find('td:first').find('input:checkbox.dynamic-calculator').prop('checked')) {
+                                var value = $(row).find('td:nth('+crindex+')').find('input').val();
+                                if(!isNaN(value)) {
+                                    field_sum+= parseFloat(value);
+                                }
+                            }
+                        });
+                        var text_class = '';
+                        if(isNaN(field_sum)) {
+                            field_sum = 0;
+                        } else if(field_sum < 0) {
+                            text_class = 'text-danger';
+                        }
+
+                        var field_html = '<div class="input-group">';
+                        field_html+= '<div class="input-group-prepend">';
+                        field_html+= '<span class="input-group-text readonly">£</span></div>';
+                        field_html+= '<input class="form-control no-border '+text_class+'" disabled value="'+parseFloat(field_sum).toFixed(2)+'"/>';
+                        field_html+= '</div>';
+                        $(field_to_set).html(field_html);
+                    }
+                });
+            });
+
             $(".additional-info").on("blur, change", function() {
                 var organisation_id = $("#organisation_id.additional-info").val();
                 savePartnerAdditionalFields();
@@ -1332,6 +1369,32 @@
             });
 
         });
+
+        function initiateCalculationRow(selector) {
+            var calculationRow = $(selector).parent().parent().clone();
+            $(calculationRow).attr('data-parenttable', $(selector).closest('table').attr('id'));
+            $(calculationRow).addClass('subtotals-row');
+            $(calculationRow).removeAttr('data-rowid');
+            $(calculationRow).find('td:first').removeAttr('data-calculationindex').html('<strong>Subtotals</strong>');
+            $(calculationRow).find('td:nth(1)').html('-');
+            $(calculationRow).find('td:nth(2)').html('-');
+            $(calculationRow).find('td:nth(3)').html('-');
+            $(calculationRow).find('td input').val('');
+            $(calculationRow).insertAfter($(selector).parent().parent());
+            formatCalculationRows();
+            return calculationRow;
+        }
+
+        function formatCalculationRows() {
+            var formatClass = 'calculation-row';
+            $('table tr').each(function() {
+                if($(this).find('td:first').find('input:checkbox.dynamic-calculator').prop('checked')) {
+                    $(this).addClass(formatClass);
+                } else {
+                    $(this).removeClass(formatClass);
+                }
+            });
+        }
 
         function formatNegativeValue() {
             $('table input:not(.invoice-field)').each(function(i, v){
