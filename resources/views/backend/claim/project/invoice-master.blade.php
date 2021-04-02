@@ -126,7 +126,7 @@
 							<tr>
 								<td class="title" width="65%">
                                     @if(!empty($invoiceFromPartner->invoiceOrganisation->logo) && file_exists(public_path('uploads/organisations/logos/'.$invoiceFromPartner->invoiceOrganisation->logo)))
-                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqiLOo46k7O3Zl0lPs9MhLLgk0Wm1JcUzH6MmxSj4HIbAJuOsKor-Ne7Km7cbViu8l_w&usqp=CAU" style="height: auto; width: 225px;" />
+                                        <img src="{{ asset('uploads/organisations/logos/'.$invoiceFromPartner->invoiceOrganisation->logo) }}" style="height: auto; width: 225px;" />
                                     @else
                                         {{ $invoiceFromPartner->invoiceOrganisation->organisation_name }}
                                     @endif
