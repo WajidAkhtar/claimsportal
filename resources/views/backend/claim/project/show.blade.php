@@ -4,12 +4,15 @@
 
 @push('after-styles')
     <style>
-        table tr th:not(:first-child), table tr td:not(:first-child) {
+        table tr th, table tr td {
             white-space: nowrap;
             min-width: 150px;
         }
         
         table tr th:first-child, table tr td:first-child {
+            min-width: 20px !important;
+        }
+        table tr th:nth-child(2), table tr td:nth-child(2) {
             min-width: 50px !important;
         }
         
@@ -1349,6 +1352,7 @@
 
         function initiateCalculationRow(selector) {
             var calculationRow = $(selector).parent().parent().clone();
+            $(calculationRow).find('td:first').css('max-width', '');
             $(calculationRow).attr('data-parenttable', $(selector).closest('table').attr('id'));
             $(calculationRow).addClass('subtotals-row');
             $(calculationRow).removeAttr('data-rowid');

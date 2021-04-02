@@ -37,7 +37,7 @@
                 @endfor
             </tr>
             <tr class="dark-grey-bg">
-                <th class="dynamic-calculator"></th>
+                <th style="max-width: 10px;min-width:auto;" class="dynamic-calculator"></th>
                 <th style="max-width: 10px;min-width:auto;">#</th>
                 <th>COST ITEM</th>
                 <th>DESCRIPTION</th>
@@ -74,7 +74,7 @@
         <tbody>
             @foreach ($project->costItems as $index => $costItem)
             <tr data-rowid="{{ ($index+1) }}">
-                <td class="dynamic-calculator" data-calculationindex="{{ ($index+1) }}">
+                <td style="max-width: 10px;min-width:auto;" class="dynamic-calculator" data-calculationindex="{{ ($index+1) }}">
                     {{ html()->checkbox('dynamic_calculator_'.($yearIndex+1).'_'.($index+1))
                         ->class('dynamic-calculator')
                         ->attribute('data-parenttable', 'year-reporting-table-'.($yearIndex + 1))
