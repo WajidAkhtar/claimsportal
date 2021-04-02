@@ -580,7 +580,7 @@
             </div>
             <form action="#" id="claims_form">
                 <div class="col-sm-12 mt-5">
-                    <table class="table table-responsive table-borders table-sm main-claims-table" style="overflow-x: auto;">
+                    <table class="table table-responsive table-borders table-sm main-claims-table" style="overflow-x: auto;" id="main_claims_table">
                         <thead>
                             <tr>
                                 <th>&nbsp;</th>
@@ -598,6 +598,7 @@
                                 @endforeach
                             </tr>
                             <tr class="dark-grey-bg">
+                                <th style="max-width: 10px;min-width:auto;" class="dynamic-calculator"></th>
                                 <th style="max-width: 20px;min-width:auto;">#</th>
                                 <th>COST ITEM</th>
                                 <th>DESCRIPTION</th>
@@ -631,7 +632,13 @@
                         </thead>
                         <tbody>
                             @foreach ($project->costItems as $index => $costItem)
-                            <tr>
+                            <tr data-rowid="{{ ($index+1) }}">
+                                <td style="max-width: 10px;min-width:auto;" class="dynamic-calculator" data-calculationindex="{{ ($index+1) }}">
+                                    {{ html()->checkbox('dynamic_calculator_main_'.($index+1))
+                                        ->class('dynamic-calculator')
+                                        ->attribute('data-parenttable', 'main_claims_table')
+                                     }}
+                                </td>
                                 <td style="max-width: 10px;min-width:auto;">{{$index+1}}</td>
                                 <td>{{$costItem->pivot->cost_item_name}}</td>
                                 <td>{{$costItem->pivot->cost_item_description}}</td>
@@ -739,6 +746,7 @@
                             <tr class="light-grey-bg">
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
+                                <td>&nbsp;</td>
                                 <td><strong>Total Cost (for each item)</strong></td>
                                 <td>
                                     <div class="input-group">
@@ -842,6 +850,7 @@
                                 @endfor
                             </tr>
                             <tr class="dark-grey-bg">
+                                <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td><strong>Total Cost (cumulative)</strong></td>

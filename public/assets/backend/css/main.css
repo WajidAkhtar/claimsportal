@@ -5962,5 +5962,10 @@ td {
 }
 
 .calculation-row {
-    background-color: aliceblue;
+    background-color: #7e9db7e3;
+    font-weight: 600;
+}
+
+.calculation-row input {
+    font-weight: 600;   
 }
