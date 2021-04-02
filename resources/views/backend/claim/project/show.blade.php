@@ -332,9 +332,11 @@
                             <tbody class="repeatable">
                                 @if(!empty($sheetUserPermissions))
                                     @foreach($sheetUserPermissions as $permission)
-                                        <tr class="field-group">
+                                        <tr class="field-group" style="{{ ($permission->user_id == auth()->user()->id) ? 'display: none;' : '' }}">
                                             <td>
-                                                {{ html()->select('sheet_user_id[]', $users, $permission->user_id)
+                                                {{ html()->select('sheet_user_id[]',  ($permission->user_id == auth()->user()->id) ? [
+                                                $permission->user_id => $permission->user_id
+                                                ] : $users, $permission->user_id)
                                                     ->class('form-control')
                                                     ->placeholder('Select User')
                                                  }}

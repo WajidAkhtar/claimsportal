@@ -70,13 +70,13 @@
 
 			.invoice-box table tr.top table td.title {
 				font-size: 25px;
-				line-height: 25px;
+				line-height: 15px;
 				color: #333;
 				vertical-align: top;
 			}
 
 			.invoice-box table tr.information table td {
-				padding-bottom: 40px;
+				padding-bottom: 10px;
 			}
 
 			.invoice-box table tr.heading td {
@@ -125,7 +125,7 @@
 					<td colspan="3">
 						<table>
 							<tr>
-								<td class="title" style="margin-top:-20px;">
+								<td class="title" width="65%">
                                     @if(!empty($invoiceFromPartner->invoiceOrganisation->logo) && file_exists(public_path('uploads/organisations/logos/'.$invoiceFromPartner->invoiceOrganisation->logo)))
                                         <img src="{{ asset('uploads/organisations/logos/'.$invoiceFromPartner->invoiceOrganisation->logo) }}" style="height: auto; width: 225px;" />
                                     @else
@@ -149,13 +149,13 @@
 					<td colspan="3">
 						<table>
 							<tr>
-								<td>
+								<td width="65%">
                                     <strong>Invoice To:</strong><br>
 									@if (!$isInvoiceToFunder)
                                     <strong>{{$invoiceToPartner->invoiceOrganisation->organisation_name}}</strong><br />
                                     {{$invoiceToPartner->office_team_name}}<br />
                                     {{$invoiceToPartner->building_name}}<br />
-                                    {{$invoiceToPartner->street_address}}<br />
+                                    {{$invoiceToPartner->street}}<br />
                                     {{$invoiceToPartner->address_line_2}}<br />
                                     {{$invoiceToPartner->city}}<br />
                                     {{$invoiceToPartner->county}}<br />
@@ -181,7 +181,7 @@
                                     <strong>{{$invoiceFromPartner->invoiceOrganisation->organisation_name}}</strong><br />
                                     {{$invoiceFromPartner->office_team_name}}<br />
                                     {{$invoiceFromPartner->building_name}}<br />
-									{{$invoiceFromPartner->street_address}}<br />
+									{{$invoiceFromPartner->street}}<br />
                                     {{$invoiceFromPartner->address_line_2}}<br />
                                     {{$invoiceFromPartner->city}}<br />
                                     {{$invoiceFromPartner->county}}<br />
@@ -226,14 +226,11 @@
                     <td colspan="3"></td>
                 </tr>
                 <tr class="information">
-					<td colspan="3"><strong>Payment Terms: </strong>Net 30/ 30 days</td>
+					<td colspan="3">
+						<strong>Payment Terms: </strong>Net 30/ 30 days<br>
+						<strong>Payment Due Date: </strong>{{\Carbon\Carbon::createFromFormat('d/m/Y', $quarterPartner->pivot->invoice_date)->addMonth()->format('d/m/Y')}}<br><br>
+					</td>
 				</tr>
-                <tr class="information">
-					<td colspan="3"><strong>Payment Due Date: </strong>{{\Carbon\Carbon::createFromFormat('d/m/Y', $quarterPartner->pivot->invoice_date)->addMonth()->format('d/m/Y')}}</td>
-				</tr>
-                <tr class="information">
-                    <td colspan="3"></td>
-                </tr>
                 <tr class="heading">
 					<td colspan="3">BANK DETAILS</td>
 				</tr>
@@ -245,50 +242,26 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <strong>ACCOUNT NAME: </strong>{{$invoiceFromPartner->account_name}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <strong>BANK NAME: </strong>{{$invoiceFromPartner->bank_name}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <strong>SORT CODE: </strong>{{$invoiceFromPartner->sort_code}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <strong>ACCOUNT NUMBER: </strong>{{$invoiceFromPartner->account_no}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <strong>IBAN: </strong>{{$invoiceFromPartner->iban}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <strong>SWIFT: </strong>{{$invoiceFromPartner->swift}}
+                                    <strong>ACCOUNT NAME: </strong>{{$invoiceFromPartner->account_name}}<br>
+                                    <strong>BANK NAME: </strong>{{$invoiceFromPartner->bank_name}}<br>
+                                    <strong>SORT CODE: </strong>{{$invoiceFromPartner->sort_code}}<br>
+                                    <strong>ACCOUNT NUMBER: </strong>{{$invoiceFromPartner->account_no}}<br>
+                                    <strong>IBAN: </strong>{{$invoiceFromPartner->iban}}<br>
+                                    <strong>SWIFT: </strong>{{$invoiceFromPartner->swift}}<br>
                                 </td>
                             </tr>
                             <tr class="heading">
                                 <td>FOR ONLINE PAYMENTS</td>
                             </tr>
                             <tr>
-                                <td><a href="#"></a></td>
+                                <td>
+                                	<!-- <a href="#"></a><br> -->
+                                	<strong>VAT REG No: </strong>{{$invoiceFromPartner->vat}}
+                                </td>
                             </tr>
                         </table>
                     </td>
-                    <td></td>
-                    <td></td>
 				</tr>
-                <tr>
-                    <td colspan="3">
-                        <strong>VAT REG No: </strong>{{$invoiceFromPartner->vat}}
-                    </td>
-                </tr>
 			</table>
 		</div>
 	</body>
