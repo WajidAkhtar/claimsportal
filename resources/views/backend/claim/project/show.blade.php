@@ -847,6 +847,7 @@
                             <tr>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
+                                <td>&nbsp;</td>
                                 <td><strong>PO NUMBER</strong></td>
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
@@ -866,6 +867,7 @@
                                 @endfor
                             </tr>
                             <tr>
+                                <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td><strong>INVOICE DATE</strong></td>
@@ -889,6 +891,7 @@
                             <tr>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
+                                <td>&nbsp;</td>
                                 <td><strong>INVOICE NO</strong></td>
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
@@ -908,6 +911,7 @@
                                 @endfor
                             </tr>
                             <tr>
+                                <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
@@ -940,6 +944,7 @@
                             </tr>
                             @if (!$userHasMasterAccess && $userHasMasterAccessWithPermission == 'LEAD_USER')
                             <tr>
+                                <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>

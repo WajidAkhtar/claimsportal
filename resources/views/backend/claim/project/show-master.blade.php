@@ -884,6 +884,7 @@
                             <tr>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
+                                <td>&nbsp;</td>
                                 <td><strong>PO NUMBER</strong></td>
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
@@ -905,6 +906,7 @@
                             <tr>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
+                                <td>&nbsp;</td>
                                 <td><strong>INVOICE DATE</strong></td>
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
@@ -924,6 +926,7 @@
                                 @endfor
                             </tr>
                             <tr>
+                                <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td><strong>INVOICE NO</strong></td>
@@ -949,6 +952,7 @@
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
+                                <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
                                 <td class="text-center">
                                     @if ($quarter->user->status == 'historic')
@@ -965,6 +969,7 @@
                                 @endfor
                             </tr>
                             <tr>
+                                <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
