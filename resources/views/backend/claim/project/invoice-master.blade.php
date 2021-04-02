@@ -43,7 +43,7 @@
 				border: 1px solid #eee;
 				box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 				font-size: 12px;
-				line-height: 20px;
+				line-height: 18px;
 				font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
 				color: #555;
 			}
@@ -75,7 +75,7 @@
 			}
 
 			.invoice-box table tr.information table td {
-				padding-bottom: 40px;
+				padding-bottom: 10px;
 			}
 
 			.invoice-box table tr.heading td {
@@ -126,7 +126,7 @@
 							<tr>
 								<td class="title" width="65%">
                                     @if(!empty($invoiceFromPartner->invoiceOrganisation->logo) && file_exists(public_path('uploads/organisations/logos/'.$invoiceFromPartner->invoiceOrganisation->logo)))
-                                        <img src="{{ asset('uploads/organisations/logos/'.$invoiceFromPartner->invoiceOrganisation->logo) }}" style="height: auto; width: 225px;" />
+                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqiLOo46k7O3Zl0lPs9MhLLgk0Wm1JcUzH6MmxSj4HIbAJuOsKor-Ne7Km7cbViu8l_w&usqp=CAU" style="height: auto; width: 225px;" />
                                     @else
                                         {{ $invoiceFromPartner->invoiceOrganisation->organisation_name }}
                                     @endif
@@ -153,7 +153,7 @@
                                     <strong class="text-dark mb-1">{{$invoiceFunder->organisation_name}}</strong><br />
                                     {{$invoiceToPartner->funder_office}}<br />
                                     {{$invoiceToPartner->funder_building_name}}<br />
-									{{$invoiceToPartner->street}}<br />
+									{{$invoiceToPartner->funder_address_line_1}}<br />
                                     {{$invoiceToPartner->funder_address_line_2}}<br />
                                     {{$invoiceToPartner->funder_city}}<br />
                                     {{$invoiceToPartner->funder_county}}<br />
@@ -167,8 +167,7 @@
                                     <strong class="text-dark mb-1">{{$invoiceFromPartner->invoiceOrganisation->organisation_name}}</strong><br />
                                     {{$invoiceFromPartner->office_team_name}}<br />
                                     {{$invoiceFromPartner->building_name}}<br />
-									{{$invoiceFromPartner->street_address}}<br />
-									{{$invoiceFromPartner->address_line_1}}<br />
+									{{$invoiceFromPartner->street}}<br />
                                     {{$invoiceFromPartner->address_line_2}}<br />
                                     {{$invoiceFromPartner->city}}<br />
                                     {{$invoiceFromPartner->county}}<br />
