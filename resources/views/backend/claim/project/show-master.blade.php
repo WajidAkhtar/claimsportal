@@ -82,6 +82,13 @@
                     <td>
                         <button class="btn btn-sm btn-outline-primary toggle_user_permissions_info togget_action_content"><span class="toggle_action_text_hide"></span> PERMISSIONS</button>
                     </td>
+                    @if(auth()->user()->hasRole('Administrator') || auth()->user()->hasRole('Developer') || (auth()->user()->hasRole('Super User') && $project->userHasPartialAccessToProject()) || (!empty(projectLead($project)) && (projectLead($project)->id == auth()->user()->id)))
+                        <td>
+                            <a href="{{ route('admin.claim.project.edit', $project) }}" class="btn btn-primary btn-sm">
+                                <i class="fas fa-pencil-alt"></i> Edit Project
+                            </a>
+                        </td>
+                    @endif
                 </tr>
             </table>
         </x-slot>        
