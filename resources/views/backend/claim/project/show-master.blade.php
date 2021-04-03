@@ -1281,6 +1281,10 @@
             })
 
             $(document).on('change', 'table input', function(){
+                if($(this).attr('type') == 'number') {
+                    var field_row = $(this).closest('tr');
+                    $(field_row).find('td:first').find('input:checkbox.dynamic-calculator').trigger('change').trigger('change');
+                }
                 formatNegativeValue();                
             });
 
@@ -1313,10 +1317,11 @@
                         $('#'+$(calculationRow).attr('data-parenttable')).find('tr').each(function(mt, me) {
                             var row = $(this);
                             if($(row).attr('data-rowid') != 'undefined' && parseInt($(row).attr('data-rowid')) <= calculationIndex && $(row).find('td:first').find('input:checkbox.dynamic-calculator').prop('checked')) {
-                                var value = $(row).find('td:nth('+crindex+')').find('input').val();
-                                if(!isNaN(value)) {
-                                    field_sum+= parseFloat(value);
+                                var value = parseFloat($(row).find('td:nth('+crindex+')').find('input').val());
+                                if(isNaN(value)) {
+                                    value = 0;
                                 }
+                                field_sum+= parseFloat(value);
                             }
                         });
                         var text_class = '';
