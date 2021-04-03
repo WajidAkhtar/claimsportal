@@ -14,7 +14,7 @@
             </x-slot>
 
             <x-slot name="headerActions">
-                <x-utils.link class="card-header-action" :href="route('admin.auth.user.index')" :text="__('Cancel')" />
+                <x-utils.link class="card-header-action" :href="route(homeRoute())" :text="__('Cancel')" />
             </x-slot>
 
             <x-slot name="body">
