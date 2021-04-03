@@ -21,6 +21,7 @@ class ProjectPartners extends Model
         'project_id',
         'organisation_id',
         'is_master',
+        'invoice_organisation_id',
     ];
 
     /**
