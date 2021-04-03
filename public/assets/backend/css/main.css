@@ -5970,3 +5970,15 @@ td {
 .calculation-row input {
     font-weight: 600;   
 }
+
+.text-xx-small {
+    font-size: xx-small !important;
+}
+.valign-top {
+    vertical-align: top !important;
+}
+
+.required-icon {
+    margin-left: -6px;
+    padding-right: 5px;
+}

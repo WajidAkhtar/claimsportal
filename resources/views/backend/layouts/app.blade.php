@@ -142,6 +142,10 @@
                     $(this).find('i').removeClass('icon-arrow-up').addClass('icon-arrow-down');
                 }
             });
+            $('input[required], select[required]')
+                .closest(".form-group")
+                .children("label")
+                .prepend("<span class='valign-top text-xx-small text-danger required-icon'><i class='ion ion-asterisk'></i><span>");
         </script>
         <!-- END: APP JS-->
         @stack('after-scripts')
