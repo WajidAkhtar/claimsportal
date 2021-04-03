@@ -1229,6 +1229,7 @@
             calculateFields();
             calculateYearwiseFields();
             formatNegativeValue();
+            adjustSheetUsers();
             $('.select2').select2();
             $('[name^="invoice_date"]').inputmask({
                 'alias': 'date',
@@ -1362,6 +1363,7 @@
                 idStartIndex: '{{ count(old('claim_items') ?? [] ) }}',
                 afterAdd : function() {
                     $(".toggle_user_permissions_info").trigger('focus');
+                    adjustSheetUsers();
                 },
                 afterDelete : function() {
                     $(".toggle_user_permissions_info").trigger('focus');    
@@ -1462,6 +1464,29 @@
                     }
                 }
             })
+        }
+
+        $(document).on('change', 'select[name="sheet_user_id[]"]', function() {
+            adjustSheetUsers();
+        });
+
+        function adjustSheetUsers() {
+            var selectedSheetUsers = [];
+            $('select[name="sheet_user_id[]').each(function(i, v) {
+                var sheetUser = new Array();
+                sheetUser['index'] = i;
+                sheetUser['value'] = $(this).val();
+                selectedSheetUsers.push(sheetUser);
+                $(this).find("option").prop("disabled", false);
+            });
+            $.each(selectedSheetUsers, function(i, v) {
+                $('select[name="sheet_user_id[]').each(function(si, sv) {
+                    if(si != i) {
+                        $(this).find("option[value='"+v['value']+"']").prop("disabled", true);
+                    }
+                    $(this).find("option[value='']").prop("disabled", false);
+                });
+            });
         }
 
         function hideAllActionsContainers() {
