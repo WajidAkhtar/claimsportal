@@ -531,6 +531,7 @@
                                 <th>&nbsp;</th>
                                 <th>&nbsp;</th>
                                 <th>&nbsp;</th>
+                                <th>&nbsp;</th>
                                 @foreach ($project->quarters as $quarter)
                                 @php
                                     $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';

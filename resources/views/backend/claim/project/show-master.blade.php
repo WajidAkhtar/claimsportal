@@ -587,6 +587,7 @@
                                 <th>&nbsp;</th>
                                 <th>&nbsp;</th>
                                 <th>&nbsp;</th>
+                                <th>&nbsp;</th>
                                 @foreach ($project->quarters as $quarter)
                                 @php
                                     $labelClass = $quarter->user->status == 'current' ? 'text-danger' : '';

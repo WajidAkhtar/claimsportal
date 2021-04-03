@@ -16,6 +16,7 @@
                 <th>&nbsp;</th>
                 <th>&nbsp;</th>
                 <th>&nbsp;</th>
+                <th>&nbsp;</th>
                 @php
                     // $endDate = (clone $startDate)->addMonths(12);
                     $currentYearQuarters = $remainingQuarters > 4 ? 4 : $remainingQuarters;
