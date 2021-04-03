@@ -300,6 +300,7 @@ class ProjectController
             $costItems = $project->costItems()->whereNull('project_cost_items.deleted_at')->whereNotNull('cost_item_description')->groupBy('cost_item_id')->orderByRaw($project->costItemOrderRaw())->get();
             $organisations = Organisation::ordered()->pluck('organisation_name', 'id');
             $pools = current_user_pools()->pluck('full_name', 'id');
+            $leadOrganisation = optional(ProjectPartners::where('project_id', $project->id)->where('is_master', '1')->first())->invoice_organisation_id;
             return view('backend.claim.project.edit')
                 ->withProject($project)
                 ->withFunders($organisations)
@@ -307,6 +308,7 @@ class ProjectController
                 ->withCostItems($costItems)
                 ->withPools($pools)
                 ->withProjectStatuses(Project::statuses())
+                ->withLeadOrganisation($leadOrganisation)
                 ->withOrganisations($organisations);   
         } else {
             return redirect()->route('admin.claim.project.index')->withFlashDanger(__('you have no access to edit this project.'));

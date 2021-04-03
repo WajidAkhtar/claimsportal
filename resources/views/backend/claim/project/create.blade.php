@@ -25,6 +25,7 @@
                     <div class="col-md-10">
                         {{ html()->select('pool_id', $pools)
                             ->class('form-control select2')
+                            ->placeholder('Select Project Pool')
                             ->required() }}
                     </div>
                 </div><!--form-group-->
@@ -53,12 +54,23 @@
                 </div><!--form-group-->
 
                 <div class="form-group row">
+                    {{ html()->label(__('Lead Organisation'))->class('col-md-2 col-form-label')->for('number') }}
+
+                    <div class="col-md-10">
+                        {{ html()->select('lead_organisation', $funders)
+                            ->class('form-control select2')
+                            ->placeholder('Select Lead Organisation')
+                            ->required() }}
+                    </div>
+                </div><!--form-group-->
+
+                <div class="form-group row">
                     {{ html()->label(__('Funders'))->class('col-md-2 col-form-label')->for('funders') }}
 
                     <div class="col-md-10">
-                        {{ html()->multiselect('funders[]', $funders)
+                        {{ html()->select('funders[]', $funders)
                             ->class('form-control select2')
-                            // ->placeholder('Choose Funders')
+                            ->placeholder('Select Funder')
                             ->required() }}
                     </div>
                 </div><!--form-group-->

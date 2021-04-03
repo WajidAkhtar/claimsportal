@@ -87,6 +87,7 @@ class ProjectService extends BaseService
             $project->allpartners()->firstOrcreate([
                 'project_id' => $project->id,
                 'is_master' => '1',
+                'invoice_organisation_id' => $data['lead_organisation']
             ]);
             if(!empty($data['project_partners'])) {
                 foreach($data['project_partners'] as $project_partner) {
@@ -236,6 +237,13 @@ class ProjectService extends BaseService
                 'project_id' => $project->id,
                 'is_master' => '1',
             ]);
+            
+            // Save lead organisation
+            if(!empty($data['lead_organisation']) && !empty($res)) {
+                $res->invoice_organisation_id = $data['lead_organisation'];
+                $res->save();
+            }
+
             foreach ($data['project_partners'] as $key => $project_partner) {
                 $project->allpartners()->firstOrCreate([
                     'organisation_id' => $project_partner,

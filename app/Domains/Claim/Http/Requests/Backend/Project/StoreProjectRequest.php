@@ -36,6 +36,7 @@ class StoreProjectRequest extends FormRequest
             'length' => 'required|numeric',
             'status' => 'required|max:191',
             'funders' => 'required|array',
+            'lead_organisation' => 'required',
             'funders.*' => 'required|numeric|exists:organisations,id',
             'project_partners.*' => 'required|numeric|exists:organisations,id',
             'cost_items' => 'required|array',
