@@ -137,7 +137,7 @@
 									<strong>Invoice Date: </strong>{{$quarterPartner->pivot->invoice_date}}<br />
 									<strong>Invoice Number: </strong>#{{$quarterPartner->pivot->invoice_no}}<br />
 									<strong>PO Number: </strong>{{$quarterPartner->pivot->po_number}}<br />
-									<strong>Customer A/C No: </strong>{{$invoiceToPartner->account_no}}<br />
+									<strong>Customer A/C No: </strong>{{$invoiceFromPartner->customer_ref}}<br />
 									<strong>Project Funder Ref: </strong>{{$quarter->project->project_funder_ref}}
 								</td>
 							</tr>

@@ -136,7 +136,7 @@
 									<strong>Invoice Date: </strong>{{$quarterPartner->invoice_date}}<br />
 									<strong>Invoice Number: </strong>{{$quarterPartner->invoice_no}}<br />
 									<strong>PO Number: </strong>{{$quarterPartner->po_number}}<br />
-									<strong>Customer Account Number: </strong>{{$quarterPartner->account_no}}<br />
+									<strong>Customer A/C No: </strong>{{$invoiceFromPartner->customer_ref}}<br />
 									<strong>Project Funder Ref: </strong>{{$quarter->project->project_funder_ref}}<br />
 								</td>
 							</tr>
