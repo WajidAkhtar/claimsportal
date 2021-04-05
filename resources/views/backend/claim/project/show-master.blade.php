@@ -1410,7 +1410,7 @@
             $(calculationRow).attr('data-parenttable', $(selector).closest('table').attr('id'));
             $(calculationRow).addClass('subtotals-row');
             $(calculationRow).removeAttr('data-rowid');
-            $(calculationRow).find('td:first').removeAttr('data-calculationindex').html('<strong>Subtotals</strong>');
+            $(calculationRow).find('td:first').removeAttr('data-calculationindex').html('<strong>Subtotal</strong>');
             $(calculationRow).find('td:nth(1)').html('-');
             $(calculationRow).find('td:nth(2)').html('-');
             $(calculationRow).find('td:nth(3)').html('-');
