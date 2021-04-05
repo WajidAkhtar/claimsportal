@@ -45,6 +45,15 @@
 
                     <div class="row">
                         <div class="col">
+                        @if($isCreateExecutive)
+                            @foreach(current_user_pools() as $pool)
+                                 {{ html()->hidden('pools[]', $pool->id) }}
+                            @endforeach
+                            {{ html()->multiselect('pools[]', $pools, current_user_pools()->pluck('id')->toArray())
+                                    ->class('form-control select2')
+                                    ->disabled()
+                                 }}
+                        @else
                             <div class="form-group">
                                 <label for="pools[]">Colleges</label>
                                 {{ html()->multiselect('pools[]', $pools)
@@ -52,6 +61,7 @@
                                     ->required()
                                  }}
                              </div>
+                            @endif
                         </div>
                     </div>
 

@@ -82,12 +82,14 @@ class UserController
     public function create($role = '')
     {
         $organisations = Organisation::ordered()->pluck('organisation_name', 'id');
+        $isCreateExecutive = (current_user_role() == 'Developer' && $role == 'Administrator') ? true : false;
         return view('backend.auth.user.create')
             ->withRoles($this->roleService->get())
             ->withCategories($this->permissionService->getCategorizedPermissions())
             ->withPools(current_user_pools()->pluck('full_name', 'id'))
             ->withOrganisations($organisations)
             ->withDefaultRole($role)
+            ->withIsCreateExecutive($isCreateExecutive)
             ->withProjectRoles([
                 'COLLABORATOR' => 'COLLABORATOR',
                 'FUNDER' => 'FUNDER',
@@ -132,6 +134,7 @@ class UserController
     {
         $organisations = Organisation::ordered()->pluck('organisation_name', 'id');
         $preventToEditConfidentialFields = (in_array(current_user_role(), ['Developer', 'Administrator', 'Super User', 'Finance Officer', 'Project Admin', 'Project Partner', 'Funder']) && $user->id == auth()->user()->id);
+        $isCreateExecutive = (current_user_role() == 'Developer' && $user->roles()->first()->name == 'Administrator') ? true : false;
         return view('backend.auth.user.edit')
             ->withUser($user)
             ->withRoles($this->roleService->get())
@@ -140,6 +143,7 @@ class UserController
             ->withPools(current_user_pools()->pluck('full_name', 'id'))
             ->withOrganisations($organisations)
             ->withDefaultRole($user->roles()->first()->name)
+            ->withIsCreateExecutive($isCreateExecutive)
             ->withCorrespondenceAddress($user->correspondenceAddress()->first())
             ->withProjectRoles([
                 'COLLABORATOR' => 'COLLABORATOR',
