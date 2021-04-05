@@ -81,7 +81,8 @@ class ProjectsTable extends TableComponent
                         return $this->html($img);
                     }
 
-                    return 'N/A';
+                    $img = '<div style="background-color: transparent;height: 56px; width:100px;background-size: contain;background-repeat: no-repeat;")></div>';
+                    return $this->html($img);
                 }),
             Column::make(__('Project Name'), 'name')
                 ->searchable()
