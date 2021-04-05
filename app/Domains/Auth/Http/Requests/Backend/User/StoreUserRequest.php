@@ -19,6 +19,9 @@ class StoreUserRequest extends FormRequest
      */
     public function authorize()
     {
+        if(!in_array(current_user_role(), ['Developer', 'Administrator', 'Super User', 'Finance Officer', 'Project Admin', 'Project Partner'])) {
+            return false;      
+        }
         return true;
     }
 

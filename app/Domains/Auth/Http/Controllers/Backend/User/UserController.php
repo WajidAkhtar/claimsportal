@@ -81,6 +81,9 @@ class UserController
      */
     public function create($role = '')
     {
+        if(in_array(current_user_role(), ['Funder'])) {
+            return redirect()->route('admin.dashboard')->withFlashDanger(__('You do not have access to create user.'));      
+        }
         $organisations = Organisation::ordered()->pluck('organisation_name', 'id');
         $isCreateExecutive = (current_user_role() == 'Developer' && $role == 'Administrator') ? true : false;
         return view('backend.auth.user.create')
