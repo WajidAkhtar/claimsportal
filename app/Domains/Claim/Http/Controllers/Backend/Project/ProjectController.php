@@ -324,9 +324,12 @@ class ProjectController
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
-        $this->projectService->update($project, $request->validated());
-
-        return redirect()->route('admin.claim.project.index')->withFlashSuccess(__('The project was successfully updated.'));
+        if(auth()->user()->hasRole('Administrator') || auth()->user()->hasRole('Developer') || (auth()->user()->hasRole('Super User') && $project->userHasPartialAccessToProject()) || (!empty(projectLead($project)) && (projectLead($project)->id == auth()->user()->id))) {
+            $this->projectService->update($project, $request->validated());
+            return redirect()->route('admin.claim.project.index')->withFlashSuccess(__('The project was successfully updated.'));
+        } else {
+            return redirect()->route('admin.claim.project.index')->withFlashDanger(__('you have no access to edit this project.'));
+        }
     }
 
     /**
@@ -351,6 +354,9 @@ class ProjectController
      */
     public function saveClaims(Request $request, Project $project)
     {
+        if(!$project->userHasFullAccessToProject() && !$project->userHasPartialAccessToProject() && (empty(projectLead($project)) || (projectLead($project)->id != auth()->user()->id))) {
+            return response()->json(['success' => 0, 'message' => 'You have no access to edit claims data.', 'data' => ['yearwiseHtml' => '']]);
+        }
         foreach($request->claim_values as $costItemId => $claimValue) {
             $claimValue['total_budget'] = number_format($claimValue['total_budget'], 2, '.', '');
             $claimValue['project_total'] = number_format($claimValue['project_total'], 2, '.', '');
@@ -375,6 +381,9 @@ class ProjectController
     }
 
     public function savePartnerAdditionalFields(Request $request, Project $project) {
+        if(!in_array(current_user_role(), ['Developer', 'Administrator', 'Super User', 'Finance Officer', 'Project Admin'])) {
+            return response()->json(['success' => 0, 'message' => 'You have no access to edit this data.']);
+        }
         $data = [
             'invoice_organisation_id' => $request->organisation_id,
             'organisation_type' => $request->organisation_type,
@@ -422,6 +431,9 @@ class ProjectController
     }
 
     public function saveSheetUserPermissions(Request $request, Project $project) {
+        if(!in_array(current_user_role(), ['Developer', 'Administrator', 'Super User', 'Finance Officer', 'Project Admin'])) {
+            return response()->json(['success' => FALSE, 'message' => 'You have no access to edit this data.']);
+        }
         if(!empty($request->sheet_user_id)) {
             SheetUserPermissions::where('partner_id', $request->sheet_owner_for_permission)->where('project_id', $project->id)->delete();
             foreach($request->sheet_user_id as $key => $user_id) {

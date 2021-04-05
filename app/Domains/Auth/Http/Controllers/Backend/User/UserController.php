@@ -6,6 +6,7 @@ use App\Domains\Auth\Http\Requests\Backend\User\DeleteUserRequest;
 use App\Domains\Auth\Http\Requests\Backend\User\EditUserRequest;
 use App\Domains\Auth\Http\Requests\Backend\User\StoreUserRequest;
 use App\Domains\Auth\Http\Requests\Backend\User\UpdateUserRequest;
+use App\Domains\Auth\Models\Role;
 use App\Domains\Auth\Models\User;
 use App\Domains\Auth\Services\PermissionService;
 use App\Domains\Auth\Services\RoleService;
@@ -81,8 +82,11 @@ class UserController
      */
     public function create($role = '')
     {
-        if(in_array(current_user_role(), ['Funder'])) {
-            return redirect()->route('admin.dashboard')->withFlashDanger(__('You do not have access to create user.'));      
+        if(!in_array(current_user_role(), ['Developer', 'Administrator', 'Super User', 'Finance Officer', 'Project Admin', 'Project Partner'])) {
+            return redirect()->route('admin.claim.project.index')->withFlashDanger(__('You do not have access to create user.'));            
+        }
+        if($this->roleService->where('name', $role)->count() == 0) {
+            return redirect()->route('admin.claim.project.index')->withFlashDanger(__('Unathorised request.'));
         }
         $organisations = Organisation::ordered()->pluck('organisation_name', 'id');
         $isCreateExecutive = (current_user_role() == 'Developer' && $role == 'Administrator') ? true : false;

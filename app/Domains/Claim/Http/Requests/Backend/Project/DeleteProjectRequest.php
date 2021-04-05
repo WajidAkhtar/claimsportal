@@ -17,7 +17,9 @@ class DeleteProjectRequest extends FormRequest
      */
     public function authorize()
     {
-        // return $this->user()->isMasterAdmin();
+        if(!auth()->user()->hasRole('Developer') && !auth()->user()->hasRole('Administrator')) {
+            return false;
+        }
         return true;
     }
 

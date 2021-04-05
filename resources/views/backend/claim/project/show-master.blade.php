@@ -1456,7 +1456,7 @@
                             toastr.success(response.message);
                         }
                         else{
-                            toastr.error('Something goes wrong...');
+                            toastr.error(response.message);
                         }
                     }
                 })
@@ -1492,7 +1492,7 @@
                             toastr.success(response.message);
                         }
                         else{
-                            toastr.error('Something goes wrong...');
+                            toastr.error(response.message);
                         }
                     }
                 })
