@@ -18,6 +18,7 @@ class CreateCostItemsTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->unsignedTinyInteger('active')->default(1);
+            $table->unsignedTinyInteger('is_system_generated')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

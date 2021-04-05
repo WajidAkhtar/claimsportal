@@ -15,9 +15,11 @@ class CreateSheetUserPermissionsTable extends Migration
     {
         Schema::create('sheet_user_permissions', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('partner_id');
-            $table->bigInteger('user_id');
-            $table->bigInteger('sheet_permission_id');
+            $table->bigInteger('project_id')->nullable();
+            $table->bigInteger('partner_id')->nullable();
+            $table->bigInteger('user_id')->nullable();
+            $table->bigInteger('sheet_permission_id')->nullable();
+            $table->enum('is_master', [0, 1])->default(0);
             $table->timestamps();
         });
     }

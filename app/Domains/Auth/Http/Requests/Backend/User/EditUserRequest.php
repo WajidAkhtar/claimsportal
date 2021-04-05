@@ -17,6 +17,9 @@ class EditUserRequest extends FormRequest
      */
     public function authorize()
     {
+        if(auth()->user()->hasRole('Developer')) {
+            return true;
+        }
         return ! ($this->user->isMasterAdmin() && ! $this->user()->isMasterAdmin());
     }
 

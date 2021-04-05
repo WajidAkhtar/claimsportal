@@ -17,12 +17,13 @@ class CreateProjectsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('number');
-            $table->string('pool');
             $table->date('start_date');
             $table->smallInteger('length');
-            $table->smallInteger('number_of_partners')->default(0);
             $table->string('cost_items_order')->default('');
+            $table->string('project_funder_ref')->nullable();
+            $table->bigInteger('pool_id')->nullable();
             $table->string('status');
+            $table->string('logo')->nullable();
             $table->unsignedTinyInteger('active')->default(1);
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();

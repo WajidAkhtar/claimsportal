@@ -16,7 +16,7 @@ class CreateProjectFundersTable extends Migration
         Schema::create('project_funders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('project_id');
-            $table->unsignedBigInteger('user_id');
+            $table->bigInteger('organisation_id')->nullable();
         });
     }
 

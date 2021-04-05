@@ -23,10 +23,10 @@ class UserSeeder extends Seeder
         // Add the master administrator, user id of 1
         User::create([
             'type' => User::TYPE_ADMIN,
-            'first_name' => 'Super',
-            'last_name' => 'Admin',
-            'job_title' => 'Administration',
-            'department' => 'Administration',
+            'first_name' => 'Executive',
+            'last_name' => 'User',
+            'job_title' => '',
+            'department' => '',
             'email' => 'admin@admin.com',
             'password' => 'secret',
             'email_verified_at' => now(),
@@ -37,7 +37,7 @@ class UserSeeder extends Seeder
         User::create([
             'type' => User::TYPE_ADMIN,
             'first_name' => 'Developer',
-            'last_name' => '',
+            'last_name' => 'User',
             'job_title' => '',
             'department' => '',
             'email' => 'info@skylinx.co.uk',

@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('last_name');
             $table->string('job_title');
             $table->string('department');
-            $table->string('organisation');
+            $table->bigInteger('organisation_id')->nullable();
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
@@ -35,6 +35,7 @@ class CreateUsersTable extends Migration
             $table->string('provider_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
+
             $table->softDeletes();
         });
     }
