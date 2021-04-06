@@ -45,15 +45,15 @@ class CreateProjectPartnersTable extends Migration
             $table->string('contact')->nullable();
             $table->string('customer_ref')->nullable();
             $table->bigInteger('funder_id')->nullable();
-            $table->bigInteger('funder_office')->nullable();
-            $table->bigInteger('funder_building_name')->nullable();
-            $table->bigInteger('funder_address_line_1')->nullable();
-            $table->bigInteger('funder_address_line_2')->nullable();
-            $table->bigInteger('funder_city')->nullable();
-            $table->bigInteger('funder_county')->nullable();
-            $table->bigInteger('funder_post_code')->nullable();
-            $table->bigInteger('funder_web_url')->nullable();
-            $table->bigInteger('funder_contact')->nullable();
+            $table->string('funder_office')->nullable();
+            $table->string('funder_building_name')->nullable();
+            $table->string('funder_address_line_1')->nullable();
+            $table->string('funder_address_line_2')->nullable();
+            $table->string('funder_city')->nullable();
+            $table->string('funder_county')->nullable();
+            $table->string('funder_post_code')->nullable();
+            $table->string('funder_web_url')->nullable();
+            $table->string('funder_contact')->nullable();
             $table->timestamps();
         });
     }
