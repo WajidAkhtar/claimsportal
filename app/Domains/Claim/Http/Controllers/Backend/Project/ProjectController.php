@@ -263,11 +263,14 @@ class ProjectController
                     $allowToEdit = FALSE;
                 }
             }
-            $project->costItems = $project->costItems()->where('organisation_id', $sheet_owner)->whereNull('project_cost_items.deleted_at')->groupBy('cost_item_id')->orderByRaw($project->costItemOrderRaw())->get();  
-
+            $project->costItems = $project->costItems()->where('organisation_id', $sheet_owner)->whereNull('project_cost_items.deleted_at')->groupBy('cost_item_id')->orderByRaw($project->costItemOrderRaw())->get();
             $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project, 'partner' => $sheet_owner])->render();
             
-            // return Excel::download(new ClaimExport($project, request()->partner), 'claims.xlsx');
+            if(!empty(request()->exportExcel)) {
+                $reportExcelFileName = (!empty(request()->partner)) ? Organisation::find(request()->partner)->organisation_name."-" : "";
+                $reportExcelFileName.= "Claims-".date('Ymd-h:i');
+                return Excel::download(new ClaimExport($project, request()->partner), $reportExcelFileName.'.xlsx');
+            }
 
             return view('backend.claim.project.show')
             ->withProject($project)
