@@ -1039,7 +1039,7 @@
             });
             
             $('.main-claims-table [name*="[yearwise]"][name$="[amount]"]').each(function(i, v){
-                var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[2];
+                var yearIndex = $(v).attr('name').match(/(?:\[).*?(?=\])/g)[2];
 
                 var yearWiseTotal = 0;
                 $(v).closest('tr').find('[data-year-index="'+yearIndex+'"]').each(function(i1, v1){
@@ -1058,7 +1058,7 @@
             });
             
             $('.main-claims-table [name*="[yearwise]"][name$="[total_amount]"]').each(function(i, v){
-                var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[2];
+                var yearIndex = $(v).attr('name').match(/(?:\[).*?(?=\])/g)[2];
 
                 var yearWiseTotal = 0;
                 $(v).closest('tr').find('[data-year-index="'+yearIndex+'"]').each(function(i1, v1){
@@ -1077,7 +1077,7 @@
             });
             
             $('.main-claims-table [name*="[yearwise]"][name$="[variance]"]').each(function(i, v){
-                var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[2];
+                var yearIndex = $(v).attr('name').match(/(?:\[).*?(?=\])/g)[2];
                 if($(v).closest('tr').find('[name*="[yearwise]['+yearIndex+'][budget]"]').val() == '' || isNaN($(v).closest('tr').find('[name*="[yearwise]['+yearIndex+'][budget]"]').val())) {
                     yearBudgetValue = 0;
                 } else {
@@ -1100,7 +1100,7 @@
             });
 
             $('.main-claims-table [name^="total_costs[for_each_item][yearwise]"][name$="[total_budget]"]').each(function(i, v){
-                var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[2];
+                var yearIndex = $(v).attr('name').match(/(?:\[).*?(?=\])/g)[2];
                 var total_budget = 0;
                 $(v).closest('table.main-claims-table').find('[name$="[yearwise]['+yearIndex+'][budget]"]').each(function(i1, v1){
                     if($(v1).val() == '' || isNaN($(v1).val())) {
@@ -1125,7 +1125,7 @@
             });
 
             $('.main-claims-table [name^="total_costs[for_each_item][yearwise]"][name$="[total_variance]"]').each(function(i, v){
-                var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[2];
+                var yearIndex = $(v).attr('name').match(/(?:\[).*?(?=\])/g)[2];
                 var total = 0;
                 $('.main-claims-table [name$="[yearwise]['+yearIndex+'][variance]"').each(function(i1, v1){
                     if($(v1).val() == '' || isNaN($(v1).val())) {
@@ -1156,9 +1156,9 @@
             var prevYearIndex = 0;
             $('#year-wise-claims [name*="[total_costs][for_each_item][quarter_values]"]').each(function(i, v){
                 // var rowId = $(v).attr('name').replace('[total_costs][for_each_item][quarter_values]', '');
-                var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[0];
-                var quarterId = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[2];
-                var rowId = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[4];
+                var yearIndex = $(v).attr('name').match(/(?:\[).*?(?=\])/g)[0];
+                var quarterId = $(v).attr('name').match(/(?:\[).*?(?=\])/g)[2];
+                var rowId = $(v).attr('name').match(/(?:\[).*?(?=\])/g)[4];
                 // console.log(rowId)
                 var total = 0;
                 if(prevYearIndex != yearIndex) {
@@ -1180,7 +1180,7 @@
             });
 
             $('#year-wise-claims [name$="[for_each_item][project_total]"]').each(function(i, v){
-                var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[0];
+                var yearIndex = $(v).attr('name').match(/(?:\[).*?(?=\])/g)[0];
                 var project_total = 0;
                 $(v).closest('tr').find('[name^="yearly_data['+yearIndex+'][total_costs][for_each_item][quarter_values]"]').each(function(i1, v1){
                     if($(v1).val() == '' || isNaN($(v1).val())) {
@@ -1199,7 +1199,7 @@
 
             $('[name ^="yearly_data["][name $="[total_costs][for_each_item][variance]"]').not('[name*="[yearwise]"]').each(function(i, v) {
                 var total_project_variance = 0;
-                var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[0];
+                var yearIndex = $(v).attr('name').match(/(?:\[).*?(?=\])/g)[0];
                 $('[name^="yearly_data['+yearIndex+'][claim_values]"][name$="[variance]"]').each(function(i1, v1) {
                     if($(v1).val() == '' || isNaN($(v1).val())) {
                         value = 0;
@@ -1212,7 +1212,7 @@
             });
 
             $('[name^="yearly_data"][name$="[total_costs][for_each_item][total_budget]"]').each(function(i, v){
-                var yearIndex = $(v).attr('name').match(/(?<=\[).*?(?=\])/g)[0];
+                var yearIndex = $(v).attr('name').match(/(?:\[).*?(?=\])/g)[0];
                 for_each_total_budget = 0;
                 $('[name^="yearly_data['+yearIndex+'][claim_values]"][name$="[total_budget]"]').each(function(i, v) {
                     if($(v).val() == '' || isNaN($(v).val())) {
