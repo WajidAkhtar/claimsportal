@@ -54,6 +54,6 @@ class ClaimSheet implements FromView, WithTitle
      */
     public function title(): string
     {
-        return 'Year ' . ($this->yearIndex+1);
+        return 'Year ' . ($this->yearIndex+1).' Finance';
     }
 }
