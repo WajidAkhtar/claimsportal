@@ -1,6 +1,7 @@
 <?php
 namespace App\Exports;
 
+use App\Domains\System\Models\Organisation;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
@@ -27,6 +28,8 @@ class ClaimExport implements WithMultipleSheets
         $globalFromDate = clone $fromDate;
         $remainingQuarters = $this->project->length;
         $quarterNo = 1;
+        
+        $sheets[] = new ClaimMasterSheet($this->project, (!empty($this->partner) ? Organisation::find($this->partner)->organisation_name : 'Mastersheet'));
 
         for ($yearIndex = 0; $yearIndex < ceil($this->project->length/4); $yearIndex++) {
             $currentYearQuarters = $remainingQuarters > 4 ? 4 : $remainingQuarters;
