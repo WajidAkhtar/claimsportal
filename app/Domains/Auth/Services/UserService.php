@@ -328,6 +328,7 @@ class UserService extends BaseService
         if($user->forceDelete()) {
             $user->correspondenceAddress()->forceDelete();
             UserPools::where('user_id', $user->id)->delete();
+            DB::table('sheet_user_permissions')->where('user_id', $user->id)->delete();
             event(new UserDeleted($user));
 
             return $user;
