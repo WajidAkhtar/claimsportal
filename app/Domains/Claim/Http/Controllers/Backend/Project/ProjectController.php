@@ -25,6 +25,7 @@ use App\Domains\Claim\Http\Requests\Backend\Project\EditProjectRequest;
 use App\Domains\Claim\Http\Requests\Backend\Project\StoreProjectRequest;
 use App\Domains\Claim\Http\Requests\Backend\Project\DeleteProjectRequest;
 use App\Domains\Claim\Http\Requests\Backend\Project\UpdateProjectRequest;
+use App\Exports\ClaimExport;
 
 /**
  * Class ProjectController.
@@ -201,6 +202,7 @@ class ProjectController
 
             $data = (object) $data;
             $yearwiseHtml = View::make('backend.claim.project.show-yearwise-master', ['project' => $project, 'data' => $data])->render();
+
             return view('backend.claim.project.show-master')
             ->withProject($project)
             ->withSheetOwner($sheet_owner)
@@ -264,6 +266,8 @@ class ProjectController
             $project->costItems = $project->costItems()->where('organisation_id', $sheet_owner)->whereNull('project_cost_items.deleted_at')->groupBy('cost_item_id')->orderByRaw($project->costItemOrderRaw())->get();  
 
             $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project, 'partner' => $sheet_owner])->render();
+            
+            // return Excel::download(new ClaimExport($project, request()->partner), 'claims.xlsx');
 
             return view('backend.claim.project.show')
             ->withProject($project)
