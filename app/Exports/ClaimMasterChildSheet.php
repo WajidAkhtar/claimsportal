@@ -6,7 +6,7 @@ use Maatwebsite\Excel\Concerns\WithTitle;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 
-class ClaimSheet implements FromView, WithTitle
+class ClaimMasterChildSheet implements FromView, WithTitle
 {
     private $project;
     protected $partner;
@@ -17,8 +17,9 @@ class ClaimSheet implements FromView, WithTitle
     private $remainingQuarters;
     private $quarterNo;
     private $currentYearQuarters;
+    private $data;
 
-    public function __construct($project, $yearIndex, $startDate, $fromDate, $globalFromDate, $remainingQuarters, $quarterNo, $currentYearQuarters, $partner)
+    public function __construct($project, $yearIndex, $startDate, $fromDate, $globalFromDate, $remainingQuarters, $quarterNo, $currentYearQuarters, $data)
     {
         $this->project = $project;
         $this->yearIndex = $yearIndex;
@@ -28,7 +29,7 @@ class ClaimSheet implements FromView, WithTitle
         $this->remainingQuarters = $remainingQuarters;
         $this->quarterNo = $quarterNo;
         $this->currentYearQuarters = $currentYearQuarters;
-        $this->partner = $partner;
+        $this->data = $data;
     }
 
     /**
@@ -36,9 +37,8 @@ class ClaimSheet implements FromView, WithTitle
      */
     public function view() : View
     {
-        return view('backend.claim.project.yearwise-claim', [
+        return view('backend.claim.project.yearwise-master-child-table-claim', [
             'project' => $this->project,
-            'partner' => $this->partner,
             'yearIndex' => $this->yearIndex,
             'startDate' => $this->startDate,
             'fromDate' => $this->fromDate,
@@ -46,6 +46,7 @@ class ClaimSheet implements FromView, WithTitle
             'remainingQuarters' => $this->remainingQuarters,
             'quarterNo' => $this->quarterNo,
             'currentYearQuarters' => $this->currentYearQuarters,
+            'data' => $this->data,
         ]);
     }
 
