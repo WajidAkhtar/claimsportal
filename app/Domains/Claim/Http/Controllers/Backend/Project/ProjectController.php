@@ -206,8 +206,16 @@ class ProjectController
             $yearwiseHtml = View::make('backend.claim.project.show-yearwise-master', ['project' => $project, 'data' => $data])->render();
 
             if(!empty(request()->exportExcel)) {
+                $yearwiseHtml = View::make('backend.claim.project.export-master-yearly-excel', ['project' => $project, 'data' => $data])->render();
                 $reportExcelFileName = $project->name."-Claims-".date('Y_m_d_h_i');
-                return Excel::download(new ClaimMasterExport($project, $data), $reportExcelFileName.'.xlsx');
+                return Excel::download(new ClaimMasterExport(
+                    $project, 
+                    $data,
+                    $partnerAdditionalInfo,
+                    $yearwiseHtml,
+                    $leadUser,
+                    $leadUserPartner
+                ), $reportExcelFileName.'.xlsx');
             }
 
             return view('backend.claim.project.show-master')
