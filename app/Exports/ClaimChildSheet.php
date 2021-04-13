@@ -15,7 +15,7 @@ use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\RegistersEventListeners;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 
-class ClaimMasterMainSheet implements FromView, WithTitle, WithDrawings, WithStyles, WithEvents
+class ClaimChildSheet implements FromView, WithTitle, WithDrawings, WithStyles, WithEvents
 {
     use RegistersEventListeners;
 
@@ -25,9 +25,11 @@ class ClaimMasterMainSheet implements FromView, WithTitle, WithDrawings, WithSty
     private $yearwiseHtml;
     private $leadUser;
     private $leadUserPartner;
+    private $partner;
+    private $costItems;
     private $sheet_name;
 
-    public function __construct($project, $data, $partnerAdditionalInfo, $yearwiseHtml, $leadUser, $leadUserPartner, $sheet_name)
+    public function __construct($project, $data, $partnerAdditionalInfo, $yearwiseHtml, $leadUser, $leadUserPartner, $partner, $sheet_name, $costItems)
     {
         $this->project = $project;
         $this->data = $data;
@@ -35,6 +37,8 @@ class ClaimMasterMainSheet implements FromView, WithTitle, WithDrawings, WithSty
         $this->yearwiseHtml = $yearwiseHtml;
         $this->leadUser = $leadUser;
         $this->leadUserPartner = $leadUserPartner;
+        $this->partner = $partner;
+        $this->costItems = $costItems;
         $this->sheet_name = $sheet_name;
     }
 
@@ -43,13 +47,15 @@ class ClaimMasterMainSheet implements FromView, WithTitle, WithDrawings, WithSty
      */
     public function view() : View
     {
-        return view('backend.claim.project.export-master-excel', [
+        return view('backend.claim.project.export-child-excel', [
             'project' => $this->project,
             'data' => $this->data,
             'partnerAdditionalInfo' => $this->partnerAdditionalInfo,
             'yearwiseHtml' => $this->yearwiseHtml,
             'leadUser' => $this->leadUser,
-            'leadUserPartner' => $this->leadUserPartner
+            'leadUserPartner' => $this->leadUserPartner,
+            'costItems' => $this->costItems,
+            'partner' => $this->partner,
         ]);
     }
 
@@ -79,11 +85,16 @@ class ClaimMasterMainSheet implements FromView, WithTitle, WithDrawings, WithSty
         $drawing2->setCoordinates('E1');
 
         $drawing3 = new Drawing();
-        $drawing3->setPath(public_path(('uploads/organisations/logos/'.optional($this->project->funders()->first())->logo)));
+        $drawing3->setPath(public_path(('uploads/organisations/logos/'.optional($this->partnerAdditionalInfo->invoiceOrganisation)->logo)));
         $drawing3->setWidth(225);
         $drawing3->setCoordinates('H1');
 
-        return [$drawing1, $drawing2, $drawing3];
+        $drawing4 = new Drawing();
+        $drawing4->setPath(public_path(('uploads/organisations/logos/'.optional($this->project->funders()->first())->logo)));
+        $drawing4->setWidth(225);
+        $drawing4->setCoordinates('K1');
+
+        return [$drawing1, $drawing2, $drawing3, $drawing4];
     }
 
     public static function afterSheet(AfterSheet $event)

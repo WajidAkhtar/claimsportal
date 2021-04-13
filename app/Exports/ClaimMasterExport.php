@@ -4,6 +4,8 @@ namespace App\Exports;
 use App\Domains\System\Models\Organisation;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
+use Illuminate\Support\Facades\View;
+use App\Domains\Claim\Models\ProjectPartners;
 
 class ClaimMasterExport implements WithMultipleSheets
 {
@@ -40,21 +42,29 @@ class ClaimMasterExport implements WithMultipleSheets
             $this->leadUserPartner,
             'Mastersheet'
         );
-          
-        // $startDate = clone $this->project->start_date;
-        // $fromDate = clone $this->project->start_date;
-        // $globalFromDate = clone $fromDate;
-        // $remainingQuarters = $this->project->length;
-        // $quarterNo = 1;
-        
-        // $sheets[] = new ClaimMasterMainSheet($this->project, $this->data, 'Mastersheet');
 
-        // for ($yearIndex = 0; $yearIndex < ceil($this->project->length/4); $yearIndex++) {
-        //     $currentYearQuarters = $remainingQuarters > 4 ? 4 : $remainingQuarters;
-        //     $sheets[] = new ClaimMasterChildSheet($this->project, $yearIndex, $startDate, $fromDate, $globalFromDate, $remainingQuarters, (($yearIndex * 4) + 1), $currentYearQuarters, $this->data);
-        //     $remainingQuarters -= $currentYearQuarters;
-        //     $globalFromDate = clone $startDate;
-        // }
+        foreach ($this->project->partners as $key => $partner) {
+            
+            $costItems = $this->project->costItems()->where('organisation_id', $partner->id)->whereNull('project_cost_items.deleted_at')->groupBy('cost_item_id')->orderByRaw($this->project->costItemOrderRaw())->get();
+            $partnerAdditionalInfo = ProjectPartners::where('project_id', $this->project->id)->where('organisation_id', $partner->id)->first();
+            $yearwiseHtml = View::make('backend.claim.project.export-child-yearly-excel', [
+                'project' => $this->project, 
+                'partner' => $partner->id,
+                'costItems' => $costItems
+            ])->render();
+
+            $sheets[] = new ClaimChildSheet(
+                $this->project,
+                $this->data,
+                $partnerAdditionalInfo,
+                $yearwiseHtml,
+                $this->leadUser,
+                $this->leadUserPartner,
+                $partner->id,
+                $partner->organisation_name,
+                $costItems,
+            );
+        }
 
         return $sheets;
     }

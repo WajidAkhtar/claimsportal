@@ -35,7 +35,7 @@
                     @php
                         $date = clone $startDate;
                         $quarter = $project->quarters()->whereStartTimestamp($startDate->timestamp)->first();
-                        $labelClass = $quarter->user->status == 'current' ? 'color: red;' : '';
+                        $labelClass = $quarter->partner($partner)->pivot->status == 'current' ? 'color: red;' : '';
                         $date->addMonths(2)->endOfMonth();
                     @endphp
                     <th class="text-center light-grey-bg" style="background-color: #DEEAF6;{{ $labelClass }}">
@@ -71,7 +71,7 @@
                     $toDate->addMonths(2)->endOfMonth();
                 @endphp
                 <th style="background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }} {{ $fontBold }} {{ $labelClass }}text-align: center;">
-                    @switch($quarter->user->status)
+                    @switch($quarter->partner($partner)->pivot->status)
                         @case('current')
                             <label class="current-bg mb-0">&nbsp;CURRENT&nbsp;</label>
                             @break
@@ -100,7 +100,7 @@
                 $total_cumulative_for_each_items = [];
                 $overall_total_budget = 0;
             @endphp
-            @foreach ($project->costItems as $index => $costItem)
+            @foreach ($costItems as $index => $costItem)
             @php
                 $cellBgStyle = 'background-color: #ffffff;';
                 if($index % 2 == 0) {
@@ -113,7 +113,7 @@
                 <td style="font-weight:bold;background-color: #ffffff;{{ $cellBgStyle }}text-align: center;">{{$costItem->pivot->cost_item_name}}</td>
                 <td style="{{ $cellBgStyle }}">{{$costItem->pivot->cost_item_description}}</td>
                 @php
-                    $total_budget = $data->claims_data[$costItem->id]['yearwise'][$yearIndex]['budget'] ?? 0;
+                    $total_budget = optional(optional($costItem->claims_data)->yearwise)[$yearIndex]->budget ?? 0;
                     $overall_total_budget+= $total_budget;
                 @endphp
                 <td style="{{ ($total_budget < 0) ? 'color: red;' : '' }}background-color: #ffffff;{{ $cellBgStyle }}">
@@ -132,9 +132,9 @@
                 @php
                     $toDate = clone $fromDate1;
                     $quarter = $project->quarters()->whereStartTimestamp($fromDate1->timestamp)->first();
-                    $labelClass = $quarter->user->status == 'current' ? 'color: red;' : '';
+                    $labelClass = $quarter->partner($partner)->pivot->status == 'current' ? 'color: red;' : '';
                     $toDate->addMonths(2)->endOfMonth();
-                    $quarter_value = $data->claims_data[$costItem->id]['quarter_values'][$fromDate1->timestamp] ?? 0.00;
+                    $quarter_value = optional(optional($costItem->claims_data)->quarter_values)->{"$fromDate1->timestamp"} ?? 0;
                     $projectTotal += $quarter_value;
                     $project_variance = $total_budget - $projectTotal;
                 @endphp
@@ -194,14 +194,14 @@
                     $toDate = clone $fromDate2;
 
                     $quarter = $project->quarters()->whereStartTimestamp($fromDate2->timestamp)->first();
-                    $labelClass = $quarter->user->status == 'current' ? 'color: red;' : '';
+                    $labelClass = $quarter->partner($partner)->pivot->status == 'current' ? 'color: red;' : '';
 
                     $toDate->addMonths(2)->endOfMonth();
                     $total_cost_for_each_item = 0;
                 @endphp
                 @foreach ($project->costItems as $index => $costItem)
                     @php
-                        $total_cost_for_each_item+= $data->claims_data[$costItem->id]['quarter_values'][$fromDate2->timestamp] ?? 0;
+                        $total_cost_for_each_item+= optional(optional($costItem->claims_data)->quarter_values)->{"$fromDate2->timestamp"} ?? 0;
                     @endphp
                 @endforeach
                 <td style="{{ ($total_cost_for_each_item < 0) ? 'color: red' : 'black' }};background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }}border-top: 1px solid #000000;{{ $labelClass }}">
@@ -247,7 +247,7 @@
                     $toDate = clone $fromDate3;
 
                     $quarter = $project->quarters()->whereStartTimestamp($fromDate3->timestamp)->first();
-                    $labelClass = $quarter->user->status == 'current' ? 'color: red;' : '';
+                    $labelClass = $quarter->partner($partner)->pivot->status == 'current' ? 'color: red;' : '';
                     
 
                     $toDate->addMonths(2)->endOfMonth();
@@ -257,7 +257,7 @@
 
                 @foreach ($project->costItems as $index => $costItem)
                     @php
-                        $total_cumulative_for_each_item+= $data->claims_data[$costItem->id]['quarter_values'][$fromDate3->timestamp] ?? 0.00;
+                        $total_cumulative_for_each_item+= optional(optional($costItem->claims_data)->quarter_values)->{"$fromDate3->timestamp"} ?? 0;
                     @endphp
                 @endforeach
                 @php

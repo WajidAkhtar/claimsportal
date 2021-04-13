@@ -115,9 +115,9 @@
                     @php
                     $readOnly = false;
                     $yearBudgetReadOnly = false;
-                    $yearBudget = optional(optional($costItem->claims_data)->yearwise)[$i]->budget ?? 0.00;
-                    $yearAmount = optional(optional($costItem->claims_data)->yearwise)[$i]->amount ?? 0.00;
-                    $yearVariance = optional(optional($costItem->claims_data)->yearwise)[$i]->variance ?? 0.00;
+                    $yearBudget = optional(optional($data->claims_data[$costItem->id])['yearwise'])[$i]['budget'] ?? 0.00;
+                    $yearAmount = optional(optional($data->claims_data[$costItem->id])['yearwise'])[$i]['amount'] ?? 0.00;
+                    $yearVariance = optional(optional($data->claims_data[$costItem->id])['yearwise'])[$i]['variance'] ?? 0.00;
                     if(empty($total_yearly_budget[$i])) {
                         $total_yearly_budget[$i] = 0;
                     }

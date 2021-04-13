@@ -19,24 +19,28 @@
             <td style="{{ $defaultCellStyle }}"></td>
             <td colspan="3" style="background-color: #ffffff;{{ $defaultCellStyle }}"><strong>PROJECT</strong></td>
             <td colspan="3" style="background-color: #ffffff;{{ $defaultCellStyle }}"><strong>PROJECT LEAD</strong></td>
+            <td colspan="3" style="background-color: #ffffff;{{ $defaultCellStyle }}"><strong>PARTNER</strong></td>
             <td colspan="3" style="background-color: #ffffff;{{ $defaultCellStyle }}"><strong>PROJECT FUNDER</strong></td>
         </tr>
         <tr>
             <td style="{{ $defaultCellStyle }}"></td>
             <td colspan="3">Name: {{$project->name}}</td>
             <td colspan="3">Name: {{optional($leadUserPartner->invoiceOrganisation)->organisation_name ?? 'N/A'}}</td>
+            <td colspan="3">Name: {{optional($partnerAdditionalInfo->invoiceOrganisation)->organisation_name ?? optional($partnerAdditionalInfo->organisation)->organisation_name}}</td>
             <td colspan="3">Name: {{optional($project->funders()->first())->organisation_name ?? 'N/A'}}</td>
         </tr>
         <tr>
             <td style="{{ $defaultCellStyle }}"></td>
             <td colspan="3" style="{{ $defaultCellStyle }}">Code: {{$project->number}}</td>
             <td colspan="3" style="{{ $defaultCellStyle }}">Contact: {{optional($leadUserPartner)->contact ?? 'N/A'}}</td>
+            <td colspan="3" style="{{ $defaultCellStyle }}">Contact: {{$partnerAdditionalInfo->contact ?? 'N/A'}}</td>
             <td colspan="3" style="{{ $defaultCellStyle }}">Contact: {{$partnerAdditionalInfo->funder_contact ?? 'N/A'}}</td>
         </tr>
         <tr>
             <td></td>
             <td colspan="3" style="{{ $defaultCellStyle }}">Start: {{$project->start_date->format('m-Y')}}</td>
             <td colspan="3" style="{{ $defaultCellStyle }}">Web URL: {{ optional($leadUserPartner)->web_url ?? 'N/A' }}</td>
+            <td colspan="3" style="{{ $defaultCellStyle }}">Web URL: {{ $partnerAdditionalInfo->web_url ?? 'N/A' }}</td>
             <td colspan="3" style="{{ $defaultCellStyle }}">Web URL: {{ $partnerAdditionalInfo->funder_web_url ?? 'N/A' }}</td>
         </tr>
     </table>
@@ -59,7 +63,7 @@
             <th style="{{ $defaultCellStyle }}">&nbsp;</th>
             @foreach ($project->quarters as $quarter)
             @php
-            $labelClass = $quarter->user->status == 'current' ? 'color:red;' : '';
+            $labelClass = $quarter->partner($partner)->pivot->status == 'current' ? 'color:red;' : '';
             @endphp
             <th style="background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $labelClass }}">
                 <label class="{{$labelClass ?? ''}} text-uppercase"> {{ strtoupper($quarter->length) }}</label>
@@ -81,7 +85,7 @@
             <th style="{{ $defaultCellStyle }}">&nbsp;</th>
             @foreach ($project->quarters as $quarter)
             @php
-            $labelClass = $quarter->user->status == 'current' ? 'color:red;' : '';
+            $labelClass = $quarter->partner($partner)->pivot->status == 'current' ? 'color:red;' : '';
             @endphp
             <th style="{{ $defaultCellStyle }} {{ $labelClass }}">
                 <label class="{{$labelClass ?? ''}}">{{ strtoupper($quarter->name) }}</label>
@@ -96,10 +100,10 @@
             <th style="width:15px;background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }}text-align: center;">TOTAL BUDGET</th>
             @foreach ($project->quarters as $quarter)
             @php
-            $labelClass = $quarter->user->status == 'current' ? 'color:red;' : '';
+            $labelClass = $quarter->partner($partner)->pivot->status == 'current' ? 'color:red;' : '';
             @endphp
             <th style="width:15px;background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }} {{ $labelClass }}text-align: center;">
-                @switch($quarter->user->status)
+                @switch($quarter->partner($partner)->pivot->status)
                 @case('current')
                 <label class="current-bg mb-0" >&nbsp;CURRENT&nbsp;</label>
                 @break
@@ -134,7 +138,7 @@
             $overall_total_budget = 0;
             $total_cumulative_for_each_items = [];
         @endphp
-        @foreach ($project->costItems as $index => $costItem)
+        @foreach ($costItems as $index => $costItem)
         @php
             $cellBgStyle = 'background-color: #ffffff;';
             if($index % 2 == 0) {
@@ -147,11 +151,12 @@
             <td style="{{ $defaultCellStyle }} {{ $cellBgStyle }}text-align: center;font-weight: bold;">{{$costItem->pivot->cost_item_name}}</td>
             <td style="{{ $defaultCellStyle }} {{ $cellBgStyle }}">{{$costItem->pivot->cost_item_description}}</td>
             @php
-                $total_budget = 0;
-                for ($i = 0; $i < ceil(($project->length/4)); $i++) {
-                    $total_budget+= optional(optional($data->claims_data[$costItem->id])['yearwise'])[$i]['budget'] ?? 0.00;
-                }
+                $yearIndex = 0;
+                $total_budget = optional(optional($costItem->claims_data)->yearwise)[$yearIndex]->budget ?? 0;
                 $overall_total_budget+= $total_budget;
+                if($loop->iteration % 4 == 0){
+                    $yearIndex++;
+                }
             @endphp
             <td style="{{ ($total_budget < 0) ? 'color: red' : 'black' }};{{ $defaultCellStyle }} {{ $cellBgStyle }}">
                 <div class="input-group">
@@ -169,10 +174,10 @@
             @endphp
             @foreach ($project->quarters as $quarter)
             @php
-            $labelClass = $quarter->user->status == 'current' ? 'color:red;' : '';
-            $quarter_value = optional(optional($data->claims_data[$costItem->id])['quarter_values'])[$quarter->start_timestamp] ?? 0.00;
-                $projectTotal += $quarter_value;
-                $projectVariance = $total_budget - $projectTotal;
+            $labelClass = $quarter->partner($partner)->pivot->status == 'current' ? 'color:red;' : '';
+            $quarter_value = optional(optional($costItem->claims_data)->quarter_values)->{"$quarter->start_timestamp"} ?? 0.00;
+            $projectTotal += $quarter_value;
+            $projectVariance = $total_budget - $projectTotal;
             @endphp
             <td style="{{ ($quarter_value < 0) ? 'color: red' : 'black' }};background-color: #ffffff;{{ $defaultCellStyle }} {{ $labelClass }} {{ $cellBgStyle }}">
                 <div class="input-group">
@@ -213,9 +218,9 @@
                     @php
                         $readOnly = false;
                         $yearBudgetReadOnly = false;
-                        $yearBudget = optional(optional($data->claims_data[$costItem->id])['yearwise'])[$i]['budget'] ?? 0.00;
-                        $yearAmount = optional(optional($data->claims_data[$costItem->id])['yearwise'])[$i]['amount'] ?? 0.00;
-                        $yearVariance = optional(optional($data->claims_data[$costItem->id])['yearwise'])[$i]['variance'] ?? 0.00;
+                        $yearBudget = optional(optional($costItem->claims_data)->yearwise)[$i]->budget ?? 0.00;
+                        $yearAmount = optional(optional($costItem->claims_data)->yearwise)[$i]->amount ?? 0.00;
+                        $yearVariance = optional(optional($costItem->claims_data)->yearwise)[$i]->variance ?? 0.00;
                         if(empty($total_yearly_budget[$i])) {
                             $total_yearly_budget[$i] = 0;
                         }
@@ -275,13 +280,13 @@
             @endphp
             @foreach ($project->quarters as $quarter)
             @php
-            $labelClass = $quarter->user->status == 'current' ? 'color:red;' : '';
+            $labelClass = $quarter->partner($partner)->pivot->status == 'current' ? 'color:red;' : '';
             $total_cost_for_each_item = 0;
             @endphp
             
-            @foreach ($project->costItems as $index => $costItem)
+            @foreach ($costItems as $index => $costItem)
                 @php
-                    $total_cost_for_each_item+= optional(optional($data->claims_data[$costItem->id])['quarter_values'])[$quarter->start_timestamp] ?? 0.00;
+                    $total_cost_for_each_item+= optional(optional($costItem->claims_data)->quarter_values)->{"$quarter->start_timestamp"} ?? 0.00;
                 @endphp
             @endforeach
 
@@ -355,12 +360,12 @@
                 @endphp
             @foreach ($project->quarters as $quarter)
             @php
-            $labelClass = $quarter->user->status == 'current' ? 'color: red;' : '';
+            $labelClass = $quarter->partner($partner)->pivot->status == 'current' ? 'color: red;' : '';
             $total_cumulative_for_each_item = 0;
             @endphp
-            @foreach ($project->costItems as $index => $costItem)
+            @foreach ($costItems as $index => $costItem)
                     @php
-                        $total_cumulative_for_each_item+= optional(optional($data->claims_data[$costItem->id])['quarter_values'])[$quarter->start_timestamp] ?? 0.00;
+                        $total_cumulative_for_each_item+= optional(optional($costItem->claims_data)->quarter_values)->{"$quarter->start_timestamp"} ?? 0.00;
                     @endphp
                 @endforeach
                 @php
@@ -391,3 +396,4 @@
 </table>
 
 {!!$yearwiseHtml!!}
+
