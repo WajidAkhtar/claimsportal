@@ -73,8 +73,14 @@ class ClaimChildSheet implements FromView, WithTitle, WithDrawings, WithStyles, 
      */
     public function drawings()
     {
+        $project_logo_path = '';
+        if(!empty($this->project->logo) && file_exists(public_path('uploads/projects/logos/'.$this->project->logo))) {
+            $project_logo_path = public_path('uploads/projects/logos/'.$this->project->logo);
+        } else {
+            $project_logo_path = public_path('uploads/projects/logos/default-logo.png');
+        }
         $drawing1 = new Drawing();
-        $drawing1->setPath(public_path('uploads/projects/logos/'.$this->project->logo));
+        $drawing1->setPath($project_logo_path);
         $drawing1->setWidth(225);
         $drawing1->setOffsetX(5);
         $drawing1->setOffsetY(5);
