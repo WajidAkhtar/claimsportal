@@ -113,7 +113,11 @@
                 <td style="font-weight:bold;background-color: #ffffff;{{ $cellBgStyle }}text-align: center;">{{$costItem->pivot->cost_item_name}}</td>
                 <td style="{{ $cellBgStyle }}">{{$costItem->pivot->cost_item_description}}</td>
                 @php
-                    $total_budget = $data->claims_data[$costItem->id]['yearwise'][$yearIndex]['budget'] ?? 0;
+                    if(empty($data)) {
+                        $total_budget = 0;
+                    } else {
+                        $total_budget = $data->claims_data[$costItem->id]['yearwise'][$yearIndex]['budget'] ?? 0;
+                    }
                     $overall_total_budget+= $total_budget;
                 @endphp
                 <td style="{{ ($total_budget < 0) ? 'color: red;' : '' }}background-color: #ffffff;{{ $cellBgStyle }}">
@@ -134,7 +138,12 @@
                     $quarter = $project->quarters()->whereStartTimestamp($fromDate1->timestamp)->first();
                     $labelClass = $quarter->user->status == 'current' ? 'color: red;' : '';
                     $toDate->addMonths(2)->endOfMonth();
-                    $quarter_value = $data->claims_data[$costItem->id]['quarter_values'][$fromDate1->timestamp] ?? 0.00;
+                    if(empty($data)) {
+                        $quarter_value = 0;
+                    } else {
+                        $quarter_value = $data->claims_data[$costItem->id]['quarter_values'][$fromDate1->timestamp] ?? 0.00;
+                    }
+                    
                     $projectTotal += $quarter_value;
                     $project_variance = $total_budget - $projectTotal;
                 @endphp
@@ -201,7 +210,11 @@
                 @endphp
                 @foreach ($project->costItems as $index => $costItem)
                     @php
-                        $total_cost_for_each_item+= $data->claims_data[$costItem->id]['quarter_values'][$fromDate2->timestamp] ?? 0;
+                        if(empty($data)) {
+                            $total_cost_for_each_item+= 0;
+                        } else {
+                            $total_cost_for_each_item+= $data->claims_data[$costItem->id]['quarter_values'][$fromDate2->timestamp] ?? 0;
+                        }
                     @endphp
                 @endforeach
                 <td style="{{ ($total_cost_for_each_item < 0) ? 'color: red' : 'black' }};background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }}border-top: 1px solid #000000;{{ $labelClass }}">
@@ -257,7 +270,11 @@
 
                 @foreach ($project->costItems as $index => $costItem)
                     @php
-                        $total_cumulative_for_each_item+= $data->claims_data[$costItem->id]['quarter_values'][$fromDate3->timestamp] ?? 0.00;
+                        if(empty($data)) {
+                            $total_cumulative_for_each_item+= 0;
+                        } else {
+                            $total_cumulative_for_each_item+= $data->claims_data[$costItem->id]['quarter_values'][$fromDate3->timestamp] ?? 0.00;
+                        }
                     @endphp
                 @endforeach
                 @php

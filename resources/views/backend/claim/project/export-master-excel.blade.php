@@ -149,6 +149,10 @@
             @php
                 $total_budget = 0;
                 for ($i = 0; $i < ceil(($project->length/4)); $i++) {
+                    if(empty($data)) {
+                        $total_budget+=0;
+                        continue;
+                    }
                     $total_budget+= optional(optional($data->claims_data[$costItem->id])['yearwise'])[$i]['budget'] ?? 0.00;
                 }
                 $overall_total_budget+= $total_budget;
@@ -170,9 +174,14 @@
             @foreach ($project->quarters as $quarter)
             @php
             $labelClass = $quarter->user->status == 'current' ? 'color:red;' : '';
-            $quarter_value = optional(optional($data->claims_data[$costItem->id])['quarter_values'])[$quarter->start_timestamp] ?? 0.00;
-                $projectTotal += $quarter_value;
-                $projectVariance = $total_budget - $projectTotal;
+            if(empty($data)) {
+                $$quarter_value = 0;
+                continue;
+            } else {
+                $quarter_value = optional(optional($data->claims_data[$costItem->id])['quarter_values'])[$quarter->start_timestamp] ?? 0.00;
+            }
+            $projectTotal += $quarter_value;
+            $projectVariance = $total_budget - $projectTotal;
             @endphp
             <td style="{{ ($quarter_value < 0) ? 'color: red' : 'black' }};background-color: #ffffff;{{ $defaultCellStyle }} {{ $labelClass }} {{ $cellBgStyle }}">
                 <div class="input-group">
@@ -211,11 +220,18 @@
             <td></td>
             @for ($i = 0; $i < ceil(($project->length/4)); $i++)
                     @php
+                        if(empty($data)) {
+                            $yearBudget = 0;
+                            $yearAmount = 0;
+                            $yearVariance = 0;    
+                        } else {
+                            $yearBudget = optional(optional($data->claims_data[$costItem->id])['yearwise'])[$i]['budget'] ?? 0.00;
+                            $yearAmount = optional(optional($data->claims_data[$costItem->id])['yearwise'])[$i]['amount'] ?? 0.00;
+                            $yearVariance = optional(optional($data->claims_data[$costItem->id])['yearwise'])[$i]['variance'] ?? 0.00;
+                        }
                         $readOnly = false;
                         $yearBudgetReadOnly = false;
-                        $yearBudget = optional(optional($data->claims_data[$costItem->id])['yearwise'])[$i]['budget'] ?? 0.00;
-                        $yearAmount = optional(optional($data->claims_data[$costItem->id])['yearwise'])[$i]['amount'] ?? 0.00;
-                        $yearVariance = optional(optional($data->claims_data[$costItem->id])['yearwise'])[$i]['variance'] ?? 0.00;
+                        
                         if(empty($total_yearly_budget[$i])) {
                             $total_yearly_budget[$i] = 0;
                         }
@@ -281,7 +297,11 @@
             
             @foreach ($project->costItems as $index => $costItem)
                 @php
-                    $total_cost_for_each_item+= optional(optional($data->claims_data[$costItem->id])['quarter_values'])[$quarter->start_timestamp] ?? 0.00;
+                    if(empty($data)) {
+                        $total_cost_for_each_item+= 0;
+                    } else {
+                        $total_cost_for_each_item+= optional(optional($data->claims_data[$costItem->id])['quarter_values'])[$quarter->start_timestamp] ?? 0.00;
+                    }
                 @endphp
             @endforeach
 
@@ -360,7 +380,11 @@
             @endphp
             @foreach ($project->costItems as $index => $costItem)
                     @php
-                        $total_cumulative_for_each_item+= optional(optional($data->claims_data[$costItem->id])['quarter_values'])[$quarter->start_timestamp] ?? 0.00;
+                        if(empty($data)) {
+                            $total_cumulative_for_each_item+= 0;
+                        } else {
+                            $total_cumulative_for_each_item+= optional(optional($data->claims_data[$costItem->id])['quarter_values'])[$quarter->start_timestamp] ?? 0.00;
+                        }
                     @endphp
                 @endforeach
                 @php
