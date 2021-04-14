@@ -157,7 +157,7 @@
                     if(empty($costItem->claims_data)) {
                         $total_budget+=0;
                     } else {
-                        $total_budget+= optional(optional($costItem->claims_data)->yearwise)[$yearIndex]->budget ?? 0;
+                        $total_budget+= optional(optional($costItem->claims_data)->yearwise)[$i]->budget ?? 0;
                     }
                 }
                 $overall_total_budget+= $total_budget;
