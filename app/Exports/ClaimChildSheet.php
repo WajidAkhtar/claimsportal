@@ -14,6 +14,7 @@ use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\RegistersEventListeners;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use App\Domains\System\Models\Organisation;
 
 class ClaimChildSheet implements FromView, WithTitle, WithDrawings, WithStyles, WithEvents
 {
@@ -85,7 +86,7 @@ class ClaimChildSheet implements FromView, WithTitle, WithDrawings, WithStyles, 
         $drawing2->setCoordinates('E1');
 
         $drawing3 = new Drawing();
-        $drawing3->setPath(public_path(('uploads/organisations/logos/'.optional($this->partnerAdditionalInfo->invoiceOrganisation)->logo)));
+        $drawing3->setPath(public_path('uploads/organisations/logos/'.optional(Organisation::find($this->partner))->logo));
         $drawing3->setWidth(225);
         $drawing3->setCoordinates('H1');
 
