@@ -152,7 +152,14 @@
             <td style="{{ $defaultCellStyle }} {{ $cellBgStyle }}">{{$costItem->pivot->cost_item_description}}</td>
             @php
                 $yearIndex = 0;
-                $total_budget = optional(optional($costItem->claims_data)->yearwise)[$yearIndex]->budget ?? 0;
+                $total_budget = 0;
+                for ($i = 0; $i < ceil(($project->length/4)); $i++) {
+                    if(empty($costItem->claims_data)) {
+                        $total_budget+=0;
+                    } else {
+                        $total_budget+= optional(optional($costItem->claims_data)->yearwise)[$yearIndex]->budget ?? 0;
+                    }
+                }
                 $overall_total_budget+= $total_budget;
                 if($loop->iteration % 4 == 0){
                     $yearIndex++;
