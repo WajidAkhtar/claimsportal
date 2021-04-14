@@ -146,6 +146,7 @@
             <td style="max-width: 10px;min-width:auto;{{ $defaultCellStyle }} {{ $cellBgStyle }}text-align: center;font-weight: bold;">{{$index+1}}</td>
             <td style="{{ $defaultCellStyle }} {{ $cellBgStyle }}text-align: center;font-weight: bold;">{{$costItem->pivot->cost_item_name}}</td>
             <td style="{{ $defaultCellStyle }} {{ $cellBgStyle }}">{{$costItem->pivot->cost_item_description}}</td>
+            @dd($data)
             @php
                 $total_budget = 0;
                 for ($i = 0; $i < ceil(($project->length/4)); $i++) {
