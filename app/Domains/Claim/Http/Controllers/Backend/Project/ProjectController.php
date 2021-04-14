@@ -203,6 +203,7 @@ class ProjectController
             $SheetUserPermissions = SheetUserPermissions::where('project_id', $project->id)->where('is_master', '1')->get();
 
             $data = (object) $data;
+            dd($data);
             $yearwiseHtml = View::make('backend.claim.project.show-yearwise-master', ['project' => $project, 'data' => $data])->render();
 
             if(!empty(request()->exportExcel)) {

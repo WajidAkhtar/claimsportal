@@ -41,7 +41,6 @@
         </tr>
     </table>
 </table>
-@dd($data)
 <table>
     <tr>
         <td style="{{ $defaultCellStyle }}"></td>
