@@ -85,7 +85,7 @@ class ClaimChildSheet implements FromView, WithTitle, WithDrawings, WithStyles, 
         $drawing2->setCoordinates('E1');
 
         $drawing3 = new Drawing();
-        $drawing3->setPath('/home/forge/uobdev.sercs.co.uk/public/uploads/organisations/logos/CARDIFF UNIVERSITY 72.jpg');
+        $drawing3->setPath('/home/forge/uobdev.sercs.co.uk/public/uploads/organisations/logos/DIAMOND LIGHT SOURCE LTD 72.jpg');
         $drawing3->setWidth(225);
         $drawing3->setCoordinates('H1');
 
