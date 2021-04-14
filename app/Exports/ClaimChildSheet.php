@@ -40,7 +40,7 @@ class ClaimChildSheet implements FromView, WithTitle, WithDrawings, WithStyles, 
         $this->partner = $partner;
         $this->costItems = $costItems;
         $this->sheet_name = $sheet_name;
-        dd($this->partnerAdditionalInfo->invoiceOrganisation->logo);
+        dd(public_path('uploads/organisations/logos/'.optional($this->partnerAdditionalInfo->invoiceOrganisation)->logo));
     }
 
     /**
