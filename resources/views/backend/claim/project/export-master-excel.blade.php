@@ -149,11 +149,11 @@
             @php
                 $total_budget = 0;
                 for ($i = 0; $i < ceil(($project->length/4)); $i++) {
-                    if(empty($data)) {
+                    if(empty($data->claims_data)) {
                         $total_budget+=0;
-                        continue;
+                    } else {
+                        $total_budget+= optional(optional($data->claims_data[$costItem->id])['yearwise'])[$i]['budget'] ?? 0.00;
                     }
-                    $total_budget+= optional(optional($data->claims_data[$costItem->id])['yearwise'])[$i]['budget'] ?? 0.00;
                 }
                 $overall_total_budget+= $total_budget;
             @endphp
@@ -174,9 +174,8 @@
             @foreach ($project->quarters as $quarter)
             @php
             $labelClass = $quarter->user->status == 'current' ? 'color:red;' : '';
-            if(empty($data)) {
-                $$quarter_value = 0;
-                continue;
+            if(empty($data->claims_data)) {
+                $quarter_value = 0;
             } else {
                 $quarter_value = optional(optional($data->claims_data[$costItem->id])['quarter_values'])[$quarter->start_timestamp] ?? 0.00;
             }
@@ -220,7 +219,7 @@
             <td></td>
             @for ($i = 0; $i < ceil(($project->length/4)); $i++)
                     @php
-                        if(empty($data)) {
+                        if(empty($data->claims_data)) {
                             $yearBudget = 0;
                             $yearAmount = 0;
                             $yearVariance = 0;    
@@ -297,7 +296,7 @@
             
             @foreach ($project->costItems as $index => $costItem)
                 @php
-                    if(empty($data)) {
+                    if(empty($data->claims_data)) {
                         $total_cost_for_each_item+= 0;
                     } else {
                         $total_cost_for_each_item+= optional(optional($data->claims_data[$costItem->id])['quarter_values'])[$quarter->start_timestamp] ?? 0.00;
@@ -380,7 +379,7 @@
             @endphp
             @foreach ($project->costItems as $index => $costItem)
                     @php
-                        if(empty($data)) {
+                        if(empty($data->claims_data)) {
                             $total_cumulative_for_each_item+= 0;
                         } else {
                             $total_cumulative_for_each_item+= optional(optional($data->claims_data[$costItem->id])['quarter_values'])[$quarter->start_timestamp] ?? 0.00;

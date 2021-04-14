@@ -85,7 +85,7 @@ class ClaimChildSheet implements FromView, WithTitle, WithDrawings, WithStyles, 
         $drawing2->setCoordinates('E1');
 
         $drawing3 = new Drawing();
-        $drawing3->setPath(public_path(('uploads/organisations/logos/'.optional($this->project->funders()->first())->logo)));
+        $drawing3->setPath(public_path(('uploads/organisations/logos/'.optional($this->partnerAdditionalInfo->invoiceOrganisation)->logo)));
         $drawing3->setWidth(225);
         $drawing3->setCoordinates('H1');
 

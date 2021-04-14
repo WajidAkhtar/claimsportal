@@ -113,7 +113,7 @@
                 <td style="font-weight:bold;background-color: #ffffff;{{ $cellBgStyle }}text-align: center;">{{$costItem->pivot->cost_item_name}}</td>
                 <td style="{{ $cellBgStyle }}">{{$costItem->pivot->cost_item_description}}</td>
                 @php
-                    if(empty($data)) {
+                    if(empty($data->claims_data)) {
                         $total_budget = 0;
                     } else {
                         $total_budget = $data->claims_data[$costItem->id]['yearwise'][$yearIndex]['budget'] ?? 0;
@@ -138,7 +138,7 @@
                     $quarter = $project->quarters()->whereStartTimestamp($fromDate1->timestamp)->first();
                     $labelClass = $quarter->user->status == 'current' ? 'color: red;' : '';
                     $toDate->addMonths(2)->endOfMonth();
-                    if(empty($data)) {
+                    if(empty($data->claims_data)) {
                         $quarter_value = 0;
                     } else {
                         $quarter_value = $data->claims_data[$costItem->id]['quarter_values'][$fromDate1->timestamp] ?? 0.00;
@@ -210,7 +210,7 @@
                 @endphp
                 @foreach ($project->costItems as $index => $costItem)
                     @php
-                        if(empty($data)) {
+                        if(empty($data->claims_data)) {
                             $total_cost_for_each_item+= 0;
                         } else {
                             $total_cost_for_each_item+= $data->claims_data[$costItem->id]['quarter_values'][$fromDate2->timestamp] ?? 0;
@@ -270,7 +270,7 @@
 
                 @foreach ($project->costItems as $index => $costItem)
                     @php
-                        if(empty($data)) {
+                        if(empty($data->claims_data)) {
                             $total_cumulative_for_each_item+= 0;
                         } else {
                             $total_cumulative_for_each_item+= $data->claims_data[$costItem->id]['quarter_values'][$fromDate3->timestamp] ?? 0.00;
