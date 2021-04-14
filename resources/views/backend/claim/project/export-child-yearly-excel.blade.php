@@ -199,7 +199,7 @@
                     $toDate->addMonths(2)->endOfMonth();
                     $total_cost_for_each_item = 0;
                 @endphp
-                @foreach ($project->costItems as $index => $costItem)
+                @foreach ($costItems as $index => $costItem)
                     @php
                         $total_cost_for_each_item+= optional(optional($costItem->claims_data)->quarter_values)->{"$fromDate2->timestamp"} ?? 0;
                     @endphp
@@ -255,7 +255,7 @@
                     $total_cumulative_for_each_item = 0;
                 @endphp
 
-                @foreach ($project->costItems as $index => $costItem)
+                @foreach ($costItems as $index => $costItem)
                     @php
                         $total_cumulative_for_each_item+= optional(optional($costItem->claims_data)->quarter_values)->{"$fromDate3->timestamp"} ?? 0;
                     @endphp
