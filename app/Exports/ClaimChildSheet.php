@@ -72,30 +72,29 @@ class ClaimChildSheet implements FromView, WithTitle, WithDrawings, WithStyles, 
      */
     public function drawings()
     {
-        // $drawing1 = new Drawing();
-        // $drawing1->setPath(public_path('uploads/projects/logos/'.$this->project->logo));
-        // $drawing1->setWidth(225);
-        // $drawing1->setOffsetX(5);
-        // $drawing1->setOffsetY(5);
-        // $drawing1->setCoordinates('B1');
+        $drawing1 = new Drawing();
+        $drawing1->setPath(public_path('uploads/projects/logos/'.$this->project->logo));
+        $drawing1->setWidth(225);
+        $drawing1->setOffsetX(5);
+        $drawing1->setOffsetY(5);
+        $drawing1->setCoordinates('B1');
 
-        // $drawing2 = new Drawing();
-        // $drawing2->setPath(public_path('uploads/organisations/logos/'.optional($this->leadUserPartner->invoiceOrganisation)->logo));
-        // $drawing2->setWidth(225);
-        // $drawing2->setCoordinates('E1');
+        $drawing2 = new Drawing();
+        $drawing2->setPath(public_path('uploads/organisations/logos/'.optional($this->leadUserPartner->invoiceOrganisation)->logo));
+        $drawing2->setWidth(225);
+        $drawing2->setCoordinates('E1');
 
-        // $drawing3 = new Drawing();
-        // $drawing3->setPath(public_path(('uploads/organisations/logos/'.optional($this->partnerAdditionalInfo->invoiceOrganisation)->logo)));
-        // $drawing3->setWidth(225);
-        // $drawing3->setCoordinates('H1');
+        $drawing3 = new Drawing();
+        $drawing3->setPath(public_path('uploads/organisations/logos/'.optional($this->partnerAdditionalInfo->invoiceOrganisation)->logo));
+        $drawing3->setWidth(225);
+        $drawing3->setCoordinates('H1');
 
-        // $drawing4 = new Drawing();
-        // $drawing4->setPath(public_path(('uploads/organisations/logos/'.optional($this->project->funders()->first())->logo)));
-        // $drawing4->setWidth(225);
-        // $drawing4->setCoordinates('K1');
+        $drawing4 = new Drawing();
+        $drawing4->setPath(public_path(('uploads/organisations/logos/'.optional($this->project->funders()->first())->logo)));
+        $drawing4->setWidth(225);
+        $drawing4->setCoordinates('K1');
 
-        // return [$drawing1, $drawing2, $drawing3, $drawing4];
-        return [];
+        return [$drawing1, $drawing2, $drawing3, $drawing4];
     }
 
     public static function afterSheet(AfterSheet $event)
