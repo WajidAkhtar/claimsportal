@@ -131,6 +131,7 @@ class ClaimChildSheet implements FromView, WithTitle, WithDrawings, WithStyles, 
         $active_sheet->getStyle('B22:'.$active_sheet->getHighestColumn().$active_sheet->getHighestRow())->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
         $active_sheet->getStyle('B22:'.$active_sheet->getHighestColumn().$active_sheet->getHighestRow())->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
         $active_sheet->getStyle('D22:'.'D'.$active_sheet->getHighestRow())->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+        $active_sheet->getStyle('A1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
 
     }
 
