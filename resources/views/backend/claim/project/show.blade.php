@@ -76,6 +76,13 @@
                                 </select>
                             </form>
                         </div>
+                        <div class="col-md-6">
+                            <form>
+                                <input type="hidden" name="exportExcel" value="1" />
+                                <input type="hidden" name="partner" value="{{ $sheetOwner }}" />
+                                <button class="btn btn-primary btn-sm" onclick="this.form.submit()">Export Excel</button>
+                            </form>
+                        </div>
                     </div><!--form-group-->
                 </div>
             </x-slot>
@@ -1058,8 +1065,8 @@
             });
             
             $('.main-claims-table [name*="[yearwise]"][name$="[total_amount]"]').each(function(i, v){
-                var yearIndex = $(v).attr('name').match(/\[(.*?)\]/g)[2];
-
+                var yearIndex = $(v).attr('name').match(/\[(.*?)\]/g)[2].toString().replace("[", "").replace("]", "");
+                
                 var yearWiseTotal = 0;
                 $(v).closest('tr').find('[data-year-index="'+yearIndex+'"]').each(function(i1, v1){
                     if($(v1).val() == '' || isNaN($(v1).val())) {
