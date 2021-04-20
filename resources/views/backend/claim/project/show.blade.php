@@ -419,9 +419,9 @@
                 <div><strong>Project Start Date:</strong> {{$project->start_date->format('m-Y')}}</div>
                 <div><strong>Funders:</strong> {{ $project->funders->implode('organisation_name', ', ') }}</div>
             </div> -->
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="row">
+            <div class="row text-center">
+                <div class="col-md-3 text-center">
+                    <div class="row ">
                         <div class="col">
                             @if(!empty($project->logo) && file_exists(public_path('uploads/projects/logos/'.$project->logo)))
                                 <img src="{{ asset('uploads/projects/logos/'.$project->logo) }}" class="header-logo" />

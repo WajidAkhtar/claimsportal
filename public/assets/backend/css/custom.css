@@ -31,6 +31,9 @@ html {
         display: none;
     }
 }
+.card-body {
+    margin-top: 10px;
+}
 .video {
     position: absolute;
     width: 100%;
@@ -49,4 +52,7 @@ html {
 }
 .card-body {
     padding-top: 0 !important;
+}
+.select2 {
+    width: 100% !important;
 }

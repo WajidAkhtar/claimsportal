@@ -8,7 +8,9 @@
             white-space: nowrap;
             min-width: 150px;
         }
-        
+        table {
+            border: 0px; 
+        }
         table tr th:first-child, table tr td:first-child {
             min-width: 20px !important;
         }
@@ -38,6 +40,9 @@
         .input-group-text.readonly {
             border: 0px;
             padding-right: 2px;
+        }
+        .header-logo {
+            height: 100px !important;
         }
     </style>
 @endpush
@@ -514,7 +519,7 @@
         </x-slot>
 
         <x-slot name="body">
-            <div class="row">
+            <div class="row text-center">
                 <div class="col-md-4">
                     <div class="row">
                         <div class="col">

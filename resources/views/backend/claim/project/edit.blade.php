@@ -4,6 +4,11 @@
 
 @push('after-styles')
 <link rel="stylesheet" href="{{asset('assets/backend/vendors/select2/css/select2.css')}}">
+<style>
+    .select2 {
+        width: 100% !important;
+    }
+</style>
 @endpush
 @section('content')
     <h2 class="page-main-title">Edit Project</h2>

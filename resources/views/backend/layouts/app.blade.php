@@ -52,6 +52,20 @@
             input[type=number] {
             -moz-appearance: textfield;
             }
+            thead {
+                background-color: #833535;
+                color: white;
+                font-size: 15px;
+            }
+            table {
+                border: 1px solid #bca7a7;
+            }
+            .table-striped tbody tr:nth-of-type(odd) {
+                background-color: rgb(255 80 80 / 5%);
+            }
+            .select2 {
+                width: 100% !important;
+            }
         </style>
         @stack('after-styles')
 

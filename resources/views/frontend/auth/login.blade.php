@@ -16,8 +16,8 @@
                     <x-slot name="header">
                         {{-- @lang('Login') --}}
                         <div class="header_img">
-                            <img style="width:100px; height:100px;" src="{{ asset('img/sercs-logo-color-blackBG-square.png') }}">
-                            <span style="color: grey; font-size:20px; font-weight:bold;">SERCSOFT</span>
+                            <img style="width:80%;" src="{{ asset('img/logo.png') }}">
+                            {{-- <span style="color: grey; font-size:20px; font-weight:bold;margin-left:-10px">SERCSOFT</span> --}}
                         </div>
                     </x-slot>
 
