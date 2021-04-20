@@ -62,7 +62,7 @@
         @include('includes.partials.announcements')
 
         <!-- START: Main Content-->
-        <main class="ml-0 mb-5">
+        <main class="main-page">
             <div class="container-fluid body-container site-width">
                 @include('includes.partials.messages')
                 <!-- START: Breadcrumbs-->

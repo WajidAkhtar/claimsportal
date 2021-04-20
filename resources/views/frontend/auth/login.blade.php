@@ -9,7 +9,7 @@
 @endpush
 @section('content')
     <div class="custom-container py-4">
-        <video class="video" autoplay src="{{ asset('assets/video/hd.mov')}} " loop></video>
+        <video class="video" autoplay muted src="{{ asset('assets/video/hd.mov')}} " loop id="vid"></video>
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <x-frontend.card>
@@ -98,4 +98,6 @@
 
 
 <script src="{{ asset('material/js/material-dashboard.min.js') }}"></script>
+
 @endpush
+
