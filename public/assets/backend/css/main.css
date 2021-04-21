@@ -1284,7 +1284,7 @@ body::-webkit-scrollbar-thumb {
     border: 1px solid var(--bordercolor);
     border-radius: 5px;
     background: var(--mainbackground);
-    box-shadow: 1px 1px 15px 1px rgb(0 0 0 / 20%);
+    /* box-shadow: 1px 1px 15px 1px rgb(0 0 0 / 20%); */
 }
 
 .card .card-body {
