@@ -52,6 +52,7 @@
             input[type=number] {
             -moz-appearance: textfield;
             }
+         
         </style>
         @stack('after-styles')
 

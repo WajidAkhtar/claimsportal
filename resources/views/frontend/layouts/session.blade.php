@@ -26,6 +26,7 @@
 
         <!-- START: Custom CSS-->
         <link rel="stylesheet" href="{{ asset('assets/backend/css/main.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/backend/css/custom.css') }}">
         @stack('after-custom-styles')
         <!-- END: Custom CSS-->
 
@@ -61,8 +62,8 @@
         @include('includes.partials.announcements')
 
         <!-- START: Main Content-->
-        <main class="ml-0 mb-5">
-            <div class="container-fluid site-width">
+        <main class="main-page">
+            <div class="container-fluid body-container site-width">
                 @include('includes.partials.messages')
                 <!-- START: Breadcrumbs-->
                 <div class="row">
@@ -79,10 +80,13 @@
                     </div>
                 </div>
                 <!-- END: Breadcrumbs-->
-                <div class="text-center">
+                <div class="text-left">
                     <h2>{{ appName() }}</h2>
                 </div>
                 @yield('content')
+                <div class="footer_img">
+                    <img style="height:50px;" src="{{ asset('img/footer.png') }}">
+                </div>
             </div>
         </main>
 

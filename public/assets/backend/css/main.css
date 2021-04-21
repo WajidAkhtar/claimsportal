@@ -716,8 +716,7 @@ hr {
 main {
     margin-top: 65px;
     top: 0px;
-    /* margin-left: 250px; */
-    margin-left: 170px;
+    /* margin-left: 170px; */
 }
 
 @media (max-width: 991px) {
@@ -1285,6 +1284,7 @@ body::-webkit-scrollbar-thumb {
     border: 1px solid var(--bordercolor);
     border-radius: 5px;
     background: var(--mainbackground);
+    /* box-shadow: 1px 1px 15px 1px rgb(0 0 0 / 20%); */
 }
 
 .card .card-body {
@@ -6188,9 +6188,9 @@ ul.active>a {
 }
 
 .page-main-title {
-    color: #1e3d73 !important;
+    color: #29313f !important;
     margin-bottom: 1em !important;
-    text-transform: capitalize !important;
+    text-transform: uppercase !important;
 }
 
 img.header-logo {

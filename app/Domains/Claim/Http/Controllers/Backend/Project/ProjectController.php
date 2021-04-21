@@ -26,6 +26,8 @@ use App\Domains\Claim\Http\Requests\Backend\Project\StoreProjectRequest;
 use App\Domains\Claim\Http\Requests\Backend\Project\DeleteProjectRequest;
 use App\Domains\Claim\Http\Requests\Backend\Project\UpdateProjectRequest;
 use App\Exports\ClaimExport;
+use App\Exports\ClaimMasterExport;
+use App\Exports\ClaimChildSheet;
 
 /**
  * Class ProjectController.
@@ -203,6 +205,19 @@ class ProjectController
             $data = (object) $data;
             $yearwiseHtml = View::make('backend.claim.project.show-yearwise-master', ['project' => $project, 'data' => $data])->render();
 
+            if(!empty(request()->exportExcel)) {
+                $yearwiseHtml = View::make('backend.claim.project.export-master-yearly-excel', ['project' => $project, 'data' => $data])->render();
+                $reportExcelFileName = $project->name."-Claims-".date('Y_m_d_h_i');
+                return Excel::download(new ClaimMasterExport(
+                    $project, 
+                    $data,
+                    $partnerAdditionalInfo,
+                    $yearwiseHtml,
+                    $leadUser,
+                    $leadUserPartner
+                ), $reportExcelFileName.'.xlsx');
+            }
+
             return view('backend.claim.project.show-master')
             ->withProject($project)
             ->withSheetOwner($sheet_owner)
@@ -267,9 +282,25 @@ class ProjectController
             $yearwiseHtml = View::make('backend.claim.project.show-yearwise', ['project' => $project, 'partner' => $sheet_owner])->render();
             
             if(!empty(request()->exportExcel)) {
-                $reportExcelFileName = (!empty(request()->partner)) ? Organisation::find(request()->partner)->organisation_name."-" : "";
-                $reportExcelFileName.= "Claims-".date('Ymd-h:i');
-                return Excel::download(new ClaimExport($project, request()->partner), $reportExcelFileName.'.xlsx');
+                $yearwiseHtml = View::make('backend.claim.project.export-child-yearly-excel', [
+                    'project' => $project, 
+                    'partner' => $sheet_owner,
+                    'costItems' => $project->costItems
+                ])->render();
+                $reportExcelFileName = $project->name."-";
+                $reportExcelFileName.= (!empty(request()->partner)) ? Organisation::find(request()->partner)->organisation_name."-" : "";
+                $reportExcelFileName.= "Claims-".date('Y_m_d_h_i');
+                return Excel::download(new ClaimChildSheet(
+                    $project,
+                    null,
+                    $partnerAdditionalInfo,
+                    $yearwiseHtml,
+                    $leadUser,
+                    $leadUserPartner,
+                    $sheet_owner,
+                    ($partnerAdditionalInfo->invoiceOrganisation) ? $partnerAdditionalInfo->invoiceOrganisation->organisation_name : $partnerAdditionalInfo->organisation->organisation_name,
+                    $project->costItems,
+                ), $reportExcelFileName.'.xlsx');
             }
 
             return view('backend.claim.project.show')

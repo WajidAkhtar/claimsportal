@@ -8,7 +8,9 @@
             white-space: nowrap;
             min-width: 150px;
         }
-        
+        table {
+            border: 0px; 
+        }
         table tr th:first-child, table tr td:first-child {
             min-width: 20px !important;
         }
@@ -50,9 +52,9 @@
                 @lang('Filter by Partner')
             </x-slot>
             <x-slot name="body">
-                <div class="col-sm-4">
+                <div class="col-sm-12">
                     <div class="form-group row">
-                        <div class="col-md-10">
+                        <div class="col-md-4">
                             <form action="#" id="filter_project_claims_data">
                                 <select class="form-control" onchange="this.form.submit()" name="partner">
                                     @php $partnerCount = 1; @endphp
@@ -63,6 +65,13 @@
                                         @endif
                                     @endforeach                            
                                 </select>
+                            </form>
+                        </div>
+                        <div class="col-md-6">
+                            <form>
+                                <input type="hidden" name="exportExcel" value="1" />
+                                <input type="hidden" name="partner" value="{{ $sheetOwner }}" />
+                                <button class="btn btn-primary btn-sm" onclick="this.form.submit()">Export Excel</button>
                             </form>
                         </div>
                     </div><!--form-group-->
@@ -507,7 +516,7 @@
         </x-slot>
 
         <x-slot name="body">
-            <div class="row">
+            <div class="row ">
                 <div class="col-md-4">
                     <div class="row">
                         <div class="col">

@@ -1,0 +1,2293 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Claims Portal | Admin | View Project</title>
+        <meta name="description" content="Claims Portal">
+        <meta name="author" content="Claims Portal">
+        <meta name="csrf-token" content="17cuFlmoITj892GQgZMQLiFXw1r6Utq1kiNBIGD3">
+        
+                <link rel="shortcut icon" href="http://localhost/claimsportal/public/assets/backend/images/favicon.ico" />
+        <!-- START: Template CSS-->
+        <link rel="stylesheet" href="http://localhost/claimsportal/public/assets/backend/vendors/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://localhost/claimsportal/public/assets/backend/vendors/jquery-ui/jquery-ui.min.css">
+        <link rel="stylesheet" href="http://localhost/claimsportal/public/assets/backend/vendors/jquery-ui/jquery-ui.theme.min.css">
+        <link rel="stylesheet" href="http://localhost/claimsportal/public/assets/backend/vendors/simple-line-icons/css/simple-line-icons.css">
+        <link rel="stylesheet" href="http://localhost/claimsportal/public/assets/backend/vendors/flags-icon/css/flag-icon.min.css">
+                <!-- END Template CSS-->      
+        
+        <!-- START: Page CSS-->   
+        <link rel="stylesheet" href="http://localhost/claimsportal/public/assets/backend/vendors/fontawesome/css/all.min.css">
+        <link rel="stylesheet" href="http://localhost/claimsportal/public/assets/backend/vendors/weather-icons/css/pe-icon-set-weather.min.css">
+        <link rel="stylesheet" href="http://localhost/claimsportal/public/assets/backend/vendors/ionicons/css/ionicons.min.css">
+        
+        <link rel="stylesheet" href="http://localhost/claimsportal/public/assets/backend/vendors/toastr/toastr.min.css">
+        <link rel="stylesheet" href="http://localhost/claimsportal/public/assets/backend/vendors/select2/css/select2.css">
+        <!-- Livewire Styles -->
+<style>
+    [wire\:loading], [wire\:loading\.delay], [wire\:loading\.inline-block], [wire\:loading\.inline], [wire\:loading\.block], [wire\:loading\.flex], [wire\:loading\.table], [wire\:loading\.grid] {
+        display: none;
+    }
+
+    [wire\:offline] {
+        display: none;
+    }
+
+    [wire\:dirty]:not(textarea):not(input):not(select) {
+        display: none;
+    }
+
+    input:-webkit-autofill, select:-webkit-autofill, textarea:-webkit-autofill {
+        animation-duration: 50000s;
+        animation-name: livewireautofill;
+    }
+
+    @keyframes livewireautofill { from {} }
+</style>
+                <!-- END: Page CSS-->
+
+        <!-- START: Custom CSS-->
+        <link rel="stylesheet" href="http://localhost/claimsportal/public/assets/backend/css/main.css">
+                <!-- END: Custom CSS-->
+
+        <style>
+            .error{
+                color: red;
+            }
+
+            /* Chrome, Safari, Edge, Opera */
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+            }
+
+            /* Firefox */
+            input[type=number] {
+            -moz-appearance: textfield;
+            }
+        </style>
+            <style>
+        table tr th, table tr td {
+            white-space: nowrap;
+            min-width: 150px;
+        }
+        
+        table tr th:first-child, table tr td:first-child {
+            min-width: 20px !important;
+        }
+        table tr th:nth-child(2), table tr td:nth-child(2) {
+            min-width: 50px !important;
+        }
+        
+        .light-grey-bg {
+            background-color: #e9ecef;
+            color: #000;
+        }
+        
+        .dark-grey-bg {
+            background-color: #3c424de0;
+            color: #fff;
+        }
+        
+        .current-bg {
+            background-color: #f64e60;
+            color: #fff;
+        }
+
+        input:read-only {
+            border: 0px;
+        }
+
+        .input-group-text.readonly {
+            border: 0px;
+            padding-right: 2px;
+        }
+    </style>
+
+    </head>
+    <body id="main-container" class="default">
+        <!-- START: Pre Loader-->
+        <div class="se-pre-con">
+            <div class="loader"></div>
+        </div>
+        <!-- END: Pre Loader-->
+
+                                
+        <!-- START: Header-->
+<div id="header-fix" class="header fixed-top">
+    <div class="site-width">
+        <nav class="navbar navbar-expand-lg p-0">
+            <div class="navbar-header  h-100 h4 mb-0 align-self-center logo-bar text-left bottom-shadow-transparent">  
+                <a href="http://localhost/claimsportal/public/admin/claim/project" class="horizontal-logo text-left">
+                    <center>
+                        <img src="http://localhost/claimsportal/public/assets/backend/images/logo.png" class="logo" height="70">
+                    </center>
+                </a>                   
+            </div>
+            <div class="navbar-header h4 mb-0 text-center h-100 collapse-menu-bar">
+                <a href="#" class="sidebarCollapse" id="collapse"><i class="icon-menu"></i></a>
+            </div>
+
+            <div class="form-group mb-0 position-relative nav-title">
+                <h4 class="mt-2 ml-2">Claims Portal</h4>
+            </div>
+            
+            
+            <div class="navbar-right ml-auto h-100 bottom-shadow">
+                <ul class="ml-auto p-0 m-0 list-unstyled d-flex top-icon h-100">
+                    
+                                        <li class="dropdown user-profile align-self-center d-inline-block">
+                        <a href="#" class="nav-link py-0" data-toggle="dropdown" aria-expanded="false"> 
+                            <div class="media">                                   
+                                <img src="https://gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?s=80&amp;d=mp" alt="Executive User" class="d-flex img-fluid rounded-circle" width="29">
+                                <span class="ml-2" style="margin-top:3px;">Executive User </span>
+                                <span class="ml-2 toggle-user-actions" style="margin-top: 5px;"><i class="icon-arrow-down"></i></span>
+                            </div>
+                        </a>
+
+                        <div class="dropdown-menu border dropdown-menu-right p-0">
+                            <a href="http://localhost/claimsportal/public/admin/auth/user/1/edit" class="dropdown-item px-2 align-self-center d-flex">
+                                <span class="icon-pencil mr-2 h6 mb-0"></span> Edit Profile</a>
+                            <a href="http://localhost/claimsportal/public/account" class="dropdown-item px-2 align-self-center d-flex">
+                                <span class="icon-eye mr-2 h6 mb-0"></span> Change Password</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item px-2 text-danger align-self-center d-flex" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="icon-logout mr-2 h6  mb-0"></i> Logout                                    <form method="post" action="http://localhost/claimsportal/public/logout" class="form-horizontal d-none" id="logout-form">
+    <input type="hidden" name="_token" value="17cuFlmoITj892GQgZMQLiFXw1r6Utq1kiNBIGD3">
+    
+</form></a>
+                            </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>        <!-- START: Main Menu-->
+<div class="sidebar">
+    <div class="site-width" style="margin-top: 4em !important;">
+        <!-- START: Menu-->
+        <ul id="side-menu" class="sidebar-menu">
+            <li class="dropdown active" style="display: none;">
+                <ul>
+                    <li class="">
+                        <a href="http://localhost/claimsportal/public/admin/dashboard"><i class="icon-rocket"></i> Dashboard</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <ul class="active">
+                    <a href="http://localhost/claimsportal/public/admin/claim/project">
+                        <center>
+                            <i class="icon-chart menu-icon"></i>
+                            <li class="menu-link">
+                                PROJECTS                            </li>
+                        </center>
+                    </a>
+                </ul>
+            </li>
+
+                        <li class="dropdown">
+                <ul class="">
+                    <a href="http://localhost/claimsportal/public/admin/auth/user">
+                        <center>
+                            <i class="icon-user menu-icon"></i>
+                            <li class="menu-link">
+                                USERS                            </li>
+                        </center>
+                    </a>
+                </ul>
+            </li>
+            
+            <!--             <li class="dropdown active">
+                <a href="javascript:void(0)"><i class="fa fa-users mr-1"></i> Users</a>
+                <ul>
+                    <li class="">
+                        <a href="http://localhost/claimsportal/public/admin/auth/user"><i class="icon-people"></i> User</a>
+                    </li>
+                </ul>
+            </li>
+             -->
+
+            <!-- <li class="dropdown active">
+                <a href="javascript:void(0)"><i class="fa fa-sticky-note mr-1"></i> Claims</a>
+                <ul>
+                    <li class="active">
+                        <a href="http://localhost/claimsportal/public/admin/claim/project"><i class="fa fa-project-diagram"></i> Projects</a>
+                    </li>
+                </ul>
+            </li> -->
+            
+        </ul>
+        <!-- END: Menu-->
+        
+    </div>
+</div>
+<!-- END: Main Menu-->
+
+        <!-- START: Main Content-->
+        <main>
+                        <div class="container-fluid site-width">
+                <!-- START: Breadcrumbs-->
+                <div class="row">
+                    <div class="col-12  align-self-center">
+                        <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+                            <div class="w-sm-100 mr-auto"><h4 class="mb-0"></h4> <p></p></div>
+
+                            <ol class="breadcrumb border-0 m-0">
+                                    <li class="breadcrumb-item">
+                    <a href="http://localhost/claimsportal/public/admin/dashboard" class="">Home</a>
+                    </li>
+                                                <li class="breadcrumb-item">
+                    <a href="http://localhost/claimsportal/public/admin/claim/project" class="">Project Management</a>
+                    </li>
+                                                <li class="breadcrumb-item active">
+                    Relib 1.0.1
+                </li>
+                        </ol>
+                                                    </div>
+                    </div>
+                </div>
+                <!-- END: Breadcrumbs-->
+                    <div class="card">
+    
+            <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col">
+                                                            <img src="http://localhost/claimsportal/public/uploads/projects/logos/1617611605.jpg" class="header-logo" />
+                                                    </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col">
+                            <div><strong>PROJECT</strong></div>
+                            <div>Name: Relib 1.0.1</div>
+                            <div>Code: RelibV1</div>
+                            <div>Start: 10-2020</div>
+                        </div>
+                    </div>
+                </div>
+                
+                                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col">
+                                                                    <img src="http://localhost/claimsportal/public/uploads/organisations/logos/UNIVERSITY OF BRISTOL 72.jpg" class="header-logo" />
+                                                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                <div><strong>PROJECT LEAD</strong></div>
+                                <div>Name: UNIVERSITY OF BRISTOL</div>
+                                <div>Contact: N/A</div>
+                                <div>Web URL: 
+                                     
+                                        N/A
+                                                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                                                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col">
+                                                                    <img src="http://localhost/claimsportal/public/uploads/organisations/logos/ENGINEERING &amp; PHYSICAL SCIENCES RESEARCH COUNCIL 72.jpg" class="header-logo" />
+                                                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                <div><strong>FUNDER</strong></div>
+                                <div>Name: ENGINEERING &amp; PHYSICAL SCIENCES RESEARCH COUNCIL</div>
+                                <div>Contact: N/A</div>
+                                <div>Web URL: 
+                                     
+                                        N/A
+                                                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                            </div>
+            <form action="#" id="claims_form">
+                <div class="col-sm-12 mt-5">
+                    <table class="table table-responsive table-borders table-sm main-claims-table" style="overflow-x: auto;" id="main_claims_table">
+                        <thead>
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th>&nbsp;</th>
+                                <th>&nbsp;</th>
+                                <th>&nbsp;</th>
+                                <th>&nbsp;</th>
+                                                                                                <th class="text-center light-grey-bg">
+                                    <label class="text-danger text-uppercase"> Oct20 - Dec20</label><br>
+                                    <label class="text-danger">Q1</label>
+                                </th>
+                                                                                                <th class="text-center light-grey-bg">
+                                    <label class=" text-uppercase"> Jan21 - Mar21</label><br>
+                                    <label class="">Q2</label>
+                                </th>
+                                                                                                <th class="text-center light-grey-bg">
+                                    <label class=" text-uppercase"> Apr21 - Jun21</label><br>
+                                    <label class="">Q3</label>
+                                </th>
+                                                                                                <th class="text-center light-grey-bg">
+                                    <label class=" text-uppercase"> Jul21 - Sep21</label><br>
+                                    <label class="">Q4</label>
+                                </th>
+                                                                                                <th class="text-center light-grey-bg">
+                                    <label class=" text-uppercase"> Oct21 - Dec21</label><br>
+                                    <label class="">Q5</label>
+                                </th>
+                                                                                                <th class="text-center light-grey-bg">
+                                    <label class=" text-uppercase"> Jan22 - Mar22</label><br>
+                                    <label class="">Q6</label>
+                                </th>
+                                                            </tr>
+                            <tr class="dark-grey-bg">
+                                <th style="max-width: 10px;min-width:auto;" class="dynamic-calculator"></th>
+                                <th style="max-width: 20px;min-width:auto;">#</th>
+                                <th>COST ITEM</th>
+                                <th>DESCRIPTION</th>
+                                <th>TOTAL BUDGET</th>
+                                                                <th class="text-center">
+                                                                                <label class="current-bg mb-0">&nbsp;CURRENT&nbsp;</label>
+                                                                            </th>
+                                                                <th class="text-center">
+                                                                                <label class="mb-0">FORECAST</label>
+                                                                            </th>
+                                                                <th class="text-center">
+                                                                                <label class="mb-0">FORECAST</label>
+                                                                            </th>
+                                                                <th class="text-center">
+                                                                                <label class="mb-0">FORECAST</label>
+                                                                            </th>
+                                                                <th class="text-center">
+                                                                                <label class="mb-0">FORECAST</label>
+                                                                            </th>
+                                                                <th class="text-center">
+                                                                                <label class="mb-0">FORECAST</label>
+                                                                            </th>
+                                                                <th>PROJECT TOTAL</th>
+                                <th class="border-right">VARIANCE</th>
+                                
+                                                                <th>YR1 BUDGET</th>
+                                <th>YR1 TOTAL</th>
+                                <th class="border-right">VARIANCE</th>
+                                                                <th>YR2 BUDGET</th>
+                                <th>YR2 TOTAL</th>
+                                <th class="border-right">VARIANCE</th>
+                                                            </tr>
+                        </thead>
+                        <tbody>
+                                                        <tr data-rowid="1">
+                                <td style="max-width: 10px;min-width:auto;" class="dynamic-calculator" data-calculationindex="1">
+                                    <input class="dynamic-calculator" type="checkbox" name="dynamic_calculator_main_1" id="dynamic_calculator_main_1" value="1" data-parenttable="main_claims_table">
+                                </td>
+                                <td style="max-width: 10px;min-width:auto;">1</td>
+                                <td>A5</td>
+                                <td>Directly Allocated: Investigators</td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[5][total_budget]" id="claim_values[5][total_budget]" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control text-danger" type="number" name="claim_values[5][quarter_values][1601510400]" id="claim_values[5][quarter_values][1601510400]" value="123" placeholder="0.00" data-year-index="0" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[5][quarter_values][1609459200]" id="claim_values[5][quarter_values][1609459200]" value="200" placeholder="0.00" data-year-index="0" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[5][quarter_values][1617235200]" id="claim_values[5][quarter_values][1617235200]" value="300" placeholder="0.00" data-year-index="0" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[5][quarter_values][1625097600]" id="claim_values[5][quarter_values][1625097600]" value="400" placeholder="0.00" data-year-index="0" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[5][quarter_values][1633046400]" id="claim_values[5][quarter_values][1633046400]" value="500" placeholder="0.00" data-year-index="1" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[5][quarter_values][1640995200]" id="claim_values[5][quarter_values][1640995200]" value="600" placeholder="0.00" data-year-index="1" readonly required>
+                                    </div>
+                                </td>
+                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[5][project_total]" id="claim_values[5][project_total]" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                <td class="border-right">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[5][variance]" id="claim_values[5][variance]" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[5][yearwise][0][budget]" id="claim_values[5][yearwise][0][budget]" value="3000" placeholder="0.00" required>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[5][yearwise][0][amount]" id="claim_values[5][yearwise][0][amount]" value="1023" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                <td class="border-right">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[5][yearwise][0][variance]" id="claim_values[5][yearwise][0][variance]" value="1977" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[5][yearwise][1][budget]" id="claim_values[5][yearwise][1][budget]" value="0" placeholder="0.00" required>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[5][yearwise][1][amount]" id="claim_values[5][yearwise][1][amount]" value="1100" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                <td class="border-right">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[5][yearwise][1][variance]" id="claim_values[5][yearwise][1][variance]" value="-1100" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                                            </tr>
+                                                        <tr data-rowid="2">
+                                <td style="max-width: 10px;min-width:auto;" class="dynamic-calculator" data-calculationindex="2">
+                                    <input class="dynamic-calculator" type="checkbox" name="dynamic_calculator_main_2" id="dynamic_calculator_main_2" value="1" data-parenttable="main_claims_table">
+                                </td>
+                                <td style="max-width: 10px;min-width:auto;">2</td>
+                                <td>A2</td>
+                                <td>Directly Incurred: Travel &amp; Subsistence</td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[2][total_budget]" id="claim_values[2][total_budget]" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control text-danger" type="number" name="claim_values[2][quarter_values][1601510400]" id="claim_values[2][quarter_values][1601510400]" value="179" placeholder="0.00" data-year-index="0" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[2][quarter_values][1609459200]" id="claim_values[2][quarter_values][1609459200]" value="220" placeholder="0.00" data-year-index="0" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[2][quarter_values][1617235200]" id="claim_values[2][quarter_values][1617235200]" value="0" placeholder="0.00" data-year-index="0" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[2][quarter_values][1625097600]" id="claim_values[2][quarter_values][1625097600]" value="0" placeholder="0.00" data-year-index="0" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[2][quarter_values][1633046400]" id="claim_values[2][quarter_values][1633046400]" value="0" placeholder="0.00" data-year-index="1" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[2][quarter_values][1640995200]" id="claim_values[2][quarter_values][1640995200]" value="690" placeholder="0.00" data-year-index="1" readonly required>
+                                    </div>
+                                </td>
+                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[2][project_total]" id="claim_values[2][project_total]" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                <td class="border-right">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[2][variance]" id="claim_values[2][variance]" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[2][yearwise][0][budget]" id="claim_values[2][yearwise][0][budget]" value="1800" placeholder="0.00" required>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[2][yearwise][0][amount]" id="claim_values[2][yearwise][0][amount]" value="399" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                <td class="border-right">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[2][yearwise][0][variance]" id="claim_values[2][yearwise][0][variance]" value="1401" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[2][yearwise][1][budget]" id="claim_values[2][yearwise][1][budget]" value="0" placeholder="0.00" required>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[2][yearwise][1][amount]" id="claim_values[2][yearwise][1][amount]" value="690" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                <td class="border-right">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[2][yearwise][1][variance]" id="claim_values[2][yearwise][1][variance]" value="-690" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                                            </tr>
+                                                        <tr data-rowid="3">
+                                <td style="max-width: 10px;min-width:auto;" class="dynamic-calculator" data-calculationindex="3">
+                                    <input class="dynamic-calculator" type="checkbox" name="dynamic_calculator_main_3" id="dynamic_calculator_main_3" value="1" data-parenttable="main_claims_table">
+                                </td>
+                                <td style="max-width: 10px;min-width:auto;">3</td>
+                                <td>A1</td>
+                                <td>Directly Incurred: Staff</td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[1][total_budget]" id="claim_values[1][total_budget]" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control text-danger" type="number" name="claim_values[1][quarter_values][1601510400]" id="claim_values[1][quarter_values][1601510400]" value="153" placeholder="0.00" data-year-index="0" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[1][quarter_values][1609459200]" id="claim_values[1][quarter_values][1609459200]" value="242" placeholder="0.00" data-year-index="0" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[1][quarter_values][1617235200]" id="claim_values[1][quarter_values][1617235200]" value="112" placeholder="0.00" data-year-index="0" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[1][quarter_values][1625097600]" id="claim_values[1][quarter_values][1625097600]" value="21" placeholder="0.00" data-year-index="0" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[1][quarter_values][1633046400]" id="claim_values[1][quarter_values][1633046400]" value="356" placeholder="0.00" data-year-index="1" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[1][quarter_values][1640995200]" id="claim_values[1][quarter_values][1640995200]" value="78" placeholder="0.00" data-year-index="1" readonly required>
+                                    </div>
+                                </td>
+                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[1][project_total]" id="claim_values[1][project_total]" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                <td class="border-right">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[1][variance]" id="claim_values[1][variance]" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[1][yearwise][0][budget]" id="claim_values[1][yearwise][0][budget]" value="100" placeholder="0.00" required>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[1][yearwise][0][amount]" id="claim_values[1][yearwise][0][amount]" value="528" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                <td class="border-right">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[1][yearwise][0][variance]" id="claim_values[1][yearwise][0][variance]" value="-428" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[1][yearwise][1][budget]" id="claim_values[1][yearwise][1][budget]" value="534" placeholder="0.00" required>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[1][yearwise][1][amount]" id="claim_values[1][yearwise][1][amount]" value="434" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                <td class="border-right">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[1][yearwise][1][variance]" id="claim_values[1][yearwise][1][variance]" value="100" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                                            </tr>
+                                                        <tr data-rowid="4">
+                                <td style="max-width: 10px;min-width:auto;" class="dynamic-calculator" data-calculationindex="4">
+                                    <input class="dynamic-calculator" type="checkbox" name="dynamic_calculator_main_4" id="dynamic_calculator_main_4" value="1" data-parenttable="main_claims_table">
+                                </td>
+                                <td style="max-width: 10px;min-width:auto;">4</td>
+                                <td>A4</td>
+                                <td>Directly Incurred: Consumables</td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[4][total_budget]" id="claim_values[4][total_budget]" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control text-danger" type="number" name="claim_values[4][quarter_values][1601510400]" id="claim_values[4][quarter_values][1601510400]" value="1000" placeholder="0.00" data-year-index="0" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[4][quarter_values][1609459200]" id="claim_values[4][quarter_values][1609459200]" value="0" placeholder="0.00" data-year-index="0" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[4][quarter_values][1617235200]" id="claim_values[4][quarter_values][1617235200]" value="0" placeholder="0.00" data-year-index="0" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[4][quarter_values][1625097600]" id="claim_values[4][quarter_values][1625097600]" value="0" placeholder="0.00" data-year-index="0" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[4][quarter_values][1633046400]" id="claim_values[4][quarter_values][1633046400]" value="0" placeholder="0.00" data-year-index="1" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[4][quarter_values][1640995200]" id="claim_values[4][quarter_values][1640995200]" value="0" placeholder="0.00" data-year-index="1" readonly required>
+                                    </div>
+                                </td>
+                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[4][project_total]" id="claim_values[4][project_total]" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                <td class="border-right">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[4][variance]" id="claim_values[4][variance]" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[4][yearwise][0][budget]" id="claim_values[4][yearwise][0][budget]" value="0" placeholder="0.00" required>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[4][yearwise][0][amount]" id="claim_values[4][yearwise][0][amount]" value="1000" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                <td class="border-right">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[4][yearwise][0][variance]" id="claim_values[4][yearwise][0][variance]" value="-1000" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[4][yearwise][1][budget]" id="claim_values[4][yearwise][1][budget]" value="0" placeholder="0.00" required>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[4][yearwise][1][amount]" id="claim_values[4][yearwise][1][amount]" value="0" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                <td class="border-right">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[4][yearwise][1][variance]" id="claim_values[4][yearwise][1][variance]" value="0" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                                            </tr>
+                                                        <tr data-rowid="5">
+                                <td style="max-width: 10px;min-width:auto;" class="dynamic-calculator" data-calculationindex="5">
+                                    <input class="dynamic-calculator" type="checkbox" name="dynamic_calculator_main_5" id="dynamic_calculator_main_5" value="1" data-parenttable="main_claims_table">
+                                </td>
+                                <td style="max-width: 10px;min-width:auto;">5</td>
+                                <td>A3</td>
+                                <td>Directly Incurred: Equipment</td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[3][total_budget]" id="claim_values[3][total_budget]" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control text-danger" type="number" name="claim_values[3][quarter_values][1601510400]" id="claim_values[3][quarter_values][1601510400]" value="0" placeholder="0.00" data-year-index="0" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[3][quarter_values][1609459200]" id="claim_values[3][quarter_values][1609459200]" value="0" placeholder="0.00" data-year-index="0" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[3][quarter_values][1617235200]" id="claim_values[3][quarter_values][1617235200]" value="0" placeholder="0.00" data-year-index="0" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[3][quarter_values][1625097600]" id="claim_values[3][quarter_values][1625097600]" value="0" placeholder="0.00" data-year-index="0" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[3][quarter_values][1633046400]" id="claim_values[3][quarter_values][1633046400]" value="0" placeholder="0.00" data-year-index="1" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[3][quarter_values][1640995200]" id="claim_values[3][quarter_values][1640995200]" value="0" placeholder="0.00" data-year-index="1" readonly required>
+                                    </div>
+                                </td>
+                                                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[3][project_total]" id="claim_values[3][project_total]" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                <td class="border-right">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[3][variance]" id="claim_values[3][variance]" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[3][yearwise][0][budget]" id="claim_values[3][yearwise][0][budget]" value="0" placeholder="0.00" required>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[3][yearwise][0][amount]" id="claim_values[3][yearwise][0][amount]" value="0" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                <td class="border-right">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[3][yearwise][0][variance]" id="claim_values[3][yearwise][0][variance]" value="0" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[3][yearwise][1][budget]" id="claim_values[3][yearwise][1][budget]" value="0" placeholder="0.00" required>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[3][yearwise][1][amount]" id="claim_values[3][yearwise][1][amount]" value="0" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                <td class="border-right">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="claim_values[3][yearwise][1][variance]" id="claim_values[3][yearwise][1][variance]" value="0" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                                            </tr>
+                                                        <tr class="light-grey-bg">
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td><strong>Total Cost (for each item)</strong></td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="total_costs[for_each_item][total_budget]" id="total_costs[for_each_item][total_budget]" placeholder="0.00" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td class="text-center">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control text-danger" type="number" name="total_costs[for_each_item][quarter_values][1601510400]" id="total_costs[for_each_item][quarter_values][1601510400]" data-year-index="0" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td class="text-center">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="total_costs[for_each_item][quarter_values][1609459200]" id="total_costs[for_each_item][quarter_values][1609459200]" data-year-index="0" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td class="text-center">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="total_costs[for_each_item][quarter_values][1617235200]" id="total_costs[for_each_item][quarter_values][1617235200]" data-year-index="0" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td class="text-center">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="total_costs[for_each_item][quarter_values][1625097600]" id="total_costs[for_each_item][quarter_values][1625097600]" data-year-index="0" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td class="text-center">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="total_costs[for_each_item][quarter_values][1633046400]" id="total_costs[for_each_item][quarter_values][1633046400]" data-year-index="1" readonly required>
+                                    </div>
+                                </td>
+                                                                                                                                <td class="text-center">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="total_costs[for_each_item][quarter_values][1640995200]" id="total_costs[for_each_item][quarter_values][1640995200]" data-year-index="1" readonly required>
+                                    </div>
+                                </td>
+                                                                                                <td class="text-center">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="total_costs[for_each_item][project_total]" id="total_costs[for_each_item][project_total]" readonly required>
+                                    </div>
+                                </td>
+                                <td class="text-center border-right">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="total_costs[for_each_item][variance]" id="total_costs[for_each_item][variance]" readonly required>
+                                    </div>
+                                </td>
+                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="total_costs[for_each_item][yearwise][0][total_budget]" id="total_costs[for_each_item][yearwise][0][total_budget]" readonly required>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="total_costs[for_each_item][yearwise][0][total_amount]" id="total_costs[for_each_item][yearwise][0][total_amount]" readonly required>
+                                    </div>
+                                </td>
+                                <td class="border-right">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="total_costs[for_each_item][yearwise][0][total_variance]" id="total_costs[for_each_item][yearwise][0][total_variance]" readonly required>
+                                    </div>
+                                </td>
+                                                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="total_costs[for_each_item][yearwise][1][total_budget]" id="total_costs[for_each_item][yearwise][1][total_budget]" readonly required>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="total_costs[for_each_item][yearwise][1][total_amount]" id="total_costs[for_each_item][yearwise][1][total_amount]" readonly required>
+                                    </div>
+                                </td>
+                                <td class="border-right">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text readonly">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="total_costs[for_each_item][yearwise][1][total_variance]" id="total_costs[for_each_item][yearwise][1][total_variance]" readonly required>
+                                    </div>
+                                </td>
+                                                            </tr>
+                            <tr class="dark-grey-bg">
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td><strong>Total Cost (cumulative)</strong></td>
+                                <td style="color: #fff;">&nbsp;</td>
+                                                                                                <td class="text-center" style="color: #fff;">
+                                    <div class="input-group" style="color: #fff;">
+                                        <div class="input-group-prepend" style="color: #fff;">
+                                            <span class="input-group-text readonly" style="color: #fff;">£</span>
+                                        </div>
+                                        <input class="form-control text-danger" type="number" name="total_costs[cumulative][1601510400]" id="total_costs[cumulative][1601510400]" style="color: #fff;" readonly required>
+                                    </div>
+                                </td>
+                                                                                                <td class="text-center" style="color: #fff;">
+                                    <div class="input-group" style="color: #fff;">
+                                        <div class="input-group-prepend" style="color: #fff;">
+                                            <span class="input-group-text readonly" style="color: #fff;">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="total_costs[cumulative][1609459200]" id="total_costs[cumulative][1609459200]" style="color: #fff;" readonly required>
+                                    </div>
+                                </td>
+                                                                                                <td class="text-center" style="color: #fff;">
+                                    <div class="input-group" style="color: #fff;">
+                                        <div class="input-group-prepend" style="color: #fff;">
+                                            <span class="input-group-text readonly" style="color: #fff;">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="total_costs[cumulative][1617235200]" id="total_costs[cumulative][1617235200]" style="color: #fff;" readonly required>
+                                    </div>
+                                </td>
+                                                                                                <td class="text-center" style="color: #fff;">
+                                    <div class="input-group" style="color: #fff;">
+                                        <div class="input-group-prepend" style="color: #fff;">
+                                            <span class="input-group-text readonly" style="color: #fff;">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="total_costs[cumulative][1625097600]" id="total_costs[cumulative][1625097600]" style="color: #fff;" readonly required>
+                                    </div>
+                                </td>
+                                                                                                <td class="text-center" style="color: #fff;">
+                                    <div class="input-group" style="color: #fff;">
+                                        <div class="input-group-prepend" style="color: #fff;">
+                                            <span class="input-group-text readonly" style="color: #fff;">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="total_costs[cumulative][1633046400]" id="total_costs[cumulative][1633046400]" style="color: #fff;" readonly required>
+                                    </div>
+                                </td>
+                                                                                                <td class="text-center" style="color: #fff;">
+                                    <div class="input-group" style="color: #fff;">
+                                        <div class="input-group-prepend" style="color: #fff;">
+                                            <span class="input-group-text readonly" style="color: #fff;">£</span>
+                                        </div>
+                                        <input class="form-control" type="number" name="total_costs[cumulative][1640995200]" id="total_costs[cumulative][1640995200]" style="color: #fff;" readonly required>
+                                    </div>
+                                </td>
+                                                                <td style="color: #fff;">&nbsp;</td>
+                                <td class="border-right" style="color: #fff;">&nbsp;</td>
+                                                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td><strong>PO NUMBER</strong></td>
+                                <td>&nbsp;</td>
+                                                                <td class="text-center">
+                                    <input class="form-control invoice-field" type="text" name="po_number[1601510400]" id="po_number[1601510400]">
+                                </td>
+                                                                <td class="text-center">
+                                    <input class="form-control invoice-field" type="text" name="po_number[1609459200]" id="po_number[1609459200]" readonly>
+                                </td>
+                                                                <td class="text-center">
+                                    <input class="form-control invoice-field" type="text" name="po_number[1617235200]" id="po_number[1617235200]" readonly>
+                                </td>
+                                                                <td class="text-center">
+                                    <input class="form-control invoice-field" type="text" name="po_number[1625097600]" id="po_number[1625097600]" readonly>
+                                </td>
+                                                                <td class="text-center">
+                                    <input class="form-control invoice-field" type="text" name="po_number[1633046400]" id="po_number[1633046400]" readonly>
+                                </td>
+                                                                <td class="text-center">
+                                    <input class="form-control invoice-field" type="text" name="po_number[1640995200]" id="po_number[1640995200]" readonly>
+                                </td>
+                                                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td><strong>INVOICE DATE</strong></td>
+                                <td>&nbsp;</td>
+                                                                <td class="text-center">
+                                    <input class="form-control invoice-field" type="text" name="invoice_date[1601510400]" id="invoice_date[1601510400]">
+                                </td>
+                                                                <td class="text-center">
+                                    <input class="form-control invoice-field" type="text" name="invoice_date[1609459200]" id="invoice_date[1609459200]" readonly>
+                                </td>
+                                                                <td class="text-center">
+                                    <input class="form-control invoice-field" type="text" name="invoice_date[1617235200]" id="invoice_date[1617235200]" readonly>
+                                </td>
+                                                                <td class="text-center">
+                                    <input class="form-control invoice-field" type="text" name="invoice_date[1625097600]" id="invoice_date[1625097600]" readonly>
+                                </td>
+                                                                <td class="text-center">
+                                    <input class="form-control invoice-field" type="text" name="invoice_date[1633046400]" id="invoice_date[1633046400]" readonly>
+                                </td>
+                                                                <td class="text-center">
+                                    <input class="form-control invoice-field" type="text" name="invoice_date[1640995200]" id="invoice_date[1640995200]" readonly>
+                                </td>
+                                                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td><strong>INVOICE NO</strong></td>
+                                <td>&nbsp;</td>
+                                                                <td class="text-center">
+                                    <input class="form-control invoice-field" type="text" name="invoice_no[1601510400]" id="invoice_no[1601510400]">
+                                </td>
+                                                                <td class="text-center">
+                                    <input class="form-control invoice-field" type="text" name="invoice_no[1609459200]" id="invoice_no[1609459200]" readonly>
+                                </td>
+                                                                <td class="text-center">
+                                    <input class="form-control invoice-field" type="text" name="invoice_no[1617235200]" id="invoice_no[1617235200]" readonly>
+                                </td>
+                                                                <td class="text-center">
+                                    <input class="form-control invoice-field" type="text" name="invoice_no[1625097600]" id="invoice_no[1625097600]" readonly>
+                                </td>
+                                                                <td class="text-center">
+                                    <input class="form-control invoice-field" type="text" name="invoice_no[1633046400]" id="invoice_no[1633046400]" readonly>
+                                </td>
+                                                                <td class="text-center">
+                                    <input class="form-control invoice-field" type="text" name="invoice_no[1640995200]" id="invoice_no[1640995200]" readonly>
+                                </td>
+                                                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                                                <td class="text-center">
+                                                                    </td>
+                                                                <td class="text-center">
+                                                                    </td>
+                                                                <td class="text-center">
+                                                                    </td>
+                                                                <td class="text-center">
+                                                                    </td>
+                                                                <td class="text-center">
+                                                                    </td>
+                                                                <td class="text-center">
+                                                                    </td>
+                                                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                                                <td>
+                                                                                <a href="javascript:void(0)" class="btn btn-sm btn-primary" role="button" onclick="generateInvoice(this, 1, 1601510400, false)">Generate Invoice</a>
+                                                                            </td>
+                                                                <td>
+                                                                                                        </td>
+                                                                <td>
+                                                                                                        </td>
+                                                                <td>
+                                                                                                        </td>
+                                                                <td>
+                                                                                                        </td>
+                                                                <td>
+                                                                                                        </td>
+                                                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        <div id="year-wise-claims">
+            <div class="col-sm-12 mt-5">
+    <h4>Year 1 Total</h4>
+    <table class="table table-responsive table-borders table-sm" style="overflow-x: auto;" id="year-reporting-table-1">
+        <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                                
+                                                        <th class="text-center light-grey-bg">
+                        <label class="text-danger text-uppercase"> Oct20 - Dec20</label><br>
+                        <label class="text-danger">Q1</label>
+                    </th>
+                                                                            <th class="text-center light-grey-bg">
+                        <label class=" text-uppercase"> Jan21 - Mar21</label><br>
+                        <label class="">Q2</label>
+                    </th>
+                                                                            <th class="text-center light-grey-bg">
+                        <label class=" text-uppercase"> Apr21 - Jun21</label><br>
+                        <label class="">Q3</label>
+                    </th>
+                                                                            <th class="text-center light-grey-bg">
+                        <label class=" text-uppercase"> Jul21 - Sep21</label><br>
+                        <label class="">Q4</label>
+                    </th>
+                                                </tr>
+            <tr class="dark-grey-bg">
+                <th style="max-width: 10px;min-width:auto;" class="dynamic-calculator"></th>
+                <th style="max-width: 10px;min-width:auto;">#</th>
+                <th>COST ITEM</th>
+                <th>DESCRIPTION</th>
+                <th>TOTAL BUDGET</th>
+                                                <th class="text-center">
+                                                <label class="current-bg mb-0">&nbsp;CURRENT&nbsp;</label>
+                                            </th>
+                                                                <th class="text-center">
+                                                <label class="mb-0">FORECAST</label>
+                                            </th>
+                                                                <th class="text-center">
+                                                <label class="mb-0">FORECAST</label>
+                                            </th>
+                                                                <th class="text-center">
+                                                <label class="mb-0">FORECAST</label>
+                                            </th>
+                                                <th>TOTAL</th>
+                <th class="border-right">VARIANCE</th>
+            </tr>
+        </thead>
+        <tbody>
+                        <tr data-rowid="1">
+                <td style="max-width: 10px;min-width:auto;" class="dynamic-calculator" data-calculationindex="1">
+                    <input class="dynamic-calculator" type="checkbox" name="dynamic_calculator_1_1" id="dynamic_calculator_1_1" value="1" data-parenttable="year-reporting-table-1">
+                </td>
+                <td style="max-width: 10px;min-width:auto;">1</td>
+                <td>A5</td>
+                <td>Directly Allocated: Investigators</td>
+                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][5][total_budget]" id="yearly_data[0][claim_values][5][total_budget]" value="3000" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control text-danger" type="number" name="yearly_data[0][claim_values][5][quarter_values][1601510400]" id="yearly_data[0][claim_values][5][quarter_values][1601510400]" value="123" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][5][quarter_values][1609459200]" id="yearly_data[0][claim_values][5][quarter_values][1609459200]" value="200" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][5][quarter_values][1617235200]" id="yearly_data[0][claim_values][5][quarter_values][1617235200]" value="300" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][5][quarter_values][1625097600]" id="yearly_data[0][claim_values][5][quarter_values][1625097600]" value="400" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][5][project_total]" id="yearly_data[0][claim_values][5][project_total]" value="1023" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                <td class="border-right">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][5][variance]" id="yearly_data[0][claim_values][5][variance]" value="1977" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+            </tr>
+                        <tr data-rowid="2">
+                <td style="max-width: 10px;min-width:auto;" class="dynamic-calculator" data-calculationindex="2">
+                    <input class="dynamic-calculator" type="checkbox" name="dynamic_calculator_1_2" id="dynamic_calculator_1_2" value="1" data-parenttable="year-reporting-table-1">
+                </td>
+                <td style="max-width: 10px;min-width:auto;">2</td>
+                <td>A2</td>
+                <td>Directly Incurred: Travel &amp; Subsistence</td>
+                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][2][total_budget]" id="yearly_data[0][claim_values][2][total_budget]" value="1800" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control text-danger" type="number" name="yearly_data[0][claim_values][2][quarter_values][1601510400]" id="yearly_data[0][claim_values][2][quarter_values][1601510400]" value="179" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][2][quarter_values][1609459200]" id="yearly_data[0][claim_values][2][quarter_values][1609459200]" value="220" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][2][quarter_values][1617235200]" id="yearly_data[0][claim_values][2][quarter_values][1617235200]" value="0" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][2][quarter_values][1625097600]" id="yearly_data[0][claim_values][2][quarter_values][1625097600]" value="0" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][2][project_total]" id="yearly_data[0][claim_values][2][project_total]" value="399" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                <td class="border-right">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][2][variance]" id="yearly_data[0][claim_values][2][variance]" value="1401" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+            </tr>
+                        <tr data-rowid="3">
+                <td style="max-width: 10px;min-width:auto;" class="dynamic-calculator" data-calculationindex="3">
+                    <input class="dynamic-calculator" type="checkbox" name="dynamic_calculator_1_3" id="dynamic_calculator_1_3" value="1" data-parenttable="year-reporting-table-1">
+                </td>
+                <td style="max-width: 10px;min-width:auto;">3</td>
+                <td>A1</td>
+                <td>Directly Incurred: Staff</td>
+                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][1][total_budget]" id="yearly_data[0][claim_values][1][total_budget]" value="100" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control text-danger" type="number" name="yearly_data[0][claim_values][1][quarter_values][1601510400]" id="yearly_data[0][claim_values][1][quarter_values][1601510400]" value="153" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][1][quarter_values][1609459200]" id="yearly_data[0][claim_values][1][quarter_values][1609459200]" value="242" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][1][quarter_values][1617235200]" id="yearly_data[0][claim_values][1][quarter_values][1617235200]" value="112" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][1][quarter_values][1625097600]" id="yearly_data[0][claim_values][1][quarter_values][1625097600]" value="21" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][1][project_total]" id="yearly_data[0][claim_values][1][project_total]" value="528" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                <td class="border-right">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][1][variance]" id="yearly_data[0][claim_values][1][variance]" value="-428" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+            </tr>
+                        <tr data-rowid="4">
+                <td style="max-width: 10px;min-width:auto;" class="dynamic-calculator" data-calculationindex="4">
+                    <input class="dynamic-calculator" type="checkbox" name="dynamic_calculator_1_4" id="dynamic_calculator_1_4" value="1" data-parenttable="year-reporting-table-1">
+                </td>
+                <td style="max-width: 10px;min-width:auto;">4</td>
+                <td>A4</td>
+                <td>Directly Incurred: Consumables</td>
+                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][4][total_budget]" id="yearly_data[0][claim_values][4][total_budget]" value="0" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control text-danger" type="number" name="yearly_data[0][claim_values][4][quarter_values][1601510400]" id="yearly_data[0][claim_values][4][quarter_values][1601510400]" value="1000" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][4][quarter_values][1609459200]" id="yearly_data[0][claim_values][4][quarter_values][1609459200]" value="0" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][4][quarter_values][1617235200]" id="yearly_data[0][claim_values][4][quarter_values][1617235200]" value="0" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][4][quarter_values][1625097600]" id="yearly_data[0][claim_values][4][quarter_values][1625097600]" value="0" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][4][project_total]" id="yearly_data[0][claim_values][4][project_total]" value="1000" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                <td class="border-right">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][4][variance]" id="yearly_data[0][claim_values][4][variance]" value="-1000" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+            </tr>
+                        <tr data-rowid="5">
+                <td style="max-width: 10px;min-width:auto;" class="dynamic-calculator" data-calculationindex="5">
+                    <input class="dynamic-calculator" type="checkbox" name="dynamic_calculator_1_5" id="dynamic_calculator_1_5" value="1" data-parenttable="year-reporting-table-1">
+                </td>
+                <td style="max-width: 10px;min-width:auto;">5</td>
+                <td>A3</td>
+                <td>Directly Incurred: Equipment</td>
+                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][3][total_budget]" id="yearly_data[0][claim_values][3][total_budget]" value="0" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control text-danger" type="number" name="yearly_data[0][claim_values][3][quarter_values][1601510400]" id="yearly_data[0][claim_values][3][quarter_values][1601510400]" value="0" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][3][quarter_values][1609459200]" id="yearly_data[0][claim_values][3][quarter_values][1609459200]" value="0" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][3][quarter_values][1617235200]" id="yearly_data[0][claim_values][3][quarter_values][1617235200]" value="0" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][3][quarter_values][1625097600]" id="yearly_data[0][claim_values][3][quarter_values][1625097600]" value="0" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][3][project_total]" id="yearly_data[0][claim_values][3][project_total]" value="0" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                <td class="border-right">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][claim_values][3][variance]" id="yearly_data[0][claim_values][3][variance]" value="0" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+            </tr>
+                        <tr class="light-grey-bg">
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td><strong>Total Cost (for each item)</strong></td>
+                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][total_costs][for_each_item][total_budget]" id="yearly_data[0][total_costs][for_each_item][total_budget]" value="0" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td class="text-center">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][total_costs][for_each_item][quarter_values][1601510400]" id="yearly_data[0][total_costs][for_each_item][quarter_values][1601510400]" value="0" readonly required>
+                    </div>
+                </td>
+                                                                <td class="text-center">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][total_costs][for_each_item][quarter_values][1609459200]" id="yearly_data[0][total_costs][for_each_item][quarter_values][1609459200]" value="0" readonly required>
+                    </div>
+                </td>
+                                                                <td class="text-center">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][total_costs][for_each_item][quarter_values][1617235200]" id="yearly_data[0][total_costs][for_each_item][quarter_values][1617235200]" value="0" readonly required>
+                    </div>
+                </td>
+                                                                <td class="text-center">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][total_costs][for_each_item][quarter_values][1625097600]" id="yearly_data[0][total_costs][for_each_item][quarter_values][1625097600]" value="0" readonly required>
+                    </div>
+                </td>
+                                                <td class="text-center">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][total_costs][for_each_item][project_total]" id="yearly_data[0][total_costs][for_each_item][project_total]" value="0" readonly required>
+                    </div>
+                </td>
+                <td class="text-center border-right">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][total_costs][for_each_item][variance]" id="yearly_data[0][total_costs][for_each_item][variance]" value="0" readonly required>
+                    </div>
+                </td>
+            </tr>
+            <tr class="dark-grey-bg">
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td><strong>Total Cost (cumulative)</strong></td>
+                <td>&nbsp;</td>
+                                                                <td class="text-center" style="color: #fff;">
+                    <div class="input-group" style="color: #fff;">
+                        <div class="input-group-prepend" style="color: #fff;">
+                            <span class="input-group-text readonly" style="color: #fff;">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][total_costs][cumulative][1601510400]" id="yearly_data[0][total_costs][cumulative][1601510400]" value="0" style="color: #fff;" readonly required>
+                    </div>
+                </td>
+                                                                <td class="text-center" style="color: #fff;">
+                    <div class="input-group" style="color: #fff;">
+                        <div class="input-group-prepend" style="color: #fff;">
+                            <span class="input-group-text readonly" style="color: #fff;">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][total_costs][cumulative][1609459200]" id="yearly_data[0][total_costs][cumulative][1609459200]" value="0" style="color: #fff;" readonly required>
+                    </div>
+                </td>
+                                                                <td class="text-center" style="color: #fff;">
+                    <div class="input-group" style="color: #fff;">
+                        <div class="input-group-prepend" style="color: #fff;">
+                            <span class="input-group-text readonly" style="color: #fff;">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][total_costs][cumulative][1617235200]" id="yearly_data[0][total_costs][cumulative][1617235200]" value="0" style="color: #fff;" readonly required>
+                    </div>
+                </td>
+                                                                <td class="text-center" style="color: #fff;">
+                    <div class="input-group" style="color: #fff;">
+                        <div class="input-group-prepend" style="color: #fff;">
+                            <span class="input-group-text readonly" style="color: #fff;">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[0][total_costs][cumulative][1625097600]" id="yearly_data[0][total_costs][cumulative][1625097600]" value="0" style="color: #fff;" readonly required>
+                    </div>
+                </td>
+                                                <td>&nbsp;</td>
+                <td class="border-right">&nbsp;</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="col-sm-12 mt-5">
+    <h4>Year 2 Total</h4>
+    <table class="table table-responsive table-borders table-sm" style="overflow-x: auto;" id="year-reporting-table-2">
+        <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                                
+                                                        <th class="text-center light-grey-bg">
+                        <label class=" text-uppercase"> Oct21 - Dec21</label><br>
+                        <label class="">Q5</label>
+                    </th>
+                                                                            <th class="text-center light-grey-bg">
+                        <label class=" text-uppercase"> Jan22 - Mar22</label><br>
+                        <label class="">Q6</label>
+                    </th>
+                                                </tr>
+            <tr class="dark-grey-bg">
+                <th style="max-width: 10px;min-width:auto;" class="dynamic-calculator"></th>
+                <th style="max-width: 10px;min-width:auto;">#</th>
+                <th>COST ITEM</th>
+                <th>DESCRIPTION</th>
+                <th>TOTAL BUDGET</th>
+                                                <th class="text-center">
+                                                <label class="mb-0">FORECAST</label>
+                                            </th>
+                                                                <th class="text-center">
+                                                <label class="mb-0">FORECAST</label>
+                                            </th>
+                                                <th>TOTAL</th>
+                <th class="border-right">VARIANCE</th>
+            </tr>
+        </thead>
+        <tbody>
+                        <tr data-rowid="1">
+                <td style="max-width: 10px;min-width:auto;" class="dynamic-calculator" data-calculationindex="1">
+                    <input class="dynamic-calculator" type="checkbox" name="dynamic_calculator_2_1" id="dynamic_calculator_2_1" value="1" data-parenttable="year-reporting-table-2">
+                </td>
+                <td style="max-width: 10px;min-width:auto;">1</td>
+                <td>A5</td>
+                <td>Directly Allocated: Investigators</td>
+                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][claim_values][5][total_budget]" id="yearly_data[1][claim_values][5][total_budget]" value="0" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][claim_values][5][quarter_values][1633046400]" id="yearly_data[1][claim_values][5][quarter_values][1633046400]" value="500" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][claim_values][5][quarter_values][1640995200]" id="yearly_data[1][claim_values][5][quarter_values][1640995200]" value="600" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][claim_values][5][project_total]" id="yearly_data[1][claim_values][5][project_total]" value="1100" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                <td class="border-right">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][claim_values][5][variance]" id="yearly_data[1][claim_values][5][variance]" value="-1100" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+            </tr>
+                        <tr data-rowid="2">
+                <td style="max-width: 10px;min-width:auto;" class="dynamic-calculator" data-calculationindex="2">
+                    <input class="dynamic-calculator" type="checkbox" name="dynamic_calculator_2_2" id="dynamic_calculator_2_2" value="1" data-parenttable="year-reporting-table-2">
+                </td>
+                <td style="max-width: 10px;min-width:auto;">2</td>
+                <td>A2</td>
+                <td>Directly Incurred: Travel &amp; Subsistence</td>
+                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][claim_values][2][total_budget]" id="yearly_data[1][claim_values][2][total_budget]" value="0" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][claim_values][2][quarter_values][1633046400]" id="yearly_data[1][claim_values][2][quarter_values][1633046400]" value="0" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][claim_values][2][quarter_values][1640995200]" id="yearly_data[1][claim_values][2][quarter_values][1640995200]" value="690" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][claim_values][2][project_total]" id="yearly_data[1][claim_values][2][project_total]" value="690" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                <td class="border-right">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][claim_values][2][variance]" id="yearly_data[1][claim_values][2][variance]" value="-690" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+            </tr>
+                        <tr data-rowid="3">
+                <td style="max-width: 10px;min-width:auto;" class="dynamic-calculator" data-calculationindex="3">
+                    <input class="dynamic-calculator" type="checkbox" name="dynamic_calculator_2_3" id="dynamic_calculator_2_3" value="1" data-parenttable="year-reporting-table-2">
+                </td>
+                <td style="max-width: 10px;min-width:auto;">3</td>
+                <td>A1</td>
+                <td>Directly Incurred: Staff</td>
+                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][claim_values][1][total_budget]" id="yearly_data[1][claim_values][1][total_budget]" value="534" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][claim_values][1][quarter_values][1633046400]" id="yearly_data[1][claim_values][1][quarter_values][1633046400]" value="356" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][claim_values][1][quarter_values][1640995200]" id="yearly_data[1][claim_values][1][quarter_values][1640995200]" value="78" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][claim_values][1][project_total]" id="yearly_data[1][claim_values][1][project_total]" value="434" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                <td class="border-right">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][claim_values][1][variance]" id="yearly_data[1][claim_values][1][variance]" value="100" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+            </tr>
+                        <tr data-rowid="4">
+                <td style="max-width: 10px;min-width:auto;" class="dynamic-calculator" data-calculationindex="4">
+                    <input class="dynamic-calculator" type="checkbox" name="dynamic_calculator_2_4" id="dynamic_calculator_2_4" value="1" data-parenttable="year-reporting-table-2">
+                </td>
+                <td style="max-width: 10px;min-width:auto;">4</td>
+                <td>A4</td>
+                <td>Directly Incurred: Consumables</td>
+                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][claim_values][4][total_budget]" id="yearly_data[1][claim_values][4][total_budget]" value="0" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][claim_values][4][quarter_values][1633046400]" id="yearly_data[1][claim_values][4][quarter_values][1633046400]" value="0" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][claim_values][4][quarter_values][1640995200]" id="yearly_data[1][claim_values][4][quarter_values][1640995200]" value="0" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][claim_values][4][project_total]" id="yearly_data[1][claim_values][4][project_total]" value="0" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                <td class="border-right">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][claim_values][4][variance]" id="yearly_data[1][claim_values][4][variance]" value="0" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+            </tr>
+                        <tr data-rowid="5">
+                <td style="max-width: 10px;min-width:auto;" class="dynamic-calculator" data-calculationindex="5">
+                    <input class="dynamic-calculator" type="checkbox" name="dynamic_calculator_2_5" id="dynamic_calculator_2_5" value="1" data-parenttable="year-reporting-table-2">
+                </td>
+                <td style="max-width: 10px;min-width:auto;">5</td>
+                <td>A3</td>
+                <td>Directly Incurred: Equipment</td>
+                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][claim_values][3][total_budget]" id="yearly_data[1][claim_values][3][total_budget]" value="0" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][claim_values][3][quarter_values][1633046400]" id="yearly_data[1][claim_values][3][quarter_values][1633046400]" value="0" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][claim_values][3][quarter_values][1640995200]" id="yearly_data[1][claim_values][3][quarter_values][1640995200]" value="0" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][claim_values][3][project_total]" id="yearly_data[1][claim_values][3][project_total]" value="0" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                <td class="border-right">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][claim_values][3][variance]" id="yearly_data[1][claim_values][3][variance]" value="0" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+            </tr>
+                        <tr class="light-grey-bg">
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td><strong>Total Cost (for each item)</strong></td>
+                <td>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][total_costs][for_each_item][total_budget]" id="yearly_data[1][total_costs][for_each_item][total_budget]" value="0" placeholder="0.00" readonly required>
+                    </div>
+                </td>
+                                                                <td class="text-center">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][total_costs][for_each_item][quarter_values][1633046400]" id="yearly_data[1][total_costs][for_each_item][quarter_values][1633046400]" value="0" readonly required>
+                    </div>
+                </td>
+                                                                <td class="text-center">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][total_costs][for_each_item][quarter_values][1640995200]" id="yearly_data[1][total_costs][for_each_item][quarter_values][1640995200]" value="0" readonly required>
+                    </div>
+                </td>
+                                                <td class="text-center">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][total_costs][for_each_item][project_total]" id="yearly_data[1][total_costs][for_each_item][project_total]" value="0" readonly required>
+                    </div>
+                </td>
+                <td class="text-center border-right">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text readonly">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][total_costs][for_each_item][variance]" id="yearly_data[1][total_costs][for_each_item][variance]" value="0" readonly required>
+                    </div>
+                </td>
+            </tr>
+            <tr class="dark-grey-bg">
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td><strong>Total Cost (cumulative)</strong></td>
+                <td>&nbsp;</td>
+                                                                <td class="text-center" style="color: #fff;">
+                    <div class="input-group" style="color: #fff;">
+                        <div class="input-group-prepend" style="color: #fff;">
+                            <span class="input-group-text readonly" style="color: #fff;">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][total_costs][cumulative][1633046400]" id="yearly_data[1][total_costs][cumulative][1633046400]" value="0" style="color: #fff;" readonly required>
+                    </div>
+                </td>
+                                                                <td class="text-center" style="color: #fff;">
+                    <div class="input-group" style="color: #fff;">
+                        <div class="input-group-prepend" style="color: #fff;">
+                            <span class="input-group-text readonly" style="color: #fff;">£</span>
+                        </div>
+                        <input class="form-control" type="number" name="yearly_data[1][total_costs][cumulative][1640995200]" id="yearly_data[1][total_costs][cumulative][1640995200]" value="0" style="color: #fff;" readonly required>
+                    </div>
+                </td>
+                                                <td>&nbsp;</td>
+                <td class="border-right">&nbsp;</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+        </div>
+        </div><!--card-body-->
+    
+    </div><!--card-->
+            </div>
+        </main>
+
+        <!-- START: Footer-->
+        
+        <!-- END: Footer-->
+
+
+        <!-- START: Back to top-->
+        <a href="#" class="scrollup text-center"> 
+            <i class="icon-arrow-up"></i>
+        </a>
+        <!-- END: Back to top-->
+
+                <!-- START: Template JS-->
+        <script src="http://localhost/claimsportal/public/assets/backend/vendors/jquery/jquery-3.3.1.min.js"></script>
+        <script src="http://localhost/claimsportal/public/assets/backend/vendors/jquery-ui/jquery-ui.min.js"></script>
+        <script src="http://localhost/claimsportal/public/assets/backend/vendors/moment/moment.js"></script>
+        <script src="http://localhost/claimsportal/public/assets/backend/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>    
+        <script src="http://localhost/claimsportal/public/assets/backend/vendors/slimscroll/jquery.slimscroll.min.js"></script>
+                <!-- END: Template JS-->
+        
+        <!-- START: PAGE Vendor JS-->
+        
+        <script src="http://localhost/claimsportal/public/assets/backend/vendors/toastr/toastr.min.js"></script>
+        <script src="http://localhost/claimsportal/public/assets/backend/vendors/select2/js/select2.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        
+        <!-- Livewire Scripts -->
+<script {$nonce}>
+    console.warn("Livewire: The published Livewire assets are out of date\n See: https://laravel-livewire.com/docs/installation/")
+</script>
+<script src="/vendor/livewire/livewire.js?id=d9e06c155e467adb5de2" data-turbo-eval="false" data-turbolinks-eval="false"></script>
+<script data-turbo-eval="false" data-turbolinks-eval="false">
+    if (window.livewire) {
+	    console.warn('Livewire: It looks like Livewire\'s @livewireScripts JavaScript assets have already been loaded. Make sure you aren\'t loading them twice.')
+	}
+
+    window.livewire = new Livewire();
+    window.livewire.devTools(true);
+    window.Livewire = window.livewire;
+    window.livewire_app_url = '';
+    window.livewire_token = '17cuFlmoITj892GQgZMQLiFXw1r6Utq1kiNBIGD3';
+
+	/* Make sure Livewire loads first. */
+	if (window.Alpine) {
+	    /* Defer showing the warning so it doesn't get buried under downstream errors. */
+	    document.addEventListener("DOMContentLoaded", function () {
+	        setTimeout(function() {
+	            console.warn("Livewire: It looks like AlpineJS has already been loaded. Make sure Livewire\'s scripts are loaded before Alpine.\\n\\n Reference docs for more info: http://laravel-livewire.com/docs/alpine-js")
+	        })
+	    });
+	}
+
+	/* Make Alpine wait until Livewire is finished rendering to do its thing. */
+    window.deferLoadingAlpine = function (callback) {
+        window.addEventListener('livewire:load', function () {
+            callback();
+        });
+    };
+
+    document.addEventListener("DOMContentLoaded", function () {
+        window.livewire.start();
+    });
+</script>
+        
+        <!-- START: PAGE JS-->
+        
+        <!-- START: APP JS-->
+        <script src="http://localhost/claimsportal/public/assets/backend/js/app.js"></script>
+                <script>
+            $.ajaxSetup({
+                headers: {
+                    'X-XSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $('.select2').select2();
+            $(".toggle-user-actions").on("click", function() {
+                if($(this).find('i').hasClass('icon-arrow-down')) {
+                    $(this).find('i').removeClass('icon-arrow-down').addClass('icon-arrow-up');
+                } else {
+                    $(this).find('i').removeClass('icon-arrow-up').addClass('icon-arrow-down');
+                }
+            });
+            $('input[required], select[required]')
+                .closest(".form-group")
+                .children("label")
+                .prepend("<span class='valign-top text-xx-small text-danger required-icon'><i class='ion ion-asterisk'></i><span>");
+        </script>
+        <!-- END: APP JS-->
+            </body>
+</html>

@@ -76,13 +76,13 @@
                                 </select>
                             </form>
                         </div>
-                        <!-- <div class="col-md-6">
+                        <div class="col-md-6">
                             <form>
                                 <input type="hidden" name="exportExcel" value="1" />
                                 <input type="hidden" name="partner" value="{{ $sheetOwner }}" />
                                 <button class="btn btn-primary btn-sm" onclick="this.form.submit()">Export Excel</button>
                             </form>
-                        </div> -->
+                        </div>
                     </div><!--form-group-->
                 </div>
             </x-slot>
@@ -419,9 +419,9 @@
                 <div><strong>Project Start Date:</strong> {{$project->start_date->format('m-Y')}}</div>
                 <div><strong>Funders:</strong> {{ $project->funders->implode('organisation_name', ', ') }}</div>
             </div> -->
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="row">
+            <div class="row text-center">
+                <div class="col-md-3 text-center">
+                    <div class="row ">
                         <div class="col">
                             @if(!empty($project->logo) && file_exists(public_path('uploads/projects/logos/'.$project->logo)))
                                 <img src="{{ asset('uploads/projects/logos/'.$project->logo) }}" class="header-logo" />
@@ -1065,8 +1065,8 @@
             });
             
             $('.main-claims-table [name*="[yearwise]"][name$="[total_amount]"]').each(function(i, v){
-                var yearIndex = $(v).attr('name').match(/\[(.*?)\]/g)[2];
-
+                var yearIndex = $(v).attr('name').match(/\[(.*?)\]/g)[2].toString().replace("[", "").replace("]", "");
+                
                 var yearWiseTotal = 0;
                 $(v).closest('tr').find('[data-year-index="'+yearIndex+'"]').each(function(i1, v1){
                     if($(v1).val() == '' || isNaN($(v1).val())) {

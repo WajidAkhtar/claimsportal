@@ -1,5 +1,7 @@
 @extends('backend.layouts.app')
-
+@push('after-styles')
+   
+@endpush
 @section('title', __('Create Project'))
 
 @section('content')
