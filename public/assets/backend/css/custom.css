@@ -11,8 +11,7 @@ html {
     background-color: white !important;
 }
 .body-container {
-    margin: auto;
-    max-width: 1200px;
+    max-width: 1900px;
 }
 .custom-container {
     max-width: 700px !important;
@@ -21,7 +20,6 @@ html {
 @media only screen and (max-width: 1200px) {
     .body-container {
         max-width: 900px !important;
-        margin: auto;
     }
   
     .video {
@@ -48,7 +46,7 @@ html {
     transform: rotate(
         270deg
     );
-    left: 27%;
+    left: 40%;
 }
 .social-icon {
     width: 30px;
@@ -62,4 +60,8 @@ html {
 }
 .select2 {
     width: 100% !important;
+}
+.footer_img {
+    position: absolute;
+    bottom: 30px;
 }
