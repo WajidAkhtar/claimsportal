@@ -5,20 +5,27 @@ html {
     padding: 0 !important;
     margin: 0 !important;
     min-height: 100vh !important;
+    display: flex;
 }
 #main-container {
     background-color: white !important;
 }
 .body-container {
-    padding-left: 20% !important;
-    padding-right: 20% !important;
-    padding-top: 100px !important;
+    margin: auto;
+    max-width: 1200px;
 }
-
-@media only screen and (min-width: 1200px) {
-    .custom-container {
-        max-width: 700px !important;
+.custom-container {
+    max-width: 700px !important;
+    margin: auto;
+}
+@media only screen and (max-width: 1200px) {
+    .body-container {
+        max-width: 900px !important;
         margin: auto;
+    }
+  
+    .video {
+        left: 33% !important;
     }
    
 }
@@ -41,7 +48,7 @@ html {
     transform: rotate(
         270deg
     );
-    left: 24%;
+    left: 27%;
 }
 .social-icon {
     width: 30px;

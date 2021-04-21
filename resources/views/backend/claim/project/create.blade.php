@@ -1,10 +1,6 @@
 @extends('backend.layouts.app')
 @push('after-styles')
-    <style>
-        .select2 {
-            width: 100% !important;
-        }
-    </style>
+   
 @endpush
 @section('title', __('Create Project'))
 
@@ -36,8 +32,8 @@
                     </div>
                 </div><!--form-group-->
 
-                <div class="form-group row bmd-form-group">
-                    {{ html()->label(__('Project Name'))->class('col-md-2 col-form-label bmd-label-floating')->for('name') }}
+                <div class="form-group row">
+                    {{ html()->label(__('Project Name'))->class('col-md-2 col-form-label')->for('name') }}
 
                     <div class="col-md-10">
                         {{ html()->text('name')

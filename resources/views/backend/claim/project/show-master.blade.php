@@ -41,9 +41,6 @@
             border: 0px;
             padding-right: 2px;
         }
-        .header-logo {
-            height: 100px !important;
-        }
     </style>
 @endpush
 @section('content')
@@ -519,7 +516,7 @@
         </x-slot>
 
         <x-slot name="body">
-            <div class="row text-center">
+            <div class="row ">
                 <div class="col-md-4">
                     <div class="row">
                         <div class="col">
