@@ -601,7 +601,7 @@
                                 @php
                                     $isForeCast = 0;
                                     $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
-                                    $isForeCast = collect(['current', 'forecast'])->contains($quarter->partner(request()->partner)->pivot->status) ? 1 : 0;
+                                    $isForeCast = collect(['current', 'forecast'])->contains(optional(optional($quarter->partner(request()->partner))->pivot)->status) ? 1 : 0;
 
                                     $readOnly = false;
 
