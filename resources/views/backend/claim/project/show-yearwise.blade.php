@@ -27,7 +27,7 @@
                         $date = clone $startDate;
                         
                         $quarter = $project->quarters()->whereStartTimestamp($startDate->timestamp)->first();
-                        $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
+                        $labelClass = optional($quarter->partner(request()->partner))->pivot->status == 'current' ? 'text-danger' : '';
                         
                         $date->addMonths(2)->endOfMonth();
                         // $labelClass = '';
@@ -58,7 +58,7 @@
 
                 @endphp
                 <th class="text-center">
-                    @switch($quarter->partner(request()->partner)->pivot->status)
+                    @switch(optional($quarter->partner(request()->partner))->pivot->status)
                         @case('current')
                             <label class="current-bg mb-0">CURRENT</label>
                             @break
@@ -113,7 +113,7 @@
                     $toDate = clone $fromDate1;
                     
                     $quarter = $project->quarters()->whereStartTimestamp($fromDate1->timestamp)->first();
-                    $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
+                    $labelClass = optional($quarter->partner(request()->partner))->pivot->status == 'current' ? 'text-danger' : '';
 
                     $toDate->addMonths(2)->endOfMonth();
                     $projectTotal += optional(optional($costItem->claims_data)->quarter_values)->{"$fromDate1->timestamp"} ?? 0;
@@ -186,7 +186,7 @@
                     $toDate = clone $fromDate2;
                     
                     $quarter = $project->quarters()->whereStartTimestamp($fromDate2->timestamp)->first();
-                    $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
+                    $labelClass = optional($quarter->partner(request()->partner))->pivot->status == 'current' ? 'text-danger' : '';
 
                     $toDate->addMonths(2)->endOfMonth();
                 @endphp
@@ -245,7 +245,7 @@
                     $toDate = clone $fromDate3;
 
                     $quarter = $project->quarters()->whereStartTimestamp($fromDate3->timestamp)->first();
-                    $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
+                    $labelClass = optional($quarter->partner(request()->partner))->pivot->status == 'current' ? 'text-danger' : '';
 
                     $toDate->addMonths(2)->endOfMonth();
                 @endphp
