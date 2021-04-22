@@ -540,8 +540,8 @@
                                 <th>&nbsp;</th>
                                 <th>&nbsp;</th>
                                 @foreach ($project->quarters as $quarter)
-                                @php
-                                    $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
+                                @phoptional(p
+                             )       $labelClass = optional($quarter->partner(request()->partner)->piv)ot->status == 'current' ? 'text-danger' : '';
                                 @endphp
                                 <th class="text-center light-grey-bg">
                                     <label class="{{$labelClass}} text-uppercase"> {{ $quarter->length }}</label><br>
@@ -557,7 +557,7 @@
                                 <th>TOTAL BUDGET</th>
                                 @foreach ($project->quarters as $quarter)
                                 <th class="text-center">
-                                    <label class="{{$quarter->partner(request()->partner)->pivot->status == 'current' ? 'current-bg' : ''}} mb-0">&nbsp;{{strtoupper($quarter->partner(request()->partner)->pivot->status)}}&nbsp;</label>
+                                    <label class="{{optional(optional($quarter->partner(request()->partner))->pivot)->status == 'current' ? 'current-bg' : ''}} mb-0">&nbsp;{{strtoupper(optioptional(onal($quarter->partner(request()->partner)->pivot->)status))}}&nbsp;</label>
                                 </th>
                                 @endforeach
                                 <th>PROJECT TOTAL</th>
@@ -600,7 +600,7 @@
                                 @foreach ($project->quarters as $quarter)
                                 @php
                                     $isForeCast = 0;
-                                    $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
+                                    $labelClass = optional(optional($quarter->partner(request()->partner))->pivot)->status == 'current' ? 'text-danger' : '';
                                     $isForeCast = collect(['current', 'forecast'])->contains(optional(optional($quarter->partner(request()->partner))->pivot)->status) ? 1 : 0;
 
                                     $readOnly = false;
@@ -618,7 +618,7 @@
                                         $readOnly = true;
                                     }
 
-                                    if(!$userHasMasterAccess && $userHasMasterAccessWithPermission != 'LEAD_USER' && $quarter->partner(request()->partner)->pivot->status == 'current' && $quarter->partner(request()->partner)->pivot->claim_status == 1) {
+                                    if(!$userHasMasterAccess && $userHasMasterAccessWithPermission !=optional( 'LEAD_USER' && optional($quarter->part)ner(request()->partner)->pivo)t->status == 'current' && optional($qoptional(uarter->partner(reque)st()->partner)->pivot->claim_stat)us == 1) {
                                         $readOnly = true;
                                     }
                                 @endphp
@@ -735,8 +735,8 @@
                                     $yearIndex = 0;
                                 @endphp
                                 @foreach ($project->quarters as $quarter)
-                                @php
-                                    $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
+                                @phoptional(p
+                             )       $labelClass = optional($quarter->partner(request()->partner)->piv)ot->status == 'current' ? 'text-danger' : '';
                                 @endphp
                                 <td class="text-center">
                                     <div class="input-group">
@@ -827,8 +827,8 @@
                                 <td><strong>Total Cost (cumulative)</strong></td>
                                 <td style="color: #fff;">&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
-                                @php
-                                    $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
+                                @phoptional(p
+                             )       $labelClass = optional($quarter->partner(request()->partner)->piv)ot->status == 'current' ? 'text-danger' : '';
                                 @endphp
                                 <td class="text-center" style="color: #fff;">
                                     <div class="input-group" style="color: #fff;">
@@ -860,10 +860,10 @@
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
                                 <td class="text-center">
-                                    {{ html()->input('text', 'po_number['.$quarter->start_timestamp.']', $quarter->partner(request()->partner)->pivot->po_number)
-                                            // ->placeholder('0.00')
+                                    {{ html()->input('text', 'po_number['.$quarter->start_timestamp.']', optional(optional($quarter->partner(req)uest()->partner)->pivot->po_number)
+                                            //) ->placeholder('0.00')
                                             ->class('form-control invoice-field')
-                                            ->readOnly(($userHasMasterAccess && !auth()->user()->isMasterAdmin()) || ($currentSheetUserPermission != 'LEAD_USER' && ($quarter->partner(request()->partner)->pivot->claim_status !== 0 || $quarter->partner(request()->partner)->pivot->status != 'current')) || ($currentSheetUserPermission == 'LEAD_USER' && ($quarter->partner(request()->partner)->pivot->claim_status == 0 || $quarter->partner(request()->partner)->pivot->status == 'forecast'))) }}
+                                            ->readOnly(($userHasMasterAccess && !auth()->user()->isMasterAdmin()) || ($currentSheetUserPermission != 'LEAD_USER' && (optional(optional($quarter->pa)rtner(request()-)>partner)->pivot->claim_status !== 0 || optional(optional($quarter->partner(request()->partner)->pivot->s)tatus != 'curren)t')) || ($currentSheetUserPermission ==optional( 'LEAD_USER' && (optional($quarter->partner()request()->par)tner)->pivot->claim_status == 0 || optionaloptional(($quarter->partner(re)quest()->partner)->pivot->status == 'forec)ast'))) }}
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
@@ -882,10 +882,10 @@
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
                                 <td class="text-center">
-                                    {{ html()->input('text', 'invoice_date['.$quarter->start_timestamp.']', $quarter->partner(request()->partner)->pivot->invoice_date)
-                                            // ->placeholder('DD-MM-YYYY')
+                                    {{ html()->input('text', 'invoice_date['.$quarter->start_timestamp.']', optional(optional($quarter->partner(request()->partner)->pivot->invoice_date)
+                              )              //) ->placeholder('DD-MM-YYYY')
                                             ->class('form-control invoice-field')
-                                            ->readOnly(($userHasMasterAccess && !auth()->user()->isMasterAdmin()) || ($currentSheetUserPermission != 'LEAD_USER' && ($quarter->partner(request()->partner)->pivot->claim_status !== 0 || $quarter->partner(request()->partner)->pivot->status != 'current')) || ($currentSheetUserPermission == 'LEAD_USER' && ($quarter->partner(request()->partner)->pivot->claim_status == 0 || $quarter->partner(request()->partner)->pivot->status == 'forecast'))) }}
+                                            ->readOnly(($userHasMasterAccess && !auth()->user()->isMasterAdmin()) || ($currentSheetUserPermission != 'LEAD_USER' && (optional(optional($quarter->pa)rtner(request()-)>partner)->pivot->claim_status !== 0 || optional(optional($quarter->partner(request()->partner)->pivot->s)tatus != 'curren)t')) || ($currentSheetUserPermission ==optional( 'LEAD_USER' && (optional($quarter->partner()request()->par)tner)->pivot->claim_status == 0 || optionaloptional(($quarter->partner(re)quest()->partner)->pivot->status == 'forec)ast'))) }}
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
@@ -904,10 +904,10 @@
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
                                 <td class="text-center">
-                                    {{ html()->input('text', 'invoice_no['.$quarter->start_timestamp.']', $quarter->partner(request()->partner)->pivot->invoice_no)
-                                            // ->placeholder('0.00')
+                                    {{ html()->input('text', 'invoice_no['.$quarter->start_timestamp.']', optional(optional($quarter->partner(req)uest()->partner)->pivot->invoice_no)
+                                            //) ->placeholder('0.00')
                                             ->class('form-control invoice-field')
-                                            ->readOnly(($userHasMasterAccess && !auth()->user()->isMasterAdmin()) || ($currentSheetUserPermission != 'LEAD_USER' && ($quarter->partner(request()->partner)->pivot->claim_status !== 0 || $quarter->partner(request()->partner)->pivot->status != 'current')) || ($currentSheetUserPermission == 'LEAD_USER' && ($quarter->partner(request()->partner)->pivot->claim_status == 0 || $quarter->partner(request()->partner)->pivot->status == 'forecast'))) }}
+                                            ->readOnly(($userHasMasterAccess && !auth()->user()->isMasterAdmin()) || ($currentSheetUserPermission != 'LEAD_USER' && (optional(optional($quarter->pa)rtner(request()-)>partner)->pivot->claim_status !== 0 || optional(optional($quarter->partner(request()->partner)->pivot->s)tatus != 'curren)t')) || ($currentSheetUserPermission ==optional( 'LEAD_USER' && (optional($quarter->partner()request()->par)tner)->pivot->claim_status == 0 || optionaloptional(($quarter->partner(re)quest()->partner)->pivot->status == 'forec)ast'))) }}
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
@@ -926,16 +926,16 @@
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
                                 <td>
-                                    @switch($quarter->partner(request()->partner)->pivot->status)
-                                        @case('historic')
+                                    @switch(opoptional(tional($quarter->partner(requ)est()->partner)->pivot->status)
+                                        @case(')historic')
                                             <a target="_blank" href="{{asset('uploads/invoices/'.$quarter->id.'.pdf')}}" class="btn btn-sm btn-primary" role="button">Invoice</a>
                                             @break
                                         @case('current')
-                                            @if (!$userHasMasterAccess && $userHasMasterAccessWithPermission == 'LEAD_USER' && $quarter->partner(request()->partner)->pivot->claim_status == 1)
+                                            @if (!$userHasMasterAccess && $userHasMasterAccessWithPermission == 'LEAD_USER' && optional(optional($quarter->pa)rtner(request()-)>partner)->pivot->claim_status == 1)
                                             <a href="javascript:void(0)" class="btn btn-sm btn-success" role="button" onclick="closeClaim(this, {{$quarter->id}}, {{request()->partner}}, {{$quarter->start_timestamp}})">Close Claim</a>
                                             @endif
-                                            @if(((!$userHasMasterAccess && $userHasMasterAccessWithPermission != 'LEAD_USER') || auth()->user()->isMasterAdmin()) && $quarter->partner(request()->partner)->pivot->claim_status == 0)
-                                            <a href="javascript:void(0)" class="btn btn-sm btn-success {{$quarter->partner(request()->partner)->pivot->claim_status == 1 ? 'disabled' : ''}}" role="button" onclick="submitClaim(this, {{$quarter->id}}, {{$quarter->start_timestamp}})">Submit Claim</a>
+                                            @if(((!$userHasMasterAccess && $userHasMasterAccessWithPermission != 'LEAD_USER') || auth()->user()->isMasterAdmin()) && optional(optional($qu)arter->partner(request()->partner)->pivot->claim_st)atus == 0)
+                                            <a href="javascript:void(0)" class="btn optional(btn-sm btn-success {{optional($quarter->p)artner(request()->p)artner)->pivot->claim_status == 1 ? 'disabled' : ''}}" role="button" onclick="submitClaim(this, {{$quarter->id}}, {{$quarter->start_timestamp}})">Submit Claim</a>
                                             @endif
                                             @break
                                         @default
@@ -957,11 +957,11 @@
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                @foreach ($project->quarters as $quarter)
-                                @if( $quarter->partner(request()->partner)->pivot->claim_status == 2)
+                                @foreach ($project->quarters as $quarteroptional()
+                                @if( optional($quarter->partner(re)quest()->partner)->pivot->claim_st)atus == 2)
                                 <td>
-                                    @switch($quarter->partner(request()->partner)->pivot->status)
-                                        @case('historic')
+                                    @switch(opoptional(tional($quarter->partner(requ)est()->partner)->pivot->status)
+                                        @case(')historic')
                                             <a href="javascript:void(0)" class="btn btn-sm btn-secondary" role="button" onclick="closeClaim(this, {{$quarter->id}}, {{request()->partner}}, {{$quarter->start_timestamp}}, true)">Regenerate</a>
                                             @break
                                         @default
