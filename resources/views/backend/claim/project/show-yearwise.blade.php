@@ -245,7 +245,7 @@
                     $toDate = clone $fromDate3;
 
                     $quarter = $project->quarters()->whereStartTimestamp($fromDate3->timestamp)->first();
-                    $labelClass = optional($quarter->partner(request()->partner))->pivot->status == 'current' ? 'text-danger' : '';
+                    $labelClass = optional(optional($quarter->partner(request()->partner))->pivot)->status == 'current' ? 'text-danger' : '';
 
                     $toDate->addMonths(2)->endOfMonth();
                 @endphp
