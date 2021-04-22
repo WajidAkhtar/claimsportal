@@ -924,10 +924,10 @@
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
                                 <td class="text-center">
-                                    {{ html()->input('text', 'invoice_no['.$quarter->start_timestamp.']', $quarter->partner(request()->partner)->pivot->invoice_no)
+                                    {{ html()->input('text', 'invoice_no['.$quarter->start_timestamp.']', optional(optional($quarter->partner(request()->partner))->pivot)->invoice_no)
                                             // ->placeholder('0.00')
                                             ->class('form-control invoice-field')
-                                            ->readOnly(($userHasMasterAccess && !auth()->user()->isMasterAdmin()) || ($currentSheetUserPermission != 'LEAD_USER' && ($quarter->partner(request()->partner)->pivot->claim_status !== 0 || $quarter->partner(request()->partner)->pivot->status != 'current')) || ($currentSheetUserPermission == 'LEAD_USER' && ($quarter->partner(request()->partner)->pivot->claim_status == 0 || $quarter->partner(request()->partner)->pivot->status == 'forecast'))) }}
+                                            ->readOnly(($userHasMasterAccess && !auth()->user()->isMasterAdmin()) || ($currentSheetUserPermission != 'LEAD_USER' && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status !== 0 || optional(optional($quarter->partner(request()->partner))->pivot)->status != 'current')) || ($currentSheetUserPermission == 'LEAD_USER' && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 0 || optional(optional($quarter->partner(request()->partner))->pivot)->status == 'forecast'))) }}
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
@@ -946,16 +946,16 @@
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
                                 <td>
-                                    @switch($quarter->partner(request()->partner)->pivot->status)
+                                    @switch(optional(optional($quarter->partner(request()->partner))->pivot)->status)
                                         @case('historic')
                                             <a target="_blank" href="{{asset('uploads/invoices/'.$quarter->id.'.pdf')}}" class="btn btn-sm btn-primary" role="button">Invoice</a>
                                             @break
                                         @case('current')
-                                            @if (!$userHasMasterAccess && $userHasMasterAccessWithPermission == 'LEAD_USER' && $quarter->partner(request()->partner)->pivot->claim_status == 1)
+                                            @if (!$userHasMasterAccess && $userHasMasterAccessWithPermission == 'LEAD_USER' && optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 1)
                                             <a href="javascript:void(0)" class="btn btn-sm btn-success" role="button" onclick="closeClaim(this, {{$quarter->id}}, {{request()->partner}}, {{$quarter->start_timestamp}})">Close Claim</a>
                                             @endif
-                                            @if(((!$userHasMasterAccess && $userHasMasterAccessWithPermission != 'LEAD_USER') || auth()->user()->isMasterAdmin()) && $quarter->partner(request()->partner)->pivot->claim_status == 0)
-                                            <a href="javascript:void(0)" class="btn btn-sm btn-success {{$quarter->partner(request()->partner)->pivot->claim_status == 1 ? 'disabled' : ''}}" role="button" onclick="submitClaim(this, {{$quarter->id}}, {{$quarter->start_timestamp}})">Submit Claim</a>
+                                            @if(((!$userHasMasterAccess && $userHasMasterAccessWithPermission != 'LEAD_USER') || auth()->user()->isMasterAdmin()) && optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 0)
+                                            <a href="javascript:void(0)" class="btn btn-sm btn-success {{optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 1 ? 'disabled' : ''}}" role="button" onclick="submitClaim(this, {{$quarter->id}}, {{$quarter->start_timestamp}})">Submit Claim</a>
                                             @endif
                                             @break
                                         @default
