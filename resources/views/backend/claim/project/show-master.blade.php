@@ -65,13 +65,13 @@
                                 </select>
                             </form>
                         </div>
-                        <!-- <div class="col-md-6">
+                        <div class="col-md-6">
                             <form>
                                 <input type="hidden" name="exportExcel" value="1" />
                                 <input type="hidden" name="partner" value="{{ $sheetOwner }}" />
                                 <button class="btn btn-primary btn-sm" onclick="this.form.submit()">Export Excel</button>
                             </form>
-                        </div> -->
+                        </div>
                     </div><!--form-group-->
                 </div>
             </x-slot>
