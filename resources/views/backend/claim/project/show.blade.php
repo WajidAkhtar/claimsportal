@@ -611,8 +611,11 @@
                                 @foreach ($project->quarters as $quarter)
                                 @php
                                     $isForeCast = 0;
-                                    $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
-                                    $isForeCast = collect(['current', 'forecast'])->contains($quarter->partner(request()->partner)->pivot->status) ? 1 : 0;
+                                    $labelClass = '';
+                                    if(!empty($quarter->partner(request()->partner))) {
+                                        $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
+                                    }
+                                    $isForeCast = collect(['current', 'forecast'])->contains(optional(optional($quarter->partner(request()->partner))->pivot)->status) ? 1 : 0;
 
                                     $readOnly = false;
 
