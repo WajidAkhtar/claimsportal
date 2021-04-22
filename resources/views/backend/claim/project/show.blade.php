@@ -901,11 +901,16 @@
                                 <td><strong>INVOICE DATE</strong></td>
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
+                                @php
+                                    if(!empty($quarter->partner(request()->partner))) {
+                                        $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
+                                    }
+                                @endphp
                                 <td class="text-center">
-                                    {{ html()->input('text', 'invoice_date['.$quarter->start_timestamp.']', $quarter->partner(request()->partner)->pivot->invoice_date)
+                                    {{ html()->input('text', 'invoice_date['.$quarter->start_timestamp.']', optional(optional($quarter->partner(request()->partner))->pivot)->invoice_date)
                                             // ->placeholder('DD-MM-YYYY')
                                             ->class('form-control invoice-field')
-                                            ->readOnly(($userHasMasterAccess && !auth()->user()->isMasterAdmin()) || ($currentSheetUserPermission != 'LEAD_USER' && ($quarter->partner(request()->partner)->pivot->claim_status !== 0 || $quarter->partner(request()->partner)->pivot->status != 'current')) || ($currentSheetUserPermission == 'LEAD_USER' && ($quarter->partner(request()->partner)->pivot->claim_status == 0 || $quarter->partner(request()->partner)->pivot->status == 'forecast'))) }}
+                                            ->readOnly(($userHasMasterAccess && !auth()->user()->isMasterAdmin()) || ($currentSheetUserPermission != 'LEAD_USER' && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status !== 0 || optional(optional($quarter->partner(request()->partner))->pivot)->status != 'current')) || ($currentSheetUserPermission == 'LEAD_USER' && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 0 || optional(optional($quarter->partner(request()->partner))->pivot)->status == 'forecast'))) }}
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
