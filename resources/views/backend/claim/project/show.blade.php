@@ -750,7 +750,10 @@
                                 @endphp
                                 @foreach ($project->quarters as $quarter)
                                 @php
-                                    $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
+                                    $labelClass = '';
+                                    if(!empty($quarter->partner(request()->partner))) {
+                                        $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
+                                    }
                                 @endphp
                                 <td class="text-center">
                                     <div class="input-group">
@@ -842,7 +845,10 @@
                                 <td style="color: #fff;">&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
                                 @php
-                                    $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
+                                    $labelClass = '';
+                                    if(!empty($quarter->partner(request()->partner))) {
+                                        $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
+                                    }
                                 @endphp
                                 <td class="text-center" style="color: #fff;">
                                     <div class="input-group" style="color: #fff;">
