@@ -559,8 +559,16 @@
                                 <th>DESCRIPTION</th>
                                 <th>TOTAL BUDGET</th>
                                 @foreach ($project->quarters as $quarter)
+                                @php
+                                    $labelClass = '';
+                                    $labelStatus = '';
+                                    if(!empty($quarter->partner(request()->partner))) {
+                                        $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
+                                        $labelStatus = strtoupper($quarter->partner(request()->partner)->pivot->status);
+                                    }
+                                @endphp
                                 <th class="text-center">
-                                    <label class="{{$quarter->partner(request()->partner)->pivot->status == 'current' ? 'current-bg' : ''}} mb-0">&nbsp;{{strtoupper($quarter->partner(request()->partner)->pivot->status)}}&nbsp;</label>
+                                    <label class="{{ $labelClass }} mb-0">&nbsp;{{$labelStatus}}&nbsp;</label>
                                 </th>
                                 @endforeach
                                 <th>PROJECT TOTAL</th>
