@@ -73,16 +73,6 @@
                     <div class="container-fluid">
                         @include('includes.partials.messages')
                         <div class="fade-in">
-                            <!-- START: Breadcrumbs-->
-                            <div class="row">
-                                <div class="col-sm-6 col-lg-3">
-                                    <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
-                                        <div class="w-sm-100 mr-auto"><h4 class="mb-0">@yield('page-title')</h4> <p>@yield('page-sub-title')</p></div>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END: Breadcrumbs-->
                             @yield('content')
                         </div>
                     </div>
