@@ -8,9 +8,11 @@
             <div class="col-md-12">
                 <h2 class="page-main-title">Change Password</h2>
                 <x-frontend.card>
-
+                    <x-slot name="header">
+                        <strong>Change your account password</strong>
+                    </x-slot>
                     <x-slot name="body">
-                        <nav>
+                        <nav style="display: none;">
                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                 <!-- <x-utils.link
                                     :text="__('My Profile')"

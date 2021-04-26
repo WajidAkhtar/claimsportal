@@ -25,7 +25,7 @@
 
     <div class="form-group row mb-0">
         <div class="col-md-12 text-left">
-            <button class="btn btn-sm btn-primary float-right" type="submit">@lang('Update Password')</button>
+            <button class="btn btn-primary float-right" type="submit">@lang('Update Password')</button>
         </div>
     </div><!--form-group-->
 </x-forms.patch>

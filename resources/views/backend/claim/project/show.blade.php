@@ -80,7 +80,7 @@
                             <form>
                                 <input type="hidden" name="exportExcel" value="1" />
                                 <input type="hidden" name="partner" value="{{ $sheetOwner }}" />
-                                <button class="btn btn-primary btn-sm" onclick="this.form.submit()">Export Excel</button>
+                                <button class="btn btn-primary" onclick="this.form.submit()">Export Excel</button>
                             </form>
                         </div>
                     </div><!--form-group-->
@@ -563,7 +563,7 @@
                                     $labelClass = '';
                                     $labelStatus = '';
                                     if(!empty($quarter->partner(request()->partner))) {
-                                        $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
+                                        $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'current-bg' : '';
                                         $labelStatus = strtoupper($quarter->partner(request()->partner)->pivot->status);
                                     }
                                 @endphp
@@ -948,14 +948,14 @@
                                 <td>
                                     @switch(optional(optional($quarter->partner(request()->partner))->pivot)->status)
                                         @case('historic')
-                                            <a target="_blank" href="{{asset('uploads/invoices/'.$quarter->id.'.pdf')}}" class="btn btn-sm btn-primary" role="button">Invoice</a>
+                                            <a target="_blank" href="{{asset('uploads/invoices/'.$quarter->id.'.pdf')}}" class="btn btn-primary" role="button">Invoice</a>
                                             @break
                                         @case('current')
                                             @if (!$userHasMasterAccess && $userHasMasterAccessWithPermission == 'LEAD_USER' && optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 1)
-                                            <a href="javascript:void(0)" class="btn btn-sm btn-success" role="button" onclick="closeClaim(this, {{$quarter->id}}, {{request()->partner}}, {{$quarter->start_timestamp}})">Close Claim</a>
+                                            <a href="javascript:void(0)" class="btn btn-success" role="button" onclick="closeClaim(this, {{$quarter->id}}, {{request()->partner}}, {{$quarter->start_timestamp}})">Close Claim</a>
                                             @endif
                                             @if(((!$userHasMasterAccess && $userHasMasterAccessWithPermission != 'LEAD_USER') || auth()->user()->isMasterAdmin()) && optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 0)
-                                            <a href="javascript:void(0)" class="btn btn-sm btn-success {{optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 1 ? 'disabled' : ''}}" role="button" onclick="submitClaim(this, {{$quarter->id}}, {{$quarter->start_timestamp}})">Submit Claim</a>
+                                            <a href="javascript:void(0)" class="btn btn-success {{optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 1 ? 'disabled' : ''}}" role="button" onclick="submitClaim(this, {{$quarter->id}}, {{$quarter->start_timestamp}})">Submit Claim</a>
                                             @endif
                                             @break
                                         @default
@@ -982,7 +982,7 @@
                                 <td>
                                     @switch($quarter->partner(request()->partner)->pivot->status)
                                         @case('historic')
-                                            <a href="javascript:void(0)" class="btn btn-sm btn-secondary" role="button" onclick="closeClaim(this, {{$quarter->id}}, {{request()->partner}}, {{$quarter->start_timestamp}}, true)">Regenerate</a>
+                                            <a href="javascript:void(0)" class="btn btn-secondary" role="button" onclick="closeClaim(this, {{$quarter->id}}, {{request()->partner}}, {{$quarter->start_timestamp}}, true)">Regenerate</a>
                                             @break
                                         @default
                                     @endswitch

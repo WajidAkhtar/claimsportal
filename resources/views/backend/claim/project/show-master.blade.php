@@ -69,7 +69,7 @@
                             <form>
                                 <input type="hidden" name="exportExcel" value="1" />
                                 <input type="hidden" name="partner" value="{{ $sheetOwner }}" />
-                                <button class="btn btn-primary btn-sm" onclick="this.form.submit()">Export Excel</button>
+                                <button class="btn btn-primary" onclick="this.form.submit()">Export Excel</button>
                             </form>
                         </div>
                     </div><!--form-group-->
@@ -973,7 +973,7 @@
                                 @foreach ($project->quarters as $quarter)
                                 <td class="text-center">
                                     @if ($quarter->user->status == 'historic')
-                                        <a target="_blank" href="{{asset('uploads/invoices/master-'.$quarter->id.'.pdf')}}" class="btn btn-sm btn-primary" role="button">Invoice</a>
+                                        <a target="_blank" href="{{asset('uploads/invoices/master-'.$quarter->id.'.pdf')}}" class="btn btn-primary" role="button">Invoice</a>
                                     @endif
                                 </td>
                                 @endforeach
@@ -995,10 +995,10 @@
                                 <td>
                                     @switch($quarter->user->status)
                                         @case('historic')
-                                            <a href="javascript:void(0)" class="btn btn-sm btn-secondary" role="button" onclick="generateInvoice(this, {{$quarter->id}}, {{$quarter->start_timestamp}}, true)">Regenerate Invoice</a>
+                                            <a href="javascript:void(0)" class="btn btn-secondary" role="button" onclick="generateInvoice(this, {{$quarter->id}}, {{$quarter->start_timestamp}}, true)">Regenerate Invoice</a>
                                             @break
                                         @case('current')
-                                            <a href="javascript:void(0)" class="btn btn-sm btn-primary" role="button" onclick="generateInvoice(this, {{$quarter->id}}, {{$quarter->start_timestamp}}, false)">Generate Invoice</a>
+                                            <a href="javascript:void(0)" class="btn btn-primary" role="button" onclick="generateInvoice(this, {{$quarter->id}}, {{$quarter->start_timestamp}}, false)">Generate Invoice</a>
                                             @break
                                         @default
                                     @endswitch

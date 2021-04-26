@@ -25,7 +25,9 @@
         <!-- END: Page CSS-->
 
         <!-- START: Custom CSS-->
-        <link rel="stylesheet" href="{{ asset('assets/backend/css/main.css') }}">
+        <!-- <link rel="stylesheet" href="{{ asset('assets/backend/css/main.css') }}"> -->
+        <link rel="stylesheet" href="{{ asset('assets/backend/css/style.css') }}">
+        <link href="{{ asset('assets/backend/vendors/@coreui/icons/css/free.min.css') }}" rel="stylesheet">
         @stack('after-custom-styles')
         <!-- END: Custom CSS-->
 
@@ -63,24 +65,27 @@
         <!-- START: Main Content-->
         <main class="ml-0 mb-5">
             <div class="container-fluid site-width">
-                @include('includes.partials.messages')
                 <!-- START: Breadcrumbs-->
                 <div class="row">
                     <div class="col-12  align-self-center">
                         <div class="sub-header mt-1 align-self-center d-sm-flex w-100 rounded">
                             <div class="w-sm-100 mr-auto mt-3 mb-3"><h4 class="mb-0">@yield('page-title')</h4></div>
-
-                            {{-- <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
-                                <li class="breadcrumb-item">Home</li>
-                                <li class="breadcrumb-item">Page</li>
-                                <li class="breadcrumb-item active"><a href="#">Blank Page</a></li>
-                            </ol> --}}
                         </div>
                     </div>
                 </div>
                 <!-- END: Breadcrumbs-->
                 <div class="text-center">
+                    <div class="c-sidebar-brand">
+                        <img src="{{ asset('assets/backend/images/logo.png') }}" class="sidebar-logo" height="100">
+                    </div>
                     <h2>{{ appName() }}</h2>
+                </div>
+                <div class="row text-center">
+                    <div class="col-md-4 mt-3">
+                    </div>
+                    <div class="col-md-4 mt-3">
+                        @include('includes.partials.messages')
+                    </div>
                 </div>
                 @yield('content')
             </div>
@@ -91,13 +96,6 @@
             {{ date('Y') }} © {{ appName() }}
         </footer> --}}
         <!-- END: Footer-->
-
-
-        <!-- START: Back to top-->
-        <a href="#" class="scrollup text-center"> 
-            <i class="icon-arrow-up"></i>
-        </a>
-        <!-- END: Back to top-->
 
         @stack('before-scripts')
         <!-- START: Template JS-->

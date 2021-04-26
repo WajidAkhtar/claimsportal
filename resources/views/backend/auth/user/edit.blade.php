@@ -232,7 +232,7 @@
             </x-slot>
 
             <x-slot name="footer">
-                <button class="btn btn-sm btn-primary float-right" type="submit">@lang('Update User')</button>
+                <button class="btn btn-primary float-right" type="submit">@lang('Update User')</button>
             </x-slot>
         </x-backend.card>
     </x-forms.patch>

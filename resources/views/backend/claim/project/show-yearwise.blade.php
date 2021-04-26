@@ -60,7 +60,7 @@
                 <th class="text-center">
                     @switch(optional(optional($quarter->partner(request()->partner))->pivot)->status)
                         @case('current')
-                            <label class="current-bg mb-0">CURRENT</label>
+                            <label class="current-bg mb-0">&nbsp;CURRENT&nbsp;</label>
                             @break
                         @case('forecast')
                             <label class="mb-0">FORECAST</label>
