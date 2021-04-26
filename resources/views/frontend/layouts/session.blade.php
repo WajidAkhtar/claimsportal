@@ -51,12 +51,7 @@
         @stack('after-styles')
 
     </head>
-    <body id="main-container" class="default">
-        <!-- START: Pre Loader-->
-        <div class="se-pre-con">
-            <div class="loader"></div>
-        </div>
-        <!-- END: Pre Loader-->
+    <body id="main-container" class="default" style="background-color: #fff;">
 
         @include('includes.partials.read-only')
         @include('includes.partials.logged-in-as')
@@ -65,6 +60,7 @@
         <!-- START: Main Content-->
         <main class="ml-0 mb-5">
             <div class="container-fluid site-width">
+                <video class="login-animation" autoplay="" muted="" src="{{ asset('assets/backend/images/animation.mov') }}" loop="" id="vid" style="position: absolute;width: 100%;height: 100%;transform: rotate(270deg);left: 40%;"></video>
                 <!-- START: Breadcrumbs-->
                 <div class="row">
                     <div class="col-12  align-self-center">
