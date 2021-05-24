@@ -1639,7 +1639,7 @@
             var invoice_no = $('[name="invoice_no['+timestamp+']"]').val();
             var invoice_date = $('[name="invoice_date['+timestamp+']"]').val();
             var organisationId = '{{$sheetOwner}}';
-            if(po_number.length == 0 || invoice_no.length == 0 || invoice_date.length == 0) {
+            if(invoice_date.length == 0) {
                 toastr.error('Please fill all invoice related fields!');
                 return false;
             }
