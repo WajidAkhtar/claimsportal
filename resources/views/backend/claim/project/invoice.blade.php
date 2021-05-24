@@ -152,40 +152,87 @@
 								<td width="65%">
                                     <strong>Invoice To:</strong><br>
 									@if (!$isInvoiceToFunder)
-                                    <strong>{{$invoiceToPartner->invoiceOrganisation->organisation_name}}</strong><br />
-                                    {{$invoiceToPartner->office_team_name}}<br />
-                                    {{$invoiceToPartner->building_name}}<br />
-                                    {{$invoiceToPartner->street}}<br />
-                                    {{$invoiceToPartner->address_line_2}}<br />
-                                    {{$invoiceToPartner->city}}<br />
-                                    {{$invoiceToPartner->county}}<br />
-                                    {{$invoiceToPartner->post_code}}<br />
-                                    <strong>Finance Tel:</strong> {{$invoiceToPartner->finance_tel ?? 'N/A'}}<br />
-                                    <strong>Finance Email:</strong> {{$invoiceToPartner->finance_email ?? 'N/A'}}<br />
-                                    @else    
-                                    <strong>{{$invoiceTo->organisation_name}}</strong><br />
-									{{$invoiceToPartner->funder_office}}<br />
-                                    {{$invoiceToPartner->funder_building_name}}<br />
-									{{$invoiceToPartner->funder_address_line_1}}<br />
-                                    {{$invoiceToPartner->funder_address_line_2}}<br />
-                                    {{$invoiceToPartner->funder_city}}<br />
-                                    {{$invoiceToPartner->funder_county}}<br />
-                                    {{$invoiceToPartner->funder_post_code}}<br />
-                                    <strong>Finance Tel:</strong> {{$invoiceToPartner->finance_tel ?? 'N/A'}}<br />
-                                    <strong>Finance Email:</strong> {{$invoiceToPartner->finance_email ?? 'N/A'}}<br />
+										@if(!empty($invoiceToPartner->invoiceOrganisation->organisation_name))
+	                                    	<strong>{{$invoiceToPartner->invoiceOrganisation->organisation_name}}</strong><br />
+	                                    @endif
+	                                    @if(!empty($invoiceToPartner->office_team_name))
+	                                    	{{$invoiceToPartner->office_team_name}}<br />
+	                                    @endif
+	                                    @if(!empty($invoiceToPartner->building_name))
+	                                    	{{$invoiceToPartner->building_name}}<br />
+	                                    @endif
+	                                    @if(!empty($invoiceToPartner->street))
+	                                    	{{$invoiceToPartner->street}}<br />
+	                                    @endif
+	                                    @if(!empty($invoiceToPartner->address_line_2))
+	                                    	{{$invoiceToPartner->address_line_2}}<br />
+	                                    @endif
+	                                    @if(!empty($invoiceToPartner->city))
+	                                    	{{$invoiceToPartner->city}}<br />
+	                                    @endif
+	                                    @if(!empty($invoiceToPartner->county))
+	                                    	{{$invoiceToPartner->county}}<br />
+	                                    @endif
+	                                    @if(!empty($invoiceToPartner->post_code))
+	                                    	{{$invoiceToPartner->post_code}}<br />
+	                                    @endif
+
+	                                @else
+	                                    @if(!empty($invoiceTo->organisation_name))
+	                                    	<strong>{{$invoiceTo->organisation_name}}</strong><br />
+	                                    @endif
+	                                    @if(!empty($invoiceToPartner->funder_office))
+	                                    	{{$invoiceToPartner->funder_office}}<br />
+	                                    @endif
+	                                    @if(!empty($invoiceToPartner->funder_building_name))
+	                                    	{{$invoiceToPartner->funder_building_name}}<br />
+	                                    @endif
+	                                    @if(!empty($invoiceToPartner->funder_address_line_1))
+	                                    	{{$invoiceToPartner->funder_address_line_1}}<br />
+	                                    @endif
+	                                    @if(!empty($invoiceToPartner->funder_address_line_2))
+	                                    	{{$invoiceToPartner->funder_address_line_2}}<br />
+	                                    @endif
+	                                    @if(!empty($invoiceToPartner->funder_city))
+	                                    	{{$invoiceToPartner->funder_city}}<br />
+	                                    @endif
+	                                    @if(!empty($invoiceToPartner->funder_county))
+	                                    	{{$invoiceToPartner->funder_county}}<br />
+	                                    @endif
+	                                    @if(!empty($invoiceToPartner->funder_post_code))
+	                                    	{{$invoiceToPartner->funder_post_code}}<br />
+	                                    @endif
+
                                     @endif
 								</td>
 
 								<td style="text-align: left;float:right;">
                                     <strong>Invoice From:</strong><br />
-                                    <strong>{{$invoiceFromPartner->invoiceOrganisation->organisation_name}}</strong><br />
-                                    {{$invoiceFromPartner->office_team_name}}<br />
-                                    {{$invoiceFromPartner->building_name}}<br />
-									{{$invoiceFromPartner->street}}<br />
-                                    {{$invoiceFromPartner->address_line_2}}<br />
-                                    {{$invoiceFromPartner->city}}<br />
-                                    {{$invoiceFromPartner->county}}<br />
-                                    {{$invoiceFromPartner->post_code}}<br />
+                                    @if(!empty($invoiceFromPartner->invoiceOrganisation->organisation_name))
+                                    	<strong>{{$invoiceFromPartner->invoiceOrganisation->organisation_name}}</strong><br />
+                                    @endif
+                                    @if(!empty($invoiceFromPartner->office_team_name))
+                                    	{{$invoiceFromPartner->office_team_name}}<br />
+                                    @endif
+                                    @if(!empty($invoiceFromPartner->building_name))
+                                    	{{$invoiceFromPartner->building_name}}<br />
+                                    @endif
+                                    @if(!empty($invoiceFromPartner->street))
+                                    	{{$invoiceFromPartner->street}}<br />
+                                    @endif
+                                    @if(!empty($invoiceFromPartner->address_line_2))
+                                    	{{$invoiceFromPartner->address_line_2}}<br />
+                                    @endif
+                                    @if(!empty($invoiceFromPartner->city))
+                                    	{{$invoiceFromPartner->city}}<br />
+                                    @endif
+                                    @if(!empty($invoiceFromPartner->county))
+                                    	{{$invoiceFromPartner->county}}<br />
+                                    @endif
+                                    @if(!empty($invoiceFromPartner->post_code))
+                                    	{{$invoiceFromPartner->post_code}}<br />
+                                    @endif
+
                                     <strong>Finance Tel:</strong> {{$invoiceFromPartner->finance_tel ?? 'N/A'}}<br />
                                     <strong>Finance Email:</strong> {{$invoiceFromPartner->finance_email ?? 'N/A'}}<br />
 								</td>
