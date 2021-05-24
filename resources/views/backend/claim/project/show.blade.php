@@ -27,7 +27,7 @@
         }
         
         .current-bg {
-            background-color: #f64e60;
+            background-color: #45a164;
             color: #fff;
         }
 
@@ -47,6 +47,9 @@
             height: 300px;
             overflow: scroll;
             overflow-x: hidden;
+        }
+        input.text-success::placeholder {
+            color: #45a164 !important;
         }
     </style>
     <link rel="stylesheet" href="{{asset('assets/backend/vendors/select2/css/select2.css')}}">
@@ -560,7 +563,7 @@
                                 @php
                                     $labelClass = '';
                                     if(!empty($quarter->partner(request()->partner))) {
-                                        $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
+                                        $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-success' : '';
                                     }
                                 @endphp
                                 <th class="text-center light-grey-bg">
@@ -630,7 +633,7 @@
                                     $isForeCast = 0;
                                     $labelClass = '';
                                     if(!empty($quarter->partner(request()->partner))) {
-                                        $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
+                                        $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-success' : '';
                                     }
                                     $isForeCast = collect(['current', 'forecast'])->contains(optional(optional($quarter->partner(request()->partner))->pivot)->status) ? 1 : 0;
 
@@ -656,7 +659,7 @@
                                 <td>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text {{ $readOnly ? 'readonly' : '' }}">£</span>
+                                            <span class="input-group-text {{ $readOnly ? 'readonly' : '' }} {{ $labelClass }}">£</span>
                                         </div>
                                         {{ html()->input('number', 'claim_values['.$costItem->id.'][quarter_values]['.$quarter->start_timestamp.']', optional(optional($costItem->claims_data)->quarter_values)->{"$quarter->start_timestamp"} ?? '')
                                             ->placeholder('0.00')
@@ -769,13 +772,13 @@
                                 @php
                                     $labelClass = '';
                                     if(!empty($quarter->partner(request()->partner))) {
-                                        $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
+                                        $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-success' : '';
                                     }
                                 @endphp
                                 <td class="text-center">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text readonly">£</span>
+                                            <span class="input-group-text readonly {{ $labelClass }}">£</span>
                                         </div>
                                         {{ html()->input('number', 'total_costs[for_each_item][quarter_values]['.$quarter->start_timestamp.']')
                                             // ->placeholder('0.00')
@@ -864,13 +867,13 @@
                                 @php
                                     $labelClass = '';
                                     if(!empty($quarter->partner(request()->partner))) {
-                                        $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-danger' : '';
+                                        $labelClass = $quarter->partner(request()->partner)->pivot->status == 'current' ? 'text-success' : '';
                                     }
                                 @endphp
                                 <td class="text-center" style="color: #fff;">
                                     <div class="input-group" style="color: #fff;">
                                         <div class="input-group-prepend" style="color: #fff;">
-                                            <span class="input-group-text readonly" style="color: #fff;">£</span>
+                                            <span class="input-group-text readonly" style="color: #fff;" {{ $labelClass }}>£</span>
                                         </div>
                                         {{ html()->input('number', 'total_costs[cumulative]['.$quarter->start_timestamp.']')
                                             // ->placeholder('0.00')

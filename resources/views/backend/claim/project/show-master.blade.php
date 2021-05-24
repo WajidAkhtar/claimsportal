@@ -27,7 +27,7 @@
         }
         
         .current-bg {
-            background-color: #f64e60;
+            background-color: #45a164;
             color: #fff;
         }
 
@@ -38,6 +38,9 @@
         .input-group-text.readonly {
             border: 0px;
             padding-right: 2px;
+        }
+        input.text-success::placeholder {
+            color: #45a164 !important;
         }
     </style>
 @endpush
@@ -614,7 +617,7 @@
                                 <th>&nbsp;</th>
                                 @foreach ($project->quarters as $quarter)
                                 @php
-                                    $labelClass = $quarter->user->status == 'current' ? 'text-danger' : '';
+                                    $labelClass = $quarter->user->status == 'current' ? 'text-success' : '';
                                 @endphp
                                 <th class="text-center light-grey-bg">
                                     <label class="{{$labelClass ?? ''}} text-uppercase"> {{ $quarter->length }}</label><br>
@@ -684,12 +687,12 @@
                                 @endphp
                                 @foreach ($project->quarters as $quarter)
                                 @php
-                                    $labelClass = $quarter->user->status == 'current' ? 'text-danger' : '';
+                                    $labelClass = $quarter->user->status == 'current' ? 'text-success' : '';
                                 @endphp
                                 <td>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text readonly">£</span>
+                                            <span class="input-group-text readonly {{ $labelClass }}">£</span>
                                         </div>
                                         {{ html()->input('number', 'claim_values['.$costItem->id.'][quarter_values]['.$quarter->start_timestamp.']', $data->claims_data[$costItem->id]['quarter_values'][$quarter->start_timestamp] ?? '')
                                             ->placeholder('0.00')
@@ -790,12 +793,12 @@
                                 @endphp
                                 @foreach ($project->quarters as $quarter)
                                 @php
-                                    $labelClass = $quarter->user->status == 'current' ? 'text-danger' : '';
+                                    $labelClass = $quarter->user->status == 'current' ? 'text-success' : '';
                                 @endphp
                                 <td class="text-center">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text readonly">£</span>
+                                            <span class="input-group-text readonly {{ $labelClass }}">£</span>
                                         </div>
                                         {{ html()->input('number', 'total_costs[for_each_item][quarter_values]['.$quarter->start_timestamp.']')
                                             // ->placeholder('0.00')
@@ -882,12 +885,12 @@
                                 <td style="color: #fff;">&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
                                 @php
-                                    $labelClass = $quarter->user->status == 'current' ? 'text-danger' : '';
+                                    $labelClass = $quarter->user->status == 'current' ? 'text-success' : '';
                                 @endphp
                                 <td class="text-center" style="color: #fff;">
                                     <div class="input-group" style="color: #fff;">
                                         <div class="input-group-prepend" style="color: #fff;">
-                                            <span class="input-group-text readonly" style="color: #fff;">£</span>
+                                            <span class="input-group-text readonly {{ $labelClass }}" style="color: #fff;">£</span>
                                         </div>
                                         {{ html()->input('number', 'total_costs[cumulative]['.$quarter->start_timestamp.']')
                                             // ->placeholder('0.00')
