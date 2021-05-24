@@ -333,6 +333,14 @@
                                          }}
                                     </div>
                                 </div>
+                                <div class="row mt-2">
+                                    <div class="col">
+                                        {{ html()->label('Payment Link')->for('payment_link') }}
+                                        {{ html()->text('payment_link', $partnerAdditionalInfo->payment_link ?? '')
+                                            ->class('form-control additional-info')
+                                        }}
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="row mt-2">

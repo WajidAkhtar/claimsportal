@@ -43,6 +43,8 @@ Route::group([
                 Route::post('/submit-claim', [ProjectController::class, 'submitClaim'])->name('submit.claim');
                 Route::post('/close-claim', [ProjectController::class, 'closeClaim'])->name('close.claim');
                 Route::post('/generate-invoice', [ProjectController::class, 'generateInvoiceForMastersheet'])->name('invoice.generate');
+                Route::post('/save-quarter-note', [ProjectController::class, 'saveQuarterNote'])->name('save.quarter.note');
+                Route::get('/get-quarter-notes', [ProjectController::class, 'getQuarterNotes'])->name('get.quarter.notes');
             });
         });
 

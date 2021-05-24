@@ -39,6 +39,15 @@
             border: 0px;
             padding-right: 2px;
         }
+        .quarter-note {
+            border-bottom: 1px solid #ebebeb;
+            margin-bottom: 10px;
+        }
+        #table_quarter_notes {
+            height: 300px;
+            overflow: scroll;
+            overflow-x: hidden;
+        }
     </style>
     <link rel="stylesheet" href="{{asset('assets/backend/vendors/select2/css/select2.css')}}">
 @endpush
@@ -326,6 +335,14 @@
                                 {{ html()->text('iban', $partnerAdditionalInfo->iban ?? '')
                                     ->class('form-control additional-info')
                                  }}
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                {{ html()->label('Payment Link')->for('payment_link') }}
+                                {{ html()->text('payment_link', $partnerAdditionalInfo->payment_link ?? '')
+                                    ->class('form-control additional-info')
+                                }}
                             </div>
                         </div>
                     </form>
@@ -998,6 +1015,27 @@
                                 @endfor
                             </tr>
                             @endif
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                @foreach ($project->quarters as $quarter)
+                                <td>
+                                    @if($quarter->partner(request()->partner)->pivot->status == 'historic' || $quarter->partner(request()->partner)->pivot->status == 'current')
+                                        <button type="button" class="btn btn-sm btn-danger btn-notes" data-quarter="{{ $quarter->id }}" data-toggle="modal" data-target="#projectQuarterNotesModal">Notes</button>
+                                    @endif
+                                </td>
+                                @endforeach
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
+                                @endfor
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -1008,6 +1046,35 @@
             @endif
         </x-slot>
     </x-backend.card>
+
+    <div class="modal fade" id="projectQuarterNotesModal" tabindex="-1" role="dialog" aria-labelledby="projectQuarterNotesModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Notes</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <input type="hidden" id="note_quarter_id" name="note_quarter_id" />
+                <div class="form-group">
+                    <textarea id="note_text" name="note_text" class="form-control" placeholder="Note"></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-save-quarter-note">Save Note</button>
+                </div>
+                <p><strong>Notes</strong></p>
+                <div id="table_quarter_notes">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-close-quarter-note-modal" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 @push('after-scripts')
     <script src="{{asset('assets/backend/vendors/repeatable/jquery.repeatable.js')}}"></script>
@@ -1398,6 +1465,47 @@
                 }
             });
 
+            $("#projectQuarterNotesModal").on("show.coreui.modal", function(e) {
+                var quarterId = $(e.relatedTarget).attr('data-quarter');
+                $("#projectQuarterNotesModal").find("input[name='note_quarter_id']").val(quarterId);
+                var organisationId = '{{request()->partner}}';
+                showLatestQuarterNotes(quarterId, organisationId);
+            });
+
+            $(".btn-save-quarter-note").on("click", function() {
+                var obj = $(this);
+                var prevHtml = $(obj).html();
+                var quarterId = $("#projectQuarterNotesModal").find("input[name='note_quarter_id']").val();
+                var note = $("#projectQuarterNotesModal").find("textarea[name='note_text']").val();
+                if(stringIsEmpty(note)) {
+                    return false;
+                }
+                var organisationId = '{{request()->partner}}';
+                $.ajax({
+                    url: '{{route('admin.claim.project.save.quarter.note', $project)}}',
+                    data: {quarterId: quarterId, organisationId: organisationId, note: note},
+                    type: 'POST',
+                    dataType: 'json',
+                    beforeSend: function(){
+                        $(obj).html('Please wait....');
+                        $(obj).attr('disabled', 'disabled').addClass('disabled');
+                    },
+                    success: function(response){
+                        $(obj).html(prevHtml);
+                        if(response.success) {
+                            toastr.success(response.message);
+                            $("#projectQuarterNotesModal").find("textarea[name='note_text']").val('');
+                            $(obj).removeAttr('disabled').removeClass('disabled');
+                            showLatestQuarterNotes(quarterId, organisationId);
+                        }
+                        else{
+                            $(obj).removeAttr('disabled').removeClass('disabled');
+                            toastr.error('Something goes wrong!');
+                        }
+                    }
+                })
+            });
+
         });
 
         function initiateCalculationRow(selector) {
@@ -1595,5 +1703,49 @@
                 }
             })
         }
+
+        function showLatestQuarterNotes(quarterId, organisationId) {
+            $.ajax({
+                url: '{{route('admin.claim.project.get.quarter.notes', $project)}}',
+                data: {quarterId: quarterId, organisationId: organisationId},
+                type: 'GET',
+                dataType: 'json',
+                beforeSend: function(){
+                    
+                },
+                success: function(response){
+                    if(response.success) {
+                        var notes = '';
+                        if(response.notes.length == 0) {
+                            notes+= '<div>';
+                            notes+= 'No notes available.';
+                            notes+= '</div>';
+                        } else {
+                            $.each(response.notes, function(i, v) {
+                                notes+= '<div class="quarter-note">';
+                                notes+= '<div class="mb-1">';
+                                notes+= v.note;
+                                notes+= '</div>';
+                                notes+= '<div class="small text-muted mb-1">';
+                                notes+= v.user.first_name+' '+v.user.last_name+' | ';
+                                if(v.user.organisation != null) {
+                                    notes+= v.user.organisation.organisation_name+ ' | ';
+                                }
+                                notes+= v.created_at;
+                                notes+= '</div>';
+                                notes+= '</div>';
+                            });
+                        }
+                        notes = notes.replace(/\r?\n/g, '<br />');
+                        $("#projectQuarterNotesModal").find("#table_quarter_notes").html(notes);
+                    }
+                }
+            });
+        }
+
+        function stringIsEmpty(value) {
+            return value ? value.trim().length == 0 : true;
+        }
+
     </script>
 @endpush

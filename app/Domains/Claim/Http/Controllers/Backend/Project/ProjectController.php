@@ -28,6 +28,7 @@ use App\Domains\Claim\Http\Requests\Backend\Project\UpdateProjectRequest;
 use App\Exports\ClaimExport;
 use App\Exports\ClaimMasterExport;
 use App\Exports\ClaimChildSheet;
+use App\Domains\Claim\Models\ProjectQuarterNote;
 
 /**
  * Class ProjectController.
@@ -459,6 +460,7 @@ class ProjectController
             'contact' => $request->contact,
             'funder_web_url' => $request->funder_web_url,
             'funder_contact' => $request->funder_contact,
+            'payment_link' => $request->payment_link,
         ];
         if(!empty($request->is_master) && $request->is_master == 1) {
             $isSaved = ProjectPartners::where('is_master', '1')->where('project_id', $project->id)->update($data);
@@ -810,4 +812,31 @@ class ProjectController
             'message' => 'Invoice Saved!'
         ];
     }
+
+    // Save quarter note
+    public function saveQuarterNote(Request $request, Project $project) {
+        $quarterNote = new ProjectQuarterNote();
+        $quarterNote->project_id = $project->id;
+        $quarterNote->quarter_id = $request->quarterId;
+        $quarterNote->organisation_id = $request->organisationId;
+        $quarterNote->note = $request->note;
+        $quarterNote->created_by = auth()->user()->id;
+        $quarterNote->save();
+
+        return response()->json([
+            'success' => 1,
+            'message' => 'Note successfully saved!'  
+        ]);
+
+    }
+
+    // Get quarter notes
+    public function getQuarterNotes(Request $request, Project $project) {
+        $quarterNotes = ProjectQuarterNote::where('project_id', $project->id)->where('quarter_id', $request->quarterId)->where('organisation_id', $request->organisationId)->orderBy('created_at', 'DESC')->with(['user', 'organisation'])->get();
+        return response()->json([
+            'success' => 1,
+            'notes' => $quarterNotes  
+        ]);        
+    }
+
 }
