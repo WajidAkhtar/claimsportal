@@ -18,6 +18,11 @@ img.header-logo {
     height: auto;
 }
 
+img.header-project-logo {
+    width: 225px;
+    height: 108px !important;
+}
+
 td {
     vertical-align: middle !important;
 }

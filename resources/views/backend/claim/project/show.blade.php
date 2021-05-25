@@ -444,9 +444,9 @@
                     <div class="row">
                         <div class="col">
                             @if(!empty($project->logo) && file_exists(public_path('uploads/projects/logos/'.$project->logo)))
-                                <img src="{{ asset('uploads/projects/logos/'.$project->logo) }}" class="header-logo" />
+                                <img src="{{ asset('uploads/projects/logos/'.$project->logo) }}" class="header-project-logo" />
                             @else
-                                <img src="{{ asset('uploads/projects/logos/default-logo.png') }}" class="header-logo" />
+                                <img src="{{ asset('uploads/projects/logos/default-logo.png') }}" class="header-project-logo" />
                             @endif
                         </div>
                     </div>
