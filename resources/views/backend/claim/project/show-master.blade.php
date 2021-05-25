@@ -42,6 +42,14 @@
         input.text-success::placeholder {
             color: #45a164 !important;
         }
+
+        .gap {
+            background-color: white;
+            border: 0px !important;
+            border-right: 1px solid #d8dbe0 !important;
+            padding: 0px !important;
+            min-width: 5mm;
+        }
     </style>
 @endpush
 @section('content')
@@ -652,6 +660,7 @@
                                 <th class="border-right">VARIANCE</th>
                                 
                                 @for ($i = 1; $i <= ceil(($project->length/4)); $i++)
+                                <th class="gap">&nbsp;</th>
                                 <th>YR{{$i}} BUDGET</th>
                                 <th>YR{{$i}} TOTAL</th>
                                 <th class="border-right">VARIANCE</th>
@@ -733,6 +742,7 @@
                                     </div>
                                 </td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+                                <td class="gap">&nbsp;</td>
                                 <td>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -839,6 +849,7 @@
                                     </div>
                                 </td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+                                <td class="gap">&nbsp;</td>
                                 <td>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -904,6 +915,7 @@
                                 <td style="color: #fff;">&nbsp;</td>
                                 <td class="border-right" style="color: #fff;">&nbsp;</td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+                                <td class="gap">&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td class="border-right">&nbsp;</td>
@@ -920,12 +932,13 @@
                                     {{ html()->input('text', 'po_number['.$quarter->start_timestamp.']', $quarter->user->po_number)
                                             // ->placeholder('0.00')
                                             ->class('form-control invoice-field')
-                                            ->readOnly($quarter->user->status != 'current') }}
+                                            ->readOnly(($quarter->user->status == 'forecast') || ($quarter->user->status == 'historic' && !in_array(current_user_role(), ['Developer', 'Administrator', 'Super User']))) }}
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
                                 <td class="border-right">&nbsp;</td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+                                <td class="gap">&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td class="border-right">&nbsp;</td>
@@ -942,12 +955,13 @@
                                     {{ html()->input('text', 'invoice_date['.$quarter->start_timestamp.']', $quarter->user->invoice_date)
                                             // ->placeholder('DD/MM/YYYY')
                                             ->class('form-control invoice-field')
-                                            ->readOnly($quarter->user->status != 'current') }}
+                                            ->readOnly(($quarter->user->status == 'forecast') || ($quarter->user->status == 'historic' && !in_array(current_user_role(), ['Developer', 'Administrator', 'Super User']))) }}
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
                                 <td class="border-right">&nbsp;</td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+                                <td class="gap">&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td class="border-right">&nbsp;</td>
@@ -964,12 +978,13 @@
                                     {{ html()->input('text', 'invoice_no['.$quarter->start_timestamp.']', $quarter->user->invoice_no)
                                             // ->placeholder('0.00')
                                             ->class('form-control invoice-field')
-                                            ->readOnly($quarter->user->status != 'current') }}
+                                            ->readOnly(($quarter->user->status == 'forecast') || ($quarter->user->status == 'historic' && !in_array(current_user_role(), ['Developer', 'Administrator', 'Super User']))) }}
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
                                 <td class="border-right">&nbsp;</td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+                                <td class="gap">&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td class="border-right">&nbsp;</td>
@@ -991,6 +1006,7 @@
                                 <td>&nbsp;</td>
                                 <td class="border-right">&nbsp;</td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+                                <td class="gap">&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td class="border-right">&nbsp;</td>
@@ -1018,6 +1034,7 @@
                                 <td>&nbsp;</td>
                                 <td class="border-right">&nbsp;</td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+                                <td class="gap">&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td class="border-right">&nbsp;</td>
