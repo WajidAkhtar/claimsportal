@@ -111,7 +111,7 @@
                 <td>
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text readonly">£</span>
+                            <span class="input-group-text readonly {{ $labelClass }}">£</span>
                         </div>
                         {{ html()->input('number', 'yearly_data['.$yearIndex.'][claim_values]['.$costItem->id.'][quarter_values]['.$fromDate1->timestamp.']', $data->claims_data[$costItem->id]['quarter_values'][$fromDate1->timestamp] ?? 0.00)
                             ->placeholder('0.00')
@@ -176,15 +176,15 @@
                     $toDate = clone $fromDate2;
 
                     $quarter = $project->quarters()->whereStartTimestamp($fromDate2->timestamp)->first();
-                    $labelClass = $quarter->user->status == 'current' ? 'text-success' : '';
                     $labelClass = '';
+                    $labelClass = $quarter->user->status == 'current' ? 'text-success' : '';
 
                     $toDate->addMonths(2)->endOfMonth();
                 @endphp
                 <td class="text-center">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text readonly">£</span>
+                            <span class="input-group-text readonly {{ $labelClass }}">£</span>
                         </div>
                         {{ html()->input('number', 'yearly_data['.$yearIndex.'][total_costs][for_each_item][quarter_values]['.$fromDate2->timestamp.']', 0)
                             // ->placeholder('0.00')
@@ -236,15 +236,15 @@
                     $toDate = clone $fromDate3;
 
                     $quarter = $project->quarters()->whereStartTimestamp($fromDate3->timestamp)->first();
-                    $labelClass = $quarter->user->status == 'current' ? 'text-success' : '';
                     $labelClass = '';
+                    $labelClass = $quarter->user->status == 'current' ? 'text-success' : '';
 
                     $toDate->addMonths(2)->endOfMonth();
                 @endphp
                 <td class="text-center" style="color: #fff;">
                     <div class="input-group" style="color: #fff;">
                         <div class="input-group-prepend" style="color: #fff;">
-                            <span class="input-group-text readonly" style="color: #fff;">£</span>
+                            <span class="input-group-text readonly {{ $labelClass }}" style="color: #fff;">£</span>
                         </div>
                         {{ html()->input('number', 'yearly_data['.$yearIndex.'][total_costs][cumulative]['.$fromDate3->timestamp.']', 0)
                             // ->placeholder('0.00')
