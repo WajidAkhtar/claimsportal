@@ -365,5 +365,200 @@ class OrganisationSeeder extends Seeder
             'logo_high' => 'ENGINEERING & PHYSICAL SCIENCES RESEARCH COUNCIL 300.jpg',
         ]);
 
+        Organisation::create([
+            'organisation_name' => 'UNIVERSITY OF LEICESTER',
+            'organisation_type' => 'ACADEMIC',
+            'building_name_no' => '',
+            'street' => 'UNIVERSITY ROAD',
+            'address_line_2' => '',
+            'county' => 'LEICESTERSHIRE',
+            'city' => 'LEICESTER',
+            'postcode' => 'LE1 7RH',
+            'logo' => 'UNIVERSITY OF LEICESTER 72.jpg',
+            'logo_high' => 'UNIVERSITY OF LEICESTER 300.jpg',
+        ]);
+
+        Organisation::create([
+            'organisation_name' => 'BRUNEL UNIVERSITY LONDON',
+            'organisation_type' => 'ACADEMIC',
+            'building_name_no' => 'KINGSTON LN',
+            'street' => 'UXBRIDGE',
+            'address_line_2' => '',
+            'county' => 'LONDON',
+            'city' => 'LONDON',
+            'postcode' => 'UB8 3PH',
+            'logo' => 'BRUNEL UNIVERSITY LONDON 72.jpg',
+            'logo_high' => 'BRUNEL UNIVERSITY LONDON 300.jpg',
+        ]);
+
+        Organisation::create([
+            'organisation_name' => 'LANCASTER UNIVERSITY',
+            'organisation_type' => 'ACADEMIC',
+            'building_name_no' => '',
+            'street' => 'BAILRIGG',
+            'address_line_2' => '',
+            'county' => 'LANCASHIRE',
+            'city' => 'LANCASTER',
+            'postcode' => 'LA1 4YW',
+            'logo' => 'LANCASTER UNIVERSITY 72.jpg',
+            'logo_high' => 'LANCASTER UNIVERSITY 300.jpg',
+        ]);
+
+        Organisation::create([
+            'organisation_name' => 'PLYMOUTH UNIVERSITY',
+            'organisation_type' => 'ACADEMIC',
+            'building_name_no' => '',
+            'street' => 'DRAKE CIRCUS',
+            'address_line_2' => '',
+            'county' => 'DEVON',
+            'city' => 'PLYMOUTH',
+            'postcode' => 'PL4 8AA',
+            'logo' => 'PLYMOUTH UNIVERSITY 72.jpg',
+            'logo_high' => 'PLYMOUTH UNIVERSITY 300.jpg',
+        ]);
+
+        Organisation::create([
+            'organisation_name' => 'UNIVERSITY OF NORTHAMPTON',
+            'organisation_type' => 'ACADEMIC',
+            'building_name_no' => 'WATERSIDE CAMPUS',
+            'street' => 'UNIVERSITY DR',
+            'address_line_2' => '',
+            'county' => 'NORTHAMPTONSHIRE',
+            'city' => 'NORTHAMPTON',
+            'postcode' => 'NN1 5PH',
+            'logo' => 'UNIVERSITY OF NORTHAMPTON 72.jpg',
+            'logo_high' => 'UNIVERSITY OF NORTHAMPTON 300.jpg',
+        ]);
+
+        Organisation::create([
+            'organisation_name' => 'UNIVERSITY OF STRATHCLYDE',
+            'organisation_type' => 'ACADEMIC',
+            'building_name_no' => '',
+            'street' => '16 RICHMOND ST',
+            'address_line_2' => '',
+            'county' => 'LANARKSHIRE',
+            'city' => 'GLASGOW',
+            'postcode' => 'G1 1XQ',
+            'logo' => 'UNIVERSITY OF STRATHCLYDE 72.jpg',
+            'logo_high' => 'UNIVERSITY OF STRATHCLYDE 300.jpg',
+        ]);
+
+        Organisation::create([
+            'organisation_name' => 'UNIVERSITY OF ST ANDREWS',
+            'organisation_type' => 'ACADEMIC',
+            'building_name_no' => '',
+            'street' => 'COLLEGE GATE',
+            'address_line_2' => '',
+            'county' => 'SCOTLAND',
+            'city' => 'FIFE',
+            'postcode' => 'KY16 9AJ',
+            'logo' => 'UNIVERSITY OF ST ANDREWS 72.jpg',
+            'logo_high' => 'UNIVERSITY OF ST ANDREWS 300.jpg',
+        ]);
+
+        Organisation::create([
+            'organisation_name' => 'LOUGHBOROUGH UNIVERSITY',
+            'organisation_type' => 'ACADEMIC',
+            'building_name_no' => '',
+            'street' => 'EPINAL WAY',
+            'address_line_2' => '',
+            'county' => 'LEICESTERSHIRE',
+            'city' => 'LOUGHBOROUGH',
+            'postcode' => 'LE11 3TU',
+            'logo' => 'LOUGHBOROUGH UNIVERSITY 72.jpg',
+            'logo_high' => 'LOUGHBOROUGH UNIVERSITY 300.jpg',
+        ]);
+
+        Organisation::create([
+            'organisation_name' => 'UNIVERSITY OF BATH',
+            'organisation_type' => 'ACADEMIC',
+            'building_name_no' => '',
+            'street' => 'CLAVERTON DOWN',
+            'address_line_2' => '',
+            'county' => 'NORTH EAST SOMERSET',
+            'city' => 'BATH',
+            'postcode' => 'BA2 7AY',
+            'logo' => 'UNIVERSITY OF BATH 72.jpg',
+            'logo_high' => 'UNIVERSITY OF BATH 300.jpg',
+        ]);
+
+        Organisation::create([
+            'organisation_name' => 'UNIVERSITY OF EAST ANGLIA',
+            'organisation_type' => 'ACADEMIC',
+            'building_name_no' => '',
+            'street' => 'NORWICH RESEARCH PARK',
+            'address_line_2' => '',
+            'county' => 'NORFOLK',
+            'city' => 'NORWICH',
+            'postcode' => 'NR4 7TJ',
+            'logo' => 'UNIVERSITY OF EAST ANGLIA 72.jpg',
+            'logo_high' => 'UNIVERSITY OF EAST ANGLIA 300.jpg',
+        ]);
+
+        Organisation::create([
+            'organisation_name' => 'UNIVERSITY OF DUNDEE',
+            'organisation_type' => 'ACADEMIC',
+            'building_name_no' => '',
+            'street' => 'NETHERGATE',
+            'address_line_2' => '',
+            'county' => 'SCOTLAND',
+            'city' => 'DUNDEE',
+            'postcode' => 'DD1 4HN',
+            'logo' => 'UNIVERSITY OF DUNDEE 72.jpg',
+            'logo_high' => 'UNIVERSITY OF DUNDEE 300.jpg',
+        ]);
+
+        Organisation::create([
+            'organisation_name' => 'UNIVERSITY OF ABERDEEN',
+            'organisation_type' => 'ACADEMIC',
+            'building_name_no' => '',
+            'street' => "KING'S COLLEGE",
+            'address_line_2' => '',
+            'county' => 'ABERDEENSHIRE',
+            'city' => 'ABERDEEN',
+            'postcode' => 'AB24 3FX',
+            'logo' => 'UNIVERSITY OF ABERDEEN 72.jpg',
+            'logo_high' => 'UNIVERSITY OF ABERDEEN 300.jpg',
+        ]);
+
+        Organisation::create([
+            'organisation_name' => 'SWANSEA UNIVERSITY',
+            'organisation_type' => 'ACADEMIC',
+            'building_name_no' => '',
+            'street' => 'SINGLETON PARK',
+            'address_line_2' => '',
+            'county' => 'WALES',
+            'city' => 'SWANSEA',
+            'postcode' => 'SA2 8PP',
+            'logo' => 'SWANSEA UNIVERSITY 72.jpg',
+            'logo_high' => 'SWANSEA UNIVERSITY 300.jpg',
+        ]);
+
+        Organisation::create([
+            'organisation_name' => 'UNIVERSITY OF SURREY',
+            'organisation_type' => 'ACADEMIC',
+            'building_name_no' => 'UNIVERSITY CAMPUS',
+            'street' => 'STAG HILL',
+            'address_line_2' => '',
+            'county' => 'SURREY',
+            'city' => 'GUILDFORD',
+            'postcode' => 'GU2 7XH',
+            'logo' => 'UNIVERSITY OF SURREY 72.jpg',
+            'logo_high' => 'UNIVERSITY OF SURREY 300.jpg',
+        ]);
+
+        Organisation::create([
+            'organisation_name' => 'UNIVERSITY OF READING',
+            'organisation_type' => 'ACADEMIC',
+            'building_name_no' => '',
+            'street' => 'WHITEKNIGHTS',
+            'address_line_2' => '',
+            'county' => 'BERKSHIRE',
+            'city' => 'READING',
+            'postcode' => 'RG6 6AH',
+            'logo' => 'UNIVERSITY OF READING 72.jpg',
+            'logo_high' => 'UNIVERSITY OF READING 300.jpg',
+        ]);
+
     }
 }

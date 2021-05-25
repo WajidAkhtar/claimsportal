@@ -41,6 +41,7 @@ class CreateProjectPartnersTable extends Migration
             $table->string('account_no')->nullable();
             $table->string('swift')->nullable();
             $table->string('iban')->nullable();
+            $table->string('payment_link')->nullable();
             $table->string('web_url')->nullable();
             $table->string('contact')->nullable();
             $table->string('customer_ref')->nullable();

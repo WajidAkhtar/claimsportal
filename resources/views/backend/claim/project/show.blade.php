@@ -873,7 +873,7 @@
                                 <td class="text-center" style="color: #fff;">
                                     <div class="input-group" style="color: #fff;">
                                         <div class="input-group-prepend" style="color: #fff;">
-                                            <span class="input-group-text readonly" style="color: #fff;" {{ $labelClass }}>£</span>
+                                            <span class="input-group-text readonly {{ $labelClass }}" style="color: #fff;">£</span>
                                         </div>
                                         {{ html()->input('number', 'total_costs[cumulative]['.$quarter->start_timestamp.']')
                                             // ->placeholder('0.00')
