@@ -25,7 +25,7 @@
                     @php
                         $date = clone $startDate;
                         $quarter = $project->quarters()->whereStartTimestamp($startDate->timestamp)->first();
-                        $labelClass = $quarter->user->status == 'current' ? 'text-danger' : '';
+                        $labelClass = $quarter->user->status == 'current' ? 'text-success' : '';
                         $date->addMonths(2)->endOfMonth();
                     @endphp
                     <th class="text-center light-grey-bg">
@@ -104,7 +104,7 @@
                 @php
                     $toDate = clone $fromDate1;
                     $quarter = $project->quarters()->whereStartTimestamp($fromDate1->timestamp)->first();
-                    $labelClass = $quarter->user->status == 'current' ? 'text-danger' : '';
+                    $labelClass = $quarter->user->status == 'current' ? 'text-success' : '';
                     $toDate->addMonths(2)->endOfMonth();
                     $projectTotal += $data->claims_data[$costItem->id]['quarter_values'][$fromDate1->timestamp] ?? 0;
                 @endphp
@@ -176,7 +176,7 @@
                     $toDate = clone $fromDate2;
 
                     $quarter = $project->quarters()->whereStartTimestamp($fromDate2->timestamp)->first();
-                    $labelClass = $quarter->user->status == 'current' ? 'text-danger' : '';
+                    $labelClass = $quarter->user->status == 'current' ? 'text-success' : '';
                     $labelClass = '';
 
                     $toDate->addMonths(2)->endOfMonth();
@@ -236,7 +236,7 @@
                     $toDate = clone $fromDate3;
 
                     $quarter = $project->quarters()->whereStartTimestamp($fromDate3->timestamp)->first();
-                    $labelClass = $quarter->user->status == 'current' ? 'text-danger' : '';
+                    $labelClass = $quarter->user->status == 'current' ? 'text-success' : '';
                     $labelClass = '';
 
                     $toDate->addMonths(2)->endOfMonth();
