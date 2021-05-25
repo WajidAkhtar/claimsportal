@@ -7,7 +7,7 @@
     $yearlyTableStyleTop = 'border-top:3px solid black;border-bottom:3px solid #ffffff;';
 @endphp
 <table>
-    @for($i = 0; $i <= 12;$i++)
+    @for($i = 0; $i <= 7;$i++)
         <tr>
             <td></td>
         </tr>

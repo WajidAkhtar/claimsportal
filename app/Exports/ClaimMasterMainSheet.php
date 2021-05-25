@@ -76,6 +76,7 @@ class ClaimMasterMainSheet implements FromView, WithTitle, WithDrawings, WithSty
         $drawing1 = new Drawing();
         $drawing1->setPath($project_logo_path);
         $drawing1->setWidth(225);
+        $drawing1->setHeight(108);
         $drawing1->setOffsetX(5);
         $drawing1->setOffsetY(5);
         $drawing1->setCoordinates('B1');
