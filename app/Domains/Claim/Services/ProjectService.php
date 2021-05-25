@@ -60,12 +60,15 @@ class ProjectService extends BaseService
                 $project_logo_name = time().'.'.$data['project_logo']->extension();
                 
                 // Resize project logo to 225 X 225
-                $canvas = Image::canvas(225, 225);
-                $image  = Image::make($data['project_logo']->getRealPath())->resize(225, 225, function($constraint) {
-                    $constraint->aspectRatio();
-                });
-                $canvas->insert($image, 'center');
-                $canvas->save('uploads/projects/logos/'.$project_logo_name);
+                // $canvas = Image::canvas(225, 225);
+                // $image  = Image::make($data['project_logo']->getRealPath())->resize(225, 225, function($constraint) {
+                //     $constraint->aspectRatio();
+                // });
+                // $canvas->insert($image, 'center');
+                // $canvas->save('uploads/projects/logos/'.$project_logo_name);
+
+                $image = Image::make($data['project_logo']);
+                $image->save('uploads/projects/logos/'.$project_logo_name);
 
                 $project->update([
                     'logo' => $project_logo_name
@@ -195,12 +198,15 @@ class ProjectService extends BaseService
                 $project_logo_name = time().'.'.$data['project_logo']->extension();
 
                 // Resize project logo to 225 X 225
-                $canvas = Image::canvas(225, 225);
-                $image  = Image::make($data['project_logo']->getRealPath())->resize(225, 225, function($constraint) {
-                    $constraint->aspectRatio();
-                });
-                $canvas->insert($image, 'center');
-                $canvas->save('uploads/projects/logos/'.$project_logo_name);
+                // $canvas = Image::canvas(225, 225);
+                // $image  = Image::make($data['project_logo']->getRealPath())->resize(225, 225, function($constraint) {
+                //     $constraint->aspectRatio();
+                // });
+                // $canvas->insert($image, 'center');
+                // $canvas->save('uploads/projects/logos/'.$project_logo_name);
+
+                $image = Image::make($data['project_logo']);
+                $image->save('uploads/projects/logos/'.$project_logo_name);
 
                 $project->update([
                     'logo' => $project_logo_name
