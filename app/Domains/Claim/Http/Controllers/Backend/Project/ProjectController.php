@@ -516,8 +516,6 @@ class ProjectController
         $validator = Validator::make($request->all(), [
             'quarterId' => 'required|exists:project_quarters,id',
             'organisationId' => 'required|exists:organisations,id',
-            'po_number' => 'required',
-            'invoice_no' => 'required',
             'invoice_date' => 'required|date_format:d/m/Y',
         ]);
 
