@@ -148,7 +148,7 @@
                             <div class="col">
                                 {{ html()->label('Organisation Type')->for('organisation_type') }}
                                 <div class="form-group"> 
-                                    {{ html()->select('organisation_type', $organisationTypes, $partnerAdditionalInfo->organisation_type ?? '')
+                                    {{ html()->select('organisation_type', $organisationTypes, $partnerAdditionalInfo->organisation_type ?? $partnerAdditionalInfo->invoiceOrganisation->organisation_type)
                                         ->class('form-control additional-info')
                                         ->placeholder('Select Organisation Type')
                                         ->required()
@@ -158,7 +158,7 @@
                             <div class="col">
                                 {{ html()->label('Building Name/No')->for('building_name') }}
                                 <div class="form-group"> 
-                                    {{ html()->text('building_name', $partnerAdditionalInfo->building_name ?? '')
+                                    {{ html()->text('building_name', $partnerAdditionalInfo->building_name ?? $partnerAdditionalInfo->invoiceOrganisation->building_name_no)
                                         ->class('form-control additional-info')
                                         ->required()
                                      }}
@@ -179,7 +179,7 @@
                             <div class="col">
                                 {{ html()->label('Address Line 1')->for('street') }}
                                 <div class="form-group"> 
-                                    {{ html()->text('street', $partnerAdditionalInfo->street ?? '')
+                                    {{ html()->text('street', $partnerAdditionalInfo->street ?? $partnerAdditionalInfo->invoiceOrganisation->street)
                                         ->class('form-control additional-info')
                                         ->required()
                                      }}
@@ -195,7 +195,7 @@
                             </div>
                             <div class="col">
                                 {{ html()->label('Address Line 2')->for('address_line_2') }}
-                                {{ html()->text('address_line_2', $partnerAdditionalInfo->address_line_2 ?? '')
+                                {{ html()->text('address_line_2', $partnerAdditionalInfo->address_line_2 ?? $partnerAdditionalInfo->invoiceOrganisation->address_line_2)
                                     ->class('form-control additional-info')
                                  }}
                             </div>
@@ -209,7 +209,7 @@
                             </div>
                             <div class="col">
                                 {{ html()->label('City')->for('city') }}
-                                {{ html()->text('city', $partnerAdditionalInfo->city ?? '')
+                                {{ html()->text('city', $partnerAdditionalInfo->city ?? $partnerAdditionalInfo->invoiceOrganisation->city)
                                     ->class('form-control additional-info')
                                  }}
                             </div>
@@ -223,7 +223,7 @@
                             </div>
                             <div class="col">
                                 {{ html()->label('County')->for('county') }}
-                                {{ html()->text('county', $partnerAdditionalInfo->county ?? '')
+                                {{ html()->text('county', $partnerAdditionalInfo->county ?? $partnerAdditionalInfo->invoiceOrganisation->county)
                                     ->class('form-control additional-info')
                                  }}
                             </div>
@@ -237,7 +237,7 @@
                             </div>
                             <div class="col">
                                 {{ html()->label('Post Code')->for('post_code') }}
-                                {{ html()->text('post_code', $partnerAdditionalInfo->post_code ?? '')
+                                {{ html()->text('post_code', $partnerAdditionalInfo->post_code ?? $partnerAdditionalInfo->invoiceOrganisation->postcode)
                                     ->class('form-control additional-info')
                                  }}
                             </div>
@@ -385,7 +385,7 @@
                                 <div class="row mt-2">
                                     <div class="col">
                                         {{ html()->label('Building Name/No')->for('funder_building_name') }}
-                                        {{ html()->text('funder_building_name', $partnerAdditionalInfo->funder_building_name ?? '')
+                                        {{ html()->text('funder_building_name', $partnerAdditionalInfo->funder_building_name ?? optional($project->funders()->first())->building_name_no)
                                             ->class('form-control additional-info')
                                          }}
                                     </div>
@@ -393,7 +393,7 @@
                                 <div class="row mt-2">
                                     <div class="col">
                                         {{ html()->label('Address Line 1')->for('funder_address_line_1') }}
-                                        {{ html()->text('funder_address_line_1', $partnerAdditionalInfo->funder_address_line_1 ?? '')
+                                        {{ html()->text('funder_address_line_1', $partnerAdditionalInfo->funder_address_line_1 ?? optional($project->funders()->first())->street)
                                             ->class('form-control additional-info')
                                          }}
                                     </div>
@@ -401,7 +401,7 @@
                                 <div class="row mt-2">
                                     <div class="col">
                                         {{ html()->label('Address Line 2')->for('funder_address_line_2') }}
-                                        {{ html()->text('funder_address_line_2', $partnerAdditionalInfo->funder_address_line_2 ?? '')
+                                        {{ html()->text('funder_address_line_2', $partnerAdditionalInfo->funder_address_line_2 ?? optional($project->funders()->first())->address_line_2)
                                             ->class('form-control additional-info')
                                          }}
                                     </div>
@@ -409,7 +409,7 @@
                                 <div class="row mt-2">
                                     <div class="col">
                                         {{ html()->label('City')->for('funder_city') }}
-                                        {{ html()->text('funder_city', $partnerAdditionalInfo->funder_city ?? '')
+                                        {{ html()->text('funder_city', $partnerAdditionalInfo->funder_city ?? optional($project->funders()->first())->city)
                                             ->class('form-control additional-info')
                                          }}
                                     </div>
@@ -417,7 +417,7 @@
                                 <div class="row mt-2">
                                     <div class="col">
                                         {{ html()->label('County')->for('funder_county') }}
-                                        {{ html()->text('funder_county', $partnerAdditionalInfo->funder_county ?? '')
+                                        {{ html()->text('funder_county', $partnerAdditionalInfo->funder_county ?? optional($project->funders()->first())->county)
                                             ->class('form-control additional-info')
                                          }}
                                     </div>
@@ -425,7 +425,7 @@
                                 <div class="row mt-2">
                                     <div class="col">
                                         {{ html()->label('Post Code')->for('funder_post_code') }}
-                                        {{ html()->text('funder_post_code', $partnerAdditionalInfo->funder_post_code ?? '')
+                                        {{ html()->text('funder_post_code', $partnerAdditionalInfo->funder_post_code ?? optional($project->funders()->first())->postcode)
                                             ->class('form-control additional-info')
                                          }}
                                     </div>
