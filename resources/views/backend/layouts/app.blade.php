@@ -24,7 +24,7 @@
         <link rel="stylesheet" href="{{ asset('assets/backend/vendors/weather-icons/css/pe-icon-set-weather.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/backend/vendors/ionicons/css/ionicons.min.css') }}">
         {{-- <link rel="stylesheet" href="{{ asset('assets/backend/vendors/sweetalert/sweetalert.css') }}"> --}}
-        <link rel="stylesheet" href="{{ asset('assets/backend/vendors/toastr/toastr.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/backend/vendors/toastr/toastr.min.css') }}?v={{ uniqid() }}">
         <link rel="stylesheet" href="{{asset('assets/backend/vendors/select2/css/select2.css')}}">
         <livewire:styles />
             @stack('after-page-styles')

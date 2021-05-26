@@ -27,8 +27,9 @@
         }
         
         .current-bg {
-            background-color: #45a164;
-            color: #fff;
+            /*background-color: #45a164;
+            color: #fff;*/
+            color: #45a164 !important;
         }
 
         input:read-only {
