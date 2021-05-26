@@ -6,6 +6,32 @@
     @include('backend.claim.project.includes.breadcrumb-links')
 @endsection --}}
 
+<style type="text/css">
+    th {
+        font-size: 0.875rem;
+    }
+    td {
+        font-size: 0.875rem;
+        font-weight: 400;
+    }
+    th:nth-child(2) {
+        width: 12%;
+        font-size: small;
+    }
+    th:nth-child(3) {
+        width: 12%;
+        font-size: small;
+    }
+    th:nth-child(6) {
+        width: 15%;
+        font-size: small;
+    }
+    th:nth-child(7) {
+        width: 13%;
+        font-size: small;
+    }
+</style>
+
 @section('content')
     <div class="row">
         <div class="col-12 mt-3">
