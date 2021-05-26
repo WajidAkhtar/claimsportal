@@ -72,6 +72,14 @@
         .input-group input:read-only.text-success {
             font-weight: bold !important;
         } 
+
+        li.nav-item {
+            margin-bottom: 0.2em;
+        }
+        li.nav-item > button {
+            width: 95px !important;
+        }
+
     </style>
     <link rel="stylesheet" href="{{asset('assets/backend/vendors/select2/css/select2.css')}}">
 @endpush
@@ -110,11 +118,30 @@
                             </form>
                         </div>
                         <div class="col-md-6">
-                            <form>
-                                <input type="hidden" name="exportExcel" value="1" />
-                                <input type="hidden" name="partner" value="{{ $sheetOwner }}" />
-                                <button class="btn btn-primary" onclick="this.form.submit()">Export Excel</button>
-                            </form>
+                            
+                        </div>
+                        <div class="col-md-2">
+                            <button class="navbar-toggler toggler-example pull-right collapsed" type="button" data-toggle="collapse" data-target="#navSheetActions" aria-controls="navSheetActions" aria-expanded="false" aria-label="Toggle navigation" style="float: right;">
+                            <span class=""><i class="fas fa-bars fa-1x"></i></span></button>
+                            <div class="navbar-collapse collapse" id="navSheetActions" style="">
+                                <!-- Links -->
+                                <ul class="navbar-nav mr-auto">
+                                  <li class="nav-item active">
+                                    <button class="btn btn-sm btn-outline-primary toggle_user_permissions_info togget_action_content"><span class="toggle_action_text_hide"></span> PERMISSIONS</button>
+                                  </li>
+                                  <li class="nav-item">
+                                    <button class="btn btn-sm btn-outline-primary toggle_partner_additional_info togget_action_content"><span class="toggle_action_text_hide"></span> FINANCE</button></td>
+                                  </li>
+                                  <li class="nav-item">
+                                    <form>
+                                        <input type="hidden" name="exportExcel" value="1" />
+                                        <input type="hidden" name="partner" value="{{ $sheetOwner }}" />
+                                        <button class="btn btn-primary" onclick="this.form.submit()">Export Excel</button>
+                                    </form>
+                                  </li>
+                                </ul>
+                                <!-- Links -->
+                              </div>
                         </div>
                     </div><!--form-group-->
                 </div>
@@ -126,15 +153,7 @@
     @if(current_user_role() == 'Developer' || current_user_role() == 'Administrator' || current_user_role() == 'Super User' || current_user_role() == 'Finance Officer' || current_user_role() == 'Project Admin')
     <x-backend.card>
         <x-slot name="header">
-            <table class="">
-                <tr>
-                    <td>
-                        <button class="btn btn-sm btn-outline-primary toggle_partner_additional_info togget_action_content"><span class="toggle_action_text_hide"></span> FINANCE</button></td>
-                    <td>
-                        <button class="btn btn-sm btn-outline-primary toggle_user_permissions_info togget_action_content"><span class="toggle_action_text_hide"></span> PERMISSIONS</button>
-                    </td>
-                </tr>
-            </table>
+            
         </x-slot>        
 
         <x-slot name="body">

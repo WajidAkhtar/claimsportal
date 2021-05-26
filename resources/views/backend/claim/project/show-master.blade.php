@@ -66,6 +66,13 @@
             font-weight: bold !important;
         } 
 
+        li.nav-item {
+            margin-bottom: 0.2em;
+        }
+        li.nav-item > button {
+            width: 95px !important;
+        }
+
     </style>
 @endpush
 @section('content')
@@ -93,11 +100,37 @@
                             </form>
                         </div>
                         <div class="col-md-6">
-                            <form>
-                                <input type="hidden" name="exportExcel" value="1" />
-                                <input type="hidden" name="partner" value="{{ $sheetOwner }}" />
-                                <button class="btn btn-primary" onclick="this.form.submit()">Export Excel</button>
-                            </form>
+                            
+                        </div>
+                        <div class="col-md-2">
+                            <button class="navbar-toggler toggler-example pull-right collapsed" type="button" data-toggle="collapse" data-target="#navSheetActions" aria-controls="navSheetActions" aria-expanded="false" aria-label="Toggle navigation" style="float: right;">
+                            <span class=""><i class="fas fa-bars fa-1x"></i></span></button>
+                            <div class="navbar-collapse collapse" id="navSheetActions" style="">
+                                <!-- Links -->
+                                <ul class="navbar-nav mr-auto">
+                                  <li class="nav-item active">
+                                    <button class="btn btn-sm btn-outline-primary toggle_user_permissions_info togget_action_content"><span class="toggle_action_text_hide"></span> PERMISSIONS</button>
+                                  </li>
+                                  <li class="nav-item">
+                                    <button class="btn btn-sm btn-outline-primary toggle_partner_additional_info togget_action_content"><span class="toggle_action_text_hide"></span> FINANCE</button>
+                                  </li>
+                                  @if(auth()->user()->hasRole('Administrator') || auth()->user()->hasRole('Developer') || (auth()->user()->hasRole('Super User') && $project->userHasPartialAccessToProject()) || (!empty(projectLead($project)) && (projectLead($project)->id == auth()->user()->id)))
+                                    <li class="nav-item">
+                                        <a href="{{ route('admin.claim.project.edit', $project) }}" class="btn btn-primary btn-sm">
+                                            <i class="fas fa-pencil-alt"></i> Edit Project
+                                        </a>
+                                    </li>
+                                  @endif
+                                  <li class="nav-item">
+                                    <form>
+                                        <input type="hidden" name="exportExcel" value="1" />
+                                        <input type="hidden" name="partner" value="{{ $sheetOwner }}" />
+                                        <button class="btn btn-primary" onclick="this.form.submit()">Export Excel</button>
+                                    </form>
+                                  </li>
+                                </ul>
+                                <!-- Links -->
+                              </div>
                         </div>
                     </div><!--form-group-->
                 </div>
@@ -109,22 +142,7 @@
     @if(current_user_role() == 'Developer' || current_user_role() == 'Administrator' || current_user_role() == 'Super User' || current_user_role() == 'Finance Officer' || current_user_role() == 'Project Admin')
     <x-backend.card>
         <x-slot name="header">
-            <table class="">
-                <tr>
-                    <td>
-                        <button class="btn btn-sm btn-outline-primary toggle_partner_additional_info togget_action_content"><span class="toggle_action_text_hide"></span> FINANCE</button></td>
-                    <td>
-                        <button class="btn btn-sm btn-outline-primary toggle_user_permissions_info togget_action_content"><span class="toggle_action_text_hide"></span> PERMISSIONS</button>
-                    </td>
-                    @if(auth()->user()->hasRole('Administrator') || auth()->user()->hasRole('Developer') || (auth()->user()->hasRole('Super User') && $project->userHasPartialAccessToProject()) || (!empty(projectLead($project)) && (projectLead($project)->id == auth()->user()->id)))
-                        <td>
-                            <a href="{{ route('admin.claim.project.edit', $project) }}" class="btn btn-primary btn-sm">
-                                <i class="fas fa-pencil-alt"></i> Edit Project
-                            </a>
-                        </td>
-                    @endif
-                </tr>
-            </table>
+            
         </x-slot>        
 
         <x-slot name="body">
@@ -1451,6 +1469,10 @@
                 afterDelete : function() {
                     $(".toggle_user_permissions_info").trigger('focus');    
                 }
+            });
+
+            $('.navbar-toggler').click(function(){
+                $('#navSheetActions').toggleClass('show');
             });
 
         });
