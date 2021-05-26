@@ -51,6 +51,10 @@
         }
         input.text-success::placeholder {
             color: #45a164 !important;
+            font-weight: bold !important;
+        }
+        span.text-success {
+            font-weight: bold !important;   
         }
         .gap {
             background-color: white;
@@ -58,6 +62,15 @@
             border-right: 1px solid #d8dbe0 !important;
             padding: 0px !important;
             min-width: 5mm;
+        }
+        .input-group {
+            padding-left: 22px;
+        }
+        .input-group input:read-only {
+            padding-left: 22px !important;
+        }
+        .input-group input:read-only.text-success {
+            font-weight: bold !important;
         }
     </style>
     <link rel="stylesheet" href="{{asset('assets/backend/vendors/select2/css/select2.css')}}">

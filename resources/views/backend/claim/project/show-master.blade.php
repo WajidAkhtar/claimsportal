@@ -42,6 +42,10 @@
         }
         input.text-success::placeholder {
             color: #45a164 !important;
+            font-weight: bold;
+        }
+        span.text-success {
+            font-weight: bold !important;   
         }
 
         .gap {
@@ -51,6 +55,17 @@
             padding: 0px !important;
             min-width: 5mm;
         }
+
+        .input-group {
+            padding-left: 22px;
+        }
+        .input-group input:read-only {
+            padding-left: 22px !important;
+        }
+        .input-group input:read-only.text-success {
+            font-weight: bold !important;
+        }
+
     </style>
 @endpush
 @section('content')
