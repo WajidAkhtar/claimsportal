@@ -71,7 +71,7 @@
         }
         .input-group input:read-only.text-success {
             font-weight: bold !important;
-        }
+        } 
     </style>
     <link rel="stylesheet" href="{{asset('assets/backend/vendors/select2/css/select2.css')}}">
 @endpush

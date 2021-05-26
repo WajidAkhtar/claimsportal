@@ -64,7 +64,7 @@
         }
         .input-group input:read-only.text-success {
             font-weight: bold !important;
-        }
+        } 
 
     </style>
 @endpush
