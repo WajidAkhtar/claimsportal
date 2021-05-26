@@ -20597,9 +20597,9 @@ html:not([dir="rtl"]) .c-switch-label .c-switch-slider::after {
 }
 
 .toast-warning {
-  color: #4f5d73;
-  background-color: #f9b115;
-  border-color: #d69405;
+  color: #fff;
+  background-color: #e55353;
+  border-color: #de2727;
 }
 
 .toast-warning .toast-header {

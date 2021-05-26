@@ -1491,7 +1491,7 @@
                             toastr.success(response.message);
                         }
                         else{
-                            toastr.error(response.message);
+                            toastr.warning(response.message);
                         }
                     }
                 })
@@ -1512,7 +1512,7 @@
                 }
             });
             if(isError) {
-                toastr.error('User and Permission must be assigned for giving access to the sheet.');
+                toastr.warning('User and Permission must be assigned for giving access to the sheet.');
                 return;
             }
             var formData = new FormData($('#user_permissions_info')[0]);
@@ -1527,7 +1527,7 @@
                             toastr.success(response.message);
                         }
                         else{
-                            toastr.error(response.message);
+                            toastr.warning(response.message);
                         }
                     }
                 })
@@ -1572,7 +1572,7 @@
             var invoice_no = $('[name="invoice_no['+timestamp+']"]').val();
             var invoice_date = $('[name="invoice_date['+timestamp+']"]').val();
             if(invoice_date.length == 0) {
-                toastr.error('Please fill all invoice related fields!');
+                toastr.warning('Please fill all invoice related fields!');
                 return false;
             }
 
@@ -1594,7 +1594,7 @@
                     }
                     else{
                         $(element).removeAttr('disabled').removeClass('disabled');
-                        toastr.error(response.message);
+                        toastr.warning(response.message);
                     }
                 }
             })

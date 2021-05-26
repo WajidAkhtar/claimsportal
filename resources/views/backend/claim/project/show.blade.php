@@ -1520,7 +1520,7 @@
                         }
                         else{
                             $(obj).removeAttr('disabled').removeClass('disabled');
-                            toastr.error('Something goes wrong!');
+                            toastr.warning('Something goes wrong!');
                         }
                     }
                 })
@@ -1580,7 +1580,7 @@
                             toastr.success(response.message);
                         }
                         else{
-                            toastr.error('Something goes wrong...');
+                            toastr.warning('Something goes wrong...');
                         }
                     }
                 })
@@ -1601,7 +1601,7 @@
                 }
             });
             if(isError) {
-                toastr.error('User and Permission must be assigned for giving access to the sheet.');
+                toastr.warning('User and Permission must be assigned for giving access to the sheet.');
                 return;
             }
             var formData = new FormData($('#user_permissions_info')[0]);
@@ -1616,7 +1616,7 @@
                         toastr.success(response.message);
                     }
                     else{
-                        toastr.error('Something goes wrong...');
+                        toastr.warning('Something goes wrong...');
                     }
                 }
             })
@@ -1660,7 +1660,7 @@
             var invoice_date = $('[name="invoice_date['+timestamp+']"]').val();
             var organisationId = '{{$sheetOwner}}';
             if(invoice_date.length == 0) {
-                toastr.error('Please fill all invoice related fields!');
+                toastr.warning('Please fill all invoice related fields!');
                 return false;
             }
 
@@ -1683,7 +1683,7 @@
                     }
                     else{
                         $(element).removeAttr('disabled').removeClass('disabled');
-                        toastr.error(response.message);
+                        toastr.warning(response.message);
                     }
                 }
             })
@@ -1696,7 +1696,7 @@
             var invoice_no = $('[name="invoice_no['+timestamp+']"]').val();
             var invoice_date = $('[name="invoice_date['+timestamp+']"]').val();
             if(po_number.length == 0 || invoice_no.length == 0 || invoice_date.length == 0) {
-                toastr.error('Please fill all invoice related fields!');
+                toastr.warning('Please fill all invoice related fields!');
                 return false;
             }
 
@@ -1718,7 +1718,7 @@
                     }
                     else{
                         $(element).removeAttr('disabled').removeClass('disabled');
-                        toastr.error(response.message);
+                        toastr.warning(response.message);
                     }
                 }
             })
