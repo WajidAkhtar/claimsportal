@@ -655,6 +655,7 @@ class ProjectController
         // ]);
 
         $pdf = PDF::loadView('backend.claim.project.invoice', [
+            'project' => $project,
             'quarter' => $quarter,
             'quarterPartner' => $quarterPartner,
             'invoiceItems' => json_decode(json_encode($invoiceItems)),
