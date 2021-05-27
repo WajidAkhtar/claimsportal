@@ -3,7 +3,12 @@
 @section('title', __('Create Project'))
 
 @section('content')
-    <h2 class="page-main-title">Create Project</h2>
+    <a href="{{ url()->previous() }}" class="text-large">
+        <span>
+            <i class="fa fa-arrow-left"></i>
+        </span>
+    </a>
+    <h2 class="page-main-title mt-3">Create Project</h2>
     <x-forms.post :action="route('admin.claim.project.store')" enctype="multipart/form-data">
         <x-backend.card>
             <x-slot name="header">

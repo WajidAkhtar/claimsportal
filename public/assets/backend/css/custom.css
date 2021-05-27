@@ -185,3 +185,7 @@ td {
     width: 100px;
     height: auto;
 }
+
+.text-large {
+    font-size: 20px;
+}

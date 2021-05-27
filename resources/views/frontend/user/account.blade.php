@@ -6,7 +6,12 @@
     <div class="container py-4">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <h2 class="page-main-title">Change Password</h2>
+                <a href="{{ url()->previous() }}" class="text-large">
+                    <span>
+                        <i class="fa fa-arrow-left"></i>
+                    </span>
+                </a>
+                <h2 class="page-main-title mt-3">Change Password</h2>
                 <x-frontend.card>
                     <x-slot name="header">
                         <strong>Change your account password</strong>

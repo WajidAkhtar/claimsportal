@@ -76,7 +76,12 @@
     </style>
 @endpush
 @section('content')
-    <h2 class="page-main-title">View Project</h2>
+    <a href="{{ url()->previous() }}" class="text-large">
+        <span>
+            <i class="fa fa-arrow-left"></i>
+        </span>
+    </a>
+    <h2 class="page-main-title mt-3">View Project</h2>
 
     @if($project->userHasPartialAccessToProject())
     <x-backend.card>
