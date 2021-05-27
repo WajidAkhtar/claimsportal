@@ -14,7 +14,9 @@
 			body {
 				font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
 				text-align: center;
-				color: #777;
+				color: #000;
+				margin-right: 3em;
+				margin-left: 3em;
 			}
 
 			body h1 {
@@ -29,23 +31,21 @@
 				/* margin-top: 10px; */
 				/* margin-bottom: 20px; */
 				font-style: italic;
-				color: #555;
+				color: #000;
 			}
 
 			body a {
-				color: #06f;
+				color: #000;
 			}
 
 			.invoice-box {
 				max-width: 800px;
 				margin: auto;
 				padding: 5px;
-				border: 1px solid #eee;
-				box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 				font-size: 12px;
 				line-height: 18px;
 				font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-				color: #555;
+				color: #000;
 			}
 
 			.invoice-box table {
@@ -71,7 +71,7 @@
 			.invoice-box table tr.top table td.title {
 				font-size: 25px;
 				line-height: 15px;
-				color: #333;
+				color: #000;
 			}
 
 			.invoice-box table tr.information table td {
@@ -79,8 +79,8 @@
 			}
 
 			.invoice-box table tr.heading td {
-				background: #eee;
-				border-bottom: 1px solid #ddd;
+				/*background: #eee;*/
+				/*border-bottom: 1px solid #ddd;*/
 				font-weight: bold;
 			}
 
@@ -99,6 +99,11 @@
 			.invoice-box table tr.total td:nth-child(2) {
 				border-top: 2px solid #eee;
 				font-weight: bold;
+			}
+
+			a {
+				text-decoration: none;
+				color: #4799eb !important;
 			}
 
 			@media only screen and (max-width: 600px) {
@@ -121,10 +126,10 @@
 		<div class="invoice-box">
 			<table>
 				<tr class="top">
-					<td colspan="2">
-						<table>
+					<td colspan="4">
+						<table width="100%">
 							<tr>
-								<td class="title" width="65%">
+								<td class="title" width="65%" valign="top">
                                     @if(!empty($invoiceFromPartner->invoiceOrganisation->logo) && file_exists(public_path('uploads/organisations/logos/'.$invoiceFromPartner->invoiceOrganisation->logo)))
                                         <img src="{{ asset('uploads/organisations/logos/'.$invoiceFromPartner->invoiceOrganisation->logo) }}" style="height: auto; width: 225px;" />
                                     @else
@@ -145,11 +150,11 @@
 				</tr>
 
 				<tr class="information">
-					<td colspan="2">
+					<td colspan="4">
 						<table>
 							<tr>
 								<td width="65%">
-									<strong class="mb-3 text-sm">Invoice To:</strong><br />
+									<span class="mb-3 text-sm">Invoice To:</span><br />
 									@if(!empty($invoiceFunder->organisation_name))
                                     	<strong class="text-dark mb-1">{{$invoiceFunder->organisation_name}}</strong><br />
                                     @endif
@@ -178,7 +183,7 @@
 								</td>
 
 								<td style="text-align: left;float:right;">
-									<strong class="mb-3 text-sm">Invoice From:</strong><br />
+									<span class="mb-3 text-sm">Invoice From:</span><br />
 									@if(!empty($invoiceFromPartner->invoiceOrganisation->organisation_name))
                                     	<strong class="text-dark mb-1">{{$invoiceFromPartner->invoiceOrganisation->organisation_name}}</strong><br />
                                     @endif
@@ -204,7 +209,8 @@
                                     @if(!empty($invoiceFromPartner->post_code))
                                     	{{$invoiceFromPartner->post_code}}<br />
                                     @endif
-                                   
+                                   	
+                                   	<br>
                                     <strong>Finance Tel:</strong> {{$invoiceFromPartner->finance_tel ?? 'N/A'}}<br />
                                     <strong>Finance Email:</strong> {{$invoiceFromPartner->finance_email ?? 'N/A'}}<br />
 								</td>
@@ -213,73 +219,84 @@
 					</td>
 				</tr>
 
-				<tr class="heading">
-					<td>Description</td>
-					<td style="text-align:center;">Amount</td>
-					<td style="text-align:center;">VAT</td>
-				</tr>
-
-                @foreach (array_slice($invoiceItems, 0, 5) as $invoiceItem)
-                <tr class="item {{$loop->last ? 'last' : ''}}">
-                    <td>{{$invoiceItem->item_name.' '.$invoiceItem->item_description}}</td>
-                    <td style="text-align:center;">£{{$invoiceItem->item_price}}</td>
-                    <td style="text-align:center;">{{$invoiceItem->vat_perc}}%</td>
+				<tr class="information">
+                    <td colspan="3"></td>
                 </tr>
-                @endforeach
-				<tr class="total">
-					<td style="text-align:right;"><strong>Total (Net):</strong> </td>
-					<td style="text-align:center;">£{{number_format($total = array_sum(array_column($invoiceItems, 'item_price')), 2)}}</td>
-					<td></td>
-				</tr>
-				<tr class="total">
-					<td style="text-align:right;"><strong>VAT:</strong> </td>
-					<td style="text-align:center;">£{{number_format($vat = ($total * (array_sum(array_column($invoiceItems, 'vat_perc')) / 100)), 2)}}</td>
-					<td></td>
-				</tr>
-				<tr class="total">
-					<td style="text-align:right;"><strong>Balance Due:</strong> </td>
-					<td style="text-align:center;">£{{number_format($total + $vat, 2)}}</td>
-					<td></td>
-				</tr>
                 <tr class="information">
                     <td colspan="3"></td>
                 </tr>
                 <tr class="information">
+                    <td colspan="3"></td>
+                </tr>
+                <tr class="information">
+                    <td colspan="3"></td>
+                </tr>
+
+				<tr class="heading">
+					<td style="background-color: #dedede;padding: 10px;">DESCRIPTION<000>
+					<td style="background-color: #dedede;padding: 10px;text-align:center;">AMOUNT<000>
+					<td style="background-color: #dedede;padding: 10px;text-align:center;">VAT<000>
+					<td style="background-color: #dedede;padding: 10px;text-align:center;">TOTAL<000>
+				</tr>
+
+				<tr>
+					<td>
+						<strong>Project Name:</strong> {{ $project->name }}<br>
+						<strong>Claim Period:</strong> 
+							@php
+								$project_end_date = date('d-m-Y', strtotime("+".($project->length * 3)." months", strtotime('01-'.$project->start_date->format('m-Y'))));
+							@endphp
+							{{ strtoupper($project->start_date->format('M y').' - '.date('M y', strtotime($project_end_date))) }}
+						<br>
+						<strong>Project Quarter:</strong>
+							{{ $project->length }}
+						<br>
+					</td>
+					<td style="text-align: center;">£{{number_format($total = array_sum(array_column($invoiceItems, 'item_price')), 2)}}</td>
+					<td style="text-align: center;">£{{number_format($vat = ($total * (array_sum(array_column($invoiceItems, 'vat_perc')) / 100)), 2)}}</td>
+					<td style="text-align: center;">£{{number_format($total + $vat, 2)}}</td>
+				</tr>
+
+                <tr class="information">
+                    <td colspan="3"></td>
+                </tr>
+                <tr class="information">
+                    <td colspan="3"></td>
+                </tr>
+                <tr class="information">
+                    <td colspan="3"></td>
+                </tr>
+
+                <tr class="information">
 					<td colspan="3">
-						<strong>Payment Terms: </strong>Net 30/ 30 days<br>
-						<strong>Payment Due Date: </strong>{{\Carbon\Carbon::createFromFormat('d/m/Y', $quarterPartner->invoice_date)->addMonth()->format('d/m/Y')}}<br><br>
+						<strong>PAYMENT TERMS:</strong> Net 30<br>
+						<strong>PAYMENT DUE DATE:</strong> {{\Carbon\Carbon::createFromFormat('d/m/Y', $quarterPartner->invoice_date)->addMonth()->format('d/m/Y')}}<br><br>
 					</td>
 				</tr>
-                <tr class="heading">
-					<td colspan="3">BANK DETAILS</td>
-				</tr>
                 <tr>
-					<td>
-                        <table>
-                            <tr class="heading">
-                                <td>FOR BACS PAYMENTS</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <strong>ACCOUNT NAME: </strong>{{$invoiceFromPartner->account_name}}<br>
-                                    <strong>BANK NAME: </strong>{{$invoiceFromPartner->bank_name}}<br>
-                                    <strong>SORT CODE: </strong>{{$invoiceFromPartner->sort_code}}<br>
-                                    <strong>ACCOUNT NUMBER: </strong>{{$invoiceFromPartner->account_no}}<br>
-                                    <strong>IBAN: </strong>{{$invoiceFromPartner->iban}}<br>
-                                    <strong>SWIFT: </strong>{{$invoiceFromPartner->swift}}<br>
-                                </td>
-                            </tr>
-                            <tr class="heading">
-                                <td>FOR ONLINE PAYMENTS</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                	<!-- <a href="#"></a><br> -->
-                                	<strong>VAT REG No: </strong>{{$invoiceFromPartner->vat}}
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
+					<td colspan="3">
+						<strong>BANK DETAILS</strong><br>
+						<span style="line-height: 0px;font-size: 9px;">ACCOUNT NAME: {{$invoiceFromPartner->account_name}}</span><br>
+                        <span style="line-height: 0px;font-size: 9px;">BANK NAME: {{$invoiceFromPartner->bank_name}}</span><br>
+                        <span style="line-height: 0px;font-size: 9px;">SORT CODE: {{$invoiceFromPartner->sort_code}}</span><br>
+                        <span style="line-height: 0px;font-size: 9px;">ACCOUNT NUMBER: {{$invoiceFromPartner->account_no}}</span><br>
+                        <span style="line-height: 0px;font-size: 9px;">IBAN: {{$invoiceFromPartner->iban}}</span><br>
+                        <span style="line-height: 0px;font-size: 9px;">SWIFT: {{$invoiceFromPartner->swift}}</span><br>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<strong>PAYMENT LINK:</strong><br>
+						@if(!empty($invoiceFromPartner->payment_link))
+							<a href="{{ $invoiceFromPartner->payment_link }}">{{ $invoiceFromPartner->payment_link }}</a>
+						@endif
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<strong>VAT REG NO:</strong><br>
+						{{ $invoiceFromPartner->vat }}
+					</td>
 				</tr>
 			</table>
 		</div>

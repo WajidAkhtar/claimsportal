@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
             'job_title' => '',
             'department' => '',
             'email' => 'admin@admin.com',
-            'password' => 'secret',
+            'password' => 't3chdn4',
             'email_verified_at' => now(),
             'active' => true,
         ]);
