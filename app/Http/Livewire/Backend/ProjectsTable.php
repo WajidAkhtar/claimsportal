@@ -74,7 +74,7 @@ class ProjectsTable extends TableComponent
     public function columns(): array
     {
         return [
-            Column::make(__('Logo'), 'logo')
+            Column::make(__(''), 'logo')
                 ->format(function(Project $model){
                     if(!empty($model->logo) && file_exists(public_path('uploads/projects/logos/'.$model->logo))) {
                         // $project_log_path = $this->image(asset('uploads/projects/logos/'.$model->logo), 'Logo', ['class' => '', 'style' => 'height:56px; width: 200px;max-width:200px;']);
@@ -109,7 +109,7 @@ class ProjectsTable extends TableComponent
             Column::make(__('Project Status'), 'status')
                 ->searchable()
                 ->sortable(),
-            Column::make(__('Actions'))
+            Column::make(__(''))
                 ->format(function (Project $model) {
                     return view('backend.claim.project.includes.actions', ['project' => $model]);
                 }),

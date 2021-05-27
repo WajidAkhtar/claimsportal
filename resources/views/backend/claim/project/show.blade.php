@@ -638,14 +638,14 @@
                                     <label class="{{ $labelClass }} mb-0">&nbsp;{{$labelStatus}}&nbsp;</label>
                                 </th>
                                 @endforeach
-                                <th>PROJECT TOTAL</th>
-                                <th class="border-right">VARIANCE</th>
+                                <th class="text-center">PROJECT TOTAL</th>
+                                <th class="border-right text-center">VARIANCE</th>
                                 
                                 @for ($i = 1; $i <= ceil(($project->length/4)); $i++)
                                 <th class="gap">&nbsp;</th>
-                                <th>YR{{$i}} BUDGET</th>
-                                <th>YR{{$i}} TOTAL</th>
-                                <th class="border-right">VARIANCE</th>
+                                <th class="text-center">YR{{$i}} BUDGET</th>
+                                <th class="text-center">YR{{$i}} TOTAL</th>
+                                <th class="border-right text-center">VARIANCE</th>
                                 @endfor
                             </tr>
                         </thead>
@@ -1083,7 +1083,7 @@
                                 @foreach ($project->quarters as $quarter)
                                 <td>
                                     @if($quarter->partner(request()->partner)->pivot->status == 'historic' || $quarter->partner(request()->partner)->pivot->status == 'current')
-                                        <button type="button" class="btn btn-sm btn-danger btn-notes" data-quarter="{{ $quarter->id }}" data-toggle="modal" data-target="#projectQuarterNotesModal">Notes</button>
+                                        <button type="button" class="btn btn-danger btn-notes" style="width: 107px;" data-quarter="{{ $quarter->id }}" data-toggle="modal" data-target="#projectQuarterNotesModal">Notes</button>
                                     @endif
                                 </td>
                                 @endforeach
@@ -1782,9 +1782,10 @@
                             notes+= '</div>';
                         } else {
                             $.each(response.notes, function(i, v) {
+                                var note_number = i+1;
                                 notes+= '<div class="quarter-note">';
                                 notes+= '<div class="mb-1">';
-                                notes+= v.note;
+                                notes+= note_number+". "+v.note;
                                 notes+= '</div>';
                                 notes+= '<div class="small text-muted mb-1">';
                                 notes+= v.user.first_name+' '+v.user.last_name+' | ';

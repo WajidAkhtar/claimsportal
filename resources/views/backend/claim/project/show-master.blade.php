@@ -695,14 +695,14 @@
                                     @endswitch
                                 </th>
                                 @endforeach
-                                <th>PROJECT TOTAL</th>
-                                <th class="border-right">VARIANCE</th>
+                                <th class="text-center">PROJECT TOTAL</th>
+                                <th class="border-right text-center">VARIANCE</th>
                                 
                                 @for ($i = 1; $i <= ceil(($project->length/4)); $i++)
                                 <th class="gap">&nbsp;</th>
-                                <th>YR{{$i}} BUDGET</th>
-                                <th>YR{{$i}} TOTAL</th>
-                                <th class="border-right">VARIANCE</th>
+                                <th class="text-center">YR{{$i}} BUDGET</th>
+                                <th class="text-center">YR{{$i}} TOTAL</th>
+                                <th class="border-right text-center">VARIANCE</th>
                                 @endfor
                             </tr>
                         </thead>

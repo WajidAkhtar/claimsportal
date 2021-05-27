@@ -76,8 +76,8 @@
                     $fromDate->addMonths(3);
                 @endphp
                 @endfor
-                <th>TOTAL</th>
-                <th class="border-right">VARIANCE</th>
+                <th class="text-center">TOTAL</th>
+                <th class="border-right text-center">VARIANCE</th>
             </tr>
         </thead>
         <tbody>
