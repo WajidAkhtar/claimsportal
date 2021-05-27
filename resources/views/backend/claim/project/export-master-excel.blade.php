@@ -5,6 +5,7 @@
     $yearlyTableStyleRight = 'border-right:3px solid black;border-bottom:3px solid #ffffff;';
     $yearlyTableStyleBottom = 'border-bottom:3px solid black;';
     $yearlyTableStyleTop = 'border-top:3px solid black;border-bottom:3px solid #ffffff;';
+    $textCenterStyle = "text-align: center;";
 @endphp
 <table>
     @for($i = 0; $i <= 5;$i++)
@@ -157,7 +158,7 @@
                 }
                 $overall_total_budget+= $total_budget;
             @endphp
-            <td style="{{ ($total_budget < 0) ? 'color: red' : 'black' }};{{ $defaultCellStyle }} {{ $cellBgStyle }}">
+            <td style="{{ ($total_budget < 0) ? 'color: red' : 'black' }};{{ $defaultCellStyle }} {{ $cellBgStyle }} {{ $textCenterStyle }}">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text readonly">£</span>
@@ -182,7 +183,7 @@
             $projectTotal += $quarter_value;
             $projectVariance = $total_budget - $projectTotal;
             @endphp
-            <td style="{{ ($quarter_value < 0) ? 'color: red' : 'black' }};background-color: #ffffff;{{ $defaultCellStyle }} {{ $labelClass }} {{ $cellBgStyle }}">
+            <td style="{{ ($quarter_value < 0) ? 'color: red' : 'black' }};background-color: #ffffff;{{ $defaultCellStyle }} {{ $labelClass }} {{ $cellBgStyle }} {{ $textCenterStyle }}">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text readonly">£</span>
@@ -200,7 +201,7 @@
                 $total_project_total+= $projectTotal;
                 $total_project_variance+= $projectVariance;
             @endphp
-            <td style="{{ ($projectTotal < 0) ? 'color: red' : 'black' }};background-color: #ffffff;{{ $defaultCellStyle }} {{ $cellBgStyle }}">
+            <td style="{{ ($projectTotal < 0) ? 'color: red' : 'black' }};background-color: #ffffff;{{ $defaultCellStyle }} {{ $cellBgStyle }} {{ $textCenterStyle }}">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text readonly">£</span>
@@ -208,7 +209,7 @@
                     <span>{{ number_format($projectTotal, 2 , ".", "") }}</span>
                 </div>
             </td>
-            <td style="{{ ($projectVariance < 0) ? 'color: red' : 'black' }};background-color: #ffffff;{{ $defaultCellStyle }} {{ $cellBgStyle }}">
+            <td style="{{ ($projectVariance < 0) ? 'color: red' : 'black' }};background-color: #ffffff;{{ $defaultCellStyle }} {{ $cellBgStyle }} {{ $textCenterStyle }}">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text readonly">£</span>
@@ -244,7 +245,7 @@
                         $total_yearly_amount[$i]+= $yearAmount;
                         $total_yearly_variance[$i]+= $yearVariance;
                     @endphp
-                <td style="{{ ($yearBudget < 0) ? 'color: red' : 'black' }};background-color: #ffffff;{{ $defaultCellStyle }} {{ $cellBgStyle }}{{ $yearlyTableStyleLeft }} {{ $yearlyTableStyleTop }}">
+                <td style="{{ ($yearBudget < 0) ? 'color: red' : 'black' }};background-color: #ffffff;{{ $defaultCellStyle }} {{ $cellBgStyle }}{{ $yearlyTableStyleLeft }} {{ $yearlyTableStyleTop }} {{ $textCenterStyle }}">
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">£</span>
@@ -252,7 +253,7 @@
                         <span>{{ number_format($yearBudget, 2, ".", "") }}</span>
                     </div>
                 </td>
-                <td style="{{ ($yearAmount < 0) ? 'color: red' : 'black' }};background-color: #ffffff;{{ $defaultCellStyle }} {{ $cellBgStyle }}{{ $yearlyTableStyleTop }}">
+                <td style="{{ ($yearAmount < 0) ? 'color: red' : 'black' }};background-color: #ffffff;{{ $defaultCellStyle }} {{ $cellBgStyle }}{{ $yearlyTableStyleTop }} {{ $textCenterStyle }}">
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text readonly">£</span>
@@ -260,7 +261,7 @@
                         <span>{{ number_format($yearAmount, 2, ".", "") }}</span>
                     </div>
                 </td>
-                <td style="{{ ($yearVariance < 0) ? 'color: red' : 'black' }};background-color: #ffffff;{{ $defaultCellStyle }} {{ $cellBgStyle }}{{ $yearlyTableStyleRight }} {{ $yearlyTableStyleTop }}">
+                <td style="{{ ($yearVariance < 0) ? 'color: red' : 'black' }};background-color: #ffffff;{{ $defaultCellStyle }} {{ $cellBgStyle }}{{ $yearlyTableStyleRight }} {{ $yearlyTableStyleTop }} {{ $textCenterStyle }}">
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text readonly">£</span>
@@ -277,7 +278,7 @@
             <td style="border-top: 1px solid black;background-color: #ffffff;">&nbsp;</td>
             <td style="border-top: 1px solid black;background-color: #ffffff;">&nbsp;</td>
             <td style="border-top: 1px solid black;background-color: #DEEAF6;{{ $defaultCellStyle }}border-bottom: 1px solid #000000;"><strong>Total Cost (for each item)</strong></td>
-            <td style="{{ ($overall_total_budget < 0) ? 'color: red' : 'black' }};background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }}border-top: 1px solid black;">
+            <td style="{{ ($overall_total_budget < 0) ? 'color: red' : 'black' }};background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }} {{ $textCenterStyle }}border-top: 1px solid black;">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text readonly">£</span>
@@ -304,7 +305,7 @@
                 @endphp
             @endforeach
 
-            <td style="{{ ($total_cost_for_each_item < 0) ? 'color: red' : 'black' }};background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }}border-top: 1px solid black;{{ $labelClass }}">
+            <td style="{{ ($total_cost_for_each_item < 0) ? 'color: red' : 'black' }};background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }} {{ $textCenterStyle }}border-top: 1px solid black;{{ $labelClass }}">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text readonly">£</span>
@@ -318,7 +319,7 @@
             }
             @endphp
             @endforeach
-            <td style="{{ ($total_project_total < 0) ? 'color: red' : 'black' }};background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }}border-top: 1px solid black;">
+            <td style="{{ ($total_project_total < 0) ? 'color: red' : 'black' }};background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }} {{ $textCenterStyle }}border-top: 1px solid black;">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text readonly">£</span>
@@ -326,7 +327,7 @@
                     <span>{{ number_format($total_project_total, 2, ".", "") }}</span>
                 </div>
             </td>
-            <td style="{{ ($total_project_variance < 0) ? 'color: red' : 'black' }};background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }}border-top: 1px solid black;">
+            <td style="{{ ($total_project_variance < 0) ? 'color: red' : 'black' }};background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }} {{ $textCenterStyle }}border-top: 1px solid black;">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text readonly">£</span>
@@ -336,7 +337,7 @@
             </td>
             <td></td>
             @for ($i = 0; $i < ceil(($project->length/4)); $i++)
-                <td style="{{ ($total_yearly_budget[$i] < 0) ? 'color: red' : 'black' }};background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }}{{ $yearlyTableStyleLeft }} {{ $yearlyTableStyleTop }}border-bottom:1px solid black;">
+                <td style="{{ ($total_yearly_budget[$i] < 0) ? 'color: red' : 'black' }};background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }}{{ $yearlyTableStyleLeft }} {{ $yearlyTableStyleTop }} {{ $textCenterStyle }}border-bottom:1px solid black;">
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text readonly">£</span>
@@ -344,7 +345,7 @@
                         <span>{{ number_format($total_yearly_budget[$i], 2, ".", "") }}</span>
                     </div>
                 </td>
-                <td style="{{ ($total_yearly_amount[$i] < 0) ? 'color: red' : 'black' }};background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }}{{ $yearlyTableStyleTop }}border-bottom:1px solid black;">
+                <td style="{{ ($total_yearly_amount[$i] < 0) ? 'color: red' : 'black' }};background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }}{{ $yearlyTableStyleTop }} {{ $textCenterStyle }}border-bottom:1px solid black;">
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text readonly">£</span>
@@ -352,7 +353,7 @@
                         <span>{{ number_format($total_yearly_amount[$i], 2, ".", "") }}</span>
                     </div>
                 </td>
-                <td style="{{ ($total_yearly_variance[$i] < 0) ? 'color: red' : 'black' }};background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }}{{ $yearlyTableStyleRight }} {{ $yearlyTableStyleTop }}border-bottom:1px solid black;">
+                <td style="{{ ($total_yearly_variance[$i] < 0) ? 'color: red' : 'black' }};background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }}{{ $yearlyTableStyleRight }} {{ $yearlyTableStyleTop }} {{ $textCenterStyle }}border-bottom:1px solid black;">
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text readonly">£</span>
@@ -391,7 +392,7 @@
                     $total_cumulative_for_each_items[] = $total_cumulative_for_each_item;
                     $count++;
                 @endphp
-            <td style="background-color: #DEEAF6;{{ ($total_cumulative_for_each_item < 0) ? 'color: red' : 'black' }};{{ $defaultCellStyle }} {{ $hedingStyle  }} {{ $labelClass }}">
+            <td style="background-color: #DEEAF6;{{ ($total_cumulative_for_each_item < 0) ? 'color: red' : 'black' }};{{ $defaultCellStyle }} {{ $hedingStyle  }} {{ $labelClass }} {{ $textCenterStyle }}">
                 <div class="input-group" style="color: #fff;">
                     <div class="input-group-prepend" style="color: #fff;">
                         <span class="input-group-text readonly" style="color: #fff;">£</span>
