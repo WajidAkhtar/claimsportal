@@ -715,16 +715,16 @@ class ProjectController
             ]);
         }
 
+        $response = $this->generateAndSaveMasterInvoice($project, $quarter, $quarterPartner, $invoiceFrom, $invoiceFromPartner);
+        if($response['success'] == 0) {
+            return response()->json($response);
+        }
+
         $quarterPartner->status = 'historic';
         $quarterPartner->po_number = $request->po_number;
         $quarterPartner->invoice_no = $request->invoice_no;
         $quarterPartner->invoice_date = $request->invoice_date;
         $quarterPartner->save();
-        
-        $response = $this->generateAndSaveMasterInvoice($project, $quarter, $quarterPartner, $invoiceFrom, $invoiceFromPartner);
-        if($response['success'] == 0) {
-            return response()->json($response);
-        }
         
         // Next Quarter
         if($request->regenerate == 'false') {
