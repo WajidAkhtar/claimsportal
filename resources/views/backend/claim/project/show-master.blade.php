@@ -66,11 +66,40 @@
             font-weight: bold !important;
         } 
 
+        @media (min-width:961px)  {
+            #navSheetActions {
+                margin-left: -25em;
+            }
+            ul.action-nav {
+               display: flex;
+               flex-direction: row;
+               justify-content: flex-start; 
+               list-style: none;
+               padding: 0;
+               white-space: nowrap;
+            }
+            li.nav-item {
+                margin-bottom: 0.2em;
+                margin-left: 0.2em;
+            }
+        }
+
+        ul.action-nav {
+            margin-top: 1em;
+        }
         li.nav-item {
             margin-bottom: 0.2em;
+            list-style: none;
         }
-        li.nav-item > button {
-            width: 95px !important;
+        li.nav-item > button, li.nav-item > a, li.nav-item > form button {
+            width: 112px !important;
+            height: 33px !important;
+        }
+        .navbar-toggler {
+            margin-top: 1em;
+        }
+        .navbar-toggler:hover, .navbar-toggler:focus {
+            outline: none !important;
         }
 
     </style>
@@ -112,16 +141,16 @@
                             <span class=""><i class="fas fa-bars fa-1x"></i></span></button>
                             <div class="navbar-collapse collapse" id="navSheetActions" style="">
                                 <!-- Links -->
-                                <ul class="navbar-nav mr-auto">
+                                <ul class="action-nav mr-auto">
                                   <li class="nav-item active">
-                                    <button class="btn btn-sm btn-outline-primary toggle_user_permissions_info togget_action_content"><span class="toggle_action_text_hide"></span> PERMISSIONS</button>
+                                    <button class="btn btn-outline-primary toggle_user_permissions_info togget_action_content"><span class="toggle_action_text_hide"></span> PERMISSIONS</button>
                                   </li>
                                   <li class="nav-item">
-                                    <button class="btn btn-sm btn-outline-primary toggle_partner_additional_info togget_action_content"><span class="toggle_action_text_hide"></span> FINANCE</button>
+                                    <button class="btn btn-outline-primary toggle_partner_additional_info togget_action_content"><span class="toggle_action_text_hide"></span> FINANCE</button>
                                   </li>
                                   @if(auth()->user()->hasRole('Administrator') || auth()->user()->hasRole('Developer') || (auth()->user()->hasRole('Super User') && $project->userHasPartialAccessToProject()) || (!empty(projectLead($project)) && (projectLead($project)->id == auth()->user()->id)))
                                     <li class="nav-item">
-                                        <a href="{{ route('admin.claim.project.edit', $project) }}" class="btn btn-primary btn-sm">
+                                        <a href="{{ route('admin.claim.project.edit', $project) }}" class="btn btn-primary">
                                             <i class="fas fa-pencil-alt"></i> Edit Project
                                         </a>
                                     </li>

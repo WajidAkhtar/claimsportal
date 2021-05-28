@@ -18,22 +18,22 @@
         width: 12%;
         font-size: small;
     }
-    th:nth-child(3) {
+    /*th:nth-child(3) {
         width: 12%;
         font-size: small;
-    }
+    }*/
     th:nth-child(4) {
         width: 22%;
         font-size: small;
     }
-    th:nth-child(6) {
-        width: 15%;
+    /*th:nth-child(6) {
+        width: 5%;
         font-size: small;
     }
     th:nth-child(7) {
-        width: 13%;
+        width: 5%;
         font-size: small;
-    }
+    }*/
 </style>
 
 @section('content')

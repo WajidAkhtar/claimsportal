@@ -271,7 +271,7 @@
 						<strong>Project Name:</strong> {{ $project->name }}<br>
 						<strong>Claim Period:</strong> 
 							@php
-								$project_end_date = date('d-m-Y', strtotime("+".($project->length * 3)." months", strtotime('01-'.$project->start_date->format('m-Y'))));
+								$project_end_date = date('d-m-Y', strtotime("+".(($project->length * 3) - 1)." months", strtotime('01-'.$project->start_date->format('m-Y'))));
 							@endphp
 							{{ strtoupper($project->start_date->format('M y').' - '.date('M y', strtotime($project_end_date))) }}
 						<br>
@@ -300,6 +300,17 @@
 						<strong>Payment Due Date: </strong>{{\Carbon\Carbon::createFromFormat('d/m/Y', $quarterPartner->pivot->invoice_date)->addMonth()->format('d/m/Y')}}<br><br>
 					</td>
 				</tr>
+
+				<tr class="information">
+                    <td colspan="3"></td>
+                </tr>
+                <tr class="information">
+                    <td colspan="3"></td>
+                </tr>
+                <tr class="information">
+                    <td colspan="3"></td>
+                </tr>
+
 				<tr>
 					<td colspan="3">
 						<strong>BANK DETAILS</strong><br>

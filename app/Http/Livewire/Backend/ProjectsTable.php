@@ -88,7 +88,7 @@ class ProjectsTable extends TableComponent
             Column::make(__('Project Name'), 'name')
                 ->searchable()
                 ->sortable(),
-            Column::make(__('Project Code'), 'number')
+            Column::make(__('Code'), 'number')
                 ->searchable()
                 ->sortable(),
             Column::make(__('College'), 'pool_id')
@@ -100,13 +100,13 @@ class ProjectsTable extends TableComponent
             Column::make(__('Funder'), 'funders')
                 ->searchable()
                 ->sortable(),
-            Column::make(__('Project Start Date'), 'start_date')
+            Column::make(__('Start Date'), 'start_date')
                 ->format(function($model){
                     return $model->start_date->format('m-Y');
                 })
                 ->searchable()
                 ->sortable(),
-            Column::make(__('Project Status'), 'status')
+            Column::make(__('Status'), 'status')
                 ->searchable()
                 ->sortable(),
             Column::make(__(''))
