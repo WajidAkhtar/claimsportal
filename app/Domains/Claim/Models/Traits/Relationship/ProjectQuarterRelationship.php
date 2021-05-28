@@ -5,6 +5,7 @@ namespace App\Domains\Claim\Models\Traits\Relationship;
 use App\Domains\Claim\Models\Project;
 use App\Domains\System\Models\Organisation;
 use App\Domains\Claim\Models\ProjectQuarterUser;
+use App\Domains\Claim\Models\ProjectQuarterNote;
 
 /**
  * Class ProjectQuarterRelationship.
@@ -34,6 +35,20 @@ trait ProjectQuarterRelationship
     public function project()
     {
         return $this->belongsTo(Project::class)->withTrashed();
+    }
+
+    public function notes() {
+        return ProjectQuarterNote::where(function($q) {
+            /**
+             * @var Builder $q
+             */
+            $q->where('project_id', $this->project_id)
+                ->where('quarter_id', $this->id);
+        });
+    }
+
+    public function getNotesAttribute() {
+        return $this->notes()->get();
     }
 
 }

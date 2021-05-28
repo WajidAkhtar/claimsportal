@@ -102,6 +102,13 @@
             outline: none !important;
         }
 
+        .btn-column-action {
+            width: 140px !important;
+        }
+        .pl-40 {
+            padding-left: 40px !important;
+        }
+
     </style>
 @endpush
 @section('content')
@@ -996,7 +1003,7 @@
                                 <td><strong>PO NUMBER</strong></td>
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
-                                <td class="text-center">
+                                <td class="text-center pl-40">
                                     {{ html()->input('text', 'po_number['.$quarter->start_timestamp.']', $quarter->user->po_number)
                                             // ->placeholder('0.00')
                                             ->class('form-control invoice-field')
@@ -1019,7 +1026,7 @@
                                 <td><strong>INVOICE DATE</strong></td>
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
-                                <td class="text-center">
+                                <td class="text-center pl-40">
                                     {{ html()->input('text', 'invoice_date['.$quarter->start_timestamp.']', $quarter->user->invoice_date)
                                             // ->placeholder('DD/MM/YYYY')
                                             ->class('form-control invoice-field')
@@ -1042,7 +1049,7 @@
                                 <td><strong>INVOICE NO</strong></td>
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
-                                <td class="text-center">
+                                <td class="text-center pl-40">
                                     {{ html()->input('text', 'invoice_no['.$quarter->start_timestamp.']', $quarter->user->invoice_no)
                                             // ->placeholder('0.00')
                                             ->class('form-control invoice-field')
@@ -1050,12 +1057,12 @@
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
-                                <td class="border-right">&nbsp;</td>
+                                <td class="">&nbsp;</td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
-                                <td class="gap">&nbsp;</td>
+                                <td class="">&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td class="border-right">&nbsp;</td>
+                                <td class="">&nbsp;</td>
                                 @endfor
                             </tr>
                             <tr>
@@ -1065,19 +1072,19 @@
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
-                                <td class="text-center">
+                                <td class="text-center pl-40">
                                     @if ($quarter->user->status == 'historic')
-                                        <a target="_blank" href="{{asset('uploads/invoices/master-'.$quarter->id.'.pdf')}}" class="btn btn-primary" role="button">Invoice</a>
+                                        <a target="_blank" href="{{asset('uploads/invoices/master-'.$quarter->id.'.pdf')}}" class="btn btn-primary btn-column-action" role="button">Invoice</a>
                                     @endif
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
-                                <td class="border-right">&nbsp;</td>
+                                <td class="">&nbsp;</td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
-                                <td class="gap">&nbsp;</td>
+                                <td class="">&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td class="border-right">&nbsp;</td>
+                                <td class="">&nbsp;</td>
                                 @endfor
                             </tr>
                             <tr>
@@ -1087,25 +1094,25 @@
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
-                                <td>
+                                <td class="pl-40">
                                     @switch($quarter->user->status)
                                         @case('historic')
-                                            <a href="javascript:void(0)" class="btn btn-secondary" role="button" onclick="generateInvoice(this, {{$quarter->id}}, {{$quarter->start_timestamp}}, true)">Regenerate Invoice</a>
+                                            <a href="javascript:void(0)" class="btn btn-secondary btn-column-action" role="button" onclick="generateInvoice(this, {{$quarter->id}}, {{$quarter->start_timestamp}}, true)">Regenerate Invoice</a>
                                             @break
                                         @case('current')
-                                            <a href="javascript:void(0)" class="btn btn-primary" role="button" onclick="generateInvoice(this, {{$quarter->id}}, {{$quarter->start_timestamp}}, false)">Generate Invoice</a>
+                                            <a href="javascript:void(0)" class="btn btn-primary btn-column-action" role="button" onclick="generateInvoice(this, {{$quarter->id}}, {{$quarter->start_timestamp}}, false)">Generate Invoice</a>
                                             @break
                                         @default
                                     @endswitch
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
-                                <td class="border-right">&nbsp;</td>
+                                <td class="">&nbsp;</td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
-                                <td class="gap">&nbsp;</td>
+                                <td class="">&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td class="border-right">&nbsp;</td>
+                                <td class="">&nbsp;</td>
                                 @endfor
                             </tr>
                         </tbody>
@@ -1508,6 +1515,9 @@
             $('.navbar-toggler').click(function(){
                 $('#navSheetActions').toggleClass('show');
             });
+
+            // $(":input:not(:read-only)").each(function (i) { $(this).attr('tabindex', i + 1); });
+            $(":input:not([readonly='readonly'])").each(function (i) { $(this).attr('tabindex', i + 1); });
 
         });
 

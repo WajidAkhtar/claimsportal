@@ -108,6 +108,12 @@
         .navbar-toggler:hover, .navbar-toggler:focus {
             outline: none !important;
         }
+        .btn-column-action {
+            width: 107px !important;
+        }
+        .pl-40 {
+            padding-left: 40px !important;
+        }
 
     </style>
     <link rel="stylesheet" href="{{asset('assets/backend/vendors/select2/css/select2.css')}}">
@@ -979,7 +985,7 @@
                                 <td><strong>PO NUMBER</strong></td>
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
-                                <td class="text-center">
+                                <td class="text-center pl-40">
                                     {{ html()->input('text', 'po_number['.$quarter->start_timestamp.']', optional(optional($quarter->partner(request()->partner))->pivot)->po_number)
                                             // ->placeholder('0.00')
                                             ->class('form-control invoice-field')
@@ -987,12 +993,12 @@
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
-                                <td class="border-right">&nbsp;</td>
+                                <td>&nbsp;</td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
-                                <td class="gap">&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td class="border-right">&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="">&nbsp;</td>
                                 @endfor
                             </tr>
                             <tr>
@@ -1002,7 +1008,7 @@
                                 <td><strong>INVOICE DATE</strong></td>
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
-                                <td class="text-center">
+                                <td class="text-center pl-40">
                                     {{ html()->input('text', 'invoice_date['.$quarter->start_timestamp.']', optional(optional($quarter->partner(request()->partner))->pivot)->invoice_date)
                                             // ->placeholder('DD-MM-YYYY')
                                             ->class('form-control invoice-field')
@@ -1010,12 +1016,12 @@
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
-                                <td class="border-right">&nbsp;</td>
+                                <td>&nbsp;</td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
-                                <td class="gap">&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td class="border-right">&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="">&nbsp;</td>
                                 @endfor
                             </tr>
                             <tr>
@@ -1025,7 +1031,7 @@
                                 <td><strong>INVOICE NO</strong></td>
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
-                                <td class="text-center">
+                                <td class="text-center pl-40">
                                     {{ html()->input('text', 'invoice_no['.$quarter->start_timestamp.']', optional(optional($quarter->partner(request()->partner))->pivot)->invoice_no)
                                             // ->placeholder('0.00')
                                             ->class('form-control invoice-field')
@@ -1033,12 +1039,12 @@
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
-                                <td class="border-right">&nbsp;</td>
+                                <td>&nbsp;</td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
-                                <td class="gap">&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td class="border-right">&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="">&nbsp;</td>
                                 @endfor
                             </tr>
                             <tr>
@@ -1048,17 +1054,17 @@
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
-                                <td>
+                                <td class="pl-40">
                                     @switch(optional(optional($quarter->partner(request()->partner))->pivot)->status)
                                         @case('historic')
-                                            <a target="_blank" href="{{asset('uploads/invoices/'.$quarter->id.'.pdf')}}" class="btn btn-primary" role="button">Invoice</a>
+                                            <a target="_blank" href="{{asset('uploads/invoices/'.$quarter->id.'.pdf')}}" class="btn btn-primary btn-column-action" role="button">Invoice</a>
                                             @break
                                         @case('current')
                                             @if (!$userHasMasterAccess && $userHasMasterAccessWithPermission == 'LEAD_USER' && optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 1)
-                                            <a href="javascript:void(0)" class="btn btn-success" role="button" onclick="closeClaim(this, {{$quarter->id}}, {{request()->partner}}, {{$quarter->start_timestamp}})">Close Claim</a>
+                                            <a href="javascript:void(0)" class="btn btn-success btn-column-action" role="button" onclick="closeClaim(this, {{$quarter->id}}, {{request()->partner}}, {{$quarter->start_timestamp}})">Close Claim</a>
                                             @endif
                                             @if(((!$userHasMasterAccess && $userHasMasterAccessWithPermission != 'LEAD_USER') || auth()->user()->isMasterAdmin()) && optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 0)
-                                            <a href="javascript:void(0)" class="btn btn-success {{optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 1 ? 'disabled' : ''}}" role="button" onclick="submitClaim(this, {{$quarter->id}}, {{$quarter->start_timestamp}})">Submit Claim</a>
+                                            <a href="javascript:void(0)" class="btn btn-success {{optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 1 ? 'disabled' : ''}} btn-column-action" role="button" onclick="submitClaim(this, {{$quarter->id}}, {{$quarter->start_timestamp}})">Submit Claim</a>
                                             @endif
                                             @break
                                         @default
@@ -1066,12 +1072,12 @@
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
-                                <td class="border-right">&nbsp;</td>
+                                <td>&nbsp;</td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
-                                <td class="gap">&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td class="border-right">&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="">&nbsp;</td>
                                 @endfor
                             </tr>
                             @if (!$userHasMasterAccess && $userHasMasterAccessWithPermission == 'LEAD_USER')
@@ -1083,10 +1089,10 @@
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
                                 @if( $quarter->partner(request()->partner)->pivot->claim_status == 2)
-                                <td>
+                                <td class="pl-40">
                                     @switch($quarter->partner(request()->partner)->pivot->status)
                                         @case('historic')
-                                            <a href="javascript:void(0)" class="btn btn-secondary" role="button" onclick="closeClaim(this, {{$quarter->id}}, {{request()->partner}}, {{$quarter->start_timestamp}}, true)">Regenerate</a>
+                                            <a href="javascript:void(0)" class="btn btn-secondary btn-column-action" role="button" onclick="closeClaim(this, {{$quarter->id}}, {{request()->partner}}, {{$quarter->start_timestamp}}, true)">Regenerate</a>
                                             @break
                                         @default
                                     @endswitch
@@ -1094,12 +1100,12 @@
                                 @endif
                                 @endforeach
                                 <td>&nbsp;</td>
-                                <td class="border-right">&nbsp;</td>
+                                <td>&nbsp;</td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
-                                <td class="gap">&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td class="border-right">&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="">&nbsp;</td>
                                 @endfor
                             </tr>
                             @endif
@@ -1110,19 +1116,19 @@
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
-                                <td>
+                                <td class="pl-40">
                                     @if($quarter->partner(request()->partner)->pivot->status == 'historic' || $quarter->partner(request()->partner)->pivot->status == 'current')
-                                        <button type="button" class="btn btn-danger btn-notes" style="width: 107px;" data-quarter="{{ $quarter->id }}" data-toggle="modal" data-target="#projectQuarterNotesModal">Notes</button>
+                                        <button type="button" class="btn btn-danger btn-notes btn-column-action" style="width: 107px;" data-quarter="{{ $quarter->id }}" data-toggle="modal" data-target="#projectQuarterNotesModal">Notes ({{ $quarter->notes()->count() }})</button>
                                     @endif
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
-                                <td class="border-right">&nbsp;</td>
+                                <td>&nbsp;</td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
-                                <td class="gap">&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td class="border-right">&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td class="">&nbsp;</td>
                                 @endfor
                             </tr>
                         </tbody>
@@ -1598,6 +1604,8 @@
             $('.navbar-toggler').click(function(){
                 $('#navSheetActions').toggleClass('show');
             });
+
+            $(":input:not([readonly='readonly'])").each(function (i) { $(this).attr('tabindex', i + 1); });
 
         });
 

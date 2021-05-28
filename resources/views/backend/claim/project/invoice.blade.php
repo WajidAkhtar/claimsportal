@@ -311,17 +311,6 @@
                     <td colspan="3"></td>
                 </tr>
 
-				<tr>
-					<td colspan="3">
-						<strong>BANK DETAILS</strong><br>
-						<span style="line-height: 0px;font-size: 9px;">ACCOUNT NAME: {{$invoiceFromPartner->account_name}}</span><br>
-                        <span style="line-height: 0px;font-size: 9px;">BANK NAME: {{$invoiceFromPartner->bank_name}}</span><br>
-                        <span style="line-height: 0px;font-size: 9px;">SORT CODE: {{$invoiceFromPartner->sort_code}}</span><br>
-                        <span style="line-height: 0px;font-size: 9px;">ACCOUNT NUMBER: {{$invoiceFromPartner->account_no}}</span><br>
-                        <span style="line-height: 0px;font-size: 9px;">IBAN: {{$invoiceFromPartner->iban}}</span><br>
-                        <span style="line-height: 0px;font-size: 9px;">SWIFT: {{$invoiceFromPartner->swift}}</span><br>
-					</td>
-				</tr>
                 <tr>
 					<td colspan="3">
 						<strong>BANK DETAILS</strong><br>
