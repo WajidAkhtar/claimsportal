@@ -22,6 +22,9 @@
         width: 12%;
         font-size: small;
     }*/
+    th:nth-child(5) {
+        width: 12%;
+    }
     th:nth-child(4) {
         width: 22%;
         font-size: small;
