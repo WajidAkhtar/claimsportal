@@ -691,7 +691,7 @@ class ProjectController
 
         $quarter = $project->quarters()->whereId($request->quarterId)->first();
         $quarterPartner = $quarter->user;
-        dd($quarterPartner);
+
         if($quarterPartner->status == 'historic' && $request->regenerate == 'false') {
             return response()->json([
                 'success' => 0,
@@ -707,6 +707,7 @@ class ProjectController
 
         // Invoice From Lead To Funder
         $invoiceFrom = auth()->user()->organisation;
+        dd($invoiceFrom);
         $invoiceFromPartner = $project->allpartners()->whereNull('organisation_id')->whereIsMaster('1')->first();
         
         if(empty($invoiceFromPartner) || (!empty($invoiceFromPartner) && empty($invoiceFromPartner->invoiceOrganisation))) {
