@@ -1088,16 +1088,16 @@
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
-                                @if( $quarter->partner(request()->partner)->pivot->claim_status == 2)
                                 <td class="pl-40">
+                                @if( $quarter->partner(request()->partner)->pivot->claim_status == 2)
                                     @switch($quarter->partner(request()->partner)->pivot->status)
                                         @case('historic')
                                             <a href="javascript:void(0)" class="btn btn-secondary btn-column-action" role="button" onclick="closeClaim(this, {{$quarter->id}}, {{request()->partner}}, {{$quarter->start_timestamp}}, true)">Regenerate</a>
                                             @break
                                         @default
                                     @endswitch
-                                </td>
                                 @endif
+                                </td>
                                 @endforeach
                                 <td>&nbsp;</td>
                                 <td class="border-right">&nbsp;</td>
@@ -1128,7 +1128,7 @@
                                 <td class="gap">&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td class="border-right">&nbsp;</td>
+                                <td class="">&nbsp;</td>
                                 @endfor
                             </tr>
                         </tbody>
