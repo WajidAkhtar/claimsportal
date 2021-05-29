@@ -707,7 +707,7 @@ class ProjectController
 
         // Invoice From Lead To Funder
         $invoiceFrom = auth()->user()->organisation;
-        dd($invoiceFrom);
+        dd(auth()->user());
         $invoiceFromPartner = $project->allpartners()->whereNull('organisation_id')->whereIsMaster('1')->first();
         
         if(empty($invoiceFromPartner) || (!empty($invoiceFromPartner) && empty($invoiceFromPartner->invoiceOrganisation))) {
