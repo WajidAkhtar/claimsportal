@@ -691,7 +691,6 @@ class ProjectController
 
         $quarter = $project->quarters()->whereId($request->quarterId)->first();
         $quarterPartner = $quarter->user;
-
         if($quarterPartner->status == 'historic' && $request->regenerate == 'false') {
             return response()->json([
                 'success' => 0,
@@ -707,7 +706,6 @@ class ProjectController
 
         // Invoice From Lead To Funder
         $invoiceFrom = auth()->user()->organisation;
-        dd(auth()->user());
         $invoiceFromPartner = $project->allpartners()->whereNull('organisation_id')->whereIsMaster('1')->first();
         
         if(empty($invoiceFromPartner) || (!empty($invoiceFromPartner) && empty($invoiceFromPartner->invoiceOrganisation))) {
@@ -717,15 +715,17 @@ class ProjectController
             ]);
         }
 
+        $quarterPartner->po_number = $request->po_number;
+        $quarterPartner->invoice_no = $request->invoice_no;
+        $quarterPartner->invoice_date = $request->invoice_date;
+        $quarterPartner->save();
+
         $response = $this->generateAndSaveMasterInvoice($project, $quarter, $quarterPartner, $invoiceFrom, $invoiceFromPartner);
         if($response['success'] == 0) {
             return response()->json($response);
         }
 
         $quarterPartner->status = 'historic';
-        $quarterPartner->po_number = $request->po_number;
-        $quarterPartner->invoice_no = $request->invoice_no;
-        $quarterPartner->invoice_date = $request->invoice_date;
         $quarterPartner->save();
         
         // Next Quarter
