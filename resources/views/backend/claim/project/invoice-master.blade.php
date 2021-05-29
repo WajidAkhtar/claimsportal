@@ -244,12 +244,18 @@
 						<strong>Project Name:</strong> {{ $project->name }}<br>
 						<strong>Claim Period:</strong> 
 							@php
-								$project_end_date = date('d-m-Y', strtotime("+".(($project->length * 3) - 1)." months", strtotime('01-'.$project->start_date->format('m-Y'))));
+								$quarter_length = $quarter->length;
+								$quarter_length_split = explode(' - ', $quarter_length);
+								$quarter_start_month = substr($quarter_length_split[0], 0, 3);
+								$quarter_start_year = substr($quarter_length_split[0], 3, 2);
+								$quarter_end_month = substr($quarter_length_split[1], 0, 3);
+								$quarter_end_year = substr($quarter_length_split[1], 3, 2);
+								$quarter_length = $quarter_start_month.' '.$quarter_start_year.' - '.$quarter_end_month.' '.$quarter_end_year;
 							@endphp
-							{{ strtoupper($project->start_date->format('M y').' - '.date('M y', strtotime($project_end_date))) }}
+							{{ strtoupper($quarter_length) }}
 						<br>
 						<strong>Project Quarter:</strong>
-							{{ $project->length }}
+							{{ $quarter->name }}
 						<br>
 					</td>
 					<td style="text-align: center;">£{{number_format($total = array_sum(array_column($invoiceItems, 'item_price')), 2)}}</td>
