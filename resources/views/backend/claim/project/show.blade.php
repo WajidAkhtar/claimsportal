@@ -993,12 +993,12 @@
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
-                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+                                <td class="gap">&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td class="">&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
                                 @endfor
                             </tr>
                             <tr>
@@ -1016,12 +1016,12 @@
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
-                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+                                <td class="gap">&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td class="">&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
                                 @endfor
                             </tr>
                             <tr>
@@ -1039,12 +1039,12 @@
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
-                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+                                <td class="gap">&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td class="">&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
                                 @endfor
                             </tr>
                             <tr>
@@ -1072,12 +1072,12 @@
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
-                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+                                <td class="gap">&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td class="">&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
                                 @endfor
                             </tr>
                             @if (!$userHasMasterAccess && $userHasMasterAccessWithPermission == 'LEAD_USER')
@@ -1100,12 +1100,12 @@
                                 @endif
                                 @endforeach
                                 <td>&nbsp;</td>
-                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+                                <td class="gap">&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td class="">&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
                                 @endfor
                             </tr>
                             @endif
@@ -1123,12 +1123,12 @@
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
-                                <td>&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
                                 @for ($i = 0; $i < ceil(($project->length/4)); $i++)
+                                <td class="gap">&nbsp;</td>
                                 <td>&nbsp;</td>
                                 <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td class="">&nbsp;</td>
+                                <td class="border-right">&nbsp;</td>
                                 @endfor
                             </tr>
                         </tbody>
