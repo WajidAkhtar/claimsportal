@@ -243,7 +243,7 @@
                             <div class="col">
                                 {{ html()->label('Building Name/No')->for('building_name') }}
                                 <div class="form-group"> 
-                                    {{ html()->text('building_name', $partnerAdditionalInfo->building_name ?? $partnerAdditionalInfo->invoiceOrganisation->building_name_no)
+                                    {{ html()->text('building_name', $partnerAdditionalInfo->building_name ?? optional($partnerAdditionalInfo->invoiceOrganisation)->building_name_no)
                                         ->class('form-control additional-info')
                                         ->required()
                                      }}
@@ -264,7 +264,7 @@
                             <div class="col">
                                 {{ html()->label('Address Line 1')->for('street') }}
                                 <div class="form-group"> 
-                                    {{ html()->text('street', $partnerAdditionalInfo->street ?? $partnerAdditionalInfo->invoiceOrganisation->street)
+                                    {{ html()->text('street', $partnerAdditionalInfo->street ?? optional($partnerAdditionalInfo->invoiceOrganisation)->street)
                                         ->class('form-control additional-info')
                                         ->required()
                                      }}
@@ -280,7 +280,7 @@
                             </div>
                             <div class="col">
                                 {{ html()->label('Address Line 2')->for('address_line_2') }}
-                                {{ html()->text('address_line_2', $partnerAdditionalInfo->address_line_2 ?? $partnerAdditionalInfo->invoiceOrganisation->address_line_2)
+                                {{ html()->text('address_line_2', $partnerAdditionalInfo->address_line_2 ?? optional($partnerAdditionalInfo->invoiceOrganisation)->address_line_2)
                                     ->class('form-control additional-info')
                                  }}
                             </div>
@@ -294,7 +294,7 @@
                             </div>
                             <div class="col">
                                 {{ html()->label('City')->for('city') }}
-                                {{ html()->text('city', $partnerAdditionalInfo->city ?? $partnerAdditionalInfo->invoiceOrganisation->city)
+                                {{ html()->text('city', $partnerAdditionalInfo->city ?? optional($partnerAdditionalInfo->invoiceOrganisation)->city)
                                     ->class('form-control additional-info')
                                  }}
                             </div>
@@ -308,7 +308,7 @@
                             </div>
                             <div class="col">
                                 {{ html()->label('County')->for('county') }}
-                                {{ html()->text('county', $partnerAdditionalInfo->county ?? $partnerAdditionalInfo->invoiceOrganisation->county)
+                                {{ html()->text('county', $partnerAdditionalInfo->county ?? optional($partnerAdditionalInfo->invoiceOrganisation)->county)
                                     ->class('form-control additional-info')
                                  }}
                             </div>
@@ -322,7 +322,7 @@
                             </div>
                             <div class="col">
                                 {{ html()->label('Post Code')->for('post_code') }}
-                                {{ html()->text('post_code', $partnerAdditionalInfo->post_code ?? $partnerAdditionalInfo->invoiceOrganisation->postcode)
+                                {{ html()->text('post_code', $partnerAdditionalInfo->post_code ?? optional($partnerAdditionalInfo->invoiceOrganisation)->postcode)
                                     ->class('form-control additional-info')
                                  }}
                             </div>
