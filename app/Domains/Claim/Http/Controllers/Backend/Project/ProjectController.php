@@ -691,6 +691,7 @@ class ProjectController
 
         $quarter = $project->quarters()->whereId($request->quarterId)->first();
         $quarterPartner = $quarter->user;
+        dd($quarterPartner);
         if($quarterPartner->status == 'historic' && $request->regenerate == 'false') {
             return response()->json([
                 'success' => 0,
