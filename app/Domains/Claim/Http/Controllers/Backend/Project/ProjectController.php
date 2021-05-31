@@ -304,6 +304,11 @@ class ProjectController
                 ), $reportExcelFileName.'.xlsx');
             }
 
+            if(in_array(current_user_role(), ['Super User'])) {
+                $userHasMasterAccess = false;
+                $userHasMasterAccessWithPermission = 'LEAD_USER';
+            }
+
             return view('backend.claim.project.show')
             ->withProject($project)
             ->withSheetOwner($sheet_owner)
