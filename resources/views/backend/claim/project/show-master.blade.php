@@ -1516,8 +1516,14 @@
                 $('#navSheetActions').toggleClass('show');
             });
 
-            // $(":input:not(:read-only)").each(function (i) { $(this).attr('tabindex', i + 1); });
-            $(":input:not([readonly='readonly'])").each(function (i) { $(this).attr('tabindex', i + 1); });
+            var tabindex = 1;
+            $( "input:not([readonly='readonly'])[name^='po_number']" ).each(function(i) {
+                var name = $(this).attr('name');
+                name = name.toString().replace('po_number', '');
+                $(this).attr('tabindex', tabindex++);
+                $("input:not([readonly='readonly'])[name='invoice_date"+name+"']").attr('tabindex', tabindex++);
+                $("input:not([readonly='readonly'])[name='invoice_no"+name+"']").attr('tabindex', tabindex++);
+            });
 
         });
 
