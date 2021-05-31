@@ -84,7 +84,7 @@
             @php
             $labelClass = $quarter->user->status == 'current' ? 'color:red;' : '';
             @endphp
-            <th style="{{ $defaultCellStyle }} {{ $labelClass }}">
+            <th style="{{ $defaultCellStyle }} {{ $labelClass }} {{ $textCenterStyle }}">
                 <label class="{{$labelClass ?? ''}}">{{ strtoupper($quarter->name) }}</label>
             </th>
             @endforeach
@@ -115,14 +115,14 @@
                 @endswitch
             </th>
             @endforeach
-            <th style="width: 18px;background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }}">PROJECT TOTAL</th>
-            <th style="width: 18px;background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }}">VARIANCE</th>
+            <th style="width: 18px;background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }} {{ $textCenterStyle }}">PROJECT TOTAL</th>
+            <th style="width: 18px;background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }} {{ $textCenterStyle }}">VARIANCE</th>
 
             <th></th>
             @for ($i = 1; $i <= ceil(($project->length/4)); $i++)
-                <th style="width: 15px;background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }} {{ $yearlyTableStyleLeft }} {{ $yearlyTableStyleTop }}">YR{{$i}} BUDGET</th>
-                <th style="width: 15px;background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }} {{ $yearlyTableStyleTop }}">YR{{$i}} TOTAL</th>
-                <th style="width: 15px;background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }}  {{ $yearlyTableStyleRight }} {{ $yearlyTableStyleTop }}">VARIANCE</th>
+                <th style="width: 15px;background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }} {{ $yearlyTableStyleLeft }} {{ $yearlyTableStyleTop }} {{ $textCenterStyle }}">YR{{$i}} BUDGET</th>
+                <th style="width: 15px;background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }} {{ $yearlyTableStyleTop }} {{ $textCenterStyle }}">YR{{$i}} TOTAL</th>
+                <th style="width: 15px;background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }}  {{ $yearlyTableStyleRight }} {{ $yearlyTableStyleTop }} {{ $textCenterStyle }}">VARIANCE</th>
                 <th></th>
                 @endfor
         </tr>
