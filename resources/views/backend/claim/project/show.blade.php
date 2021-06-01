@@ -1606,7 +1606,7 @@
             });
 
             var tabindex = 1;
-            $( "input:not([readonly='readonly'])[name^='po_number']" ).each(function(i) {
+            $( "input[name^='po_number']" ).each(function(i) {
                 var name = $(this).attr('name');
                 name = name.toString().replace('po_number', '');
                 $(this).attr('tabindex', tabindex++);
@@ -1614,10 +1614,21 @@
                 $("input:not([readonly='readonly'])[name='invoice_no"+name+"']").attr('tabindex', tabindex++);
             });
 
+            $("input:not([readonly='readonly'])[name^=claim_values][name*='[quarter_values]['").each(function(i1, v1){
+                var readonly = $(this).attr('readonly');
+                if (typeof readonly !== 'undefined' && readonly !== false) {
+                    return false;       
+                }
+                var name = $(this).attr('name');
+                var timestamp = name.substr(name.indexOf("[quarter_values]") + 1).replace('quarter_values]', '');
+                $(this).attr('tabindex', tabindex++);
+                $("input:not([readonly='readonly'])[name^=claim_values][name*='[quarter_values]"+timestamp+"']").attr('tabindex', tabindex++); 
+            });
+
         });
 
         function initiateCalculationRow(selector) {
-            var calculationRow = $(selector).parent().parent().clone();
+            var calculationRow = $(selector).parent().parent( ).clone();
             $(calculationRow).find('td:first').css('max-width', '');
             $(calculationRow).attr('data-parenttable', $(selector).closest('table').attr('id'));
             $(calculationRow).addClass('subtotals-row');
