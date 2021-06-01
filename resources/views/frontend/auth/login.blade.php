@@ -1,9 +1,13 @@
 @extends('frontend.layouts.session') @section('title', __('Login')) @section('content')
-<div class="container py-4">
+<style type="text/css">
+    .card {
+        border: none !important;
+    }
+</style>
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-4">
             <x-frontend.card>
-                <x-slot name="header">@lang('Login')</x-slot>
                 <x-slot name="body">
                     <x-forms.post :action="route('frontend.auth.login')">
                         <div class="input-group mb-3">

@@ -47,6 +47,9 @@
             input[type=number] {
             -moz-appearance: textfield;
             }
+            .pt-5 {
+                padding-top: 2em !important;
+            }
         </style>
         @stack('after-styles')
 
@@ -59,8 +62,9 @@
 
         <!-- START: Main Content-->
         <main class="ml-0 mb-5">
-            <div class="container-fluid site-width">
-                <video class="login-animation" autoplay="" muted="" src="{{ asset('assets/backend/images/animation.mov') }}" loop="" id="vid" style="position: absolute;width: 100%;height: 100%;transform: rotate(270deg);left: 40%;"></video>
+            <img src="{{ asset('assets/backend/images/app_title_name_logo.png') }}" class="mt-5 ml-5" width="300" height="auto">
+            <div class="container-fluid site-width pt-5">
+                <video class="login-animation" autoplay="" muted="" src="{{ asset('assets/backend/images/animation.mov') }}" loop="" id="vid" style="position: absolute;width: 100%;height: 100%;transform: rotate(270deg);left: 32%;"></video>
                 <!-- START: Breadcrumbs-->
                 <div class="row">
                     <div class="col-12  align-self-center">
@@ -72,14 +76,13 @@
                 <!-- END: Breadcrumbs-->
                 <div class="text-center">
                     <div class="c-sidebar-brand">
-                        <img src="{{ asset('assets/backend/images/logo.png') }}" class="sidebar-logo" height="100">
+                        <img src="{{ asset('assets/backend/images/logo_with_title.png') }}" class="sidebar-logo" height="100">
                     </div>
-                    <h2>{{ appName() }}</h2>
                 </div>
                 <div class="row text-center">
-                    <div class="col-md-4 mt-3">
+                    <div class="col-md-4 mt-1">
                     </div>
-                    <div class="col-md-4 mt-3">
+                    <div class="col-md-4 mt-1">
                         @include('includes.partials.messages')
                     </div>
                 </div>
