@@ -54,7 +54,7 @@
         @stack('after-styles')
 
     </head>
-    <body id="main-container" class="default" style="background-color: #fff;">
+    <body id="main-container" class="default" style="background-color: #fff;overflow: hidden;">
 
         @include('includes.partials.read-only')
         @include('includes.partials.logged-in-as')
