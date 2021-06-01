@@ -5,7 +5,7 @@
     $remainingQuarters = $project->length;
     $quarterNo = 1;
     $defaultCellStyle = 'height:15px;';
-    $hedingStyle = 'border-bottom: 1px solid #000000;';
+    $hedingStyle = 'border-bottom: 1px solid #000000;font-weight: bold;border-left: 1px thin #DEEAF6;border-right: 1px thin #DEEAF6;';
     $fontBold = 'font-weight: bold;';
 @endphp
 @for ($yearIndex = 0; $yearIndex < ceil($project->length/4); $yearIndex++)
@@ -102,9 +102,9 @@
             @endphp
             @foreach ($costItems as $index => $costItem)
             @php
-                $cellBgStyle = 'background-color: #ffffff;';
+                $cellBgStyle = 'background-color: #ffffff;border-right: 1px solid #ffffff; border-left: 1px solid #ffffff;';
                 if($index % 2 == 0) {
-                    $cellBgStyle = 'background-color: #eaeaea;';
+                    $cellBgStyle = 'background-color: #eaeaea;border-right: 1px thin #eaeaea; border-left: 1px thin #eaeaea;';
                 }
             @endphp
             <tr data-rowid="{{ ($index+1) }}">

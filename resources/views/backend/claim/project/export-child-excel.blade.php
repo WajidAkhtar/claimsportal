@@ -1,6 +1,6 @@
 @php
     $defaultCellStyle = 'height:15px;';
-    $hedingStyle = 'border-bottom: 1px solid #000000;font-weight: bold;';
+    $hedingStyle = 'border-bottom: 1px solid #000000;font-weight: bold;border-left: 1px thin #DEEAF6;border-right: 1px thin #DEEAF6;';
     $yearlyTableStyleLeft = 'border-left:3px solid black;border-bottom:3px solid #ffffff;';
     $yearlyTableStyleRight = 'border-right:3px solid black;border-bottom:3px solid #ffffff;';
     $yearlyTableStyleBottom = 'border-bottom:3px solid black;';
@@ -141,9 +141,9 @@
         @endphp
         @foreach ($costItems as $index => $costItem)
         @php
-            $cellBgStyle = 'background-color: #ffffff;';
+            $cellBgStyle = 'background-color: #ffffff;border-right: 1px solid #ffffff; border-left: 1px solid #ffffff;';
             if($index % 2 == 0) {
-                $cellBgStyle = 'background-color: #eaeaea;';
+                $cellBgStyle = 'background-color: #eaeaea;border-right: 1px thin #eaeaea; border-left: 1px thin #eaeaea;';
             }
         @endphp
         <tr data-rowid="{{ ($index+1) }}">
@@ -390,13 +390,13 @@
                 </div>
             </td>
             @endforeach
-            <td style="background-color: #DEEAF6;border-bottom:1px solid black;">&nbsp;</td>
-            <td style="background-color: #DEEAF6;border-bottom:1px solid black;">&nbsp;</td>
+            <td style="background-color: #DEEAF6;border-bottom:1px solid black;border-right: 1px thin #DEEAF6;">&nbsp;</td>
+            <td style="background-color: #DEEAF6;border-bottom:1px solid black;border-left: 1px thin #DEEAF6;">&nbsp;</td>
             <td></td>
             @for ($i = 0; $i < ceil(($project->length/4)); $i++)
-                <td style="background-color: #DEEAF6;{{ $yearlyTableStyleLeft }} {{ $yearlyTableStyleTop }}border-bottom:1px solid black;">&nbsp;</td>
-                <td style="background-color: #DEEAF6;{{ $yearlyTableStyleTop }}border-bottom:1px solid black;">&nbsp;</td>
-                <td style="background-color: #DEEAF6;{{ $yearlyTableStyleRight }} {{ $yearlyTableStyleTop }}border-bottom:1px solid black;">&nbsp;</td>
+                <td style="background-color: #DEEAF6;{{ $yearlyTableStyleLeft }} {{ $yearlyTableStyleTop }}border-bottom:1px solid black;border-right: 1px thin #DEEAF6;">&nbsp;</td>
+                <td style="background-color: #DEEAF6;{{ $yearlyTableStyleTop }}border-bottom:1px solid black;border-left: 1px thin #DEEAF6;border-right: 1px thin #DEEAF6;">&nbsp;</td>
+                <td style="background-color: #DEEAF6;{{ $yearlyTableStyleRight }} {{ $yearlyTableStyleTop }}border-bottom:1px solid black;border-left: 1px thin #DEEAF6;">&nbsp;</td>
                 <td></td>
                 @endfor
         </tr>

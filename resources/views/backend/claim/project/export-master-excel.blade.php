@@ -6,6 +6,7 @@
     $yearlyTableStyleBottom = 'border-bottom:3px solid black;';
     $yearlyTableStyleTop = 'border-top:3px solid black;border-bottom:3px solid #ffffff;';
     $textCenterStyle = "text-align: center;";
+    $bgWhiteStyle = "background-color: #FFFFFF;";
 @endphp
 <table>
     @for($i = 0; $i <= 5;$i++)
@@ -84,7 +85,7 @@
             @php
             $labelClass = $quarter->user->status == 'current' ? 'color:red;' : '';
             @endphp
-            <th style="{{ $defaultCellStyle }} {{ $labelClass }} {{ $textCenterStyle }}">
+            <th style="{{ $defaultCellStyle }} {{ $labelClass }} {{ $textCenterStyle }} {{ $bgWhiteStyle }}">
                 <label class="{{$labelClass ?? ''}}">{{ strtoupper($quarter->name) }}</label>
             </th>
             @endforeach
@@ -137,9 +138,9 @@
         @endphp
         @foreach ($project->costItems as $index => $costItem)
         @php
-            $cellBgStyle = 'background-color: #ffffff;';
+            $cellBgStyle = 'background-color: #ffffff;border-right: 1px solid #ffffff; border-left: 1px solid #ffffff;';
             if($index % 2 == 0) {
-                $cellBgStyle = 'background-color: #eaeaea;';
+                $cellBgStyle = 'background-color: #eaeaea;border-right: 1px thin #eaeaea; border-left: 1px thin #eaeaea;';
             }
         @endphp
         <tr data-rowid="{{ ($index+1) }}">
