@@ -198,3 +198,11 @@ td {
 .c-sidebar-nav-link:hover {
     background-color: #20a8d8 !important;
 }
+
+.breadcrumb-item {
+    margin-top: 2px !important;
+}
+
+li.breadcrumb-item:nth-child(2) {
+    margin-left: 1.7em !important;
+}

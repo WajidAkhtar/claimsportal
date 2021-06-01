@@ -257,107 +257,161 @@
                                 </div>
                             </div>
                             <div class="col">
-                                {{ html()->label('Address Line 1')->for('street')->class('col-md-3') }}
-                                <div class="form-group"> 
-                                    {{ html()->text('street', $partnerAdditionalInfo->street ?? $partnerAdditionalInfo->invoiceOrganisation->street)
-                                        ->class('form-control additional-info')
-                                        ->required()
-                                     }}
+                                <div class="form-group row">
+                                    {{ html()->label('Address Line 1')->for('street')->class('col-md-4') }} 
+                                    <div class="col-md-8"> 
+                                        {{ html()->text('street', $partnerAdditionalInfo->street ?? $partnerAdditionalInfo->invoiceOrganisation->street)
+                                            ->class('form-control additional-info')
+                                            ->required()
+                                         }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                {{ html()->label('Finance Contact Name')->for('finance_contact_name')->class('col-md-3') }}
-                                {{ html()->text('finance_contact_name', $partnerAdditionalInfo->finance_contact_name ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
+                                <div class="form-group row">
+                                    {{ html()->label('Finance Contact Name')->for('finance_contact_name')->class('col-md-4') }}
+                                    <div class="col-md-8">
+                                        {{ html()->text('finance_contact_name', $partnerAdditionalInfo->finance_contact_name ?? '')
+                                            ->class('form-control additional-info')
+                                         }}
+                                    </div>
+                                </div>
                             </div>
                             <div class="col">
-                                {{ html()->label('Address Line 2')->for('address_line_2')->class('col-md-3') }}
-                                {{ html()->text('address_line_2', $partnerAdditionalInfo->address_line_2 ?? $partnerAdditionalInfo->invoiceOrganisation->address_line_2)
-                                    ->class('form-control additional-info')
-                                 }}
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col">
-                                {{ html()->label('Finance Email')->for('finance_email')->class('col-md-3') }}
-                                {{ html()->text('finance_email', $partnerAdditionalInfo->finance_email ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
-                            </div>
-                            <div class="col">
-                                {{ html()->label('City')->for('city')->class('col-md-3') }}
-                                {{ html()->text('city', $partnerAdditionalInfo->city ?? $partnerAdditionalInfo->invoiceOrganisation->city)
-                                    ->class('form-control additional-info')
-                                 }}
+                                <div class="form-group row">
+                                    {{ html()->label('Address Line 2')->for('address_line_2')->class('col-md-4') }}
+                                    <div class="col-md-8">
+                                        {{ html()->text('address_line_2', $partnerAdditionalInfo->address_line_2 ?? $partnerAdditionalInfo->invoiceOrganisation->address_line_2)
+                                            ->class('form-control additional-info')
+                                         }}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="row mt-2">
+                        <div class="row">
                             <div class="col">
-                                {{ html()->label('Finance Tel')->for('finance_tel')->class('col-md-3') }}
-                                {{ html()->text('finance_tel', $partnerAdditionalInfo->finance_tel ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
+                                <div class="form-group row">
+                                    {{ html()->label('Finance Email')->for('finance_email')->class('col-md-4') }}
+                                    <div class="col-md-8">
+                                        {{ html()->text('finance_email', $partnerAdditionalInfo->finance_email ?? '')
+                                            ->class('form-control additional-info')
+                                         }}
+                                     </div>
+                                </div>
                             </div>
                             <div class="col">
-                                {{ html()->label('County')->for('county')->class('col-md-3') }}
-                                {{ html()->text('county', $partnerAdditionalInfo->county ?? $partnerAdditionalInfo->invoiceOrganisation->county)
-                                    ->class('form-control additional-info')
-                                 }}
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col">
-                                {{ html()->label('Finance Fax')->for('finance_fax')->class('col-md-3') }}
-                                {{ html()->text('finance_fax', $partnerAdditionalInfo->finance_fax ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
-                            </div>
-                            <div class="col">
-                                {{ html()->label('Post Code')->for('post_code')->class('col-md-3') }}
-                                {{ html()->text('post_code', $partnerAdditionalInfo->post_code ?? $partnerAdditionalInfo->invoiceOrganisation->postcode)
-                                    ->class('form-control additional-info')
-                                 }}
+                                <div class="form-group row">
+                                    {{ html()->label('City')->for('city')->class('col-md-4') }}
+                                    <div class="col-md-8">
+                                        {{ html()->text('city', $partnerAdditionalInfo->city ?? $partnerAdditionalInfo->invoiceOrganisation->city)
+                                            ->class('form-control additional-info')
+                                         }}
+                                     </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="row mt-2">
+                        <div class="row">
                             <div class="col">
-                                {{ html()->label('VAT No')->for('vat')->class('col-md-3') }}
-                                {{ html()->text('vat', $partnerAdditionalInfo->vat ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
+                                <div class="form-group row">
+                                    {{ html()->label('Finance Tel')->for('finance_tel')->class('col-md-4') }}
+                                    <div class="col-md-8">
+                                        {{ html()->text('finance_tel', $partnerAdditionalInfo->finance_tel ?? '')
+                                            ->class('form-control additional-info')
+                                         }}
+                                     </div>
+                                 </div>
                             </div>
                             <div class="col">
-                                {{ html()->label('Web URL')->for('web_url')->class('col-md-3') }}
-                                {{ html()->text('web_url', $partnerAdditionalInfo->web_url ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col">
-                                {{ html()->label('EORI No')->for('eori')->class('col-md-3') }}
-                                {{ html()->text('eori', $partnerAdditionalInfo->eori ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
-                            </div>
-                            <div class="col">
-                                {{ html()->label('Contact')->for('contact')->class('col-md-3') }}
-                                {{ html()->text('contact', $partnerAdditionalInfo->contact ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
+                                <div class="form-group row">
+                                    {{ html()->label('County')->for('county')->class('col-md-4') }}
+                                    <div class="col-md-8">
+                                        {{ html()->text('county', $partnerAdditionalInfo->county ?? $partnerAdditionalInfo->invoiceOrganisation->county)
+                                            ->class('form-control additional-info')
+                                         }}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="row mt-2">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group row">
+                                    {{ html()->label('Finance Fax')->for('finance_fax')->class('col-md-4') }}
+                                    <div class="col-md-8">
+                                    {{ html()->text('finance_fax', $partnerAdditionalInfo->finance_fax ?? '')
+                                    ->class('form-control additional-info')
+                                    }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group row">
+                                    {{ html()->label('Post Code')->for('post_code')->class('col-md-4') }}
+                                    <div class="col-md-8">
+                                        {{ html()->text('post_code', $partnerAdditionalInfo->post_code ?? $partnerAdditionalInfo->invoiceOrganisation->postcode)
+                                            ->class('form-control additional-info')
+                                         }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group row">
+                                    {{ html()->label('VAT No')->for('vat')->class('col-md-4') }}
+                                    <div class="col-md-8">
+                                        {{ html()->text('vat', $partnerAdditionalInfo->vat ?? '')
+                                            ->class('form-control additional-info')
+                                         }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group row">
+                                    {{ html()->label('Web URL')->for('web_url')->class('col-md-4') }}
+                                    <div class="col-md-8">
+                                        {{ html()->text('web_url', $partnerAdditionalInfo->web_url ?? '')
+                                            ->class('form-control additional-info')
+                                         }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group row">
+                                    {{ html()->label('EORI No')->for('eori')->class('col-md-4') }}
+                                    <div class="col-md-8">
+                                        {{ html()->text('eori', $partnerAdditionalInfo->eori ?? '')
+                                            ->class('form-control additional-info')
+                                         }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group row">
+                                    {{ html()->label('Contact')->for('contact')->class('col-md-4') }}
+                                    <div class="col-md-8">
+                                        {{ html()->text('contact', $partnerAdditionalInfo->contact ?? '')
+                                            ->class('form-control additional-info')
+                                         }}
+                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col">
                             </div>
                             <div class="col">
-                                {{ html()->label('Customer Ref')->for('customer_ref')->class('col-md-3') }}
-                                {{ html()->text('customer_ref', $partnerAdditionalInfo->customer_ref ?? '')
-                                    ->class('form-control float-right additional-info')
-                                 }}
+                                <div class="form-group row">
+                                    {{ html()->label('Customer Ref')->for('customer_ref')->class('col-md-4') }}
+                                    <div class="col-md-8">
+                                        {{ html()->text('customer_ref', $partnerAdditionalInfo->customer_ref ?? '')
+                                            ->class('form-control float-right additional-info')
+                                         }}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="row mt-4">
