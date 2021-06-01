@@ -74,9 +74,13 @@
                     </div>
                 </div>
                 <!-- END: Breadcrumbs-->
-                <div class="text-center">
-                    <div class="c-sidebar-brand">
-                        <img src="{{ asset('assets/backend/images/logo_with_title.png') }}" class="sidebar-logo" height="100">
+                <div class="row text-center">
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-4">
+                        <div class="c-sidebar-brand ml-4" style="justify-content: left !important;">
+                            <img src="{{ asset('assets/backend/images/logo_horiz_white.jpg') }}" class="sidebar-logo" height="100">
+                        </div>
                     </div>
                 </div>
                 <div class="row text-center">
