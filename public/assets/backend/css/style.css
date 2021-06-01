@@ -16560,7 +16560,8 @@ html:not([dir="rtl"]) .c-sidebar.c-sidebar-show.c-sidebar-right, html:not([dir="
 }
 
 .c-sidebar .c-sidebar-brand,.c-sidebar .c-sidebar-header {
-  background: rgba(0, 0, 21, 0.2);
+  /*background: rgba(0, 0, 21, 0.2);*/
+  background: #fff !important;
 }
 
 .c-sidebar .c-sidebar-form .c-form-control {
