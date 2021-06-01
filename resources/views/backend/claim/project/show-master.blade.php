@@ -112,11 +112,6 @@
     </style>
 @endpush
 @section('content')
-    <a href="{{ url()->previous() }}" class="text-large">
-        <span>
-            <i class="fa fa-arrow-left"></i>
-        </span>
-    </a>
     <h2 class="page-main-title mt-3">View Project</h2>
 
     @if($project->userHasPartialAccessToProject())

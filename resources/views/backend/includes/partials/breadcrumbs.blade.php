@@ -1,8 +1,14 @@
-@if (Breadcrumbs::has())
 <div class="c-subheader justify-content-between px-3">
-  <!-- Breadcrumb-->
   <ol class="breadcrumb border-0 m-0">
-    @foreach (Breadcrumbs::current() as $crumb)
+    <li class="mr-4">
+      <a href="{{ url()->previous() }}" style="text-decoration: none;">
+          <span>
+              <i class="cil-arrow-thick-left"></i>
+          </span>
+      </a>
+  </li>
+@if (Breadcrumbs::has())
+  @foreach (Breadcrumbs::current() as $crumb)
     @if ($crumb->url() && !$loop->last)
     <li class="breadcrumb-item">
       <x-utils.link :href="$crumb->url()" :text="$crumb->title()" />
@@ -14,6 +20,6 @@
     @endif
     @endforeach
     <!-- Breadcrumb Menu-->
+@endif
   </ol>
 </div>
-@endif

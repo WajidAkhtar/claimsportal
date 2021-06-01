@@ -5,11 +5,6 @@
 @section('title', __('Update User'))
 
 @section('content')
-    <a href="{{ url()->previous() }}" class="text-large">
-        <span>
-            <i class="fa fa-arrow-left"></i>
-        </span>
-    </a>
     <h2 class="page-main-title mt-3">Update User</h2>
     
     <x-forms.patch :action="route('admin.auth.user.update', $user)">

@@ -6,11 +6,6 @@
 <link rel="stylesheet" href="{{asset('assets/backend/vendors/select2/css/select2.css')}}">
 @endpush
 @section('content')
-    <a href="{{ url()->previous() }}" class="text-large">
-        <span>
-            <i class="fa fa-arrow-left"></i>
-        </span>
-    </a>
     <h2 class="page-main-title mt-3">Edit Project</h2>
     <x-forms.patch :action="route('admin.claim.project.update', $project)" enctype="multipart/form-data">
         @php

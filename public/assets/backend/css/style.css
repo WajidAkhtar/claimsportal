@@ -14758,7 +14758,7 @@ html:not([dir="rtl"]) .progress-group-icon {
   flex-direction: column;
   -ms-flex-order: -1;
   order: -1;
-  width: 256px;
+  width: 200px;
   padding: 0;
   box-shadow: none;
   color: #fff;
@@ -14793,15 +14793,15 @@ html:not([dir="rtl"]) .progress-group-icon {
 }
 
 html:not([dir="rtl"]) .c-sidebar:not(.c-sidebar-right) {
-  margin-left: -256px;
+  margin-left: -200px;
 }
 
 html:not([dir="rtl"]) .c-sidebar.c-sidebar-right,*[dir="rtl"] .c-sidebar:not(.c-sidebar-right) {
-  margin-right: -256px;
+  margin-right: -200px;
 }
 
 *[dir="rtl"] .c-sidebar.c-sidebar-right {
-  margin-left: -256px;
+  margin-left: -200px;
   border: 0;
 }
 
@@ -16109,11 +16109,11 @@ html:not([dir="rtl"]) .c-sidebar.c-sidebar-show.c-sidebar-right, html:not([dir="
 @media (min-width: 992px) and (min-width: 992px) {
   html:not([dir="rtl"]) .c-sidebar.c-sidebar-lg-show:not(.c-sidebar-right).c-sidebar-fixed ~ .c-wrapper, html:not([dir="rtl"])
   .c-sidebar.c-sidebar-show:not(.c-sidebar-right).c-sidebar-fixed ~ .c-wrapper {
-    margin-left: 256px;
+    margin-left: 200px;
   }
   *[dir="rtl"] .c-sidebar.c-sidebar-lg-show:not(.c-sidebar-right).c-sidebar-fixed ~ .c-wrapper, *[dir="rtl"]
   .c-sidebar.c-sidebar-show:not(.c-sidebar-right).c-sidebar-fixed ~ .c-wrapper {
-    margin-right: 256px;
+    margin-right: 200px;
   }
   html:not([dir="rtl"]) .c-sidebar.c-sidebar-lg-show:not(.c-sidebar-right).c-sidebar-fixed.c-sidebar-sm ~ .c-wrapper, html:not([dir="rtl"])
   .c-sidebar.c-sidebar-show:not(.c-sidebar-right).c-sidebar-fixed.c-sidebar-sm ~ .c-wrapper {

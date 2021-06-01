@@ -22,9 +22,9 @@
             </ul>
             <ul class="c-header-nav">
                 <li class="c-header-nav-item dropdown"><a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <div class="c-avatar"><img class="c-avatar-img" src="{{ $logged_in_user->avatar }}" alt="{{ $logged_in_user->name }}">
+                    <span class="mr-2" style="margin-top:3px;">{{ $logged_in_user->full_name }} </span>
+                    <div class="c-avatar ml-2 mr-2"><img class="c-avatar-img" src="{{ $logged_in_user->avatar }}" alt="{{ $logged_in_user->name }}">
                     </div>
-                    <span class="ml-2" style="margin-top:3px;">{{ $logged_in_user->full_name }} </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right pt-0">
                     <a href="{{ route('admin.auth.user.edit', [$logged_in_user->id]) }}" class="dropdown-item">
