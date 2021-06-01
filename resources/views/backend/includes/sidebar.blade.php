@@ -2,13 +2,12 @@
     <div class="c-sidebar-brand">
         <a href="{{route('admin.claim.project.index')}}" class="horizontal-logo text-left">
             <center>
-                <img src="{{ asset('assets/backend/images/logo.png') }}" class="sidebar-logo" height="70">
+                <img src="{{ asset('assets/backend/images/logo_black.jpeg') }}" class="sidebar-logo" height="70">
             </center>
         </a>
     </div>
     <ul class="c-sidebar-nav">
-        <li class="c-sidebar-nav-title">Menus</li>
-        <li class="c-sidebar-nav-item">
+        <li class="c-sidebar-nav-item mt-2">
             <ul class="c-sidebar-nav {{activeClass(Route::is('admin.claim.project.*'), 'active')}}">
                 <a class="c-sidebar-nav-link" href="{{route('admin.claim.project.index')}}">
                     <svg class="c-sidebar-nav-icon">
