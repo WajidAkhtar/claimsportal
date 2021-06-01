@@ -14762,7 +14762,7 @@ html:not([dir="rtl"]) .progress-group-icon {
   padding: 0;
   box-shadow: none;
   color: #fff;
-  background: #3c4b64;
+  background: #2f353a;
   transition: box-shadow 0.3s 0.15s, margin-left 0.3s, margin-right 0.3s, width 0.3s, z-index 0s ease 0.3s, -webkit-transform 0.3s;
   transition: box-shadow 0.3s 0.15s, transform 0.3s, margin-left 0.3s, margin-right 0.3s, width 0.3s, z-index 0s ease 0.3s;
   transition: box-shadow 0.3s 0.15s, transform 0.3s, margin-left 0.3s, margin-right 0.3s, width 0.3s, z-index 0s ease 0.3s, -webkit-transform 0.3s;
@@ -16950,6 +16950,7 @@ html:not([dir="rtl"]) .c-sidebar.c-sidebar-light.c-sidebar-right,*[dir="rtl"] .c
 .c-legacy-theme .c-sidebar {
   color: #fff;
   background: #2f353a;
+  /*background: #2f353a;*/
 }
 
 *[dir="rtl"] .c-legacy-theme .c-sidebar.c-sidebar-right {

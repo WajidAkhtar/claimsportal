@@ -194,3 +194,7 @@ td {
 .droodown-item:hover {
     background-color: #f0f3f5 !important;
 }
+
+.c-sidebar-nav-link:hover {
+    background-color: #20a8d8 !important;
+}
