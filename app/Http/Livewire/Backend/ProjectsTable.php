@@ -98,7 +98,6 @@ class ProjectsTable extends TableComponent
                 ->searchable()
                 ->sortable(),    
             Column::make(__('Funder'), 'funders')
-                ->searchable()
                 ->sortable(),
             Column::make(__('Start Date'), 'start_date')
                 ->format(function($model){
