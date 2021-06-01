@@ -26,22 +26,24 @@
                     <div class="c-avatar ml-2 mr-2"><img class="c-avatar-img" src="{{ $logged_in_user->avatar }}" alt="{{ $logged_in_user->name }}">
                     </div>
                 </a>
-                <div class="dropdown-menu dropdown-menu-right pt-0">
+                <div class="dropdown-menu dropdown-menu-right pt-0 mr-2">
+                    <div class="dropdown-header bg-light py-2"><strong>Account</strong></div>
                     <a href="{{ route('admin.auth.user.edit', [$logged_in_user->id]) }}" class="dropdown-item">
-                        <span class="icon-pencil mr-2 h6 mb-0"></span> Edit Profile</a>
-                        <a href="{{ route('frontend.user.account') }}" class="dropdown-item">
-                            <span class="icon-eye mr-2 h6 mb-0"></span> Change Password</a>
-                            <div class="dropdown-divider"></div>
-                            <x-utils.link
-                            class="dropdown-item px-2 text-danger align-self-center d-flex"
-                            icon="icon-logout mr-2 h6  mb-0"
-                            onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                            <x-slot name="text">
-                            @lang('Logout')
-                            <x-forms.post :action="route('frontend.auth.logout')" id="logout-form" class="d-none" />
-                            </x-slot>
-                            </x-utils.link>
-                        </div>
+                        <span class="cil-pencil mr-2 h6 mb-0"></span> Edit Profile
+                    </a>
+                    <a href="{{ route('frontend.user.account') }}" class="dropdown-item">
+                        <span class="cil-low-vision mr-2 h6 mb-0"></span> Change Password
+                    </a>
+                    <x-utils.link
+                    class="dropdown-item"
+                    icon="cil-account-logout mr-2 h6  mb-0"
+                    onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                    <x-slot name="text">
+                    @lang('Logout')
+                    <x-forms.post :action="route('frontend.auth.logout')" id="logout-form" class="d-none" />
+                    </x-slot>
+                    </x-utils.link>
+                    </div>
                     </li>
                     <button class="c-header-toggler c-class-toggler mfe-md-3" type="button" data-target="#aside" data-class="c-sidebar-show" style="display: none;">
                     
