@@ -182,7 +182,8 @@ td {
 }
 
 .sidebar-logo {
-    width: 100px;
+    /*width: 100px;*/
+    width: 65px;
     height: auto;
 }
 
