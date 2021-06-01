@@ -12,7 +12,8 @@
             </button>
             <ul class="c-header-nav d-md-down-none">
                 <li class="c-header-nav-item px-3">
-                    <h4 class="mt-2 ml-2">Claims Portal</h4>
+                    <!-- <h4 class="mt-2 ml-2">Claims Portal</h4> -->
+                    <img class="mt-2 ml-2" src="{{ asset('assets/backend/images/app_title_name_logo.png') }}" width="200" height="auto" />
                 </li>
             </ul>
             <ul class="c-header-nav mfs-auto">
