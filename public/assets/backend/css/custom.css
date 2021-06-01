@@ -189,3 +189,7 @@ td {
 .text-large {
     font-size: 20px;
 }
+
+.droodown-item:hover {
+    background-color: #f0f3f5 !important;
+}

@@ -193,9 +193,9 @@
 
                         <div class="row">
                             <div class="col">
-                                {{ html()->label('Organisation')->for('organisation_id') }}
                                 <div class="form-group">
                                     {{ html()->hidden('organisation_id', $partnerAdditionalInfo->invoiceOrganisation->id ?? 0) }}
+                                    {{ html()->label('Organisation')->for('organisation_id') }}
                                     {{ html()->select('sel_organisation_id', $organisations, $partnerAdditionalInfo->invoiceOrganisation ?? '')
                                         ->class('form-control additional-info select2')
                                         ->attribute('style', 'width:100%;')
