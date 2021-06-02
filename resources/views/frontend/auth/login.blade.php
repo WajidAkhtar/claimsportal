@@ -9,6 +9,9 @@
         <div class="col-md-4">
             <x-frontend.card>
                 <x-slot name="body">
+                    <div class="c-sidebar-brand mb-4" style="justify-content: left !important;">
+                            <img src="{{ asset('assets/backend/images/logo_horiz_white.jpg') }}" class="sidebar-logo" height="100">
+                        </div>
                     <x-forms.post :action="route('frontend.auth.login')">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend"><span class="input-group-text">
