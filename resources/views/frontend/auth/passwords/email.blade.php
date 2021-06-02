@@ -15,7 +15,7 @@
                 <x-frontend.card>
                     <x-slot name="body">
                         <div class="c-sidebar-brand mb-4" style="justify-content: left !important;">
-                            <img src="{{ asset('assets/backend/images/logo_horiz_white.jpg') }}" class="sidebar-logo" height="100">
+                            <img src="{{ asset('assets/backend/images/logo_horiz_white.jpg') }}" class="sidebar-logo" height="50">
                         </div>
                         <x-forms.post :action="route('frontend.auth.password.email')">
                             <div class="input-group mb-3">
