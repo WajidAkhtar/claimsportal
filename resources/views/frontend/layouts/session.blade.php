@@ -64,7 +64,7 @@
         <main class="ml-0 mb-5">
             <img src="{{ asset('assets/backend/images/app_title_name_logo.png') }}" class="mt-5 ml-5" width="300" height="auto">
             <div class="container-fluid site-width pt-5">
-                <video class="login-animation" autoplay="" muted="" src="{{ asset('assets/backend/images/animation.mov') }}" loop="" id="vid" style="position: absolute;width: 100%;height: 100%;transform: rotate(270deg);left: 35%;"></video>
+                <video class="login-animation" autoplay="" muted="" src="{{ asset('assets/backend/images/animation.mov') }}" loop="" id="vid" style="position: absolute;width: 100%;height: 100%;transform: rotate(270deg);left: 38%;"></video>
                 <!-- START: Breadcrumbs-->
                 <div class="row">
                     <div class="col-12  align-self-center">
