@@ -119,3 +119,22 @@ if(! function_exists('projectLead')) {
         return $lead;
     }
 }
+
+if(! function_exists('preetyUrl')) {
+    /**
+    * @return String
+    */
+    function preetyUrl($url): String
+    {
+        if(empty($url)) {
+            return null;
+        }
+
+        $parsed = parse_url($url);
+        if (empty($parsed['scheme'])) {
+            $url = 'http://' . ltrim($url, '/');
+        }
+
+        return $url;
+    }
+}

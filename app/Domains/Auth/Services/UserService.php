@@ -211,7 +211,7 @@ class UserService extends BaseService
                 'county' => $data['county'],
                 'city' => $data['city'],
                 'postcode' => $data['postcode'],
-                'email' => $data['email'],
+                'email' => $data['correspending_email'],
                 'mobile' => $data['mobile'],
                 'direct_dial' => $data['direct_dial'],
             ]);

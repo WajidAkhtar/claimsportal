@@ -171,7 +171,7 @@
                                     <form>
                                         <input type="hidden" name="exportExcel" value="1" />
                                         <input type="hidden" name="partner" value="{{ $sheetOwner }}" />
-                                        <button class="btn btn-primary" onclick="this.form.submit()">Export Excel</button>
+                                        <button class="btn btn-success" onclick="this.form.submit()">Export Excel</button>
                                     </form>
                                   </li>
                                 </ul>
@@ -197,7 +197,7 @@
                         {{ html()->input('hidden', 'project_id', $project->id) }}
                         {{ html()->input('hidden', 'sheet_owner', $sheetOwner) }}
 
-                        <h6>Finance Contact</h6>
+                        <h6>FINANCE INFORMATION</h6>
                         <hr />
 
                         <div class="row">
@@ -374,7 +374,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group row"> 
-                                {{ html()->label('Contact')->for('contact')->class('col-md-4') }}
+                                {{ html()->label('Project Contact No')->for('contact')->class('col-md-4') }}
                                 <div class="col-md-8">
                                 {{ html()->text('contact', $partnerAdditionalInfo->contact ?? '')
                                     ->class('form-control additional-info')
@@ -544,7 +544,7 @@
                                 <tr>
                                     <td colspan="4">
                                         <button type="button" class="btn btn-primary btn-sm add"><i class="fa fa-plus"></i></button>
-                                        <button type="button" class="btn-save-sheet-user-permissions btn btn-sm btn-success">Save User & Permissions</button>
+                                        <button type="button" class="btn-save-sheet-user-permissions btn btn-sm btn-success">SAVE PERMISSIONS</button>
                                     </td>
                                 </tr>
                             </tfoot>
@@ -633,7 +633,7 @@
                                 <div>Contact: {{optional($leadUserPartner)->contact ?? 'N/A'}}</div>
                                 <div>Web URL: 
                                     @if(optional($leadUserPartner)->web_url) 
-                                        <a class="text-primary" href="{{ optional($leadUserPartner)->web_url }}">
+                                        <a class="text-primary" href="{{ optional($leadUserPartner)->preety_web_url_link }}" target="_blank">
                                             {{ optional($leadUserPartner)->web_url }}
                                         </a>
                                     @else 
@@ -662,7 +662,7 @@
                                 <div>Contact: {{$partnerAdditionalInfo->contact ?? 'N/A'}}</div>
                                 <div>Web URL: 
                                     @if($partnerAdditionalInfo->web_url) 
-                                        <a class="text-primary" href="{{ $partnerAdditionalInfo->web_url }}">
+                                        <a class="text-primary" href="{{ $partnerAdditionalInfo->preety_web_url_link }}" target="_blank">
                                             {{ $partnerAdditionalInfo->web_url }}
                                         </a>
                                     @else 
@@ -691,7 +691,7 @@
                                 <div>Contact: {{$funderAdditionalInfo->funder_contact ?? 'N/A'}}</div>
                                 <div>Web URL: 
                                     @if($funderAdditionalInfo->funder_web_url) 
-                                        <a class="text-primary" href="{{ $funderAdditionalInfo->funder_web_url }}">
+                                        <a class="text-primary" href="{{ $funderAdditionalInfo->preety_funder_web_url_link }}" target="_blank">
                                             {{ $funderAdditionalInfo->funder_web_url }}
                                         </a>
                                     @else 

@@ -15,8 +15,8 @@
 				font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
 				text-align: center;
 				color: #000;
-				margin-right: 3em;
-				margin-left: 3em;
+				margin-right: 0.2em;
+				margin-left: 0.2em;
 			}
 
 			body h1 {
@@ -316,6 +316,15 @@
                 <tr class="information">
                     <td colspan="3"></td>
                 </tr>
+                <tr class="information">
+                    <td colspan="3"></td>
+                </tr>
+                <tr class="information">
+                    <td colspan="3"></td>
+                </tr>
+                <tr class="information">
+                    <td colspan="3"></td>
+                </tr>
 
                 <tr>
 					<td colspan="3">
@@ -332,7 +341,7 @@
 					<td colspan="3">
 						<strong>PAYMENT LINK:</strong><br>
 						@if(!empty($invoiceFromPartner->payment_link))
-							<a href="{{ $invoiceFromPartner->payment_link }}">{{ $invoiceFromPartner->payment_link }}</a>
+							<a href="{{ $invoiceFromPartner->preety_payment_link }}">{{ $invoiceFromPartner->payment_link }}</a>
 						@endif
 					</td>
 				</tr>

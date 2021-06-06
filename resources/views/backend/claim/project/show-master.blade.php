@@ -161,7 +161,7 @@
                                     <form>
                                         <input type="hidden" name="exportExcel" value="1" />
                                         <input type="hidden" name="partner" value="{{ $sheetOwner }}" />
-                                        <button class="btn btn-primary" onclick="this.form.submit()">Export Excel</button>
+                                        <button class="btn btn-success" onclick="this.form.submit()">Export Excel</button>
                                     </form>
                                   </li>
                                 </ul>
@@ -188,7 +188,7 @@
                         {{ html()->input('hidden', 'sheet_owner', $sheetOwner) }}
                         {{ html()->input('hidden', 'is_master', 1) }}
 
-                        <h6>Finance Contact</h6>
+                        <h6>FINANCE INFORMATION</h6>
                         <hr />
 
                         <div class="row">
@@ -391,7 +391,7 @@
                             </div>
                             <div class="col">
                                 <div class="form-group row">
-                                    {{ html()->label('Contact')->for('contact')->class('col-md-4') }}
+                                    {{ html()->label('Project Contact No')->for('contact')->class('col-md-4') }}
                                     <div class="col-md-8">
                                         {{ html()->text('contact', $partnerAdditionalInfo->contact ?? '')
                                             ->class('form-control additional-info')
@@ -633,7 +633,7 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group row"> 
-                                        {{ html()->label('Contact')->for('funder_contact')->class('col-md-4') }}
+                                        {{ html()->label('Project Contact No')->for('funder_contact')->class('col-md-4') }}
                                         <div class="col-md-8"> 
                                         {{ html()->text('funder_contact', $partnerAdditionalInfo->funder_contact ?? '')
                                             ->class('form-control additional-info')
@@ -684,7 +684,7 @@
                                 <tr>
                                     <td colspan="4">
                                         <button type="button" class="btn btn-primary btn-sm add"><i class="fa fa-plus"></i></button>
-                                        <button type="button" class="btn-save-sheet-user-permissions btn btn-sm btn-success">Save User & Permissions</button>
+                                        <button type="button" class="btn-save-sheet-user-permissions btn btn-sm btn-success">SAVE PERMISSIONS</button>
                                     </td>
                                 </tr>
                             </tfoot>
@@ -767,7 +767,7 @@
                                 <div>Contact: {{optional($leadUserPartner)->contact ?? 'N/A'}}</div>
                                 <div>Web URL: 
                                     @if(optional($leadUserPartner)->web_url) 
-                                        <a class="text-primary" href="{{ optional($leadUserPartner)->web_url }}">
+                                        <a class="text-primary" href="{{ optional($leadUserPartner)->preety_web_url }}" target="_blank">
                                             {{ optional($leadUserPartner)->web_url }}
                                         </a>
                                     @else 
@@ -796,7 +796,7 @@
                                 <div>Contact: {{$partnerAdditionalInfo->funder_contact ?? 'N/A'}}</div>
                                 <div>Web URL: 
                                     @if($partnerAdditionalInfo->funder_web_url) 
-                                        <a class="text-primary" href="{{ $partnerAdditionalInfo->funder_web_url }}">
+                                        <a class="text-primary" href="{{ $partnerAdditionalInfo->preety_funder_web_url }}" target="_blank">
                                             {{ $partnerAdditionalInfo->funder_web_url }}
                                         </a>
                                     @else 

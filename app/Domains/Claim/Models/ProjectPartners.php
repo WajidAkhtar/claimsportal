@@ -76,4 +76,15 @@ class ProjectPartners extends Model
         return $this->belongsToMany(SheetPermission::class, 'user_id', 'partner_id');
     }
 
+    public function getPreetyWebUrlAttribute() {
+        return preetyUrl($this->web_url);
+    }
+
+    public function getPreetyFunderWebUrlAttribute() {
+        return preetyUrl($this->funder_web_url);
+    }
+
+    public function getPreetyPaymentLinkAttribute() {
+        return preetyUrl($this->payment_link);
+    }
 }
