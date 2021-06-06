@@ -12,7 +12,7 @@
             <ul class="c-sidebar-nav {{activeClass(Route::is('admin.claim.project.*'), 'active')}}">
                 <a class="c-sidebar-nav-link" href="{{route('admin.claim.project.index')}}">
                     <svg class="c-sidebar-nav-icon">
-                        <use xlink:href="{{ asset('assets/backend/vendors/@coreui/icons/svg/free.svg#cil-chart-line') }}"></use>
+                        <use xlink:href="{{ asset('assets/backend/vendors/@coreui/icons/svg/free.svg#cil-layers') }}"></use>
                     </svg>
                     <li class="c-sidebar-nav-item">
                         @lang('PROJECTS')

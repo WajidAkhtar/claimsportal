@@ -35,14 +35,14 @@
             <td colspan="3" style="{{ $defaultCellStyle }}">Code: {{$project->number}}</td>
             <td colspan="3" style="{{ $defaultCellStyle }}">Contact: {{optional($leadUserPartner)->contact ?? 'N/A'}}</td>
             <td colspan="3" style="{{ $defaultCellStyle }}">Contact: {{$partnerAdditionalInfo->contact ?? 'N/A'}}</td>
-            <td colspan="3" style="{{ $defaultCellStyle }}">Contact: {{$partnerAdditionalInfo->funder_contact ?? 'N/A'}}</td>
+            <td colspan="3" style="{{ $defaultCellStyle }}">Contact: {{$funderAdditionalInfo->funder_contact ?? 'N/A'}}</td>
         </tr>
         <tr>
             <td></td>
             <td colspan="3" style="{{ $defaultCellStyle }}">Start: {{$project->start_date->format('m-Y')}}</td>
             <td colspan="3" style="{{ $defaultCellStyle }}">Web URL: {{ optional($leadUserPartner)->web_url ?? 'N/A' }}</td>
             <td colspan="3" style="{{ $defaultCellStyle }}">Web URL: {{ $partnerAdditionalInfo->web_url ?? 'N/A' }}</td>
-            <td colspan="3" style="{{ $defaultCellStyle }}">Web URL: {{ $partnerAdditionalInfo->funder_web_url ?? 'N/A' }}</td>
+            <td colspan="3" style="{{ $defaultCellStyle }}">Web URL: {{ $funderAdditionalInfo->funder_web_url ?? 'N/A' }}</td>
         </tr>
     </table>
 </table>

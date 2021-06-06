@@ -291,6 +291,8 @@ class ProjectController
                 $reportExcelFileName = $project->name."-";
                 $reportExcelFileName.= (!empty(request()->partner)) ? Organisation::find(request()->partner)->organisation_name."-" : "";
                 $reportExcelFileName.= "Claims-".date('Y_m_d_h_i');
+
+                $funderAdditionalInfo = ProjectPartners::where('project_id', $project->id)->where('is_master', '1')->first();
                 return Excel::download(new ClaimChildSheet(
                     $project,
                     null,
@@ -301,6 +303,7 @@ class ProjectController
                     $sheet_owner,
                     ($partnerAdditionalInfo->invoiceOrganisation) ? $partnerAdditionalInfo->invoiceOrganisation->organisation_name : $partnerAdditionalInfo->organisation->organisation_name,
                     $project->costItems,
+                    $funderAdditionalInfo,
                 ), $reportExcelFileName.'.xlsx');
             }
 

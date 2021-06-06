@@ -108,7 +108,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col">
+                        <div class="col-md-6">
                             <div class="form-group row">
                                 <label for="job_title" class="col-form-label col-md-4">@lang('Job Title')</label>
                                 <div class="col-md-8">
@@ -116,7 +116,21 @@
                                 </div>
                             </div><!--form-group-->
                         </div>
-                        <div class="col">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="department" class="col-form-label col-md-4">@lang('Department')</label>
+                                <div class="col-md-8">
+                                <input type="text" name="department" class="form-control" placeholder="{{ __('Department') }}" value="{{ old('department') ?? $user->department }}" maxlength="100" />
+                                </div>
+                            </div><!--form-group-->
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
                             <div class="form-group row">
                                 <label for="email" class="col-form-label col-md-4">@lang('E-mail Address')</label>
                                 <div class="col-md-8">
@@ -127,14 +141,6 @@
                     </div>
 
                     <div class="row">
-                        <div class="col">
-                            <div class="form-group row">
-                                <label for="department" class="col-form-label col-md-4">@lang('Department')</label>
-                                <div class="col-md-8">
-                                <input type="text" name="department" class="form-control" placeholder="{{ __('Department') }}" value="{{ old('department') ?? $user->department }}" maxlength="100" />
-                                </div>
-                            </div><!--form-group-->
-                        </div>
                         <div class="col-md-6">
                             <div class="form-group row">
                                 <label for="direct_dial" class="col-md-4">Direct Dial</label>
@@ -150,7 +156,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group row">
-                                <label for="mobile" class="col-md-4">Mobile</label>
+                                <label for="mobile" class="col-md-4">Mobile No</label>
                                 <div class="col-md-8">
                                 {{ html()->text('mobile', (!empty($correspondenceAddress)) ? $correspondenceAddress->mobile ?? '' : '')
                                     ->class('form-control')
@@ -171,8 +177,8 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group row">
-                                <label for="building_name_no" class="col-md-4">Building Name/No</label>
-                                <div class="col-md-8">
+                                <label for="building_name_no" class="col-md-2">Building Name/No</label>
+                                <div class="col-md-10">
                                 {{ html()->text('building_name_no', (!empty($correspondenceAddress)) ? $correspondenceAddress->building_name_no ?? '' : '' )
                                     ->class('form-control')
                                  }}
@@ -183,8 +189,8 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group row">
-                                <label for="street" class="col-md-4">Address Line 1</label>
-                                <div class="col-md-8">
+                                <label for="street" class="col-md-2">Address Line 1</label>
+                                <div class="col-md-10">
                                 {{ html()->text('street', (!empty($correspondenceAddress)) ? $correspondenceAddress->street ?? '' : '')
                                     ->class('form-control')
                                  }}
@@ -196,8 +202,8 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group row">
-                                <label for="address_line_2" class="col-md-4">Address Line 2</label>
-                                <div class="col-md-8">
+                                <label for="address_line_2" class="col-md-2">Address Line 2</label>
+                                <div class="col-md-10">
                                 {{ html()->text('address_line_2', (!empty($correspondenceAddress)) ? $correspondenceAddress->address_line_2 ?? '' : '')
                                     ->class('form-control')
                                  }}
@@ -208,8 +214,8 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group row">
-                                <label for="county" class="col-md-4">County</label>
-                                <div class="col-md-8">
+                                <label for="county" class="col-md-2">County</label>
+                                <div class="col-md-10">
                                 {{ html()->text('county', (!empty($correspondenceAddress)) ? $correspondenceAddress->county ?? '' : '')
                                     ->class('form-control')
                                  }}
@@ -221,8 +227,8 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group row">
-                                <label for="city" class="col-md-4">City</label>
-                                <div class="col-md-8">
+                                <label for="city" class="col-md-2">City</label>
+                                <div class="col-md-10">
                                 {{ html()->text('city', (!empty($correspondenceAddress)) ? $correspondenceAddress->city ?? '' : '')
                                     ->class('form-control')
                                  }}
@@ -233,8 +239,8 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group row">
-                                <label for="postcode" class="col-md-4">Post Code</label>
-                                <div class="col-md-8">
+                                <label for="postcode" class="col-md-2">Post Code</label>
+                                <div class="col-md-10">
                                 {{ html()->text('postcode', (!empty($correspondenceAddress)) ? $correspondenceAddress->postcode ?? '' : '')
                                     ->class('form-control')
                                  }}
@@ -246,8 +252,8 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group row">
-                                <label for="correspending_email" class="col-md-4">Correspondance Email</label>
-                                <div class="col-md-8">
+                                <label for="correspending_email" class="col-md-2">Correspondance Email</label>
+                                <div class="col-md-10">
                                 {{ html()->text('correspending_email', (!empty($correspondenceAddress)) ? $correspondenceAddress->email ?? '' : '')
                                     ->class('form-control')
                                  }}

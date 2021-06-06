@@ -256,6 +256,18 @@ class UserService extends BaseService
 
         return tap($user)->save();
     }
+    
+    /**
+     * @param  User  $user
+     * @param  array  $data
+     *
+     * @return User
+     */
+    public function updateAvatar(User $user, array $data = []): User
+    {
+        $user->avatar = $data['avatar'] ?? null;
+        return tap($user)->save();
+    }
 
     /**
      * @param  User  $user

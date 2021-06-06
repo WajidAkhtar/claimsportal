@@ -99,7 +99,11 @@ trait UserMethod
      */
     public function getAvatar($size = null)
     {
-        // return 'https://gravatar.com/avatar/'.md5(strtolower(trim($this->email))).'?s='.config('boilerplate.avatar.size', $size).'&d=mp';
-        return asset('assets/backend/images/default_profile_pic.jpg');
+        
+        if($this->attributes['avatar']) {
+            return asset('assets/backend/avatars/'.$this->attributes['avatar']);
+        }
+        return 'https://gravatar.com/avatar/'.md5(strtolower(trim($this->email))).'?s='.config('boilerplate.avatar.size', $size).'&d=mp';
+        // return asset('assets/backend/images/default_profile_pic.jpg');
     }
 }

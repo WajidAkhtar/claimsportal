@@ -400,20 +400,11 @@
                             </div>
                         </div>
                         <div class="row ">
-                            <div class="col">
+                            <div class="col-md-6">
                                 <div class="form-group row"> 
                                 {{ html()->label('Bank Name')->for('bank_name')->class('col-md-4') }}
                                 <div class="col-md-8">
                                 {{ html()->text('bank_name', $partnerAdditionalInfo->bank_name ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
-                                </div></div>
-                            </div>
-                            <div class="col">
-                                <div class="form-group row"> 
-                                {{ html()->label('Customer Ref')->for('customer_ref')->class('col-md-4') }}
-                                <div class="col-md-8">
-                                {{ html()->text('customer_ref', $partnerAdditionalInfo->customer_ref ?? '')
                                     ->class('form-control additional-info')
                                  }}
                                 </div></div>
@@ -443,9 +434,9 @@
                             </div>
                             <div class="col">
                                 <div class="form-group row"> 
-                                {{ html()->label('VAT No')->for('vat')->class('col-md-4') }}
+                                {{ html()->label('Customer Ref')->for('customer_ref')->class('col-md-4') }}
                                 <div class="col-md-8">
-                                {{ html()->text('vat', $partnerAdditionalInfo->vat ?? '')
+                                {{ html()->text('customer_ref', $partnerAdditionalInfo->customer_ref ?? '')
                                     ->class('form-control additional-info')
                                  }}
                                 </div></div>
@@ -462,17 +453,17 @@
                                 </div></div>
                             </div>
                             <div class="col">
-                                <div class="form-group row"> 
-                                {{ html()->label('EORI No')->for('eori')->class('col-md-4') }}
+                                <div class="form-group row">
+                                {{ html()->label('Payment Link')->for('payment_link')->class('col-md-4') }}
                                 <div class="col-md-8">
-                                {{ html()->text('eori', $partnerAdditionalInfo->eori ?? '')
+                                {{ html()->text('payment_link', $partnerAdditionalInfo->payment_link ?? '')
                                     ->class('form-control additional-info')
-                                 }}
+                                }}
                                 </div></div>
                             </div>
                         </div>
                         <div class="row ">
-                            <div class="col-md-6">
+                            <div class="col">
                                 <div class="form-group row"> 
                                 {{ html()->label('SWIFT Code')->for('swift')->class('col-md-4') }}
                                 <div class="col-md-8">
@@ -481,9 +472,18 @@
                                  }}
                                 </div></div>
                             </div>
+                            <div class="col">
+                                <div class="form-group row"> 
+                                {{ html()->label('VAT No')->for('vat')->class('col-md-4') }}
+                                <div class="col-md-8">
+                                {{ html()->text('vat', $partnerAdditionalInfo->vat ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                                </div></div>
+                            </div>
                         </div>
                         <div class="row ">
-                            <div class="col-md-6">
+                            <div class="col">
                                 <div class="form-group row">
                                 {{ html()->label('IBAN')->for('iban')->class('col-md-4') }}
                                 <div class="col-md-8">
@@ -492,15 +492,13 @@
                                  }}
                                 </div></div>
                             </div>
-                        </div>
-                        <div class="row ">
-                            <div class="col-md-6">
-                                <div class="form-group row">
-                                {{ html()->label('Payment Link')->for('payment_link')->class('col-md-4') }}
+                            <div class="col">
+                                <div class="form-group row"> 
+                                {{ html()->label('EORI No')->for('eori')->class('col-md-4') }}
                                 <div class="col-md-8">
-                                {{ html()->text('payment_link', $partnerAdditionalInfo->payment_link ?? '')
+                                {{ html()->text('eori', $partnerAdditionalInfo->eori ?? '')
                                     ->class('form-control additional-info')
-                                }}
+                                 }}
                                 </div></div>
                             </div>
                         </div>

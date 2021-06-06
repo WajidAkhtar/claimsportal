@@ -5,7 +5,13 @@
 {{-- @section('breadcrumb-links')
     @include('backend.auth.user.includes.breadcrumb-links')
 @endsection --}}
-
+@push('after-styles')
+    <style>
+        .table th, .table td {
+            width: 17%;
+        }
+    </style>
+@endpush
 @section('content')
     <div class="row">
         <div class="col-12 mt-3">

@@ -23,6 +23,7 @@ class ClaimChildSheet implements FromView, WithTitle, WithDrawings, WithStyles, 
     private $project;
     private $data;
     private $partnerAdditionalInfo;
+    private $funderAdditionalInfo;
     private $yearwiseHtml;
     private $leadUser;
     private $leadUserPartner;
@@ -30,7 +31,7 @@ class ClaimChildSheet implements FromView, WithTitle, WithDrawings, WithStyles, 
     private $costItems;
     private $sheet_name;
 
-    public function __construct($project, $data, $partnerAdditionalInfo, $yearwiseHtml, $leadUser, $leadUserPartner, $partner, $sheet_name, $costItems)
+    public function __construct($project, $data, $partnerAdditionalInfo, $yearwiseHtml, $leadUser, $leadUserPartner, $partner, $sheet_name, $costItems, $funderAdditionalInfo)
     {
         $this->project = $project;
         $this->data = $data;
@@ -41,6 +42,7 @@ class ClaimChildSheet implements FromView, WithTitle, WithDrawings, WithStyles, 
         $this->partner = $partner;
         $this->costItems = $costItems;
         $this->sheet_name = $sheet_name;
+        $this->funderAdditionalInfo = $funderAdditionalInfo;
     }
 
     /**
@@ -57,6 +59,7 @@ class ClaimChildSheet implements FromView, WithTitle, WithDrawings, WithStyles, 
             'leadUserPartner' => $this->leadUserPartner,
             'costItems' => $this->costItems,
             'partner' => $this->partner,
+            'funderAdditionalInfo' => $this->funderAdditionalInfo,
         ]);
     }
 
