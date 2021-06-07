@@ -156,7 +156,7 @@
                             
                         </div>
                         <div class="col-md-2">
-                            <button class="navbar-toggler toggler-example pull-right collapsed" type="button" data-toggle="collapse" data-target="#navSheetActions" aria-controls="navSheetActions" aria-expanded="false" aria-label="Toggle navigation" style="float: right;">
+                            <button class="navbar-toggler pull-right" type="button" style="float: right;">
                             <span class=""><i class="fas fa-bars fa-1x"></i></span></button>
                             <div class="navbar-collapse collapse" id="navSheetActions" style="">
                                 <!-- Links -->
@@ -1701,9 +1701,14 @@
             });
 
             $('.navbar-toggler').click(function(){
-                $('#navSheetActions').toggleClass('show');
-                $("#partner_additional_info").toggle();
-                $("#partner_additional_info").parent().parent().toggle();
+                $('#navSheetActions').toggle().trigger('showAdded');
+            });
+
+            $('#navSheetActions').on('showAdded', function() {
+                if($(this).css('display') == 'none') {
+                    $("#partner_additional_info").toggle();
+                    $("#partner_additional_info").parent().parent().toggle();
+                }
             });
 
             var tabindex = 1;
