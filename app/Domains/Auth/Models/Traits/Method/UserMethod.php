@@ -100,7 +100,7 @@ trait UserMethod
     public function getAvatar($size = null)
     {
         
-        if(!empty($this->attributes['avatar'])) {
+        if(!empty($this->attributes['avatar']) && \File::exists('assets/backend/avatars/'.$this->attributes['avatar'])) {
             return asset('assets/backend/avatars/'.$this->attributes['avatar']);
         }
         return 'https://gravatar.com/avatar/'.md5(strtolower(trim($this->email))).'?s='.config('boilerplate.avatar.size', $size).'&d=mp';
