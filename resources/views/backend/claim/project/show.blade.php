@@ -1059,7 +1059,7 @@
                                 @foreach ($project->quarters as $quarter)
                                 @php
                                     $showReadOnly = false;
-                                    if(($userHasMasterAccess && !auth()->user()->isMasterAdmin()) || ($currentSheetUserPermission != 'LEAD_USER' && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status !== 0 || optional(optional($quarter->partner(request()->partner))->pivot)->status != 'current')) || ($currentSheetUserPermission == 'LEAD_USER' && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 0 || optional(optional($quarter->partner(request()->partner))->pivot)->status == 'forecast'))) {
+                                    if(($userHasMasterAccess && !auth()->user()->isMasterAdmin()) || ($currentSheetUserPermission != 'LEAD_USER' && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 2 || optional(optional($quarter->partner(request()->partner))->pivot)->status != 'current')) || ($currentSheetUserPermission == 'LEAD_USER' && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 0 || optional(optional($quarter->partner(request()->partner))->pivot)->status == 'forecast'))) {
                                         $showReadOnly = true;
                                     }
                                     if($canSubmitClaim && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 1)) {
@@ -1091,7 +1091,7 @@
                                 @foreach ($project->quarters as $quarter)
                                 @php
                                     $showReadOnly = false;
-                                    if(($userHasMasterAccess && !auth()->user()->isMasterAdmin()) || ($currentSheetUserPermission != 'LEAD_USER' && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status !== 0 || optional(optional($quarter->partner(request()->partner))->pivot)->status != 'current')) || ($currentSheetUserPermission == 'LEAD_USER' && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 0 || optional(optional($quarter->partner(request()->partner))->pivot)->status == 'forecast'))) {
+                                    if(($userHasMasterAccess && !auth()->user()->isMasterAdmin()) || ($currentSheetUserPermission != 'LEAD_USER' && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 2 || optional(optional($quarter->partner(request()->partner))->pivot)->status != 'current')) || ($currentSheetUserPermission == 'LEAD_USER' && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 0 || optional(optional($quarter->partner(request()->partner))->pivot)->status == 'forecast'))) {
                                         $showReadOnly = true;
                                     }
                                     if($canSubmitClaim && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 1)) {
@@ -1123,7 +1123,7 @@
                                 @foreach ($project->quarters as $quarter)
                                 @php
                                     $showReadOnly = false;
-                                    if(($userHasMasterAccess && !auth()->user()->isMasterAdmin()) || ($currentSheetUserPermission != 'LEAD_USER' && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status !== 0 || optional(optional($quarter->partner(request()->partner))->pivot)->status != 'current')) || ($currentSheetUserPermission == 'LEAD_USER' && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 0 || optional(optional($quarter->partner(request()->partner))->pivot)->status == 'forecast'))) {
+                                    if(($userHasMasterAccess && !auth()->user()->isMasterAdmin()) || ($currentSheetUserPermission != 'LEAD_USER' && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 2 || optional(optional($quarter->partner(request()->partner))->pivot)->status != 'current')) || ($currentSheetUserPermission == 'LEAD_USER' && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 0 || optional(optional($quarter->partner(request()->partner))->pivot)->status == 'forecast'))) {
                                         $showReadOnly = true;
                                     }
                                     if($canSubmitClaim && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 1)) {
