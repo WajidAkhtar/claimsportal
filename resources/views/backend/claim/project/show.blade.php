@@ -1702,6 +1702,8 @@
 
             $('.navbar-toggler').click(function(){
                 $('#navSheetActions').toggleClass('show');
+                $("#partner_additional_info").toggle();
+                $("#partner_additional_info").parent().parent().toggle();
             });
 
             var tabindex = 1;
