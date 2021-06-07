@@ -631,7 +631,7 @@
                                 <div>Contact: {{optional($leadUserPartner)->contact ?? 'N/A'}}</div>
                                 <div>Web URL: 
                                     @if(optional($leadUserPartner)->web_url) 
-                                        <a class="text-primary" href="{{ optional($leadUserPartner)->preety_web_url_link }}" target="_blank">
+                                        <a class="text-primary" href="{{ optional($leadUserPartner)->preety_web_url }}" target="_blank">
                                             {{ optional($leadUserPartner)->web_url }}
                                         </a>
                                     @else 
@@ -660,7 +660,7 @@
                                 <div>Contact: {{$partnerAdditionalInfo->contact ?? 'N/A'}}</div>
                                 <div>Web URL: 
                                     @if($partnerAdditionalInfo->web_url) 
-                                        <a class="text-primary" href="{{ $partnerAdditionalInfo->preety_web_url_link }}" target="_blank">
+                                        <a class="text-primary" href="{{ $partnerAdditionalInfo->preety_web_url }}" target="_blank">
                                             {{ $partnerAdditionalInfo->web_url }}
                                         </a>
                                     @else 
@@ -689,7 +689,7 @@
                                 <div>Contact: {{$funderAdditionalInfo->funder_contact ?? 'N/A'}}</div>
                                 <div>Web URL: 
                                     @if($funderAdditionalInfo->funder_web_url) 
-                                        <a class="text-primary" href="{{ $funderAdditionalInfo->preety_funder_web_url_link }}" target="_blank">
+                                        <a class="text-primary" href="{{ $funderAdditionalInfo->preety_funder_web_url }}" target="_blank">
                                             {{ $funderAdditionalInfo->funder_web_url }}
                                         </a>
                                     @else 
@@ -1057,11 +1057,20 @@
                                 <td><strong>PO NUMBER</strong></td>
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
+                                @php
+                                    $showReadOnly = false;
+                                    if(($userHasMasterAccess && !auth()->user()->isMasterAdmin()) || ($currentSheetUserPermission != 'LEAD_USER' && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status !== 0 || optional(optional($quarter->partner(request()->partner))->pivot)->status != 'current')) || ($currentSheetUserPermission == 'LEAD_USER' && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 0 || optional(optional($quarter->partner(request()->partner))->pivot)->status == 'forecast'))) {
+                                        $showReadOnly = true;
+                                    }
+                                    if($canSubmitClaim && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 1)) {
+                                        $showReadOnly = false;   
+                                    }
+                                @endphp
                                 <td class="text-center pl-40">
                                     {{ html()->input('text', 'po_number['.$quarter->start_timestamp.']', optional(optional($quarter->partner(request()->partner))->pivot)->po_number)
                                             // ->placeholder('0.00')
                                             ->class('form-control invoice-field')
-                                            ->readOnly(($userHasMasterAccess && !auth()->user()->isMasterAdmin()) || ($currentSheetUserPermission != 'LEAD_USER' && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status !== 0 || optional(optional($quarter->partner(request()->partner))->pivot)->status != 'current')) || ($currentSheetUserPermission == 'LEAD_USER' && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 0 || optional(optional($quarter->partner(request()->partner))->pivot)->status == 'forecast'))) }}
+                                            ->readOnly($showReadOnly) }}
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
@@ -1080,11 +1089,20 @@
                                 <td><strong>INVOICE DATE</strong></td>
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
+                                @php
+                                    $showReadOnly = false;
+                                    if(($userHasMasterAccess && !auth()->user()->isMasterAdmin()) || ($currentSheetUserPermission != 'LEAD_USER' && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status !== 0 || optional(optional($quarter->partner(request()->partner))->pivot)->status != 'current')) || ($currentSheetUserPermission == 'LEAD_USER' && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 0 || optional(optional($quarter->partner(request()->partner))->pivot)->status == 'forecast'))) {
+                                        $showReadOnly = true;
+                                    }
+                                    if($canSubmitClaim && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 1)) {
+                                        $showReadOnly = false;   
+                                    }
+                                @endphp
                                 <td class="text-center pl-40">
                                     {{ html()->input('text', 'invoice_date['.$quarter->start_timestamp.']', optional(optional($quarter->partner(request()->partner))->pivot)->invoice_date)
                                             // ->placeholder('DD-MM-YYYY')
                                             ->class('form-control invoice-field')
-                                            ->readOnly(($userHasMasterAccess && !auth()->user()->isMasterAdmin()) || ($currentSheetUserPermission != 'LEAD_USER' && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status !== 0 || optional(optional($quarter->partner(request()->partner))->pivot)->status != 'current')) || ($currentSheetUserPermission == 'LEAD_USER' && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 0 || optional(optional($quarter->partner(request()->partner))->pivot)->status == 'forecast'))) }}
+                                            ->readOnly($showReadOnly) }}
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
@@ -1103,11 +1121,20 @@
                                 <td><strong>INVOICE NO</strong></td>
                                 <td>&nbsp;</td>
                                 @foreach ($project->quarters as $quarter)
+                                @php
+                                    $showReadOnly = false;
+                                    if(($userHasMasterAccess && !auth()->user()->isMasterAdmin()) || ($currentSheetUserPermission != 'LEAD_USER' && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status !== 0 || optional(optional($quarter->partner(request()->partner))->pivot)->status != 'current')) || ($currentSheetUserPermission == 'LEAD_USER' && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 0 || optional(optional($quarter->partner(request()->partner))->pivot)->status == 'forecast'))) {
+                                        $showReadOnly = true;
+                                    }
+                                    if($canSubmitClaim && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 1)) {
+                                        $showReadOnly = false;   
+                                    }
+                                @endphp
                                 <td class="text-center pl-40">
                                     {{ html()->input('text', 'invoice_no['.$quarter->start_timestamp.']', optional(optional($quarter->partner(request()->partner))->pivot)->invoice_no)
                                             // ->placeholder('0.00')
                                             ->class('form-control invoice-field')
-                                            ->readOnly(($userHasMasterAccess && !auth()->user()->isMasterAdmin()) || ($currentSheetUserPermission != 'LEAD_USER' && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status !== 0 || optional(optional($quarter->partner(request()->partner))->pivot)->status != 'current')) || ($currentSheetUserPermission == 'LEAD_USER' && (optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 0 || optional(optional($quarter->partner(request()->partner))->pivot)->status == 'forecast'))) }}
+                                            ->readOnly($showReadOnly) }}
                                 </td>
                                 @endforeach
                                 <td>&nbsp;</td>
@@ -1135,8 +1162,8 @@
                                             @if (!$userHasMasterAccess && $userHasMasterAccessWithPermission == 'LEAD_USER' && optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 1)
                                             <a href="javascript:void(0)" class="btn btn-success btn-column-action" role="button" onclick="closeClaim(this, {{$quarter->id}}, {{request()->partner}}, {{$quarter->start_timestamp}})">Close Claim</a>
                                             @endif
-                                            @if(((!$userHasMasterAccess && $userHasMasterAccessWithPermission != 'LEAD_USER') || auth()->user()->isMasterAdmin()) && optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 0)
-                                            <a href="javascript:void(0)" class="btn btn-success {{optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 1 ? 'disabled' : ''}} btn-column-action" role="button" onclick="submitClaim(this, {{$quarter->id}}, {{$quarter->start_timestamp}})">Submit Claim</a>
+                                            @if($canSubmitClaim || (((!$userHasMasterAccess && $userHasMasterAccessWithPermission != 'LEAD_USER') || auth()->user()->isMasterAdmin()) && optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 0))
+                                            <a href="javascript:void(0)" class="btn btn-success {{optional(optional($quarter->partner(request()->partner))->pivot)->claim_status == 1 && !$canSubmitClaim ? 'disabled' : ''}} btn-column-action" role="button" onclick="submitClaim(this, {{$quarter->id}}, {{$quarter->start_timestamp}})">Submit Claim</a>
                                             @endif
                                             @break
                                         @default

@@ -312,6 +312,11 @@ class ProjectController
                 $userHasMasterAccessWithPermission = 'LEAD_USER';
             }
 
+            $canSubmitClaim = false;
+            if($userHasMasterAccessWithPermission != 'LEAD_USER' && in_array(current_user_role(), ['Developer', 'Administrator', 'Super User'])) {
+                $canSubmitClaim = true;
+            }
+
             return view('backend.claim.project.show')
             ->withProject($project)
             ->withSheetOwner($sheet_owner)
@@ -330,6 +335,7 @@ class ProjectController
             ->withCurrentSheetUserPermission($currentSheetUserPermission)
             ->withyearwiseHtml($yearwiseHtml)
             ->withLeadUser($leadUser)
+            ->withcanSubmitClaim($canSubmitClaim)
             ->withLeadUserPartner($leadUserPartner);
         }
     }
@@ -536,7 +542,7 @@ class ProjectController
 
         $quarter = $project->quarters()->whereId($request->quarterId)->first();
         $quarterPartner = $quarter->partner($request->organisationId);
-        if($quarterPartner->pivot->claim_status == 1) {
+        if($quarterPartner->pivot->claim_status == 1 && !in_array(current_user_role(), ['Developer', 'Administrator', 'Super User'])) {
             return response()->json([
                 'success' => 0,
                 'message' => 'You already submitted claim for this quarter'
