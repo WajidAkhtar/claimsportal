@@ -38,7 +38,7 @@
                         <span class="cil-pencil mr-2 h6 mb-0"></span> Edit Profile
                     </a>
                     <a href="javascript:void(0)" class="dropdown-item" data-toggle="modal" data-target="#avatarModal">
-                        <span class="cil-pencil mr-2 h6 mb-0"></span> Avatar
+                        <span class="cil-user mr-2 h6 mb-0"></span> Avatar
                     </a>
                     <a href="{{ route('frontend.user.account') }}" class="dropdown-item">
                         <span class="cil-low-vision mr-2 h6 mb-0"></span> Change Password
@@ -96,8 +96,10 @@
                     success: function(response) {
                         if(response.status == 'success') {
                             toastr.success(response.message);
-                            $('#avatarModal').modal('hide');
-                            $('body').find('.modal-backdrop.show').remove();
+                            window.location.reload();
+                            // $('#avatarModal').modal('toggle');
+                            // $('#avatarModal').modal('hide');
+                            // $('body').find('.modal-backdrop.show').remove();
                             $('img.c-avatar-img').attr('src', '{{asset('assets/backend/avatars/')}}'+'/'+$(obj).data('image-name'));
                         }
                         else {

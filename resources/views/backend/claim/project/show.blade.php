@@ -389,7 +389,7 @@
                             </div>
                         </div>
                         <div class="row ">
-                            <div class="col-md-6">
+                            <div class="col">
                                 <div class="form-group row"> 
                                 {{ html()->label('Account Name')->for('account_name')->class('col-md-4') }}
                                 <div class="col-md-8">
@@ -398,41 +398,7 @@
                                  }}
                                 </div></div>
                             </div>
-                        </div>
-                        <div class="row ">
                             <div class="col-md-6">
-                                <div class="form-group row"> 
-                                {{ html()->label('Bank Name')->for('bank_name')->class('col-md-4') }}
-                                <div class="col-md-8">
-                                {{ html()->text('bank_name', $partnerAdditionalInfo->bank_name ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
-                                </div></div>
-                            </div>
-                        </div>
-                        <div class="row ">
-                            <div class="col">
-                                <div class="form-group row"> 
-                                {{ html()->label('Bank Address')->for('bank_address')->class('col-md-2') }}
-                                <div class="col-md-10">
-                                {{ html()->text('bank_address', $partnerAdditionalInfo->bank_address ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
-                                </div></div>
-                            </div>
-                        </div>
-                        
-                        <div class="row ">
-                            <div class="col">
-                                <div class="form-group row">
-                                {{ html()->label('Sort Code')->for('sort_code')->class('col-md-4') }}
-                                <div class="col-md-8">
-                                {{ html()->text('sort_code', $partnerAdditionalInfo->sort_code ?? '')
-                                    ->class('form-control additional-info')
-                                 }}
-                                </div></div>
-                            </div>
-                            <div class="col">
                                 <div class="form-group row"> 
                                 {{ html()->label('Customer Ref')->for('customer_ref')->class('col-md-4') }}
                                 <div class="col-md-8">
@@ -445,9 +411,9 @@
                         <div class="row ">
                             <div class="col">
                                 <div class="form-group row"> 
-                                {{ html()->label('Account Number')->for('account_no')->class('col-md-4') }}
+                                {{ html()->label('Bank Name')->for('bank_name')->class('col-md-4') }}
                                 <div class="col-md-8">
-                                {{ html()->text('account_no', $partnerAdditionalInfo->account_no ?? '')
+                                {{ html()->text('bank_name', $partnerAdditionalInfo->bank_name ?? '')
                                     ->class('form-control additional-info')
                                  }}
                                 </div></div>
@@ -465,9 +431,9 @@
                         <div class="row ">
                             <div class="col">
                                 <div class="form-group row"> 
-                                {{ html()->label('SWIFT Code')->for('swift')->class('col-md-4') }}
+                                {{ html()->label('Bank Address')->for('bank_address')->class('col-md-4') }}
                                 <div class="col-md-8">
-                                {{ html()->text('swift', $partnerAdditionalInfo->swift ?? '')
+                                {{ html()->text('bank_address', $partnerAdditionalInfo->bank_address ?? '')
                                     ->class('form-control additional-info')
                                  }}
                                 </div></div>
@@ -482,21 +448,55 @@
                                 </div></div>
                             </div>
                         </div>
+                        
                         <div class="row ">
-                            <div class="col">
+                            <div class="col-md-6">
                                 <div class="form-group row">
-                                {{ html()->label('IBAN')->for('iban')->class('col-md-4') }}
+                                {{ html()->label('Sort Code')->for('sort_code')->class('col-md-4') }}
                                 <div class="col-md-8">
-                                {{ html()->text('iban', $partnerAdditionalInfo->iban ?? '')
+                                {{ html()->text('sort_code', $partnerAdditionalInfo->sort_code ?? '')
                                     ->class('form-control additional-info')
                                  }}
                                 </div></div>
                             </div>
-                            <div class="col">
+                            <div class="col-md-6">
                                 <div class="form-group row"> 
                                 {{ html()->label('EORI No')->for('eori')->class('col-md-4') }}
                                 <div class="col-md-8">
                                 {{ html()->text('eori', $partnerAdditionalInfo->eori ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                                </div></div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-md-6">
+                                <div class="form-group row"> 
+                                {{ html()->label('Account Number')->for('account_no')->class('col-md-4') }}
+                                <div class="col-md-8">
+                                {{ html()->text('account_no', $partnerAdditionalInfo->account_no ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                                </div></div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-md-6">
+                                <div class="form-group row"> 
+                                {{ html()->label('SWIFT Code')->for('swift')->class('col-md-4') }}
+                                <div class="col-md-8">
+                                {{ html()->text('swift', $partnerAdditionalInfo->swift ?? '')
+                                    ->class('form-control additional-info')
+                                 }}
+                                </div></div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                {{ html()->label('IBAN')->for('iban')->class('col-md-4') }}
+                                <div class="col-md-8">
+                                {{ html()->text('iban', $partnerAdditionalInfo->iban ?? '')
                                     ->class('form-control additional-info')
                                  }}
                                 </div></div>

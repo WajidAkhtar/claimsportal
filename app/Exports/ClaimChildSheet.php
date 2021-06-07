@@ -31,7 +31,7 @@ class ClaimChildSheet implements FromView, WithTitle, WithDrawings, WithStyles, 
     private $costItems;
     private $sheet_name;
 
-    public function __construct($project, $data, $partnerAdditionalInfo, $yearwiseHtml, $leadUser, $leadUserPartner, $partner, $sheet_name, $costItems, $funderAdditionalInfo)
+    public function __construct($project, $data, $partnerAdditionalInfo, $yearwiseHtml, $leadUser, $leadUserPartner, $partner, $sheet_name, $costItems, $funderAdditionalInfo = null)
     {
         $this->project = $project;
         $this->data = $data;
