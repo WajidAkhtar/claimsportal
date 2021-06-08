@@ -119,7 +119,7 @@
                 <td style="{{ ($total_budget < 0) ? 'color: red;' : '' }}background-color: #ffffff;{{ $cellBgStyle }}">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text readonly">£</span>
+                            <span class="input-group-text readonly"></span>
                         </div>
                         <span>{{ number_format($total_budget, 2, ".", "") }}</span>
                     </div>
@@ -141,7 +141,7 @@
                 <td style="{{ ($quarter_value < 0) ? 'color: red;' : '' }}background-color: #ffffff;{{ $defaultCellStyle }} {{ $labelClass }}{{ $cellBgStyle }}">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text readonly">£</span>
+                            <span class="input-group-text readonly"></span>
                         </div>
                         <span>{{ number_format($quarter_value, 2, ".", "") }}</span>
                     </div>
@@ -157,7 +157,7 @@
                 <td style="{{ ($projectTotal < 0) ? 'color: red;' : '' }}background-color: #ffffff;{{ $defaultCellStyle }} {{ $fontBold }} {{ $labelClass }}{{ $cellBgStyle }}">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text readonly">£</span>
+                            <span class="input-group-text readonly"></span>
                         </div>
                         <span>{{ number_format($projectTotal, 2, ".", "") }}</span>
                     </div>
@@ -165,7 +165,7 @@
                 <td style="{{ ($project_variance < 0) ? 'color: red;' : '' }}background-color: #ffffff;{{ $defaultCellStyle }} {{ $fontBold }} {{ $labelClass }}{{ $cellBgStyle }}">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text readonly">£</span>
+                            <span class="input-group-text readonly"></span>
                         </div>
                         <span>{{ number_format($project_variance, 2, ".", "") }}</span>
                     </div>
@@ -180,7 +180,7 @@
                 <td style="{{ ($overall_total_budget < 0) ? 'color: red' : 'black' }};background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }}border-top: 1px solid #000000;">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text readonly">£</span>
+                            <span class="input-group-text readonly"></span>
                         </div>
                         {{ number_format($overall_total_budget, 2, ".", "") }}
                     </div>
@@ -207,7 +207,7 @@
                 <td style="{{ ($total_cost_for_each_item < 0) ? 'color: red' : 'black' }};background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }}border-top: 1px solid #000000;{{ $labelClass }}">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text readonly">£</span>
+                            <span class="input-group-text readonly"></span>
                         </div>
                         <span>{{ number_format($total_cost_for_each_item, 2, ".", "") }}</span>
                     </div>
@@ -219,7 +219,7 @@
                 <td style="{{ ($total_project_total < 0) ? 'color: red' : 'black' }};background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }} {{ $fontBold }}border-top: 1px solid #000000;{{ $labelClass }}">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text readonly">£</span>
+                            <span class="input-group-text readonly"></span>
                         </div>
                         <span>{{ number_format($total_project_total, 2, ".", "") }}</span>
                     </div>
@@ -227,7 +227,7 @@
                 <td style="{{ ($total_project_variance < 0) ? 'color: red' : 'black' }};background-color: #DEEAF6;{{ $defaultCellStyle }} {{ $hedingStyle  }} {{ $fontBold }}border-top: 1px solid #000000;{{ $labelClass }}">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text readonly">£</span>
+                            <span class="input-group-text readonly"></span>
                         </div>
                         <span>{{ number_format($total_project_variance, 2, ".", "") }}</span>
                     </div>
