@@ -47,6 +47,7 @@ class ClaimMasterExport implements WithMultipleSheets
             
             $costItems = $this->project->costItems()->where('organisation_id', $partner->id)->whereNull('project_cost_items.deleted_at')->groupBy('cost_item_id')->orderByRaw($this->project->costItemOrderRaw())->get();
             $partnerAdditionalInfo = ProjectPartners::where('project_id', $this->project->id)->where('organisation_id', $partner->id)->first();
+            $funderAdditionalInfo = ProjectPartners::where('project_id', $this->project->id)->where('is_master', '1')->first();
             $yearwiseHtml = View::make('backend.claim.project.export-child-yearly-excel', [
                 'project' => $this->project, 
                 'partner' => $partner->id,
@@ -63,6 +64,7 @@ class ClaimMasterExport implements WithMultipleSheets
                 $partner->id,
                 $partner->organisation_name,
                 $costItems,
+                $funderAdditionalInfo,
             );
         }
 

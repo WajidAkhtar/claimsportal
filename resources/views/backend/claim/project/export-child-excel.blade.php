@@ -6,6 +6,7 @@
     $yearlyTableStyleBottom = 'border-bottom:3px solid black;';
     $yearlyTableStyleTop = 'border-top:3px solid black;border-bottom:3px solid #ffffff;';
     $textCenterStyle = "text-align: center;";
+    $bgWhiteStyle = "background-color: #FFFFFF;";
 @endphp
 <table>
     @for($i = 0; $i <= 7;$i++)
@@ -88,7 +89,7 @@
             @php
             $labelClass = $quarter->partner($partner)->pivot->status == 'current' ? 'color:red;' : '';
             @endphp
-            <th style="{{ $defaultCellStyle }} {{ $labelClass }} {{ $textCenterStyle }}">
+            <th style="{{ $defaultCellStyle }} {{ $labelClass }} {{ $textCenterStyle }} {{ $bgWhiteStyle }}">
                 <label class="{{$labelClass ?? ''}}">{{ strtoupper($quarter->name) }}</label>
             </th>
             @endforeach
