@@ -134,7 +134,7 @@
                                 <select class="form-control" onchange="this.form.submit()" name="partner">
                                     @php $partnerCount = 1; @endphp
                                     @if($project->userHasFullAccessToProject() || $userHasMasterAccess)
-                                        <option value="">Project Totals</option>
+                                        <option value="">PROJECT TOTALS</option>
                                         @foreach($project->allpartners as $partner)
                                             @if($partner->organisation_id != 0 && $partner->organisation_id != NULL)
                                                 <option value="{{ $partner->organisation->id ?? 0 }}" {{ (!empty($partner->organisation) && request()->partner == $partner->organisation->id ? 'selected':'') }}>{{ $partner->organisation->organisation_name ?? 'Partener - '.$partnerCount++ }}</option>
@@ -143,7 +143,7 @@
                                     @else
                                         @foreach($sheetUserPermissions as $partner)
                                             @if(auth()->user()->id == $partner->user_id && $partner->partner_id == 0 && $partner->is_master == '1')
-                                                <option value="">Project Totals</option>
+                                                <option value="">PROJECT TOTALS</option>
                                             @elseif($partner->partner_id != 0 && $partner->partner_id != NULL && \App\Domains\System\Models\Organisation::find($partner->partner_id)->organisation_name)
                                                 <option value="{{ $partner->partner_id ?? 0 }}" {{ (request()->partner == $partner->partner_id ? 'selected':'') }}>{{ \App\Domains\System\Models\Organisation::find($partner->partner_id)->organisation_name ?? 'Partener - '.$partnerCount++ }}</option>
                                             @endif

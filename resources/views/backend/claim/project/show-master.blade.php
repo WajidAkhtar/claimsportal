@@ -126,7 +126,7 @@
                             <form action="#" id="filter_project_claims_data">
                                 <select class="form-control" onchange="this.form.submit()" name="partner">
                                     @php $partnerCount = 1; @endphp
-                                    <option value="">Project Totals</option>
+                                    <option value="">PROJECT TOTALS</option>
                                     @foreach($project->allpartners as $partner)
                                         @if($partner->organisation_id != 0 && $partner->organisation_id != NULL)
                                             <option value="{{ $partner->organisation->id ?? 0 }}" {{ (!empty($partner->organisation) && request()->partner == $partner->organisation->id ? 'selected':'') }}>{{ $partner->organisation->organisation_name ?? 'Partener - '.$partnerCount++ }}</option>
