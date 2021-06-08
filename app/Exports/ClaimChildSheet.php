@@ -128,9 +128,17 @@ class ClaimChildSheet implements FromView, WithTitle, WithDrawings, WithStyles, 
         $active_sheet = $event->sheet->getDelegate();
         $active_sheet->getParent()->getDefaultStyle()->applyFromArray($defaultStyle);
 
-        for ($i = 18; $i <= $active_sheet->getHighestRow(); $i++) {
+        for ($i = 20; $i <= $active_sheet->getHighestRow(); $i++) {
           $active_sheet->getRowDimension($i)->setRowHeight(20);
         }
+
+        for ($column = 'E'; $column <= $active_sheet->getHighestColumn(); $column++) {
+            for ($row = 20; $row <= $active_sheet->getHighestRow(); $row++) {
+                $active_sheet->getStyle($column.$row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_CURRENCY_EUR);
+            }
+        }
+
+        $active_sheet->getStyle('B18:'.$active_sheet->getHighestColumn().$active_sheet->getHighestRow())->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);        
 
         $active_sheet->getStyle('B18:'.$active_sheet->getHighestColumn().$active_sheet->getHighestRow())->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
         $active_sheet->getStyle('B18:'.$active_sheet->getHighestColumn().$active_sheet->getHighestRow())->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
