@@ -128,13 +128,13 @@ class ClaimChildSheet implements FromView, WithTitle, WithDrawings, WithStyles, 
         $active_sheet = $event->sheet->getDelegate();
         $active_sheet->getParent()->getDefaultStyle()->applyFromArray($defaultStyle);
 
-        for ($i = 22; $i <= $active_sheet->getHighestRow(); $i++) {
+        for ($i = 18; $i <= $active_sheet->getHighestRow(); $i++) {
           $active_sheet->getRowDimension($i)->setRowHeight(20);
         }
 
-        $active_sheet->getStyle('B22:'.$active_sheet->getHighestColumn().$active_sheet->getHighestRow())->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
-        $active_sheet->getStyle('B22:'.$active_sheet->getHighestColumn().$active_sheet->getHighestRow())->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $active_sheet->getStyle('D22:'.'D'.$active_sheet->getHighestRow())->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+        $active_sheet->getStyle('B18:'.$active_sheet->getHighestColumn().$active_sheet->getHighestRow())->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
+        $active_sheet->getStyle('B18:'.$active_sheet->getHighestColumn().$active_sheet->getHighestRow())->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $active_sheet->getStyle('D18:'.'D'.$active_sheet->getHighestRow())->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
         $active_sheet->getStyle('A1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
 
     }
