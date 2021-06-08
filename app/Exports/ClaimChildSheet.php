@@ -134,7 +134,7 @@ class ClaimChildSheet implements FromView, WithTitle, WithDrawings, WithStyles, 
 
         for ($column = 'E'; $column <= $active_sheet->getHighestColumn(); $column++) {
             for ($row = 20; $row <= $active_sheet->getHighestRow(); $row++) {
-                $active_sheet->getStyle($column.$row)->getNumberFormat()->setFormatCode('#,##0.00_-');
+                $active_sheet->getStyle($column.$row)->getNumberFormat()->setFormatCode('"£ "#,##0.00_-');
             }
         }
 
