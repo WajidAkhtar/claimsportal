@@ -120,7 +120,7 @@ class ClaimMasterMainSheet implements FromView, WithTitle, WithDrawings, WithSty
 
         for ($column = 'E'; $column <= $active_sheet->getHighestColumn(); $column++) {
             for ($row = 18; $row <= $active_sheet->getHighestRow(); $row++) {
-                $active_sheet->getStyle($column.$row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                $active_sheet->getStyle($column.$row)->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED2);
             } 
         }
 
